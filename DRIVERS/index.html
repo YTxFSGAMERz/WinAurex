@@ -1,0 +1,1743 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comprehensive collection of scripts and tools to optimize Windows 10/11 for peak performance, gaming, and privacy.">
+      
+      
+      
+      
+        <link rel="prev" href="../TWEAKS/">
+      
+      
+        <link rel="next" href="../ANTIVIRUS/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Drivers - Windows Optimisations</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#drivers-directory" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Windows Optimisations" class="md-header__button md-logo" aria-label="Windows Optimisations" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Windows Optimisations
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Drivers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/YTxFSGAMERz/Windows-Optimisations" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Windows-Optimisations
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../TWEAKS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Tweaks
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Drivers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ANTIVIRUS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Antivirus &amp; Security
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../BROWSERS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Web Browsers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../WINDOWS_UPDATE/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Windows Update
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../WEBVIEW/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  WebView2 Info
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../HARDWARE/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Hardware Monitoring
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../EXTRA/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Extra Utilities
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ACTIVATORS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Activators
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../AUTOUNATTEND/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Unattended Install
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Windows Optimisations" class="md-nav__button md-logo" aria-label="Windows Optimisations" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Windows Optimisations
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/YTxFSGAMERz/Windows-Optimisations" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Windows-Optimisations
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TWEAKS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Tweaks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drivers
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drivers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contents
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contents">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#driver-boosterexe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Driver Booster.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#driveridentifier_setupexe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        driveridentifier_setup.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3dp-chipexe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3DP Chip.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommendationtxt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RECOMMENDATION.txt
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#driver-installation-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Driver Installation Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Driver Installation Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#method-1-manufacturer-website-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method 1: Manufacturer Website (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-2-driver-booster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method 2: Driver Booster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-3-manual-installation-via-device-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method 3: Manual Installation via Device Manager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-4-using-driver-identifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method 4: Using Driver Identifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-installation-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-Installation Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#special-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Special Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Special Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphics-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Graphics Drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audio Drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage Drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-issues-after-driver-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Issues After Driver Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-avoid-automatic-updaters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Avoid Automatic Updaters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternative-tools-not-included-but-useful" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternative Tools (Not Included but Useful)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safety-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Safety Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ANTIVIRUS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Antivirus &amp; Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BROWSERS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Browsers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WINDOWS_UPDATE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Update
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WEBVIEW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WebView2 Info
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HARDWARE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTRA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extra Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ACTIVATORS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Activators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AUTOUNATTEND/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unattended Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contents
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contents">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#driver-boosterexe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Driver Booster.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#driveridentifier_setupexe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        driveridentifier_setup.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3dp-chipexe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3DP Chip.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommendationtxt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RECOMMENDATION.txt
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#driver-installation-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Driver Installation Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Driver Installation Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#method-1-manufacturer-website-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method 1: Manufacturer Website (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-2-driver-booster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method 2: Driver Booster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-3-manual-installation-via-device-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method 3: Manual Installation via Device Manager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-4-using-driver-identifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method 4: Using Driver Identifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-installation-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-Installation Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#special-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Special Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Special Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphics-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Graphics Drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audio Drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage Drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-issues-after-driver-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Issues After Driver Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-avoid-automatic-updaters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Avoid Automatic Updaters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternative-tools-not-included-but-useful" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternative Tools (Not Included but Useful)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safety-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Safety Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="drivers-directory">Drivers Directory<a class="headerlink" href="#drivers-directory" title="Permanent link">¶</a></h1>
+<p>This directory contains tools and utilities for detecting, installing, and managing device drivers on Windows systems. Proper drivers are essential for optimal hardware performance, stability, and feature support.</p>
+<h2 id="contents">Contents<a class="headerlink" href="#contents" title="Permanent link">¶</a></h2>
+<h3 id="driver-boosterexe">Driver Booster.exe<a class="headerlink" href="#driver-boosterexe" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Description</strong>: Automatic driver updater utility from IObit</li>
+<li><strong>Functionality</strong>: Scans system for outdated, missing, or faulty drivers and provides one-click updates</li>
+<li><strong>Features</strong>:</li>
+<li>Large driver database covering most hardware components</li>
+<li>Game optimization components (DirectX, PhysX, etc.)</li>
+<li>Backup and restore functionality for drivers</li>
+<li>Offline driver installer capability</li>
+<li>Silent installation mode</li>
+<li><strong>Usage</strong>: Run as administrator, let it scan, then click "Update All" or select specific drivers to update</li>
+<li><strong>Safety</strong>: Creates restore points before updates and maintains driver backups</li>
+</ul>
+<h3 id="driveridentifier_setupexe">driveridentifier_setup.exe<a class="headerlink" href="#driveridentifier_setupexe" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Description</strong>: Driver identification and download utility</li>
+<li><strong>Functionality</strong>: Identifies unknown devices and provides direct download links for correct drivers</li>
+<li><strong>Features</strong>:</li>
+<li>Hardware ID-based detection for accurate matching</li>
+<li>Works without internet connection for identification</li>
+<li>Provides direct download links when online</li>
+<li>Supports legacy hardware identification</li>
+<li>Portable version available</li>
+<li><strong>Usage</strong>: Run the installer or portable version, let it scan, then follow links to download drivers manually</li>
+<li><strong>Best For</strong>: Identifying unknown devices in Device Manager or when automatic updaters fail</li>
+</ul>
+<h3 id="3dp-chipexe">3DP Chip.exe<a class="headerlink" href="#3dp-chipexe" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Description</strong>: Specialized utility for detecting and updating chipset, graphics, audio, and network drivers</li>
+<li><strong>Functionality</strong>: Focuses on critical motherboard and component drivers</li>
+<li><strong>Features</strong>:</li>
+<li>Motherboard chipset detection</li>
+<li>Graphics card (NVIDIA, AMD, Intel) driver detection</li>
+<li>Audio driver identification (Realtek, HD Audio, etc.)</li>
+<li>Network adapter driver detection</li>
+<li>Direct download links to official manufacturer sites</li>
+<li>Lightweight and portable</li>
+<li><strong>Usage</strong>: Run the executable, it automatically detects components and shows current vs latest driver versions</li>
+<li><strong>Best For</strong>: Quick checks of critical system drivers, especially after OS reinstall</li>
+</ul>
+<h3 id="recommendationtxt">RECOMMENDATION.txt<a class="headerlink" href="#recommendationtxt" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Description</strong>: Guidance on essential drivers to install for optimal system performance</li>
+<li><strong>Contents</strong>:</li>
+<li><strong>Priority 1 (Critical)</strong>:<ul>
+<li>Motherboard chipset drivers</li>
+<li>Graphics card drivers (NVIDIA/AMD/Intel)</li>
+<li>Network drivers (Ethernet/WiFi)</li>
+<li>Audio drivers</li>
+</ul>
+</li>
+<li><strong>Priority 2 (Important)</strong>:<ul>
+<li>Storage controllers (SATA/NVMe)</li>
+<li>USB controllers</li>
+<li>Input devices (touchpad, keyboard special features)</li>
+</ul>
+</li>
+<li><strong>Priority 3 (Recommended)</strong>:<ul>
+<li>Card reader drivers</li>
+<li>Webcam drivers</li>
+<li>Peripheral utilities (RGB control, etc.)</li>
+</ul>
+</li>
+<li><strong>Additional Tips</strong>:</li>
+<li>Always download drivers from manufacturer websites when possible</li>
+<li>For laptops, check OEM website first for customized drivers</li>
+<li>Display drivers are crucial for gaming and multimedia performance</li>
+<li>Network drivers affect internet stability and speed</li>
+<li>Chipset drivers affect overall system stability and performance</li>
+</ul>
+<h2 id="driver-installation-best-practices">Driver Installation Best Practices<a class="headerlink" href="#driver-installation-best-practices" title="Permanent link">¶</a></h2>
+<h3 id="preparation">Preparation<a class="headerlink" href="#preparation" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Create a System Restore Point</strong>:</li>
+<li>Search for "Create a restore point" in Start menu</li>
+<li>
+<p>Click "Create..." before making driver changes</p>
+</li>
+<li>
+<p><strong>Download Latest Drivers</strong>:</p>
+</li>
+<li>Prefer manufacturer websites over third-party updaters</li>
+<li>For graphics cards: NVIDIA.com, AMD.com, or Intel.com</li>
+<li>For motherboards: ASUS, Gigabyte, MSI, ASRock support sites</li>
+<li>
+<p>For laptops: Dell, HP, Lenovo, Acer support sites</p>
+</li>
+<li>
+<p><strong>Disconnect from Internet</strong> (Optional but Recommended):</p>
+</li>
+<li>Prevents Windows Update from interfering with driver installation</li>
+<li>Reconnect after installation to verify functionality</li>
+</ol>
+<h3 id="installation-methods">Installation Methods<a class="headerlink" href="#installation-methods" title="Permanent link">¶</a></h3>
+<h4 id="method-1-manufacturer-website-recommended">Method 1: Manufacturer Website (Recommended)<a class="headerlink" href="#method-1-manufacturer-website-recommended" title="Permanent link">¶</a></h4>
+<ol>
+<li>Identify your hardware model (Device Manager or system information tools)</li>
+<li>Go to manufacturer's support/downloads section</li>
+<li>Download the latest driver for your specific model and Windows version</li>
+<li>Run the installer and follow prompts</li>
+<li>Restart if required</li>
+</ol>
+<h4 id="method-2-driver-booster">Method 2: Driver Booster<a class="headerlink" href="#method-2-driver-booster" title="Permanent link">¶</a></h4>
+<ol>
+<li>Run Driver Booster.exe as administrator</li>
+<li>Click "Scan" to detect outdated drivers</li>
+<li>Review results and select drivers to update</li>
+<li>Click "Update" and wait for completion</li>
+<li>Restart if prompted</li>
+</ol>
+<h4 id="method-3-manual-installation-via-device-manager">Method 3: Manual Installation via Device Manager<a class="headerlink" href="#method-3-manual-installation-via-device-manager" title="Permanent link">¶</a></h4>
+<ol>
+<li>Press Win+X and select "Device Manager"</li>
+<li>Right-click the device and select "Update driver"</li>
+<li>Choose "Browse my computer for drivers"</li>
+<li>Navigate to the downloaded driver folder</li>
+<li>Follow prompts and restart if required</li>
+</ol>
+<h4 id="method-4-using-driver-identifier">Method 4: Using Driver Identifier<a class="headerlink" href="#method-4-using-driver-identifier" title="Permanent link">¶</a></h4>
+<ol>
+<li>Run Driver Identifier to detect unknown devices</li>
+<li>Note the hardware IDs shown (VEN_XXXX&amp;DEV_XXXX format)</li>
+<li>Search for these IDs online or use the provided links</li>
+<li>Download and install drivers manually</li>
+</ol>
+<h2 id="post-installation-verification">Post-Installation Verification<a class="headerlink" href="#post-installation-verification" title="Permanent link">¶</a></h2>
+<ol>
+<li><strong>Check Device Manager</strong>:</li>
+<li>No yellow exclamation marks or unknown devices</li>
+<li>
+<p>All devices show correct names and drivers</p>
+</li>
+<li>
+<p><strong>Verify Functionality</strong>:</p>
+</li>
+<li>Graphics: Check resolution, refresh rate, and 3D performance</li>
+<li>Audio: Test sound output and input devices</li>
+<li>Network: Verify internet connectivity and speed</li>
+<li>
+<p>USB: Test all ports with devices</p>
+</li>
+<li>
+<p><strong>Monitor Stability</strong>:</p>
+</li>
+<li>Use system for several hours to check for crashes or issues</li>
+<li>Monitor temperatures (especially after chipset/graphics driver updates)</li>
+</ol>
+<h2 id="special-considerations">Special Considerations<a class="headerlink" href="#special-considerations" title="Permanent link">¶</a></h2>
+<h3 id="graphics-drivers">Graphics Drivers<a class="headerlink" href="#graphics-drivers" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Clean Installation</strong>: Use Display Driver Uninstaller (DDU) in safe mode when switching between NVIDIA/AMD or major version updates</li>
+<li><strong>Game Ready vs Studio Drivers</strong>: </li>
+<li>Game Ready: Optimized for latest games (NVIDIA) </li>
+<li>Studio: Optimized for creative applications (NVIDIA)</li>
+<li>AMD equivalent: Adrenalin vs Pro drivers</li>
+<li><strong>Beta Drivers</strong>: Only use if experiencing specific issues that beta drivers fix</li>
+</ul>
+<h3 id="network-drivers">Network Drivers<a class="headerlink" href="#network-drivers" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>WiFi vs Ethernet</strong>: Install both if system has both adapters</li>
+<li><strong>Bluetooth</strong>: Often bundled with WiFi drivers on laptops</li>
+<li><strong>Vendor Tools</strong>: Some manufacturers provide management suites (Intel MyWiFi, Killer Control Center)</li>
+</ul>
+<h3 id="audio-drivers">Audio Drivers<a class="headerlink" href="#audio-drivers" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>HD Audio vs Realtek</strong>: Most modern systems use Realtek HD Audio</li>
+<li><strong>Features</strong>: Check for enhanced features like EQ, surround sound, etc.</li>
+<li><strong>Digital Output</strong>: Ensure S/PDIF or HDMI audio works if needed</li>
+</ul>
+<h3 id="storage-drivers">Storage Drivers<a class="headerlink" href="#storage-drivers" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>NVMe vs SATA</strong>: Ensure correct driver for your storage type</li>
+<li><strong>RAID Controllers</strong>: Special drivers needed for RAID configurations</li>
+<li><strong>Optane Memory</strong>: Requires specific Intel Rapid Storage Technology drivers</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
+<h3 id="common-issues-after-driver-updates">Common Issues After Driver Updates<a class="headerlink" href="#common-issues-after-driver-updates" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>System Won't Boot</strong>:</li>
+<li>Boot into Safe Mode (F8 or Shift+Restart)</li>
+<li>Use System Restore or rollback driver</li>
+<li>
+<p>Use DDU to clean install graphics drivers in safe mode</p>
+</li>
+<li>
+<p><strong>Device Not Working</strong>:</p>
+</li>
+<li>Rollback driver in Device Manager</li>
+<li>Try different version (older/newer)</li>
+<li>
+<p>Check for Windows Updates that might include fixes</p>
+</li>
+<li>
+<p><strong>Performance Decreased</strong>:</p>
+</li>
+<li>Check for conflicting software</li>
+<li>Verify power settings aren't limiting performance</li>
+<li>
+<p>Clean install using DDU for graphics drivers</p>
+</li>
+<li>
+<p><strong>Specific Error Codes</strong>:</p>
+</li>
+<li>CODE 10: Device cannot start - try reinstalling driver</li>
+<li>CODE 28: Drivers not installed - reinstall driver</li>
+<li>CODE 31: Windows cannot load drivers - check for corruption</li>
+</ol>
+<h3 id="when-to-avoid-automatic-updaters">When to Avoid Automatic Updaters<a class="headerlink" href="#when-to-avoid-automatic-updaters" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Custom OEM Systems</strong> (Laptops, Prebuilt PCs): May need specific modified drivers</li>
+<li><strong>Workstation Cards</strong> (Quadro, FirePro): Use certified drivers from manufacturer</li>
+<li><strong>Beta/Test Environments</strong>: Stick to known stable versions</li>
+<li><strong>Critical Production Systems</strong>: Test updates before deployment</li>
+</ul>
+<h2 id="alternative-tools-not-included-but-useful">Alternative Tools (Not Included but Useful)<a class="headerlink" href="#alternative-tools-not-included-but-useful" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong>Display Driver Uninstaller (DDU)</strong>: For clean removal of graphics drivers</li>
+<li><strong>Snappy Driver Installer</strong>: Offline driver packaging solution</li>
+<li><strong>DriverMax</strong>: Alternative driver updater with free tier</li>
+<li><strong>Intel Driver &amp; Support Assistant</strong>: Intel-specific utility</li>
+<li><strong>NVIDIA GeForce Experience/AMD Radeon Software</strong>: Vendor-specific update tools</li>
+</ul>
+<h2 id="safety-notes">Safety Notes<a class="headerlink" href="#safety-notes" title="Permanent link">¶</a></h2>
+<ul>
+<li>Always verify digital signatures of drivers when possible</li>
+<li>Be wary of third-party sites offering drivers - may contain malware</li>
+<li>Create backups before major driver updates</li>
+<li>Some system manufacturers void warranties for non-OEM drivers (check your terms)</li>
+<li>Windows Update drivers are WHQL certified but may not be latest versions</li>
+</ul>
+<hr>
+<p><em>For gaming systems, prioritize graphics and chipset drivers</em>
+<em>For workstations, prioritize stability and certified drivers</em>
+<em>For laptops, check OEM support site first</em>
+<em>Last updated: May 2026</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

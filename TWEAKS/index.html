@@ -1,0 +1,2271 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comprehensive collection of scripts and tools to optimize Windows 10/11 for peak performance, gaming, and privacy.">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../DRIVERS/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>System Tweaks - Windows Optimisations</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#windows-tweaks-and-optimizations" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Windows Optimisations" class="md-header__button md-logo" aria-label="Windows Optimisations" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Windows Optimisations
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              System Tweaks
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/YTxFSGAMERz/Windows-Optimisations" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Windows-Optimisations
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Tweaks
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../DRIVERS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Drivers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ANTIVIRUS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Antivirus &amp; Security
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../BROWSERS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Web Browsers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../WINDOWS_UPDATE/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Windows Update
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../WEBVIEW/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  WebView2 Info
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../HARDWARE/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Hardware Monitoring
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../EXTRA/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Extra Utilities
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ACTIVATORS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Activators
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../AUTOUNATTEND/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Unattended Install
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Windows Optimisations" class="md-nav__button md-logo" aria-label="Windows Optimisations" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Windows Optimisations
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/YTxFSGAMERz/Windows-Optimisations" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Windows-Optimisations
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Tweaks
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Tweaks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appearance-tweaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appearance Tweaks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appearance Tweaks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-tweaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Tweaks:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Impact:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-priority-tweaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU Priority Tweaks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU Priority Tweaks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-tweaks_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Tweaks:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-mitigations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU Mitigations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU Mitigations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Tools:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-vs-performance-trade-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security vs Performance Trade-off:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-power-plans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU Power Plans
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU Power Plans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Files:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mem-reduct-ram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mem Reduct RAM
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mem Reduct RAM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-files_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Files:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#features_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimize-ssd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimize SSD
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optimize SSD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-files_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Files:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimizations-applied" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimizations Applied:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ram-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RAM Compression
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RAM Compression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-files_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Files:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services-tweaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Services Tweaks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Services Tweaks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-files_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Files:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#services-typically-affected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Services Typically Affected:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#telemetry-tweaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Telemetry Tweaks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Telemetry Tweaks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-files_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Files:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-collection-reduced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Collection Reduced:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privacy-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privacy Note:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apply-optimizations-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apply Optimizations Script
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Apply Optimizations Script">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-it-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What It Does:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safety-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Safety Features:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommendations-by-use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommendations by Use Case
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommendations by Use Case">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gaming-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gaming Systems:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workstationproductivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workstation/Productivity:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#low-end-systems-8gb-ram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Low-End Systems (&lt;8GB RAM):
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privacy-focused-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privacy-Focused Systems:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Important Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backup-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backup Recommendations:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compatibility:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reverting-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reverting Changes:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring Effects:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DRIVERS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drivers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ANTIVIRUS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Antivirus &amp; Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BROWSERS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Browsers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WINDOWS_UPDATE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Update
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WEBVIEW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WebView2 Info
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HARDWARE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTRA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extra Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ACTIVATORS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Activators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AUTOUNATTEND/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unattended Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appearance-tweaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appearance Tweaks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appearance Tweaks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-tweaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Tweaks:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Impact:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-priority-tweaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU Priority Tweaks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU Priority Tweaks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-tweaks_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Tweaks:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-mitigations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU Mitigations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU Mitigations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Tools:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-vs-performance-trade-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security vs Performance Trade-off:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-power-plans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU Power Plans
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU Power Plans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Files:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mem-reduct-ram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mem Reduct RAM
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mem Reduct RAM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-files_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Files:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#features_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimize-ssd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimize SSD
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optimize SSD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-files_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Files:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimizations-applied" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimizations Applied:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ram-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RAM Compression
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RAM Compression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-files_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Files:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services-tweaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Services Tweaks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Services Tweaks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-files_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Files:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#services-typically-affected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Services Typically Affected:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#telemetry-tweaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Telemetry Tweaks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Telemetry Tweaks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-files_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Files:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-collection-reduced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Collection Reduced:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privacy-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privacy Note:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apply-optimizations-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apply Optimizations Script
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Apply Optimizations Script">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-it-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What It Does:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safety-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Safety Features:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommendations-by-use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommendations by Use Case
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommendations by Use Case">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gaming-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gaming Systems:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workstationproductivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workstation/Productivity:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#low-end-systems-8gb-ram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Low-End Systems (&lt;8GB RAM):
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privacy-focused-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privacy-Focused Systems:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Important Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backup-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backup Recommendations:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compatibility:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reverting-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reverting Changes:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring Effects:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="windows-tweaks-and-optimizations">Windows Tweaks and Optimizations<a class="headerlink" href="#windows-tweaks-and-optimizations" title="Permanent link">¶</a></h1>
+<p>This document provides detailed information about the various system tweaks and optimizations available in the <code>Tweaks/</code> directory. Each tweak is designed to improve system performance, privacy, or usability on Windows 10/11 systems.</p>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">¶</a></h2>
+<ol>
+<li><a href="#appearance-tweaks">Appearance Tweaks</a></li>
+<li><a href="#cpu-priority-tweaks">CPU Priority Tweaks</a></li>
+<li><a href="#cpu-mitigations">CPU Mitigations</a></li>
+<li><a href="#cpu-power-plans">CPU Power Plans</a></li>
+<li><a href="#mem-reduct-ram">Mem Reduct RAM</a></li>
+<li><a href="#optimize-ssd">Optimize SSD</a></li>
+<li><a href="#ram-compression">RAM Compression</a></li>
+<li><a href="#services-tweaks">Services Tweaks</a></li>
+<li><a href="#telemetry-tweaks">Telemetry Tweaks</a></li>
+<li><a href="#apply-optimizations-script">Apply Optimizations Script</a></li>
+</ol>
+<h2 id="appearance-tweaks">Appearance Tweaks<a class="headerlink" href="#appearance-tweaks" title="Permanent link">¶</a></h2>
+<p>Located in: <code>Tweaks/Appearance/</code></p>
+<p>These registry files modify visual elements of Windows to improve performance or change the appearance:</p>
+<h3 id="available-tweaks">Available Tweaks:<a class="headerlink" href="#available-tweaks" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Disable Transparency.reg</strong> - Disables transparency effects in taskbar, start menu, and action center</li>
+<li><strong>Enable Transparency.reg</strong> - Re-enables transparency effects</li>
+<li><strong>Dark Theme.reg</strong> - Applies dark theme to Windows interface</li>
+<li><strong>Light Theme.reg</strong> - Applies light theme to Windows interface</li>
+<li><strong>Disable Action Center.reg</strong> - Disables the Windows Action Center</li>
+<li><strong>Enable Action Center.reg</strong> - Re-enables the Windows Action Center</li>
+<li><strong>Disable Cortana.reg</strong> - Disables Cortana digital assistant</li>
+<li><strong>Enable Cortana.reg</strong> - Re-enables Cortana digital assistant</li>
+</ul>
+<h3 id="performance-impact">Performance Impact:<a class="headerlink" href="#performance-impact" title="Permanent link">¶</a></h3>
+<p>Disabling transparency and visual effects can significantly improve performance on older or lower-end systems by reducing GPU and CPU usage.</p>
+<h2 id="cpu-priority-tweaks">CPU Priority Tweaks<a class="headerlink" href="#cpu-priority-tweaks" title="Permanent link">¶</a></h2>
+<p>Located in: <code>Tweaks/Recursos\CPU Priority\</code></p>
+<p>These registry files adjust process priority settings to favor either system responsiveness or gaming performance:</p>
+<h3 id="available-tweaks_1">Available Tweaks:<a class="headerlink" href="#available-tweaks_1" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Windows Priority.reg</strong> - Sets default Windows process priorities (balanced)</li>
+<li><strong>Games Priority.reg</strong> - Increases priority of gaming processes for better FPS</li>
+<li><strong>Revert Changes.reg</strong> - Restores default priority settings</li>
+</ul>
+<h3 id="how-it-works">How It Works:<a class="headerlink" href="#how-it-works" title="Permanent link">¶</a></h3>
+<p>Windows uses priority classes to determine how much CPU time a process gets relative to others. The gaming tweak increases the priority of foreground applications (typically games) to ensure they get more CPU resources.</p>
+<h2 id="cpu-mitigations">CPU Mitigations<a class="headerlink" href="#cpu-mitigations" title="Permanent link">¶</a></h2>
+<p>Located in: <code>Tweaks/Recursos\CPU Mitigations\</code></p>
+<p>These tools control hardware-level security mitigations for vulnerabilities like Spectre and Meltdown:</p>
+<h3 id="available-tools">Available Tools:<a class="headerlink" href="#available-tools" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>InSpectre.exe</strong> - Utility to enable/disable CPU mitigations with a GUI interface</li>
+</ul>
+<h3 id="security-vs-performance-trade-off">Security vs Performance Trade-off:<a class="headerlink" href="#security-vs-performance-trade-off" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Mitigations ON</strong>: Maximum security against CPU vulnerabilities but potential performance impact</li>
+<li><strong>Mitigations OFF</strong>: Better performance but increased vulnerability to certain CPU-based attacks</li>
+<li>Only disable mitigations if you understand the security risks and have other protections in place</li>
+</ul>
+<h2 id="cpu-power-plans">CPU Power Plans<a class="headerlink" href="#cpu-power-plans" title="Permanent link">¶</a></h2>
+<p>Located in: <code>Tweaks\Recursos\CPU Power Plan\</code></p>
+<p>These files define custom power plans for different usage scenarios:</p>
+<h3 id="available-files">Available Files:<a class="headerlink" href="#available-files" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>QuickCPU.pow</strong> - Exported power plan optimized for CPU performance</li>
+<li><strong>Aplicar.bat</strong> / <strong>Apply.bat</strong> - Batch files to apply the custom power plan</li>
+</ul>
+<h3 id="features">Features:<a class="headerlink" href="#features" title="Permanent link">¶</a></h3>
+<p>The QuickCPU power plan is configured to:
+- Keep CPU cores at higher frequencies longer
+- Reduce core parking aggressiveness
+- Optimize for responsiveness over power saving
+- Ideal for gaming, content creation, and other CPU-intensive tasks</p>
+<h2 id="mem-reduct-ram">Mem Reduct RAM<a class="headerlink" href="#mem-reduct-ram" title="Permanent link">¶</a></h2>
+<p>Located in: <code>Tweaks\Recursos\Mem Reduct RAM\</code></p>
+<p>This is a memory optimization utility that helps reduce RAM usage:</p>
+<h3 id="available-files_1">Available Files:<a class="headerlink" href="#available-files_1" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>memreduct.exe</strong> - Main application executable</li>
+<li><strong>memreduct.lng</strong> - Language file</li>
+<li><strong>memreduct.sig</strong> - Security signature</li>
+<li><strong>memreduct.ini</strong> - Configuration file</li>
+<li><strong>portable.dat</strong> - Indicates portable mode</li>
+<li><strong>memreduct-3.4-setup.exe</strong> - Installer version</li>
+</ul>
+<h3 id="features_1">Features:<a class="headerlink" href="#features_1" title="Permanent link">¶</a></h3>
+<p>MemReduce is a lightweight application that:
+- Cleans unused memory from the system
+- Can automatically optimize memory at set intervals
+- Shows real-time memory usage statistics
+- Works without installing drivers or services
+- Particularly useful on systems with limited RAM</p>
+<h2 id="optimize-ssd">Optimize SSD<a class="headerlink" href="#optimize-ssd" title="Permanent link">¶</a></h2>
+<p>Located in: <code>Tweaks\Recursos\Optimize SSD\</code></p>
+<p>These registry files optimize Windows for SSD storage devices:</p>
+<h3 id="available-files_2">Available Files:<a class="headerlink" href="#available-files_2" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Optimizar SSD.reg</strong> - Applies SSD optimizations</li>
+<li><strong>Revert Changes.reg</strong> - Restores default settings</li>
+</ul>
+<h3 id="optimizations-applied">Optimizations Applied:<a class="headerlink" href="#optimizations-applied" title="Permanent link">¶</a></h3>
+<ul>
+<li>Disables Superfetch/Prefetch (less beneficial on SSDs)</li>
+<li>Disables defragmentation scheduling (not needed for SSDs)</li>
+<li>Enables TRIM command support</li>
+<li>Adjusts write caching settings</li>
+<li>Reduces unnecessary write operations to extend SSD lifespan</li>
+</ul>
+<h2 id="ram-compression">RAM Compression<a class="headerlink" href="#ram-compression" title="Permanent link">¶</a></h2>
+<p>Located in: <code>Tweaks\Recursos\RAM Compression\</code></p>
+<p>These scripts control Windows memory compression feature:</p>
+<h3 id="available-files_3">Available Files:<a class="headerlink" href="#available-files_3" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Disable Compression.cmd</strong> - Disables memory compression</li>
+<li><strong>Revert Changes.bat</strong> - Re-enables memory compression</li>
+</ul>
+<h3 id="when-to-use">When to Use:<a class="headerlink" href="#when-to-use" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Disable</strong>: On systems with plenty of RAM where compression overhead isn't needed</li>
+<li><strong>Enable</strong>: On systems with limited RAM where compression helps prevent paging to disk</li>
+<li>Memory compression uses CPU to compress unused memory pages, trading CPU usage for reduced disk I/O</li>
+</ul>
+<h2 id="services-tweaks">Services Tweaks<a class="headerlink" href="#services-tweaks" title="Permanent link">¶</a></h2>
+<p>Located in: <code>Tweaks\Recursos\Services\</code></p>
+<p>These registry files optimize Windows services for better performance:</p>
+<h3 id="available-files_4">Available Files:<a class="headerlink" href="#available-files_4" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Optimize Services.reg</strong> - Applies service optimizations</li>
+<li><strong>Revert Changes.reg</strong> - Restores default service settings</li>
+</ul>
+<h3 id="services-typically-affected">Services Typically Affected:<a class="headerlink" href="#services-typically-affected" title="Permanent link">¶</a></h3>
+<ul>
+<li>Disables unnecessary background services</li>
+<li>Sets service startup types to Manual where appropriate</li>
+<li>Reduces background resource consumption</li>
+<li>Improves boot times and overall system responsiveness</li>
+</ul>
+<h2 id="telemetry-tweaks">Telemetry Tweaks<a class="headerlink" href="#telemetry-tweaks" title="Permanent link">¶</a></h2>
+<p>Located in: <code>Tweaks\Recursos\Telemetry\</code></p>
+<p>These registry files reduce or disable Windows telemetry and data collection:</p>
+<h3 id="available-files_5">Available Files:<a class="headerlink" href="#available-files_5" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Disable Telemetry.reg</strong> - Applies telemetry reduction settings</li>
+<li><strong>Revert Changes.reg</strong> - Restores default telemetry settings</li>
+</ul>
+<h3 id="data-collection-reduced">Data Collection Reduced:<a class="headerlink" href="#data-collection-reduced" title="Permanent link">¶</a></h3>
+<ul>
+<li>Diagnostic and usage data</li>
+<li>Telemetry reporting</li>
+<li>Personalized advertising</li>
+<li>Location tracking (where applicable)</li>
+<li>Voice and inking data</li>
+<li>Handwriting recognition improvements</li>
+</ul>
+<h3 id="privacy-note">Privacy Note:<a class="headerlink" href="#privacy-note" title="Permanent link">¶</a></h3>
+<p>While these tweaks reduce telemetry, some data collection may still occur for essential Windows functionality. For maximum privacy, consider using the unattended installation which includes more comprehensive telemetry disabling.</p>
+<h2 id="apply-optimizations-script">Apply Optimizations Script<a class="headerlink" href="#apply-optimizations-script" title="Permanent link">¶</a></h2>
+<p>Located at: <code>Tweaks\Apply Optimizations.bat</code></p>
+<p>This batch script applies a comprehensive set of recommended optimizations:</p>
+<h3 id="what-it-does">What It Does:<a class="headerlink" href="#what-it-does" title="Permanent link">¶</a></h3>
+<ol>
+<li>Applies appearance tweaks (disables transparency, animations)</li>
+<li>Applies CPU priority optimizations</li>
+<li>Applies service optimizations</li>
+<li>Applies SSD optimizations (if SSD detected)</li>
+<li>Applies telemetry reductions</li>
+<li>Applies visual effects optimizations for performance</li>
+<li>Sets power plan to high performance</li>
+</ol>
+<h3 id="usage">Usage:<a class="headerlink" href="#usage" title="Permanent link">¶</a></h3>
+<ol>
+<li>Right-click the file and select "Run as administrator"</li>
+<li>The script will apply tweaks and show progress</li>
+<li>A restart may be required for all changes to take effect</li>
+<li>To revert changes, manually apply the corresponding "Revert Changes" registry files</li>
+</ol>
+<h3 id="safety-features">Safety Features:<a class="headerlink" href="#safety-features" title="Permanent link">¶</a></h3>
+<ul>
+<li>Creates a system restore point before making changes (if system protection is enabled)</li>
+<li>Logs changes made for review</li>
+<li>Checks for SSD presence before applying SSD-specific tweaks</li>
+</ul>
+<h2 id="recommendations-by-use-case">Recommendations by Use Case<a class="headerlink" href="#recommendations-by-use-case" title="Permanent link">¶</a></h2>
+<h3 id="gaming-systems">Gaming Systems:<a class="headerlink" href="#gaming-systems" title="Permanent link">¶</a></h3>
+<ol>
+<li>Apply CPU Priority Games Priority.reg</li>
+<li>Apply QuickCPU power plan</li>
+<li>Disable transparency and visual effects</li>
+<li>Optimize SSD (if applicable)</li>
+<li>Consider disabling unnecessary services</li>
+<li>Keep RAM compression enabled unless you have 16GB+ RAM</li>
+</ol>
+<h3 id="workstationproductivity">Workstation/Productivity:<a class="headerlink" href="#workstationproductivity" title="Permanent link">¶</a></h3>
+<ol>
+<li>Apply Windows Priority (balanced) or slight performance tweak</li>
+<li>Apply SSD optimizations</li>
+<li>Keep visual effects if preferred (minor performance impact)</li>
+<li>Apply telemetry reductions for privacy</li>
+<li>Keep security mitigations enabled</li>
+</ol>
+<h3 id="low-end-systems-8gb-ram">Low-End Systems (&lt;8GB RAM):<a class="headerlink" href="#low-end-systems-8gb-ram" title="Permanent link">¶</a></h3>
+<ol>
+<li>Apply all appearance tweaks (disable transparency, animations)</li>
+<li>Apply service optimizations</li>
+<li>Apply telemetry reductions</li>
+<li>Consider disabling RAM compression if experiencing high CPU usage</li>
+<li>Keep page file managed by system</li>
+<li>Use MemReduce to actively manage memory usage</li>
+</ol>
+<h3 id="privacy-focused-systems">Privacy-Focused Systems:<a class="headerlink" href="#privacy-focused-systems" title="Permanent link">¶</a></h3>
+<ol>
+<li>Apply all telemetry tweaks</li>
+<li>Disable Cortana and data collection features</li>
+<li>Consider disabling Windows Update if not using Microsoft Store</li>
+<li>Use local account instead of Microsoft account</li>
+<li>Apply service optimizations to reduce background data transmission</li>
+<li>Consider using the unattended installation for maximum privacy</li>
+</ol>
+<h2 id="important-notes">Important Notes<a class="headerlink" href="#important-notes" title="Permanent link">¶</a></h2>
+<h3 id="backup-recommendations">Backup Recommendations:<a class="headerlink" href="#backup-recommendations" title="Permanent link">¶</a></h3>
+<ul>
+<li>Always create a system restore point before applying tweaks</li>
+<li>Backup important data before making system changes</li>
+<li>Some tweaks may affect specific software compatibility</li>
+</ul>
+<h3 id="compatibility">Compatibility:<a class="headerlink" href="#compatibility" title="Permanent link">¶</a></h3>
+<ul>
+<li>Tweaks are tested on Windows 10 version 1809 and later</li>
+<li>Tweaks are tested on Windows 11 version 21H2 and later</li>
+<li>Enterprise editions may have additional restrictions via group policy</li>
+</ul>
+<h3 id="reverting-changes">Reverting Changes:<a class="headerlink" href="#reverting-changes" title="Permanent link">¶</a></h3>
+<ul>
+<li>Each tweak folder includes a "Revert Changes" file</li>
+<li>The Apply Optimizations.bat script is not directly reversible - use individual revert files</li>
+<li>System restore point created by the script can be used to revert all changes</li>
+</ul>
+<h3 id="monitoring-effects">Monitoring Effects:<a class="headerlink" href="#monitoring-effects" title="Permanent link">¶</a></h3>
+<ul>
+<li>Use Task Manager to monitor CPU, memory, and disk usage before and after</li>
+<li>Use Resource Monitor for detailed service and process analysis</li>
+<li>Benchmark gaming performance with tools like 3DMark or FPS counters in games</li>
+</ul>
+<hr>
+<p><em>For questions or suggestions, please open an issue in the repository.</em>
+<em>Last updated: May 2026</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
