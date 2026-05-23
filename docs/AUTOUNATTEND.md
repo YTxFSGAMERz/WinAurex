@@ -47,4 +47,4 @@ The installation automatically removes a wide range of pre-installed Windows app
 4. **Automated Setup**: Windows Setup will read the file and automate the installation process according to the pre-defined settings.
 
 ## Important Note
-This installation is highly customized for performance and privacy. It disables many security features by default. Ensure you understand the implications and have reviewed the [ANTIVIRUS.md](ANTIVIRUS.md) guide for alternative security measures.
+This installation is highly customized for performance and privacy. It disables many security features by default. Ensure you understand the implications and have reviewed the [Antivirus Guide](ANTIVIRUS.md) guide for alternative security measures.

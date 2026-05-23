@@ -1,0 +1,68 @@
+site_name: Windows Optimisations
+site_description: Comprehensive collection of scripts and tools to optimize Windows 10/11 for peak performance, gaming, and privacy.
+repo_url: https://github.com/YTxFSGAMERz/Windows-Optimisations
+repo_name: Windows-Optimisations
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search
+  - mermaid2
+  - glightbox
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Home: index.md
+  - System Tweaks: TWEAKS.md
+  - Drivers: DRIVERS.md
+  - Antivirus & Security: ANTIVIRUS.md
+  - Web Browsers: BROWSERS.md
+  - Windows Update: WINDOWS_UPDATE.md
+  - WebView2 Info: WEBVIEW.md
+  - Hardware Monitoring: HARDWARE.md
+  - Extra Utilities: EXTRA.md
+  - Activators: ACTIVATORS.md
+  - Unattended Install: AUTOUNATTEND.md

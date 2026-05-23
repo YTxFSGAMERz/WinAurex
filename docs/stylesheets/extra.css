@@ -1,0 +1,46 @@
+/* Premium Glassmorphism & Terminal Aesthetics */
+:root {
+    --md-primary-fg-color: #00bcd4;
+    --md-primary-fg-color--light: #62efff;
+    --md-primary-fg-color--dark: #008ba3;
+    --md-accent-fg-color: #ff4081;
+}
+
+/* Glassmorphism for Navigation Tabs */
+.md-tabs {
+    background-color: rgba(0, 188, 212, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Terminal Aesthetic for Code Blocks */
+.md-typeset pre > code {
+    background-color: #1e1e1e;
+    color: #dcdcdc;
+    border-radius: 8px;
+    padding: 1em;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid #333;
+}
+
+/* Animated Buttons */
+.md-button {
+    transition: all 0.3s ease;
+    border-radius: 20px;
+}
+
+.md-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 188, 212, 0.4);
+}
+
+/* Enhanced Admonitions */
+.md-typeset .admonition {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}

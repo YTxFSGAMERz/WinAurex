@@ -1,8 +1,45 @@
-# Windows Optimisations Repository
+# Windows Optimisations
 
-This repository contains a collection of tools, scripts, and configurations designed to optimize Windows 10/11 systems for better performance, privacy, and usability. It includes various utilities, registry tweaks, batch scripts, and an unattended Windows installation configuration.
+<p align="center">
+  <img src="https://img.shields.io/github/stars/YTxFSGAMERz/Windows-Optimisations?style=for-the-badge&color=00bcd4&logo=github" alt="Stars">
+  <img src="https://img.shields.io/github/forks/YTxFSGAMERz/Windows-Optimisations?style=for-the-badge&color=00bcd4&logo=github" alt="Forks">
+  <img src="https://img.shields.io/github/license/YTxFSGAMERz/Windows-Optimisations?style=for-the-badge&color=00bcd4" alt="License">
+</p>
 
-## Repository Structure
+!!! info "Ultimate Windows Performance & Privacy Suite"
+    This repository is a curated collection of high-performance scripts, registry tweaks, and essential tools designed to transform your Windows 10/11 experience. Whether you're a gamer seeking maximum FPS or a power user prioritizing privacy, this suite provides the tools you need.
+
+## 🚀 Key Features
+
+<div class="grid cards" markdown>
+
+-   :material-rocket-launch:{ .lg .middle } __Performance First__
+
+    ---
+
+    Registry tweaks for CPU priority, SSD optimization, and custom power plans.
+
+-   :material-shield-lock:{ .lg .middle } __Privacy Focused__
+
+    ---
+
+    Comprehensive telemetry disabling and deep bloatware removal.
+
+-   :material-auto-fix:{ .lg .middle } __Automated Setup__
+
+    ---
+
+    Unattended installation configs that bypass TPM/RAM checks automatically.
+
+-   :material-tools:{ .lg .middle } __Curated Toolset__
+
+    ---
+
+    Hand-picked utilities for hardware monitoring, drivers, and system management.
+
+</div>
+
+## 📂 Repository Structure
 
 ```
 Windows-Optimisations/
@@ -117,16 +154,16 @@ Collection of useful tools including:
 
 For more in-depth information on specific components of this repository, please refer to the following guides:
 
-- [**System Tweaks & Optimizations**](docs/TWEAKS.md) - Detailed breakdown of registry tweaks and performance scripts.
-- [**Driver Management**](docs/DRIVERS.md) - Guide on installing and updating essential hardware drivers.
-- [**Antivirus & Security**](docs/ANTIVIRUS.md) - Recommendations for lightweight security and online scanners.
-- [**Web Browsers**](docs/BROWSERS.md) - Performance-based browser comparisons and installers.
-- [**Windows Update Management**](docs/WINDOWS_UPDATE.md) - How to manage updates and their impact on features like the Microsoft Store.
-- [**WebView2 Information**](docs/WEBVIEW.md) - Understanding the resource impact of the WebView2 component.
-- [**Hardware Monitoring**](docs/HARDWARE.md) - Tools for monitoring temperatures, voltages, and specifications.
-- [**Extra Utilities**](docs/EXTRA.md) - A collection of additional tools for system management and customization.
-- [**Windows Activators**](docs/ACTIVATORS.md) - Tools for Windows and Office activation.
-- [**Unattended Installation**](docs/AUTOUNATTEND.md) - Features and usage of the automated Windows 11 installation script.
+- [**System Tweaks & Optimizations**](TWEAKS.md) - Detailed breakdown of registry tweaks and performance scripts.
+- [**Driver Management**](DRIVERS.md) - Guide on installing and updating essential hardware drivers.
+- [**Antivirus & Security**](ANTIVIRUS.md) - Recommendations for lightweight security and online scanners.
+- [**Web Browsers**](BROWSERS.md) - Performance-based browser comparisons and installers.
+- [**Windows Update Management**](WINDOWS_UPDATE.md) - How to manage updates and their impact on features like the Microsoft Store.
+- [**WebView2 Information**](WEBVIEW.md) - Understanding the resource impact of the WebView2 component.
+- [**Hardware Monitoring**](HARDWARE.md) - Tools for monitoring temperatures, voltages, and specifications.
+- [**Extra Utilities**](EXTRA.md) - A collection of additional tools for system management and customization.
+- [**Windows Activators**](ACTIVATORS.md) - Tools for Windows and Office activation.
+- [**Unattended Installation**](AUTOUNATTEND.md) - Features and usage of the automated Windows 11 installation script.
 
 ## Usage Instructions
 
