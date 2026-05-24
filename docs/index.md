@@ -46,6 +46,7 @@
 
     - **Find me on GitHub:** [@YTxFSGAMERz](https://github.com/YTxFSGAMERz)
     - **Community & Support:** [Telegram Channel](https://t.me/YTxFSGAMERz)
+    - **Direct Contact:** [WhatsApp (+91 7778906798)](https://wa.me/917778906798)
 
 ## 📂 Repository Structure
 
