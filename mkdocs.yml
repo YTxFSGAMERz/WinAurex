@@ -29,10 +29,23 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
+site_url: https://ytxfsgamerz.github.io/Windows-Optimisations/
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/YTxFSGAMERz
+    - icon: fontawesome/solid/paper-plane
+      link: https://t.me/YTxFSGAMERz
+
 plugins:
   - search
   - mermaid2
   - glightbox
+  - social:
+      cards_layout_options:
+        background_color: "#1e1e1e"
+        color: "#00bcd4"
 
 markdown_extensions:
   - admonition

@@ -39,6 +39,14 @@
 
 </div>
 
+## 👑 About the Author
+
+!!! abstract "Farhan | Windows Optimization Expert"
+    Hello! I'm **Farhan**, the creator and maintainer of this optimization suite. My goal is to bridge the gap between hardware limitations and software demands, ensuring everyone can enjoy a smooth, private, and high-performance computing experience.
+
+    - **Find me on GitHub:** [@YTxFSGAMERz](https://github.com/YTxFSGAMERz)
+    - **Community & Support:** [Telegram Channel](https://t.me/YTxFSGAMERz)
+
 ## 📂 Repository Structure
 
 ```
