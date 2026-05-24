@@ -197,3 +197,5 @@ Feel free to suggest additional tools, scripts, or optimizations that could bene
 
 *Last updated: May 2026*
 *For Windows 10/11 optimization and customization*
+---
+<p align="center" style="font-style: italic; color: #888;">~ Made By Farhan</p>
