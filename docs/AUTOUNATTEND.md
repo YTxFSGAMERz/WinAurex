@@ -1,50 +1,84 @@
-# Unattended Windows Installation Guide
+# 💿 Unattended Windows Installation Guide
 
-The `autounattend.xml` file in this repository provides a highly optimized, automated installation for Windows 11 Pro.
+The `autounattend.xml` file located in the root of this repository is a highly optimized configuration script designed to automate the installation of **Windows 11 Pro** (and Windows 10 Pro) from scratch, creating a streamlined, high-performance, and debloated baseline immediately upon first boot.
 
-## Key Features
+---
 
-### 1. Hardware Requirement Bypasses
-- **TPM Check**: Bypassed
-- **Secure Boot Check**: Bypassed
-- **RAM Check**: Bypassed
-- Allows installation on older or "unsupported" hardware.
+## ⚡ Core Automation Features
 
-### 2. System Optimizations during Setup
-- **Windows Defender**: Automatically disabled via registry modification during the installation process.
-- **UAC (User Account Control)**: Disabled for a less intrusive experience.
-- **SmartScreen**: Disabled.
-- **System Restore**: Disabled to save disk space and performance.
-- **Fast Startup**: Disabled (often recommended for SSDs to prevent hibernation-related issues).
-- **Core Isolation**: Disabled for better performance.
+### 1. Hardware Restriction Bypasses
+Windows 11 has strict installation blocks for older processors or systems without modern hardware modules. This configuration automatically bypasses these checks:
+*   **TPM 2.0 Check**: Bypassed (Bypasses `TPMCheck`).
+*   **Secure Boot Check**: Bypassed (Bypasses `SecureBootCheck`).
+*   **RAM Capacity Check**: Bypassed (Allows installation on systems with less than 4GB of RAM).
+*   **Storage Capacity Check**: Bypassed.
 
-### 3. User Interface & Experience
-- **Classic Context Menu**: Re-enables the classic right-click menu in Windows 11.
-- **Taskbar Customization**:
-  - Bing search results disabled.
-  - Widgets disabled.
-  - Left-aligned taskbar (classic style).
-- **Desktop Icons**: Essential icons like "This PC", "Control Panel", and "Network" are enabled by default.
-- **Start Menu**: Pre-configured to be cleaner, with many "bloat" apps removed.
+### 2. Automatic System Tweaks during Setup
+The XML applies the following modifications directly into the registry during the OS installation process:
+*   **Windows Defender**: Disabled system-wide via registry overrides.
+*   **User Account Control (UAC)**: Adjusted to the lowest level to prevent intrusive authorization popups.
+*   **SmartScreen & Core Isolation**: Disabled to reduce real-time virtualization overhead.
+*   **System Restore**: Disabled to conserve disk space and write cycles.
+*   **Fast Startup**: Disabled to prevent persistent hibernation-related write bottlenecks.
 
-### 4. Bloatware Removal
-The installation automatically removes a wide range of pre-installed Windows applications, including:
-- 3D Viewer, Bing Search, Calculator, Camera, Clipchamp, Clock.
-- Copilot, Cortana, Family, Feedback Hub, Get Help.
-- Microsoft News, Solitaire, People, Photos, Power Automate.
-- Weather, Xbox-related apps (some), and more.
+### 3. Desktop Experience & Custom Interface
+*   **Classic Context Menu**: Re-enables the classic right-click context menu (Windows 10 style) on Windows 11 by default.
+*   **Taskbar Alignment**: Left-aligned taskbar elements out-of-the-box.
+*   **Taskbar Cleanups**: Bing search results, widgets, and task view buttons are hidden.
+*   **Desktop Icons**: Restores classic system icons ("This PC", "Control Panel", "Network", "User Profile") directly to the desktop on first boot.
 
-### 5. Account Configuration
-- **User Account**: Creates a local account named "Admin".
-- **Auto-Login**: Configured to log in automatically to the Admin account.
-- **Password**: No password set by default (Unlimited expiration).
+### 4. Deep System Debloating
+The setup executes silent scripts to uninstall pre-loaded UWP applications, preventing them from consuming CPU and disk storage:
+*   *Apps removed*: 3D Viewer, Weather, Solitaire Collection, Bing Search, Camera, Clipchamp, Alarms/Clock, Copilot, Cortana, Family Safety, Feedback Hub, Get Help, MSN News, Microsoft Photos, Power Automate, and various Xbox-related background integrations.
 
-## How to Use
+### 5. Automated Local Account Provisioning
+*   **Account Name**: Creates a local offline user profile named `Admin`.
+*   **Auto-Login**: Configured to log in automatically to the desktop without prompts.
+*   **Password**: No password is set, and the password expiration policy is set to "Never Expire".
 
-1. **Prepare Installation Media**: Create a bootable Windows 11 USB drive (using a tool like Rufus, included in `Extra/`).
-2. **Add the XML**: Copy the `autounattend.xml` file to the root of your bootable USB drive.
-3. **Boot from USB**: Start your computer from the USB drive.
-4. **Automated Setup**: Windows Setup will read the file and automate the installation process according to the pre-defined settings.
+---
 
-## Important Note
-This installation is highly customized for performance and privacy. It disables many security features by default. Ensure you understand the implications and have reviewed the [Antivirus Guide](ANTIVIRUS.md) guide for alternative security measures.
+## 🛠️ Step-by-Step Installation Guide
+
+To perform an automated, debloated installation using `autounattend.xml`, follow these steps:
+
+### Phase 1: Prepare the Installation Media
+1.  **Download Windows ISO**: Download the official Windows 11 (or Windows 10) ISO directly from Microsoft's website.
+2.  **Launch Rufus**: Open the **Rufus** utility (`Extra/rufus-3.22p.exe`) in this repository.
+3.  **Configure Rufus**:
+    *   **Device**: Select your USB drive (minimum 8GB capacity).
+    *   **Boot Selection**: Choose **Disk or ISO image** and click **SELECT** to load your downloaded Windows ISO.
+    *   **Partition Scheme**: Select **GPT** (for UEFI systems) or **MBR** (for legacy BIOS systems).
+    *   **Target System**: Select **UEFI (non CSM)**.
+4.  **Create the Installer**: Click **START**. A popup will appear. Ensure the standard Rufus hardware bypass options are unchecked (since our `autounattend.xml` already handles these and custom debloating much more aggressively). Click **OK** and wait for Rufus to complete writing.
+
+### Phase 2: Apply the Automation XML
+1.  Navigate to the root directory of this repository and copy the `autounattend.xml` file.
+2.  Open your written bootable USB drive in File Explorer.
+3.  **Paste at Root**: Paste `autounattend.xml` directly into the **root** folder of your USB drive (alongside `setup.exe` and the `sources/` folder).
+    *   *Do NOT place it in any subfolders.*
+
+```
+Your USB Drive (D:\ or E:\)
+├── sources/
+├── support/
+├── efi/
+├── autounattend.xml    <-- MUST BE PLACED HERE!
+├── bootmgr
+└── setup.exe
+```
+
+### Phase 3: Perform the Installation
+1.  Insert the prepared USB drive into the target computer.
+2.  Turn on the PC and access the **Boot Menu** (typically via `F12`, `F11`, `F8`, or `F2` depending on the motherboard).
+3.  Select your USB drive to boot.
+4.  **Hands-Off Setup**: Once the installer boots, it will read `autounattend.xml`. The partitioning, license agreement, edition selection, and account setup steps are automated. The computer will reboot several times and drop you directly onto a fully-configured, debloated desktop logged in as `Admin`.
+
+---
+
+## ⚠️ Essential Warning
+
+> [!CAUTION]
+> This unattended setup applies extremely aggressive modifications. It completely disables Windows Defender, SmartScreen, and System Restore, and debloats many Microsoft systems. 
+> 
+> *Do NOT use this XML on high-security enterprise workstations, database servers, or systems containing sensitive financial datasets without implementing alternative protection strategies.*
