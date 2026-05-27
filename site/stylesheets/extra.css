@@ -1,10 +1,10 @@
 /* Premium Glassmorphic & Terminal Optimization Aesthetics */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root {
   /* Dynamic Palette */
-  --md-text-font: 'Outfit', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  --md-text-font: 'Inter', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
   --md-code-font: 'JetBrains Mono', SFMono-Regular, Consolas, Menlo, monospace;
   
   --primary-glow: rgba(0, 188, 212, 0.15);
@@ -256,8 +256,8 @@ html {
 @media screen and (max-width: 48rem) {
   /* Optimize main headings to prevent ugly text wrapping */
   .md-typeset h1 {
-    font-size: 1.7rem !important;
-    line-height: 1.35 !important;
+    font-size: 1.45rem !important;
+    line-height: 1.3 !important;
     letter-spacing: -0.5px !important;
   }
   
