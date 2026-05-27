@@ -1,0 +1,24 @@
+# Netlify Configuration for Windows Optimisations Documentation
+
+[build]
+  publish = "site"
+  command = "pip install -r requirements.txt && mkdocs build"
+
+[build.environment]
+  PYTHON_VERSION = "3.11"
+
+# Custom headers for premium caching and security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "no-referrer-when-downgrade"
+    Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: https:; font-src 'self' data: https:;"
+
+# Redirect rules (if any legacy docs pages were moved)
+[[redirects]]
+  from = "/TWEAKS"
+  to = "/TWEAKS/"
+  status = 301
