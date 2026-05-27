@@ -13,7 +13,7 @@
 
 ## 🚀 Key Optimization Areas
 
-<div class="grid cards" markdown>
+<div class="grid cards" markdown="1">
 
 -   :material-rocket-launch:{ .lg .middle } **Performance First**
 
@@ -49,7 +49,7 @@
     Hi! I'm **Farhan**, the designer and maintainer of this optimization catalog. My passion is to streamline Windows performance and eliminate background bloat, enabling high-responsiveness computing even on legacy hardware configurations.
     
     - :octicons-mark-github-16: **GitHub Profile:** [@YTxFSGAMERz](https://github.com/YTxFSGAMERz)
-    - :material-paper-plane: **Telegram Channel:** [Telegram News Feed](https://t.me/YTxFSGAMERz)
+    - :fontawesome-brands-telegram: **Telegram Channel:** [Telegram News Feed](https://t.me/YTxFSGAMERz)
     - :material-whatsapp: **WhatsApp Direct:** [WhatsApp Channel Support (+91 7778906798)](https://wa.me/917778906798)
 
 ---
