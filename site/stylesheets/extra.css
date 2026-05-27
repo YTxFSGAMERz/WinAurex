@@ -177,12 +177,22 @@ body {
   color: var(--md-primary-fg-color) !important;
   backdrop-filter: blur(8px);
   border-radius: 50% !important;
-  transition: all 0.3s ease !important;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
 }
 
 .md-top:hover {
-  transform: scale(1.1);
+  background-color: var(--md-primary-fg-color) !important;
+  color: #ffffff !important;
+  border-color: var(--md-primary-fg-color) !important;
   box-shadow: 0 0 15px rgba(0, 188, 212, 0.4);
+}
+
+.md-top svg {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.md-top:hover svg {
+  transform: scale(1.15);
 }
 
 /* Modern tables styling */
