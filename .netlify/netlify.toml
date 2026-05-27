@@ -1,0 +1,50 @@
+headersOrigin = "config"
+redirectsOrigin = "config"
+plugins = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "C:\\Users\\Admin\\Documents\\GitHub\\Windows-Optimisations\\site"
+publishOrigin = "config"
+commandOrigin = "config"
+command = "pip install -r requirements.txt && mkdocs build"
+
+[build.environment]
+PYTHON_VERSION = "3.11"
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+X-XSS-Protection = "1; mode=block"
+Referrer-Policy = "no-referrer-when-downgrade"
+Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: https:; font-src 'self' data: https:;"
+
+[[redirects]]
+from = "/TWEAKS"
+to = "/TWEAKS/"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
