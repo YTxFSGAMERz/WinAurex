@@ -1,4 +1,4 @@
-# Windows Optimisations
+# ⚡ Windows Optimisations Documentation ⚡
 
 <p align="center">
   <img src="https://img.shields.io/github/stars/YTxFSGAMERz/Windows-Optimisations?style=for-the-badge&color=00bcd4&logo=github" alt="Stars">
@@ -6,240 +6,115 @@
   <img src="https://img.shields.io/github/license/YTxFSGAMERz/Windows-Optimisations?style=for-the-badge&color=00bcd4" alt="License">
 </p>
 
-!!! info "Ultimate Windows Performance & Privacy Suite"
-    This repository is a curated collection of high-performance scripts, registry tweaks, and essential tools designed to transform your Windows 10/11 experience. Whether you're a gamer seeking maximum FPS or a power user prioritizing privacy, this suite provides the tools you need.
-
-## 🚀 Key Features
-
-<div class="grid cards" markdown>
-
--   :material-rocket-launch:{ .lg .middle } __Performance First__
-
-    ---
-
-    Registry tweaks for CPU priority, SSD optimization, and custom power plans.
-
--   :material-shield-lock:{ .lg .middle } __Privacy Focused__
-
-    ---
-
-    Comprehensive telemetry disabling and deep bloatware removal.
-
--   :material-auto-fix:{ .lg .middle } __Automated Setup__
-
-    ---
-
-    Unattended installation configs that bypass TPM/RAM checks automatically.
-
--   :material-tools:{ .lg .middle } __Curated Toolset__
-
-    ---
-
-    Hand-picked utilities for hardware monitoring, drivers, and system management.
-
-</div>
-
-## 👑 About the Author
-
-!!! abstract "Farhan | Windows Optimization Expert"
-    Hello! I'm **Farhan**, the creator and maintainer of this optimization suite. My goal is to bridge the gap between hardware limitations and software demands, ensuring everyone can enjoy a smooth, private, and high-performance computing experience.
-
-    - **Find me on GitHub:** [@YTxFSGAMERz](https://github.com/YTxFSGAMERz)
-    - **Community & Support:** [Telegram Channel](https://t.me/YTxFSGAMERz)
-    - **Direct Contact:** [WhatsApp (+91 7778906798)](https://wa.me/917778906798)
-
-## 📂 Repository Structure
-
-```
-Windows-Optimisations/
-├── Activators/                 # Windows activation tools
-│   └── Windows Activators/
-│       ├── AAct_x64.exe       # KMS activator for Windows/Office
-│       └── MassGrave.cmd      # Alternative activation script
-├── Antivirus/                  # Antivirus tools and recommendations
-│   ├── eset_internet_security_live_installer.exe
-│   ├── Kaspersky.exe
-│   ├── MBSetup.exe            # MalwareBytes setup
-│   └── HELP.txt               # Antivirus recommendations
-├── Browsers/                   # Popular web browsers installers
-│   ├── BraveBrowserSetup-BRV010.exe
-│   ├── ChromeSetup.exe
-│   ├── Firefox Installer.exe
-│   ├── OperaGXSetup.exe
-│   ├── OperaSetup.exe
-│   ├── Internet Explorer 11.bat # IE11 installation script
-│   └── RECOMMENDATIONS.txt    # Browser recommendations
-├── Drivers/                    # Driver installation and management tools
-│   ├── 3DP Chip.exe           # Driver detection utility
-│   ├── Driver Booster.exe     # Driver updater
-│   ├── driveridentifier_setup.exe # Driver identifier tool
-│   └── RECOMMENDATION.txt     # Driver recommendations
-├── Extra/                      # Additional useful utilities
-│   ├── 7z2501-x64.exe         # File archiver
-│   ├── 7z2501.exe
-│   ├── AnyDesk.exe            # Remote desktop tool
-│   ├── CRU.exe                # Custom Resolution Utility
-│   ├── Everything-1.4.1.1024.x86-Setup.exe # File search utility
-│   ├── IObit Unlocker/        # File unlocker tool
-│   ├── Lightshot.exe          # Screenshot tool
-│   ├── memreduct-3.4-setup.exe # RAM optimization tool
-│   ├── serv iwin.exe          # Service manager
-│   ├── SteamSetup.exe         # Steam installer
-│   ├── TCPOptimizer.exe       # TCP/IP settings optimizer
-│   ├── uwd.exe                # Unknown utility
-│   ├── winrar-x64-623.exe     # File archiver
-│   └── Winaero Tweaker.exe    # Windows customization tool
-├── Hardware/                   # Hardware monitoring and information tools
-│   ├── CPU-Z.exe              # CPU information utility
-│   ├── GPU-Z.exe              # GPU information utility
-│   └── HW-Monitor.exe         # Hardware monitoring tool
-├── Tweaks/                     # System tweaks and optimizations
-│   ├── Apply Optimizations.bat # Main optimization script
-│   ├── Recursos/
-│   │   ├── CPU Priority/      # CPU priority adjustment registry files
-│   │   ├── CPU Mitigations/   # Spectre/Meltdown mitigation toggles
-│   │   │   └── InSpectre.exe  # Mitigation control utility
-│   │   ├── CPU Power Plan/    # Custom power plans
-│   │   ├── Mem Reduct RAM/    # Memory reduction tool
-│   │   ├── Optimize SSD/      # SSD optimization registry tweaks
-│   │   ├── RAM Compression/   # RAM compression/scripts
-│   │   ├── Services/          # Service optimization registry files
-│   │   ├── Telemetry/         # Windows telemetry disabling
-│   │   └── Appearance/        # Visual/theme tweaks
-│   └── Resources/             # Duplicate of Recursos (likely symlink)
-├── Windows Update/             # Windows Update control scripts
-│   ├── Enable Windows Update.bat
-│   ├── Disable Windows Update.bat
-│   └── RECOMMENDATIONS.txt
-├── WebView - IMPORTANT/        # Information about WebView component
-│   └── DATA AND PURPOSE.txt
-├── autounattend.xml            # Unattended Windows 11 installation configuration
-├── README AND PROBLEMS.txt     # Basic usage instructions
-└── .gitattributes              # Git LFS configuration for large files
-```
-
-## Key Components
-
-### 1. System Optimization Tweaks
-The `Tweaks/` directory contains various registry files and scripts to:
-- Disable Windows telemetry and data collection
-- Optimize visual effects for performance
-- Adjust CPU priority settings for games and applications
-- Disable unnecessary Windows services
-- Optimize SSD performance
-- Manage RAM compression
-- Customize power plans
-
-### 2. Driver Management
-The `Drivers/` directory includes tools to:
-- Detect outdated or missing drivers (Driver Identifier, 3DP Chip)
-- Automatically update drivers (Driver Booster)
-- Recommend essential drivers for optimal hardware performance
-
-### 3. Privacy and Security Tools
-- Antivirus recommendations focusing on lightweight, effective solutions
-- Scripts to disable Windows Defender (for low-end systems)
-- Tools to remove bloatware and telemetry
-- Recommendations for privacy-focused browsing
-
-### 4. Unattended Windows Installation
-The `autounattend.xml` file provides a completely automated Windows 11 Pro installation with:
-- Pre-configured settings to bypass TPM/Secure Boot/RAM checks
-- Built-in scripts to remove bloatware apps and features
-- Registry tweaks for performance and privacy
-- Custom user configuration (Auto-login for Admin account)
-- Disabled Windows Defender, telemetry, and data collection
-
-### 5. Essential Utilities
-Collection of useful tools including:
-- File archivers (7-Zip, WinRAR)
-- System monitoring (CPU-Z, GPU-Z, HW-Monitor)
-- Remote desktop (AnyDesk)
-- Screenshot tools (Lightshot)
-- File search (Everything)
-- Registry and system tweakers (Winaero Tweaker)
-
-## Detailed Documentation
-
-For more in-depth information on specific components of this repository, please refer to the following guides:
-
-- [**System Tweaks & Optimizations**](TWEAKS.md) - Detailed breakdown of registry tweaks and performance scripts.
-- [**Driver Management**](DRIVERS.md) - Guide on installing and updating essential hardware drivers.
-- [**Antivirus & Security**](ANTIVIRUS.md) - Recommendations for lightweight security and online scanners.
-- [**Web Browsers**](BROWSERS.md) - Performance-based browser comparisons and installers.
-- [**Windows Update Management**](WINDOWS_UPDATE.md) - How to manage updates and their impact on features like the Microsoft Store.
-- [**WebView2 Information**](WEBVIEW.md) - Understanding the resource impact of the WebView2 component.
-- [**Hardware Monitoring**](HARDWARE.md) - Tools for monitoring temperatures, voltages, and specifications.
-- [**Extra Utilities**](EXTRA.md) - A collection of additional tools for system management and customization.
-- [**Windows Activators**](ACTIVATORS.md) - Tools for Windows and Office activation.
-- [**Unattended Installation**](AUTOUNATTEND.md) - Features and usage of the automated Windows 11 installation script.
-
-## Usage Instructions
-
-### Basic Optimization
-1. Run `Tweaks\Apply Optimizations.bat` as administrator to apply recommended system tweaks
-2. Use tools from `Drivers\` to ensure all hardware has optimal drivers
-3. Install preferred browsers from `Browsers\`
-4. Install useful utilities from `Extra\` as needed
-
-### Privacy-Focused Setup
-1. Apply telemetry disabling tweaks from `Tweaks\Recursos\Telemetry\`
-2. Consider disabling Windows Update if not using Microsoft Store (see `WebView - IMPORTANT\DATA AND PURPOSE.txt`)
-3. Use recommended antivirus alternatives or online scanners (VirusTotal, tria.ge)
-4. Disable unnecessary Windows features and apps using provided scripts
-
-### Performance Optimization
-1. Apply CPU priority tweaks for gaming/workloads from `Tweaks\Recursos\CPU Priority\`
-2. Optimize power plans from `Tweaks\Recursos\CPU Power Plan\`
-3. Apply SSD optimizations from `Tweaks\Recursos\Optimize SSD\`
-4. Manage RAM usage with tools from `Tweaks\Recursos\Mem Reduct RAM\` and `Tweaks\Recursos\RAM Compression\`
-
-### Clean Installation
-For a completely fresh, optimized Windows installation:
-1. Use the `autounattend.xml` file with Windows Setup
-2. This will create a system with:
-   - Admin account with auto-login
-   - Pre-applied performance and privacy tweaks
-   - Removed bloatware apps and features
-   - Disabled telemetry and data collection
-   - Optimized visual effects and services
-
-## Important Notes
-
-### Antivirus Recommendations
-As noted in multiple files in this repository:
-- Traditional antivirus may not be necessary for careful users
-- Recommended alternatives: MalwareBytes, NOD32 (ESET), Kaspersky
-- Avoid: AVG, Avast, Avira (considered ineffective or potentially harmful)
-- Use online scanners like VirusTotal or tria.ge for file analysis
-
-### Windows Update and Microsoft Store
-- Disabling Windows Update may break Microsoft Store functionality
-- If you need Store apps, keep Windows Update enabled
-- See `WebView - IMPORTANT\DATA AND PURPOSE.txt` for more details
-
-### Driver Installation
-- Always create a system restore point before installing new drivers
-- Driver Booster from the `Drivers\` folder is recommended for automatic updates
-- Video drivers are particularly important for gaming and visual performance
-
-### Safety Precautions
-- Backup important data before applying system tweaks
-- Some optimizations may affect system stability on certain hardware configurations
-- Test changes incrementally to isolate any issues
-- The unattended installation includes aggressive tweaks that may not suit all users
-
-## Legal and Ethical Notice
-This repository contains tools for system optimization and customization. Users are responsible for:
-- Ensuring they have rights to use any activated software
-- Following local laws and regulations regarding software usage
-- Creating backups before making system changes
-- Understanding that some modifications may void warranties or support agreements
-
-## Contributing
-Feel free to suggest additional tools, scripts, or optimizations that could benefit Windows users looking to improve their system performance, privacy, or usability.
+!!! info "Ultimate Windows Performance, Debloating, and Privacy Suite"
+    Welcome to the official documentation site for the **Windows Optimisations** repository. This suite provides a curated, high-performance ecosystem of registry tweaks, automated installation files (`autounattend.xml`), toggle scripts, and utility configurations. Whether you want to boost gaming FPS, debloat background processes, or regain complete privacy on Windows 10/11, you'll find comprehensive step-by-step guides here.
 
 ---
 
+## 🚀 Key Optimization Areas
+
+<div class="grid cards" markdown>
+
+-   :material-rocket-launch:{ .lg .middle } **Performance First**
+    
+    ---
+    Registry tweaks for thread priority alignment, SSD alignments, network routing, and custom power plans (`QuickCPU`).
+
+-   :material-shield-lock:{ .lg .middle } **Privacy & Telemetry**
+    
+    ---
+    Broad-spectrum telemetry disablement, background app execution filters, and Edge telemetry cleanups.
+
+-   :material-auto-fix:{ .lg .middle } **Automated OS Setup**
+    
+    ---
+    `autounattend.xml` automation templates that bypass TPM, Secure Boot, and RAM restrictions automatically.
+
+-   :material-toolbox:{ .lg .middle } **Curated Toolset**
+    
+    ---
+    Hand-picked utilities for latency optimization (MSI Utility), custom resolutions (CRU), and hardware temperature tracking.
+
+</div>
+
+---
+
+## 👑 About the Author
+
+!!! abstract "Farhan | Windows Optimization Specialist"
+    Hi! I'm **Farhan**, the designer and maintainer of this optimization catalog. My passion is to streamline Windows performance and eliminate background bloat, enabling high-responsiveness computing even on legacy hardware configurations.
+    
+    - :octicons-mark-github-16: **GitHub Profile:** [@YTxFSGAMERz](https://github.com/YTxFSGAMERz)
+    - :material-paper-plane: **Telegram Channel:** [Telegram News Feed](https://t.me/YTxFSGAMERz)
+    - :material-whatsapp: **WhatsApp Direct:** [WhatsApp Channel Support (+91 7778906798)](https://wa.me/917778906798)
+
+---
+
+## 📂 Repository Layout
+
+```
+Windows-Optimisations/
+├── Activators/                 # Activation utilities (MAS & AAct)
+├── Antivirus/                  # Lightweight, resident security installers (NOD32, Kaspersky, MalwareBytes)
+├── Browsers/                   # Performance installers (Brave, Chrome, Firefox, Opera GX)
+├── Drivers/                    # Core hardware driver updaters (3DP Chip, Driver Booster)
+├── Extra/                      # File compression, screenshotting, and TCP tuning tools
+├── Hardware/                   # Monitoring tools (CPU-Z, GPU-Z, HWMonitor)
+├── Tweaks/                     # Primary registry modifications and scripts
+│   ├── Appearance/             # Light/dark theme, transparency, Action Center, and Cortana
+│   ├── Background/             # Telemetry background task execution filters
+│   ├── Browser/                # Edge browser background telemetry removal
+│   ├── Display/                # HDR keyboard bindings, graphics adjustments, GPU preferences
+│   ├── Gaming/                 # Windows Game Mode configurations
+│   ├── Network/                # Bandwidth throttle reduction registry tweaks
+│   ├── Privacy/                # System permissions locks (Location, Camera, Microphone)
+│   ├── Recursos/               # Standard resources (Priorities, SSD, services, MemReduct)
+│   ├── Resources/              # Duplicate resource mapping for retro-compatibility
+│   ├── Startup/                # Startup program management tools
+│   ├── Storage/                # Temp cleaning scripts and Storage Sense tools
+│   ├── Storage-Aggressive/     # Aggressive DISM / component cleanup scripts
+│   ├── Troubleshooting/        # Clean boot and diagnostic script tools
+│   └── Apply Optimizations.bat # Core Interactive Admin Optimizer Script
+├── Windows Update/             # Instant toggle batch files for Windows Update
+├── WebView - IMPORTANT/        # Guidelines regarding modern app rendering requirements
+├── autounattend.xml            # Automated, pre-debloated Windows 11 setup XML
+└── README.md                   # Home page
+```
+
+---
+
+## 🎯 Guided Paths by Use Case
+
+To help you get the most out of your optimization process, identify your use case below and follow the linked documentation paths:
+
+### 🎮 Gamers (Maximum FPS & Low Latency)
+1. Apply CPU priorities and the custom power plan via [**System Tweaks**](TWEAKS.md).
+2. Configure Message Signaled-Based Interrupts using the guide in [**Extra Utilities**](EXTRA.md).
+3. Ensure display optimizations are active by consulting [**Display Tweaks**](TWEAKS.md#4-display-tweaks).
+4. Update display and chipset drivers via [**Driver Management**](DRIVERS.md).
+
+### 💻 Legacy / Low-End PCs (<8GB RAM & Weak CPUs)
+1. Turn off visual transparency and animations using [**Appearance Tweaks**](TWEAKS.md#1-appearance-tweaks).
+2. Configure automatic RAM cleaning with [**Mem Reduct Guide**](TWEAKS.md#memory-reduction).
+3. Switch update routines off using [**Windows Update Controls**](WINDOWS_UPDATE.md) if you do not use the Microsoft Store.
+4. Clean bloated caches using the [**Aggressive Storage Cleanup**](TWEAKS.md#11-storage-aggressive-tweaks) guide.
+
+### 🔒 Privacy-Minded Users (Zero Telemetry)
+1. Stop data collection routines using [**Telemetry Tweaks**](TWEAKS.md#telemetry-data-collection).
+2. Restrict systemic access permissions via [**Privacy Tweaks**](TWEAKS.md#7-privacy-tweaks).
+3. Transition to a telemetry-free browser by reading the [**Web Browsers Guide**](BROWSERS.md).
+4. Consider performing a clean, fully-privatized OS setup using the [**Unattended Installation XML**](AUTOUNATTEND.md).
+
+---
+
+## ⚠️ Important Precautions
+
+> [!WARNING]
+> - Always perform a **System Restore Point** creation before running any scripts.
+> - Some tweaks disable core security components (Windows Defender, SmartScreen). Only apply these modifications if you have alternative safeguards active or operate in secure isolated environments.
+> - Read the [**Antivirus Guide**](ANTIVIRUS.md) to understand recommended modern scanning setups.
+
+---
+
+*For additional support or specific system optimization queries, join our Telegram Channel or contact Farhan directly.*
 *Last updated: May 2026*
-*For Windows 10/11 optimization and customization*
