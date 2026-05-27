@@ -34,7 +34,7 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
-site_url: https://idyllic-madeleine-715fde.netlify.app/
+site_url: https://windows-optimizations.netlify.app/
 
 extra:
   social:
