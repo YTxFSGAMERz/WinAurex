@@ -9,19 +9,24 @@ theme:
     - navigation.tabs
     - navigation.sections
     - navigation.top
+    - navigation.instant
+    - navigation.tracking
+    - navigation.indexes
+    - toc.follow
     - search.suggest
     - search.highlight
     - content.code.copy
+    - content.tooltips
   palette:
     - scheme: default
-      primary: custom
-      accent: custom
+      primary: teal
+      accent: cyan
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - scheme: slate
-      primary: custom
-      accent: custom
+      primary: teal
+      accent: cyan
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
@@ -29,7 +34,7 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
-site_url: https://ytxfsgamerz.github.io/Windows-Optimisations/
+site_url: https://idyllic-madeleine-715fde.netlify.app/
 
 extra:
   social:
