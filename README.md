@@ -1,136 +1,233 @@
 <div align="center">
 
 # ⚡ WINDOWS OPTIMISATIONS ⚡
-### Ultimate Performance & Privacy Control Panel
+### PERFORMANCE • PRIVACY • GAMING • CONTROL
 
-<a href="https://windows-optimizations.netlify.app/">
-  <img src="https://img.shields.io/badge/LIVE_WEBSITE-Access_Control_Panel-00bcd4?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Website">
-</a>
-<a href="https://github.com/YTxFSGAMERz/Windows-Optimisations" target="_blank">
-  <img src="https://img.shields.io/github/stars/YTxFSGAMERz/Windows-Optimisations?style=for-the-badge&color=00bcd4&logo=github" alt="Stars">
-</a>
-<a href="https://github.com/YTxFSGAMERz/Windows-Optimisations/fork" target="_blank">
-  <img src="https://img.shields.io/github/forks/YTxFSGAMERz/Windows-Optimisations?style=for-the-badge&color=00bcd4&logo=github" alt="Forks">
-</a>
-<a href="https://github.com/YTxFSGAMERz/Windows-Optimisations/blob/master/LICENSE" target="_blank">
-  <img src="https://img.shields.io/badge/license-MIT-00bcd4?style=for-the-badge" alt="License">
-</a>
+<img src="docs/assets/banner.png" alt="Futuristic Windows Optimization Cyber Dashboard with Neon Cyan Overlays, CPU/GPU Monitoring Graphs, Abstract Circuits, and Performance Analytics" width="1000" style="border-radius: 8px; border: 1px solid #00bcd4; box-shadow: 0 0 20px rgba(0, 188, 212, 0.25);">
 
-<br><br>
+<br>
 
-<img src="docs/assets/banner.png" alt="Cyber Dashboard" width="800" style="border-radius: 10px; box-shadow: 0 0 20px rgba(0,255,255,0.2);">
+<p align="center">
+  <img src="https://img.shields.io/badge/Architecture-Modular_Ecosystem-00bcd4?style=for-the-badge&logo=windows&logoColor=white" alt="Modular Ecosystem">
+  <img src="https://img.shields.io/badge/OS-Windows_11_Verified-00bcd4?style=for-the-badge&logo=windows11&logoColor=white" alt="Windows 11 Verified">
+  <img src="https://img.shields.io/badge/OS-Windows_10_Supported-00bcd4?style=for-the-badge&logo=windows&logoColor=white" alt="Windows 10 Supported">
+  <img src="https://img.shields.io/badge/Engine-PowerShell_Powered-00bcd4?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell Powered">
+  <img src="https://img.shields.io/badge/Control-Reversible_Tweaks-00bcd4?style=for-the-badge&logo=reverbnation&logoColor=white" alt="Reversible Tweaks">
+  <img src="https://img.shields.io/badge/Security-Privacy_Hardened-00bcd4?style=for-the-badge&logo=shield&logoColor=white" alt="Privacy Hardened">
+  <img src="https://img.shields.io/badge/Performance-Low_Latency-00bcd4?style=for-the-badge&logo=speedtest&logoColor=white" alt="Low Latency">
+</p>
+
+*A premium, flagship open-source control platform engineered to maximize raw hardware potential, eradicate system latency, and restore absolute privacy.*
 
 ---
 
-*Unlock the absolute maximum potential of Windows 10 & 11.*  
-**Built for Gamers. Engineered for Privacy. Designed for Power Users.**
+```text
+╔═══════════════════════════════════════════════════════════════════╗
+║                  S Y S T E M   S T A T U S : O N L I N E          ║
+╠═══════════════════════════════════════════════════════════════════╣
+║  [+] PERFORMANCE MODULES     ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰  ACTIVE    ║
+║  [+] GAMING OPTIMIZATIONS    ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰  ENABLED   ║
+║  [+] PRIVACY HARDENING       ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰  ACTIVE    ║
+║  [+] RESTORE ENGINE          ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰  READY     ║
+║  [+] WINDOWS 10 INTEGRATION  ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰  VERIFIED  ║
+║  [+] WINDOWS 11 INTEGRATION  ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰  VERIFIED  ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+</div>
+
+---
+
+## ⬛ CORE PHILOSOPHY
+
+Windows Optimisations is not a blind tweaking tool. It is a precise, modular engineering framework designed for power users who demand total system transparency. Modern operating systems are saturated with background telemetry, unnecessary scheduled tasks, and sub-optimal resource allocation. This repository exists to place the control back into the hands of the hardware owner.
+
+## ⬛ WHY THIS REPOSITORY EXISTS
+
+The Windows optimization ecosystem is heavily polluted with closed-source, automated "debloaters" that run hidden scripts and break essential OS features. This platform was engineered from the ground up to counter that trend. 
+
+Every tweak, script, and registry edit in this repository is plain-text, manually inspectable, structurally organized, and rigorously tested. This is a cyber-tech toolkit built for reliability and peak performance without compromising operating system integrity.
+
+## ⬛ OPTIMIZATION PHILOSOPHY
+
+> **Trust, Transparency, and Reversibility.**
+
+This repository explicitly rejects and avoids:
+*   ❌ Fake FPS myths and snake-oil placebo tweaks
+*   ❌ Dangerous, undocumented registry spam
+*   ❌ Irreversible modifications that shatter core Windows functionality
+*   ❌ Shady bundled software or malware-like "RAM boosters"
+
+Instead, every modification strictly adheres to our engineering standards:
+*   ✅ **Transparent:** All source code is open and readable.
+*   ✅ **Modular:** Apply only the exact modules your workflow requires.
+*   ✅ **Reversible:** Built-in safeguards and restore architectures.
+*   ✅ **Categorized:** Clean, logical separation of concerns.
+
+---
+
+## ⬛ MAIN FEATURE MODULES
+
+<div align="center">
+  
+| MODULE | DOMAIN | FUNCTIONALITY |
+| :--- | :--- | :--- |
+| 🎮 **GAMING** | Execution | Forces dedicated resources, disables background polling, lowers input latency |
+| 🛡️ **PRIVACY** | Security | Severs Microsoft telemetry connections, hardens microphone/camera permissions |
+| ⚡ **STARTUP** | Boot | Eliminates non-critical boot sequences for instantaneous OS initialization |
+| 🌐 **NETWORK** | Connectivity | Adjusts TCP parameters and Delivery Optimization caps for lower ping |
+| 📦 **STORAGE** | File System | Unlocks deep SSD optimizations and aggressive cache purges |
+| 🖥️ **DISPLAY** | Rendering | Tunes desktop window manager (DWM) and bypasses fullscreen optimizations |
+| 🔧 **DIAGNOSTICS** | Troubleshooting | Safe-mode toggles, component isolation, and diagnostic metric collection |
+| 🌙 **BROWSER** | Web | Eradicates background WebView/Edge bloat and background updating processes |
 
 </div>
 
 ---
 
-## 🚀 SYSTEM OVERRIDE // CORE FEATURES
+## ⬛ REPOSITORY ARCHITECTURE
 
-Experience a new level of responsiveness and control. This toolkit strips away bloat, shuts down telemetry, and fine-tunes deep system variables.
-
-- ⚙️ **Performance Engineering**  
-  *Direct registry injection for CPU thread prioritization, strict SSD alignment, zero-latency network tuning, and aggressive power states.*
-- 🛡️ **Privacy & Telemetry Blackout**  
-  *Military-grade telemetry blocking. Systematically terminate data collection, background spying, and deeply embedded Windows bloatware.*
-- ⚡ **Unattended OS Deployment**  
-  *Deploy automated, pre-debloated Windows 11 installations. Seamlessly bypass strict RAM, TPM, and Secure Boot limitations on the fly.*
-- 🛠️ **Diagnostic & Tactical Toolkit**  
-  *A hand-picked, open-source arsenal for real-time hardware monitoring, microsecond latency analysis, and unyielding driver stability.*
-
----
-
-## 📂 REPOSITORY ARCHITECTURE // DIRECTORY STRUCTURE
-
-A highly organized file structure that reads like a tactical cyber-deck. Navigate cleanly through our extensive optimization scripts.
+A clean, futuristic blueprint of the optimization matrix. 
 
 ```text
 📦 Windows-Optimisations
- ┣ 📂 Tweaks/                  # Core OS optimization scripts and registry injections
- ┃  ┣ 📂 Appearance/           # Visual UI decluttering and transparency overrides
- ┃  ┣ 📂 Background/           # Background process termination and app suspension
- ┃  ┣ 📂 Browser/              # Edge/WebView telemetry removal and debloating
- ┃  ┣ 📂 Display/              # Fullscreen optimizations and GPU preference overrides
- ┃  ┣ 📂 Gaming/               # Windows Game Mode enforcement and latency reduction
- ┃  ┣ 📂 Network/              # Bandwidth unthrottling and delivery optimization capping
- ┃  ┣ 📂 Privacy/              # Deep telemetry blocks (Camera, Mic, Location locks)
- ┃  ┣ 📂 Startup/              # Boot time acceleration and startup bloat removal
- ┃  ┣ 📂 Storage/              # Automated junk removal and prefetch clearing
- ┃  ┣ 📂 Troubleshooting/      # Safe-mode boots and diagnostic reset tools
- ┃  ┗ 📜 Apply Optimizations.bat # ⚡ MAIN INTERACTIVE OPTIMIZER SCRIPT
- ┣ 📂 Activators/              # KMS38 and HWID activation systems
- ┣ 📂 Antivirus/               # Elite security deployment setups
- ┣ 📂 Browsers/                # Hardened, privacy-focused browser installers
- ┣ 📂 Drivers/                 # Next-gen hardware driver detection utilities
- ┣ 📂 Hardware/                # Deep hardware telemetry (CPU-Z, GPU-Z, HWMonitor)
- ┣ 📂 Windows Update/          # Absolute control over Windows Update services
- ┗ 📜 autounattend.xml         # Automated, zero-telemetry Windows 11 ISO configuration
+ ┣ 📂 Tweaks/                  # [CORE] The primary system optimization engine
+ ┃  ┣ 📂 Appearance/           # UI decluttering and hardware-accelerated rendering profiles
+ ┃  ┣ 📂 Background/           # Background process suspension and app termination logic
+ ┃  ┣ 📂 Browser/              # Chromium/Edge background telemetry annihilation
+ ┃  ┣ 📂 Display/              # Fullscreen focus overrides and GPU preference routing
+ ┃  ┣ 📂 Gaming/               # Game Mode enforcement and interrupt moderation tuning
+ ┃  ┣ 📂 Network/              # Bandwidth unthrottling and telemetry firewalling
+ ┃  ┣ 📂 Privacy/              # Deep system telemetry blacks (Mic, Camera, Metadata)
+ ┃  ┣ 📂 Startup/              # Boot time acceleration and startup bloat excision
+ ┃  ┣ 📂 Storage/              # Automated garbage collection and prefetch purging
+ ┃  ┣ 📂 Troubleshooting/      # Safe-boot parameters and diagnostic resets
+ ┃  ┗ 📜 Apply Optimizations.bat # [EXECUTION] Main Interactive Terminal Interface
+ ┣ 📂 Activators/              # KMS38 and HWID activation provisioning
+ ┣ 📂 Antivirus/               # Elite security deployment frameworks
+ ┣ 📂 Browsers/                # Hardened, privacy-first web browsers
+ ┣ 📂 Drivers/                 # Next-gen hardware detection and driver initialization
+ ┣ 📂 Hardware/                # Deep hardware telemetry probes (CPU-Z, GPU-Z, HWMonitor)
+ ┣ 📂 Windows Update/          # Absolute granular control over OS update channels
+ ┗ 📜 autounattend.xml         # Automated, zero-telemetry Windows 11 installation blueprint
 ```
 
 ---
 
-## 📖 THE ARCHIVES // LIVE DOCUMENTATION
+## ⬛ OPTIMIZATION CATEGORIES
 
-Access the full capabilities of the toolkit via our highly responsive, cyberpunk-themed documentation site.
+### 🎮 Gaming Optimization
+Designed specifically for competitive environments where input lag is fatal. These tweaks force Windows to respect fullscreen exclusivity, prioritize game rendering threads above all background tasks, and disable interruptive background polling routines.
 
-🔗 **[ENTER LIVE DASHBOARD](https://windows-optimizations.netlify.app/)**
+### 🖥️ Display Optimization
+Overrides standard Desktop Window Manager (DWM) behaviors. Adjusts multiplane overlays (MPO) and bypasses unnecessary visual scaling processes to ensure frame pacing remains completely stable.
 
-**Quick Navigation Links:**
-*   [**System Tweaks & Optimizations**](docs/TWEAKS.md) — Walkthrough of all core tweak subdirectories.
-*   [**Driver Management**](docs/DRIVERS.md) — Essential guides for GPU and motherboard updates.
-*   [**Antivirus & Security**](docs/ANTIVIRUS.md) — Anti-malware guidance and safe habits.
-*   [**Web Browsers**](docs/BROWSERS.md) — Browser comparisons for gaming and privacy.
-*   [**Windows Update Control**](docs/WINDOWS_UPDATE.md) — Controlling background update schedules.
-*   [**Hardware Diagnostics**](docs/HARDWARE.md) — Measuring temperatures and thermal bottlenecks.
-*   [**OS Activators**](docs/ACTIVATORS.md) — Safe KMS38 and HWID activation details.
-*   [**Unattended Installation**](docs/AUTOUNATTEND.md) — Setting up pre-debloated Windows 11.
+### ⚡ Startup Optimization
+Strips away the massive list of bloatware that injects itself into the boot sequence. Focuses purely on critical OS services, dramatically reducing cold-boot times to seconds.
 
----
+### 🛑 Background Apps Management
+Annihilates UWP (Universal Windows Platform) background applications. Reclaims wasted CPU cycles and RAM by denying apps the ability to run in suspended states unless explicitly launched.
 
-## ⚡ INITIATION PROTOCOL // QUICK START
+### 📦 Storage Optimization
+Includes aggressive disk maintenance scripts. Flushes deep systemic caches, invalid prefetch data, and Windows Update leftovers that traditional disk cleanup utilities ignore.
 
-> [!CAUTION]
-> **WARNING: SYSTEM MODIFICATION IN PROGRESS.**
-> These scripts execute deep system-wide changes. Always create a **System Restore Point** prior to execution.
+### 🌐 Network Optimization
+Optimizes the TCP/IP stack for raw throughput and low latency. Disables Windows Delivery Optimization (P2P updates) to ensure your bandwidth is never hijacked mid-game.
 
-**Step 1: System Backup**
-Launch an Administrator PowerShell terminal and execute the backup command:
-```powershell
-Checkpoint-Computer -Description "Pre-Optimization Backup"
-```
+### 🌙 Browser Optimization
+Focuses heavily on taming Microsoft Edge and WebView2 runtimes. Prevents Chromium-based engines from perpetually running telemetry and update services in the background.
 
-**Step 2: Engage Main Optimizer**
-Navigate to the `Tweaks/` directory. Right-click on `Apply Optimizations.bat` and select **Run as administrator**. Follow the interactive terminal prompts.
+### 🛡️ Privacy Hardening
+A systemic lock-down of Windows data exfiltration. Disables advertising IDs, cortana indexing, diagnostic data uploads, and restricts app access to location, camera, and microphone hardware.
 
-**Step 3: Hardware Synchronization**
-Utilize the tools within the `Drivers/` directory to scan, fetch, and install the most stable chipset and display drivers.
-
-**Step 4: System Purge**
-Execute `Tweaks\Storage\Safe Temporary Cleanup.bat` to forcefully purge systemic caches, stale prefetch data, and temporary files.
+### 🔧 Troubleshooting Toolkit
+If an issue arises, the system features a dedicated troubleshooting module containing rapid diagnostic scripts, network resets, and clean boot environment toggles to isolate hardware vs. software faults.
 
 ---
 
-## 🛡️ MAINTAINER & COMM-LINK
+## ⬛ SAFETY & RESTORE SYSTEM
 
-> **Farhan // System Architect**
-> *Mission:* Eradicate software bloat. Maximize raw hardware performance. Restore absolute user control.
->
-> 📡 **GitHub:** [@YTxFSGAMERz](https://github.com/YTxFSGAMERz)  
-> 📡 **Telegram Network:** [Access News Feed](https://t.me/YTxFSGAMERz)  
-> 📡 **Direct WhatsApp COMMS:** [Initialize Connection](https://wa.me/917778906798)
+> **CRITICAL ARCHITECTURE NOTE**
+
+Absolute power requires absolute safety. This repository is built upon a **Reversible Tweaks Architecture**. 
+We do not believe in permanent, destructive modifications. 
+
+1. **System Restore Integration:** The execution sequence aggressively promotes the creation of Windows System Restore points prior to applying *any* module.
+2. **Reversible Registry:** Wherever a registry key is modified, its exact default counterpart is strictly documented or provided.
+3. **Modular Control:** By utilizing separate `.reg` and `.bat` files for specific categories (e.g., *only* Network, or *only* Privacy), you retain the power to test and isolate changes safely.
 
 ---
 
-## ⚠️ LEGAL & ETHICAL OVERRIDE
+## ⬛ DOCUMENTATION
 
-> [!WARNING]
-> This repository is engineered for advanced customization, performance testing, and educational analysis. All scripts are provided strictly "AS-IS" with zero warranty. Users assume full responsibility for software licensing compliance. Aggressive OS modification may void official vendor support agreements. Proceed with knowledge.
+Our complete documentation exists as a beautifully crafted, live dashboard interface. Access the archives to understand the deep technical reasoning behind every script.
+
+🔗 **[ACCESS THE LIVE DASHBOARD](https://windows-optimizations.netlify.app/)**
+
+---
+
+## ⬛ USAGE GUIDE
+
+> [!NOTE]  
+> **ELEVATED PRIVILEGES REQUIRED:** All optimization modules must interface directly with the Windows Kernel, Registry, and Services layer. You must execute all scripts with Administrator rights.
+
+1. **Clone the Framework**  
+   Download or clone the repository to your local drive. Extract all files to a secure directory (e.g., `C:\Optimizations`).
+2. **Initialize Backup Protocol**  
+   Open an Administrator PowerShell terminal and execute:  
+   `Checkpoint-Computer -Description "PRE-OPTIMIZATION-STATE"`
+3. **Engage Main Execution Interface**  
+   Navigate to the `Tweaks/` directory, right-click `Apply Optimizations.bat`, and select **Run as Administrator**.
+4. **Select Modules**  
+   Use the terminal UI to apply specific tuning modules based on your hardware target.
+
+---
+
+## ⬛ COMPATIBILITY MATRIX
+
+| ENVIRONMENT / FEATURE | STATUS | INTEGRATION LEVEL |
+| :--- | :---: | :--- |
+| **Windows 10 (22H2)** | 🟢 VERIFIED | Native Full Support |
+| **Windows 11 (23H2)** | 🟢 VERIFIED | Native Full Support |
+| **Windows 11 (24H2)** | 🟡 TESTING | Core Modules Verified |
+| **Copilot+ Devices** | 🟡 PARTIAL | ARM64 Analysis Ongoing |
+| **HDR Calibration** | 🟢 VERIFIED | Display Tuned |
+| **Auto SR Support** | 🟢 VERIFIED | Hardware Accelerated |
+
+---
+
+## ⬛ WARNINGS
+
+> [!WARNING]  
+> This toolkit modifies core operating system behaviors. 
+> * Do not execute these scripts blindly on enterprise or domain-managed corporate networks.
+> * Aggressive telemetry disabling may interfere with Windows Insider feedback pipelines.
+> * Proceed with knowledge, and always maintain a tested rollback strategy.
+
+---
+
+## ⬛ ADVANCED NOTES
+
+For deep systems engineers: Review the `autounattend.xml` file. This blueprint allows you to bake these optimizations directly into a fresh Windows ISO installation, completely bypassing TPM/Secure Boot checks and skipping Microsoft Account enforcement (OOBE bypass).
+
+---
+
+## ⬛ CONTRIBUTING
+
+We welcome pull requests from fellow system engineers and optimization enthusiasts. All submitted tweaks must meet our philosophy: they must be documented, they must be reversible, and they must demonstrate a measurable technical benefit. 
+
+---
+
+## ⬛ CREDITS
+
+Engineered, tested, and maintained by **Farhan**. 
+Leveraging the power of the open-source community to keep hardware fast, clean, and private.
+
+---
+
+## ⬛ END OF FILE
 
 <div align="center">
-  <br>
-  <code>SYSTEM OPTIMIZED BY FARHAN</code>
+
+`[ SYSTEM OPTIMIZATION SEQUENCE COMPLETE ]`
+
 </div>
