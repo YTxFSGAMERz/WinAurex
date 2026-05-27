@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/github/forks/YTxFSGAMERz/Windows-Optimisations?style=for-the-badge&color=00bcd4&logo=github" alt="Forks">
   </a>
   <a href="https://github.com/YTxFSGAMERz/Windows-Optimisations/blob/master/LICENSE" target="_blank">
-    <img src="https://img.shields.io/github/license/YTxFSGAMERz/Windows-Optimisations?style=for-the-badge&color=00bcd4" alt="License">
+    <img src="https://img.shields.io/badge/license-MIT-00bcd4?style=for-the-badge" alt="License">
   </a>
 </p>
 
