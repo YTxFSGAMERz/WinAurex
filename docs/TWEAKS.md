@@ -18,7 +18,7 @@ The `Tweaks/` directory is organized into functional categories to allow targete
 10. [**Storage**](#10-storage-tweaks): Safe temporary folder cleaners and Storage Sense toggles.
 11. [**Storage-Aggressive**](#11-storage-aggressive-tweaks): System component store and WinSXS cleanups via DISM.
 12. [**Troubleshooting**](#12-troubleshooting-tweaks): Diagnostic Clean Boot management.
-13. [**Apply Optimizations Script**](#13-apply-optimizationsbat-walkthrough): The main interactive control suite.
+13. [**WPF Dashboard Walkthrough**](#13-wpf-dashboard-walkthrough): The main interactive control suite.
 
 ---
 
@@ -201,23 +201,18 @@ The `Tweaks/` directory is organized into functional categories to allow targete
 
 ---
 
-## 13. Apply Optimizations.bat Walkthrough
-*   **Path**: `Tweaks/Apply Optimizations.bat`
+## 13. WPF Dashboard Walkthrough
+*   **Path**: `Start.bat` -> `Launch_Dashboard.ps1`
 *   **Purpose**: The central menu interface.
 
-This interactive batch file acts as a centralized dashboard. Right-click and run as Administrator to access these options:
+The framework now features a stunning native PowerShell + WPF XAML graphical dashboard. Double-click `Start.bat` to launch it. The dashboard consists of multiple tabs:
 
-1.  **Apply Recommended Optimizations**:
-    *   Alters the **svchost split threshold** according to system RAM to prevent excessive process subdivisions.
-    *   Disables Wi-Fi Sense hotspot reporting.
-    *   Deactivates update-related background tasks and Windows Defender telemetry routines.
-    *   Applies standard MMCSS gaming thread priorities.
-    *   Configures graphics scheduler Mode to HwSchMode = 2.
-    *   Sets slow, telemetry-heavy services to Manual or Disabled.
-2.  **System Optimizations**: A sub-menu to apply localized tweaks such as:
-    *   Disabling full-screen DXGI game optimizations.
-    *   Disabling background execution apps.
-    *   Disabling Telemetry registries.
+1.  **Optimization Profiles**:
+    *   **Max Performance Mode**: Targets the absolute lowest DPC latency and highest thread priorities for elite gamers.
+    *   **Balanced Creator Mode**: Optimizes Windows Explorer and removes bloatware without disabling Windows Updates or breaking creative apps.
+    *   **Enterprise Compliance Mode**: Reverts the OS into a highly secure, privacy-hardened state for corporate usage.
+2.  **Observability Telemetry**: A real-time dashboard leveraging high-speed `.NET Diagnostics` to monitor DPC latency proxy speeds, Available RAM, Uptime, and Active Process Counts.
+3.  **Rollback Engine**: Safely displays your JSON snapshot history, allowing you to instantly revert any registry/service modifications with a single click.
     *   Reducing visual effects quality parameters.
     *   Applying MMCSS gaming priority.
     *   Setting active game processes (like CS:GO, CS2, Fortnite, Minecraft, GTA V) to high performance CPU scheduling execution properties.
