@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Configure WSL (Tweaks/Developer/Configure_WSL.ps1)
 
@@ -16,7 +21,7 @@ Write-Host "This script will enable the Virtual Machine Platform"
 Write-Host "and WSL optional features natively. It will NOT"
 Write-Host "install a specific Linux distro."
 Write-Host "Press 'Y' to enable WSL or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Developer" -Action "Aborted WSL config"
@@ -40,3 +45,4 @@ Write-Host "After rebooting, you can install a distro via 'wsl --install -d Ubun
 
 
 $null = Read-Host "Press Enter to exit..."
+
