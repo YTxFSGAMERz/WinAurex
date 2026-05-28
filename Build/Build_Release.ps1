@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Build & Package Release Script
 # Run this script to generate a clean, distributable ZIP file for end users.
