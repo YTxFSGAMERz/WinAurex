@@ -36,4 +36,6 @@ Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name
 Write-FrameworkLog -ModuleName "Developer" -Action "Enabled Win32 Long Paths"
 
 Write-Host "`n[SUCCESS] Long Paths have been enabled. A restart may be required for some apps." -ForegroundColor Green
-Start-Sleep -Seconds 2
+
+
+$null = Read-Host "Press Enter to exit..."
