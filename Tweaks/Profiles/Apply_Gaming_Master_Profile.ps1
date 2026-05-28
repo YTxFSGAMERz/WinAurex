@@ -26,7 +26,7 @@ Write-Host "- Disable heavy background telemetry and services"
 Write-Host "- Disable Windows Update driver downloads"
 if (-not $Force) {
     Write-Host "Press 'Y' to continue or any other key to abort..."
-    $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+    if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
     if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Gaming Master Profile Deployment"
     Write-Host "`nAborted by user."
@@ -39,33 +39,36 @@ $TweaksDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Tweaks"
 
 # 1. Power
 Write-Host "`n[1/6] Applying Power Optimizations..." -ForegroundColor Cyan
-& (Join-Path -Path $TweaksDir -ChildPath "Power\Enable_Ultimate_Performance_Plan.ps1")
-& (Join-Path -Path $TweaksDir -ChildPath "Power\Disable_USB_Selective_Suspend.ps1")
+& (Join-Path -Path $TweaksDir -ChildPath "Power\Enable_Ultimate_Performance_Plan.ps1") -Force:$Force
+& (Join-Path -Path $TweaksDir -ChildPath "Power\Disable_USB_Selective_Suspend.ps1") -Force:$Force
 
 # 2. GPU
 Write-Host "`n[2/6] Applying GPU Optimizations..." -ForegroundColor Cyan
-& (Join-Path -Path $TweaksDir -ChildPath "GPU\Apply_Gaming_GPU_Profile.ps1")
+& (Join-Path -Path $TweaksDir -ChildPath "GPU\Apply_Gaming_GPU_Profile.ps1") -Force:$Force
 
 # 3. Visuals
 Write-Host "`n[3/6] Applying Visual Optimizations..." -ForegroundColor Cyan
-& (Join-Path -Path $TweaksDir -ChildPath "Visual\Apply_Max_Performance_Profile.ps1")
+& (Join-Path -Path $TweaksDir -ChildPath "Visual\Apply_Max_Performance_Profile.ps1") -Force:$Force
 
 # 4. Telemetry & Services
 Write-Host "`n[4/6] Disabling Heavy Telemetry & Background Tasks..." -ForegroundColor Cyan
-& (Join-Path -Path $TweaksDir -ChildPath "Services\Apply_Clean_Services_Profile.ps1")
-& (Join-Path -Path $TweaksDir -ChildPath "Tasks\Apply_Clean_Tasks_Profile.ps1")
+& (Join-Path -Path $TweaksDir -ChildPath "Services\Apply_Clean_Services_Profile.ps1") -Force:$Force
+& (Join-Path -Path $TweaksDir -ChildPath "Tasks\Apply_Clean_Tasks_Profile.ps1") -Force:$Force
 
 # 5. Updates Control
 Write-Host "`n[5/6] Disabling Driver Updates & Delivery Optimization..." -ForegroundColor Cyan
-& (Join-Path -Path $TweaksDir -ChildPath "Updates\Apply_Update_Control_Profile.ps1")
+& (Join-Path -Path $TweaksDir -ChildPath "Updates\Apply_Update_Control_Profile.ps1") -Force:$Force
 
 # 6. Search
 Write-Host "`n[6/6] Disabling Web Search in Start Menu..." -ForegroundColor Cyan
-& (Join-Path -Path $TweaksDir -ChildPath "Search\Disable_Web_Search.ps1")
+& (Join-Path -Path $TweaksDir -ChildPath "Search\Disable_Web_Search.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Profiles" -Action "Completed Gaming Master Profile Deployment" -Level WARNING
 
 Write-Host "`n[SUCCESS] Gaming Master Profile deployment complete!" -ForegroundColor Green
 Write-Host "Please RESTART YOUR COMPUTER for all changes to take effect." -ForegroundColor Yellow
-Write-Host "Press any key to exit..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+if (-not $Force) {
+    Write-Host "Press any key to exit..."
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+}
+
