@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Windows Widgets (Tweaks/Shell/Disable_Windows_Widgets.ps1)
 
