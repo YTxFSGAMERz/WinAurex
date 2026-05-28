@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Clean Framework Logs (Tools/System-Info/Clean_Framework_Logs.ps1)
 
@@ -9,7 +14,7 @@ Write-Host "================================================="
 Write-Host "This will permanently delete all framework operation logs in:"
 Write-Host "$LogsDir" -ForegroundColor DarkGray
 Write-Host "Press 'Y' to confirm deletion or any other key to cancel..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-Host "`nOperation cancelled."
@@ -30,5 +35,8 @@ if (Test-Path $LogsDir) {
     Write-Host "`n[INFO] Logs directory does not exist yet." -ForegroundColor Yellow
 }
 
-Write-Host "Press any key to exit..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+if (-not $Force) {
+    Write-Host "Press any key to exit..."
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+}
+
