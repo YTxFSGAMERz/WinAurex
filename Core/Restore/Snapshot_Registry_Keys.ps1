@@ -47,7 +47,9 @@ foreach ($Key in $KeysToBackup.GetEnumerator()) {
 
 Write-Host "`n[SUCCESS] Registry snapshots saved to: $SnapshotFolder" -ForegroundColor Green
 if (-not $Force) {
+    if (-not $Force) {
     Write-Host "Press any key to exit..."
-    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
+}
 }
 
