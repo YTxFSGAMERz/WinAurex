@@ -8,40 +8,63 @@
     FontFamily="Segoe UI" 
     ResizeMode="CanMinimize">
     
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30" CornerRadius="8" GlassFrameThickness="0" UseAeroCaptionButtons="True"/>
+    </WindowChrome.WindowChrome>
+
     <Window.Resources>
-        <!-- Custom ScrollBar Styling -->
-        <SolidColorBrush x:Key="ScrollBarBackground" Color="#121212"/>
-        <SolidColorBrush x:Key="ScrollBarThumb" Color="#333333"/>
-        <SolidColorBrush x:Key="ScrollBarThumbHover" Color="#00adb5"/>
-        
+        <!-- Custom ScrollBar Styling (Ultra Minimal) -->
         <Style x:Key="ScrollThumbStyle" TargetType="{x:Type Thumb}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="4" Margin="2,0,2,0"/>
+                        <Border Background="#333333" CornerRadius="3" Margin="4,0,0,0"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#00adb5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type ScrollBar}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid Background="Transparent">
+                            <Track x:Name="PART_Track" IsDirectionReversed="true">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource ScrollThumbStyle}"/>
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0"/>
+                                </Track.IncreaseRepeatButton>
+                            </Track>
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style TargetType="{x:Type ScrollBar}">
-            <Setter Property="Background" Value="{StaticResource ScrollBarBackground}"/>
-            <Setter Property="Width" Value="10"/>
+        <Style TargetType="ScrollViewer">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ScrollBar}">
-                        <Grid Background="{TemplateBinding Background}">
-                            <Track x:Name="PART_Track" IsDirectionReversed="true">
-                                <Track.Thumb>
-                                    <Thumb Style="{StaticResource ScrollThumbStyle}" Background="{StaticResource ScrollBarThumb}"/>
-                                </Track.Thumb>
-                            </Track>
+                    <ControlTemplate TargetType="ScrollViewer">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ScrollContentPresenter Grid.Column="0" Content="{TemplateBinding ScrollViewer.Content}" />
+                            <ScrollBar Grid.Column="1" Name="PART_VerticalScrollBar" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
                         </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="PART_Track" Property="Thumb.Background" Value="{StaticResource ScrollBarThumbHover}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -112,7 +135,7 @@
             </Style.Triggers>
         </Style>
 
-        <!-- TabItem Style (Custom Template to avoid white background) -->
+        <!-- TabItem Style -->
         <Style TargetType="TabItem">
             <Setter Property="Template">
                 <Setter.Value>
@@ -143,7 +166,7 @@
             <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
 
-        <!-- TabControl Style (Remove default borders) -->
+        <!-- TabControl Style -->
         <Style TargetType="TabControl">
             <Setter Property="Background" Value="#121212"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -194,7 +217,10 @@
         </Style>
     </Window.Resources>
 
-    <Grid Margin="20">
+    <Grid Margin="20,30,20,20">
+        <!-- Add a custom drag area since we're using WindowChrome -->
+        <Border Grid.RowSpan="3" VerticalAlignment="Top" Height="30" Margin="-20,-30,-20,0" Background="Transparent" WindowChrome.IsHitTestVisibleInChrome="True"/>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
