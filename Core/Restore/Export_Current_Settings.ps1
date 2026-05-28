@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Export Current Settings (Core/Restore/Export_Current_Settings.ps1)
 
@@ -34,5 +39,8 @@ powercfg /list | Out-File -FilePath $PowerFile -Encoding UTF8
 Write-FrameworkLog -ModuleName "RestoreEngine" -Action "Exported Power Configuration"
 
 Write-Host "`n[SUCCESS] Settings exported to: $SettingsFolder" -ForegroundColor Green
-Write-Host "Press any key to exit..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+if (-not $Force) {
+    Write-Host "Press any key to exit..."
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+}
+
