@@ -9,6 +9,44 @@
     ResizeMode="CanMinimize">
     
     <Window.Resources>
+        <!-- Custom ScrollBar Styling -->
+        <SolidColorBrush x:Key="ScrollBarBackground" Color="#121212"/>
+        <SolidColorBrush x:Key="ScrollBarThumb" Color="#333333"/>
+        <SolidColorBrush x:Key="ScrollBarThumbHover" Color="#00adb5"/>
+        
+        <Style x:Key="ScrollThumbStyle" TargetType="{x:Type Thumb}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" Margin="2,0,2,0"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type ScrollBar}">
+            <Setter Property="Background" Value="{StaticResource ScrollBarBackground}"/>
+            <Setter Property="Width" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Track x:Name="PART_Track" IsDirectionReversed="true">
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource ScrollThumbStyle}" Background="{StaticResource ScrollBarThumb}"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="PART_Track" Property="Thumb.Background" Value="{StaticResource ScrollBarThumbHover}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!-- Standard Button Style -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="#1e1e1e"/>
@@ -46,9 +84,9 @@
         <!-- Primary Accent Button -->
         <Style x:Key="AccentButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Background" Value="#00adb5"/>
-            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="Foreground" Value="#121212"/>
             <Setter Property="BorderBrush" Value="#00adb5"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontWeight" Value="Bold"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#00cfd9"/>
@@ -56,6 +94,7 @@
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="Background" Value="#008a90"/>
+                    <Setter Property="Foreground" Value="#ffffff"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -73,28 +112,56 @@
             </Style.Triggers>
         </Style>
 
-        <!-- TabControl Style -->
-        <Style TargetType="TabControl">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
+        <!-- TabItem Style (Custom Template to avoid white background) -->
+        <Style TargetType="TabItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Name="Border" Padding="20,10" BorderThickness="0,0,0,2" BorderBrush="Transparent" Background="Transparent" Cursor="Hand">
+                            <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#00adb5" />
+                                <Setter Property="Foreground" Value="#00adb5" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter Property="Foreground" Value="#888888" />
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsSelected" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Foreground" Value="#ffffff" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
 
-        <Style TargetType="TabItem">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#888888"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Padding" Value="20,10"/>
+        <!-- TabControl Style (Remove default borders) -->
+        <Style TargetType="TabControl">
+            <Setter Property="Background" Value="#121212"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Foreground" Value="#00adb5"/>
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="#ffffff"/>
-                </Trigger>
-            </Style.Triggers>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" IsItemsHost="True" Orientation="Horizontal" Background="#121212" Margin="0,0,0,10"/>
+                            <ContentPresenter Grid.Row="1" ContentSource="SelectedContent"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <!-- TextBlocks -->
@@ -143,8 +210,8 @@
         <TabControl Grid.Row="1">
             <!-- TABS: Profiles -->
             <TabItem Header="PROFILES">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="10,20,10,10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                    <StackPanel Margin="0,10,0,10">
                         <TextBlock Style="{StaticResource BodyText}" Text="Select an orchestrator profile below. Applying a profile automatically captures a state snapshot for secure rollback." Margin="0,0,0,20"/>
                         
                         <!-- Profile Card 1 -->
@@ -197,8 +264,8 @@
 
             <!-- TABS: Observability -->
             <TabItem Header="OBSERVABILITY">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="10,20,10,10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                    <StackPanel Margin="0,10,0,10">
                         <TextBlock Style="{StaticResource BodyText}" Text="Gather native telemetry to diagnose system bottlenecks, frame pacing, and scheduling behavior." Margin="0,0,0,20"/>
                         
                         <Border Style="{StaticResource Card}">
@@ -216,7 +283,7 @@
                                     <Button Name="BtnMeasureBootTime" Grid.Column="2" Content="Measure Boot Time" Height="40"/>
                                 </Grid>
                                 
-                                <Button Name="BtnGenerateReport" Style="{StaticResource AccentButton}" Content="Generate System Performance HTML Report" Height="40" Margin="0,10,0,0"/>
+                                <Button Name="BtnGenerateReport" Style="{StaticResource AccentButton}" Content="Generate System Performance HTML Report" Height="40" Margin="10,10,10,0"/>
                             </StackPanel>
                         </Border>
                         
@@ -233,8 +300,8 @@
 
             <!-- TABS: Rollback Engine -->
             <TabItem Header="ROLLBACK ENGINE">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="10,20,10,10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                    <StackPanel Margin="0,10,0,10">
                         <TextBlock Style="{StaticResource BodyText}" Text="View captured snapshots and safely rollback configuration states." Margin="0,0,0,20"/>
                         
                         <Border Style="{StaticResource Card}">
@@ -276,7 +343,7 @@
         <!-- Footer -->
         <Grid Grid.Row="2" Margin="0,20,0,0">
             <TextBlock Style="{StaticResource BodyText}" Text="v5.0 Enterprise Edition" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBlock Name="TxtStatus" Style="{StaticResource BodyText}" Text="Status: Ready" Foreground="#00adb5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <TextBlock Name="TxtStatus" Style="{StaticResource BodyText}" Text="Status: Ready" Foreground="#00adb5" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Window>
