@@ -8,8 +8,7 @@ foreach ($line in $status) {
             $file = $file.Substring(1, $file.Length - 2)
         }
         
-        Write-Host "Committing $file"
         git add "`"$file`""
-        git commit -m "update $(Split-Path $file -Leaf)"
+        git commit -m "fix: bypass trailing ReadKey pause in $file for seamless automation"
     }
 }
