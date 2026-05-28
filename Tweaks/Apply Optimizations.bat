@@ -79,7 +79,7 @@ schtasks /Change /TN "\Microsoft\Windows\UpdateOrchestrator\*" /Disable
 schtasks /Change /TN "\Microsoft\Windows\UpdateAssistant\*" /Disable
 schtasks /Change /TN "\Microsoft\Windows\WaaSMedic\*" /Disable
 schtasks /Change /TN "\Microsoft\Windows\WindowsUpdate\*" /Disable
-schtasks /Change /TN "\Microsoft\WindowsUpdate\*" /Disable																																																																																	REM ;youtube.com/@Farhan
+schtasks /Change /TN "\Microsoft\WindowsUpdate\*" /Disable
 
 echo.
 echo === Optimizing Visual Section ===
@@ -102,19 +102,6 @@ netsh interface teredo set state disabled
 
 echo.
 echo === Disabling Telemetry Tasks ===
-schtasks /Change /TN "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" /Disable
-schtasks /Change /TN "Microsoft\Windows\Application Experience\ProgramDataUpdater" /Disable
-schtasks /Change /TN "Microsoft\Windows\Autochk\Proxy" /Disable
-schtasks /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\Consolidator" /Disable
-schtasks /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\UsbCeip" /Disable
-schtasks /Change /TN "Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector" /Disable
-schtasks /Change /TN "Microsoft\Windows\Feedback\Siuf\DmClient" /Disable
-schtasks /Change /TN "Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload" /Disable
-schtasks /Change /TN "Microsoft\Windows\Windows Error Reporting\QueueReporting" /Disable
-schtasks /Change /TN "Microsoft\Windows\Application Experience\MareBackup" /Disable
-schtasks /Change /TN "Microsoft\Windows\Application Experience\StartupAppTask" /Disable
-schtasks /Change /TN "Microsoft\Windows\Application Experience\PcaPatchDbTask" /Disable
-schtasks /Change /TN "Microsoft\Windows\Maps\MapsUpdateTask" /Disable
 schtasks /Change /TN "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" /Disable
 schtasks /Change /TN "Microsoft\Windows\Application Experience\ProgramDataUpdater" /Disable
 schtasks /Change /TN "Microsoft\Windows\Autochk\Proxy" /Disable
@@ -154,7 +141,7 @@ reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" /v SearchOrderConfig /t REG_DWORD /d 1 /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v SystemResponsiveness /t REG_DWORD /d 0 /f
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v NetworkThrottlingIndex /t REG_DWORD /d 4294967295 /f																																																																																	REM ;youtube.com/@Farhan
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v NetworkThrottlingIndex /t REG_DWORD /d 4294967295 /f
 reg add "HKLM\SYSTEM\ControlSet001\Services\Ndu" /v Start /t REG_DWORD /d 2 /f
 reg add "HKCU\Control Panel\Mouse" /v MouseHoverTime /t REG_SZ /d "400" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v IRPStackSize /t REG_DWORD /d 30 /f
@@ -410,7 +397,6 @@ echo Creating restore point...
 goto :start
 
 :defender
-:defender
 cls
 
 echo --------------------------------------------------
@@ -433,7 +419,6 @@ if "%oput%"=="" goto :Start
 
 
 
-:DF
 :DF
 cls
 echo.
@@ -462,7 +447,6 @@ goto :Start
 
 
 
-:DE
 :DE
 cls
 echo.
@@ -832,7 +816,6 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image F
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MsMpEng.exe\PerfOptions" /v CpuPriorityClass /t REG_DWORD /d 1 /f
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\obs32.exe\PerfOptions" /v CpuPriorityClass /t REG_DWORD /d 6 /f
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\obs64.exe\PerfOptions" /v CpuPriorityClass /t REG_DWORD /d 6 /f
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\OptiCraft.exe\PerfOptions" /v CpuPriorityClass /t REG_DWORD /d 6 /f
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\PPSSPP.exe\PerfOptions" /v CpuPriorityClass /t REG_DWORD /d 6 /f
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\ShellExperienceHost.exe\PerfOptions" /v CpuPriorityClass /t REG_DWORD /d 5 /f
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\svchost.exe\PerfOptions" /v CpuPriorityClass /t REG_DWORD /d 5 /f
@@ -880,7 +863,6 @@ if "%oput%"=="" goto :Start
 
 
 :WA
-:WA
 cls
 
 :: Disable update related services
@@ -917,7 +899,6 @@ schtasks /change /tn "\Microsoft\WindowsUpdate\*" /disable
 timeout /t 3 /nobreak
 goto :update  
 
-:WD
 :WD
 cls
 :: Enable update related services
