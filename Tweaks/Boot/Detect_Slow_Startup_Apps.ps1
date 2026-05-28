@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Detect Slow Startup Apps (Tweaks/Boot/Detect_Slow_Startup_Apps.ps1)
 
@@ -51,3 +56,4 @@ Write-Host "'Startup Apps' tab, and disable everything except your critical audi
 
 Write-Host "`nPress any key to exit..."
 $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+
