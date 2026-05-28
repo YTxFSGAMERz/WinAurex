@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Set Launch Explorer to This PC (Tweaks/Explorer/Set_Launch_To_This_PC.ps1)
 
