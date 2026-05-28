@@ -83,4 +83,6 @@ if ($Choice -eq '1') {
 }
 
 Write-Host "Please restart the Windows Audio service or reboot to apply changes." -ForegroundColor Yellow
-Start-Sleep -Seconds 3
+
+
+$null = Read-Host "Press Enter to exit..."
