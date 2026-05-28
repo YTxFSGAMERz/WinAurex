@@ -96,6 +96,11 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#2a2a2a"/>
                     <Setter Property="BorderBrush" Value="#00adb5"/>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#00adb5" Opacity="0.5"/>
+                        </Setter.Value>
+                    </Setter>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="Background" Value="#00adb5"/>
@@ -110,14 +115,25 @@
             <Setter Property="Foreground" Value="#121212"/>
             <Setter Property="BorderBrush" Value="#00adb5"/>
             <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00adb5" Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#00cfd9"/>
                     <Setter Property="BorderBrush" Value="#00cfd9"/>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="#00cfd9" Opacity="0.8"/>
+                        </Setter.Value>
+                    </Setter>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="Background" Value="#008a90"/>
                     <Setter Property="Foreground" Value="#ffffff"/>
+                    <Setter Property="Effect" Value="{x:Null}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -221,6 +237,16 @@
                     <DropShadowEffect BlurRadius="15" ShadowDepth="4" Direction="270" Color="#000000" Opacity="0.4"/>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#00adb5"/>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#00adb5" Opacity="0.4"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
 
