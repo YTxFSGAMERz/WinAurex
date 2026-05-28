@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # ==============================================================================
 # SCRIPT: Clean Boot & Troubleshooting Manager
 # TARGET SYSTEM: Windows 10 & Windows 11
