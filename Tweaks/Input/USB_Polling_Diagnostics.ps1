@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # USB Polling & Input Diagnostics (Tweaks/Input/USB_Polling_Diagnostics.ps1)
 
@@ -44,7 +49,7 @@ if ($SelectiveSuspend.DisableSelectiveSuspend -eq 1) {
 
 if ($FoundIssues) {
     Write-Host "`nDo you want to disable USB Selective Suspend globally to fix input latency? (Y/N)"
-    $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+    if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
     
     if ($Confirm -match 'y') {
         Set-ItemProperty -Path $USBRegistryPath -Name "DisableSelectiveSuspend" -Value 1 -Type DWord -Force
@@ -60,5 +65,8 @@ if ($FoundIssues) {
 
 Write-Host "`nNOTE: High-polling rate mice (4000Hz - 8000Hz) require raw CPU performance."
 Write-Host "If you experience stutter at 8000Hz, drop your mouse software to 2000Hz."
-Write-Host "Press any key to exit..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+if (-not $Force) {
+    Write-Host "Press any key to exit..."
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+}
+
