@@ -1,0 +1,13 @@
+Windows Registry Editor Version 5.00
+
+; ==============================================================================
+; RESTORE: Enable Camera Access
+; TARGET SYSTEM: Windows 10 & Windows 11
+; DESCRIPTION: Restores Windows defaults. Permits application camera access.
+; ==============================================================================
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam]
+"Value"="Allow"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam]
+"Value"="Allow"

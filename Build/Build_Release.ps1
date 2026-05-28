@@ -23,6 +23,10 @@ New-Item -ItemType Directory -Path $ReleasePath | Out-Null
 $ExcludeList = @(
     ".git",
     ".gitignore",
+    ".github",
+    ".cache",
+    ".netlify",
+    "venv",
     "dist",
     "Logs\*",
     "Core\Restore\Backups\*",
@@ -46,7 +50,7 @@ $RoboArgs = @(
     $RootPath,
     $ReleasePath,
     "/E",
-    "/XD", ".git", "dist", "Logs", "Backups",
+    "/XD", ".git", ".github", ".cache", ".netlify", "venv", "dist", "Logs", "Backups",
     "/XF", ".gitignore", "Run_Integration_Tests.ps1", "*.bak",
     "/NJH", "/NJS", "/NDL", "/NC", "/NS"
 )

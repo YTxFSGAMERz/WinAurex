@@ -1,0 +1,23 @@
+Windows Registry Editor Version 5.00
+
+; ==============================================================================
+; TWEAK: Configure Microsoft Edge Performance Policies
+; TARGET SYSTEM: Windows 10 & Windows 11
+; DESCRIPTION: Optimizes Edge memory and background CPU footprint.
+;              - Enables Sleeping Tabs to freeze idle tabs after 5 minutes (300 sec).
+;              - Disables Startup Boost so Edge doesn't run background processes 
+;                when closed.
+; SAFETY LEVEL: Safe & Reversible
+; ==============================================================================
+
+; --- Current User Policies ---
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge]
+"SleepingTabsEnabled"=dword:00000001
+"SleepingTabsTimeout"=dword:0000012c
+"StartupBoostEnabled"=dword:00000000
+
+; --- System-wide Policies ---
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
+"SleepingTabsEnabled"=dword:00000001
+"SleepingTabsTimeout"=dword:0000012c
+"StartupBoostEnabled"=dword:00000000

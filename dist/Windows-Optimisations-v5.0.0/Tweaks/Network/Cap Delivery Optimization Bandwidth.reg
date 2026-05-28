@@ -1,0 +1,26 @@
+Windows Registry Editor Version 5.00
+
+; ==============================================================================
+; TWEAK: Cap Delivery Optimization Bandwidth
+; TARGET SYSTEM: Windows 10 & Windows 11
+; DESCRIPTION: Restricts foreground/background download speed and upload speed 
+;              used by Windows Updates. Highly recommended for users on limited 
+;              data plans, cellular hotspots, or unstable high-latency connections.
+;              - Background Download capped at 100 KB/s (800 kbps)
+;              - Foreground Download capped at 1000 KB/s (8 Mbps)
+;              - Upload sharing bandwidth capped at 50 KB/s (400 kbps)
+; SAFETY LEVEL: Safe & Reversible
+; ==============================================================================
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config]
+; Capping background update download bandwidth (in KB/s)
+"DOMaxBackgroundDownloadBandwidth"=dword:00000064
+; Capping foreground update download bandwidth (in KB/s)
+"DOMaxForegroundDownloadBandwidth"=dword:000003e8
+; Capping background upload sharing bandwidth (in KB/s)
+"DOMaxUploadBandwidth"=dword:00000032
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization]
+"DOMaxBackgroundDownloadBandwidth"=dword:00000064
+"DOMaxForegroundDownloadBandwidth"=dword:000003e8
+"DOMaxUploadBandwidth"=dword:00000032
