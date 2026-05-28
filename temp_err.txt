@@ -1,9 +1,0 @@
-Get-CimInstance : Only administrators have permission to add, remove, or configure server software during a Terminal 
-services remote session. If you want to install or configure software on the server, contact your network 
-administrator. 
-At C:\Users\Admin\Documents\GitHub\Windows-Optimisations\Tools\System-Info\Generate_System_Report.ps1:15 char:14
-+ ... PowerPlan = Get-CimInstance -Namespace root\cimv2\power -Class Win32_ ...
-+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (root\cimv2\power:Win32_PowerPlan:String) [Get-CimInstance], CimException
-    + FullyQualifiedErrorId : HRESULT 0x80070668,Microsoft.Management.Infrastructure.CimCmdlets.GetCimInstanceCommand
- 
