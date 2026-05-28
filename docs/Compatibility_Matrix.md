@@ -6,6 +6,7 @@ This matrix tracks the tested compatibility of major module packs across the mos
 
 | Module Pack | Windows 10 (22H2) | Windows 11 (23H2) | Windows 11 (24H2) | Notes |
 | :--- | :---: | :---: | :---: | :--- |
+| **WPF Dashboard UI** | ✅ Supported | ✅ Supported | ✅ Supported | Requires .NET Framework 4.8+ (native on these builds) and PowerShell 5.1+. |
 | **Shell (Copilot/Widgets)** | ⚠️ Partial | ✅ Supported | ✅ Supported | Win10 lacks Copilot & Widgets in the same implementation as Win11. Scripts will safely bypass missing keys. |
 | **Explorer Productivity** | ✅ Supported | ✅ Supported | ✅ Supported | Win11 requires specific registry overrides to restore the Classic Context Menu. |
 | **Visual Effects** | ✅ Supported | ✅ Supported | ✅ Supported | |
