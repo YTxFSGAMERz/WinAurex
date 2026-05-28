@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Apply Privacy Camera Profile (Tweaks/Camera/Apply_Privacy_Camera_Profile.ps1)
 
@@ -16,7 +21,7 @@ Write-Host "This profile strictly locks down your camera for privacy and securit
 Write-Host "It disables lock screen camera access and completely blocks Windows"
 Write-Host "Apps from using your webcam."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Camera" -Action "Aborted Privacy Camera Profile Deployment"
@@ -29,13 +34,16 @@ Write-FrameworkLog -ModuleName "Camera" -Action "Starting Master Privacy Camera 
 $ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/2] Disabling Lock Screen Camera Access..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_LockScreen_Camera.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_LockScreen_Camera.ps1") -Force:$Force
 
 Write-Host "`n[2/2] Blocking Global App Camera Access..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_App_Camera_Access.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_App_Camera_Access.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Camera" -Action "Completed Master Privacy Camera Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Privacy Camera Profile deployment complete!" -ForegroundColor Green
-Write-Host "Press any key to exit..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+if (-not $Force) {
+    Write-Host "Press any key to exit..."
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+}
+
