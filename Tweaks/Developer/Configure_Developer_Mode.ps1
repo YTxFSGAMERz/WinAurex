@@ -42,4 +42,6 @@ Set-ItemProperty -Path $RegPath -Name "AllowDevelopmentWithoutDevLicense" -Value
 Write-FrameworkLog -ModuleName "Developer" -Action "Enabled Developer Mode"
 
 Write-Host "`n[SUCCESS] Windows Developer Mode has been enabled." -ForegroundColor Green
-Start-Sleep -Seconds 2
+
+
+$null = Read-Host "Press Enter to exit..."
