@@ -29,4 +29,6 @@ Set-ItemProperty -Path $RegistryPath -Name "(Default)" -Value "" -Force
 Write-FrameworkLog -ModuleName "Explorer" -Action "Restored Classic Context Menu" -OldValue $CurrentValue -NewValue "Classic_Windows10_Menu"
 
 Write-Host "`n[SUCCESS] Classic Context Menu has been restored." -ForegroundColor Green
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."
