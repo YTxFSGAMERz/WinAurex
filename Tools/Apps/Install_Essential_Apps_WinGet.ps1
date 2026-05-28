@@ -55,6 +55,8 @@ foreach ($Id in $Apps.Keys) {
 
 Write-Host "================================================="
 Write-Host "[SUCCESS] All essential applications have been processed!" -ForegroundColor Green
-Write-Host "Press any key to exit..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+if (-not $Force) {
+    Write-Host "Press any key to exit..."
+    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
+}
 
