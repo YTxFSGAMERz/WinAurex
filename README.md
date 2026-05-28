@@ -98,22 +98,43 @@ A clean, futuristic blueprint of the massive optimization matrix.
  ┣ 📂 Launchers/                # [CONTROLLERS] Initialization logic and shortcuts
  ┣ 📂 Core/                     # [INFRASTRUCTURE] Advanced Restore & Validation Engines
  ┣ 📂 Tweaks/                   # [CORE] The primary system optimization engine
- ┃  ┣ 📂 Appearance/ & Visual/  # UI decluttering and hardware-accelerated rendering profiles
+ ┃  ┣ 📂 Appearance/            # UI decluttering and aesthetic enhancements
  ┃  ┣ 📂 Apps/                  # Windows bloatware removal and sponsored app annihilation
- ┃  ┣ 📂 Background/ & Tasks/   # Background process suspension and scheduled task tuning
- ┃  ┣ 📂 Boot/ & Startup/       # Boot latency reduction and auto-start suppression
- ┃  ┣ 📂 Browser/ & Explorer/   # Edge telemetry destruction and file explorer productivity
- ┃  ┣ 📂 Display/ & GPU/        # Fullscreen focus overrides, MPO tweaks, and GPU routing
- ┃  ┣ 📂 Gaming/                # Game Mode enforcement and interrupt moderation tuning
- ┃  ┣ 📂 Network/ & Power/      # Bandwidth unthrottling, latency tweaks, and power plans
- ┃  ┣ 📂 Privacy/ & Security/   # Deep system telemetry blocks and smartscreen/firewall tuning
- ┃  ┣ 📂 Storage/               # Disk I/O caching, pagefile config, and aggressive cleanup
- ┃  ┣ 📂 Audio/ & Camera/       # Peripheral privacy lockdowns and enhancement overrides
- ┃  ┣ 📂 Search/ & Shell/       # Local search privacy and taskbar/widget telemetry blocks
+ ┃  ┣ 📂 Audio/                 # Audio latency and device telemetry tweaks
+ ┃  ┣ 📂 Background/            # Background process suspension
+ ┃  ┣ 📂 Boot/                  # Boot latency reduction and sequence optimization
+ ┃  ┣ 📂 Browser/               # Chromium/Edge background telemetry destruction
+ ┃  ┣ 📂 Camera/                # Webcam privacy lockdowns
+ ┃  ┣ 📂 Clipboard/             # Clipboard history and telemetry removal
+ ┃  ┣ 📂 Developer/             # WSL, Terminal, and Developer Mode configuration
  ┃  ┣ 📂 Diagnostics/           # Telemetry and activity history suppression
- ┃  ┣ 📂 Developer/             # WSL configuration and terminal/developer mode enabling
- ┃  ┣ 📂 Updates/ & Sync/       # Driver update blocks and OneDrive/Settings sync removal
- ┃  ┗ 📂 Troubleshooting/       # Clean boot managers and network stack reset tools
+ ┃  ┣ 📂 Display/               # Fullscreen focus overrides and MPO tweaks
+ ┃  ┣ 📂 Drivers/               # Hardware polling and driver telemetry controls
+ ┃  ┣ 📂 Explorer/              # File Explorer productivity and layout optimizations
+ ┃  ┣ 📂 Gaming/                # Game Mode enforcement and interrupt moderation tuning
+ ┃  ┣ 📂 GPU/                   # GPU hardware acceleration and routing preferences
+ ┃  ┣ 📂 Input/                 # Mouse and keyboard input latency reduction
+ ┃  ┣ 📂 Network/               # Bandwidth unthrottling and latency tweaks
+ ┃  ┣ 📂 Network-Diagnostics/   # Network stack resetting and troubleshooting
+ ┃  ┣ 📂 Power/                 # High-performance power plans and idle suppression
+ ┃  ┣ 📂 Privacy/               # Deep system telemetry blocks and tracking prevention
+ ┃  ┣ 📂 Profiles/              # Tweak-specific optimization profiles
+ ┃  ┣ 📂 Recursos/              # Legacy resources and translations
+ ┃  ┣ 📂 Resources/             # Core scripts and execution resources
+ ┃  ┣ 📂 Search/                # Local search privacy and web-results disabling
+ ┃  ┣ 📂 Security/              # SmartScreen, Firewall, and Defender tuning
+ ┃  ┣ 📂 Services/              # Unnecessary Windows Service disabling
+ ┃  ┣ 📂 Shell/                 # Taskbar, widgets, and context menu debloating
+ ┃  ┣ 📂 Startup/               # Auto-start suppression for reduced memory footprint
+ ┃  ┣ 📂 Storage/               # Disk I/O caching and pagefile configuration
+ ┃  ┣ 📂 Storage-Advanced/      # Deep NTFS optimization and hibernation management
+ ┃  ┣ 📂 Storage-Aggressive/    # Aggressive disk cleanup and indexer bloat removal
+ ┃  ┣ 📂 Sync/                  # OneDrive and Windows Settings sync removal
+ ┃  ┣ 📂 Tasks/                 # Scheduled task tuning and telemetry job deletion
+ ┃  ┣ 📂 Troubleshooting/       # Clean boot managers and diagnostic mode toggles
+ ┃  ┣ 📂 Updates/               # Granular Windows Update and driver update blocks
+ ┃  ┣ 📂 Visual/                # Hardware-accelerated rendering profiles and animation control
+ ┃  ┗ 📜 Apply Optimizations.bat # The unified batch execution script for the tweaks
  ┣ 📂 Tools/                    # [UTILITIES] Benchmarking, System Info, and App installations
  ┣ 📂 Profiles/                 # [PROFILES] Global combined optimization profiles
  ┣ 📂 Logs/                     # [TELEMETRY] Execution logs and diagnostics tracking
