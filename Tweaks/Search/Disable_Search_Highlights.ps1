@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Search Highlights (Tweaks/Search/Disable_Search_Highlights.ps1)
 
