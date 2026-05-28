@@ -382,6 +382,32 @@
                                 </Border>
                             </StackPanel>
                         </Grid>
+
+                        <Border Style="{StaticResource Card}" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource Header2}" Text="Observability Actions" Margin="0,0,0,10"/>
+                                
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Name="BtnAnalyzeFrameTiming" Grid.Column="0" Content="Analyze Frame Timing &amp; Queues" Height="40"/>
+                                    <Button Name="BtnMeasureBootTime" Grid.Column="2" Content="Measure Boot Time" Height="40"/>
+                                </Grid>
+                                
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Name="BtnGenerateReport" Grid.Column="0" Style="{StaticResource AccentButton}" Content="Generate Performance HTML Report" Height="40"/>
+                                    <Button Name="BtnDetectThirdParty" Grid.Column="2" Content="Detect Third-Party Benchmarks" Height="40"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
