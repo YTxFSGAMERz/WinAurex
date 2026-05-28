@@ -56,7 +56,9 @@ foreach ($File in $RegFiles) {
 Write-Host "`n[SUCCESS] Rollback completed from snapshot: $($LatestSnapshot.Name)" -ForegroundColor Green
 Write-Host "A restart is required to fully apply changes." -ForegroundColor Yellow
 if (-not $Force) {
+    if (-not $Force) {
     Write-Host "Press any key to exit..."
-    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
+}
 }
 
