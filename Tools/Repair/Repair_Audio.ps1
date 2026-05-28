@@ -46,7 +46,9 @@ Write-Host "`n================================================="
 Write-Host "[SUCCESS] Windows Audio stack has been restarted." -ForegroundColor Green
 Write-Host "If your game/app still has no sound, you may need to restart the app."
 if (-not $Force) {
+    if (-not $Force) {
     Write-Host "Press any key to exit..."
-    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
+}
 }
 
