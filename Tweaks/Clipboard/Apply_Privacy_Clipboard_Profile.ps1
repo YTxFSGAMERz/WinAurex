@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Apply Privacy Clipboard Profile (Tweaks/Clipboard/Apply_Privacy_Clipboard_Profile.ps1)
 
@@ -16,7 +21,7 @@ Write-Host "This profile strictly locks down your clipboard for privacy and secu
 Write-Host "It disables clipboard history (to prevent password snooping in RAM)"
 Write-Host "and completely blocks clipboard syncing to the Microsoft Cloud."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Clipboard" -Action "Aborted Privacy Clipboard Profile Deployment"
@@ -29,13 +34,16 @@ Write-FrameworkLog -ModuleName "Clipboard" -Action "Starting Master Privacy Clip
 $ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/2] Disabling Local Clipboard History..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Clipboard_History.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Clipboard_History.ps1") -Force:$Force
 
 Write-Host "`n[2/2] Disabling Cloud Clipboard Syncing..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Clipboard_Cloud_Sync.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Clipboard_Cloud_Sync.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Clipboard" -Action "Completed Master Privacy Clipboard Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Privacy Clipboard Profile deployment complete!" -ForegroundColor Green
-Write-Host "Press any key to exit..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+if (-not $Force) {
+    Write-Host "Press any key to exit..."
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+}
+
