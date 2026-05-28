@@ -35,4 +35,6 @@ Start-Process -FilePath "winget" -ArgumentList "install", "--id", "Microsoft.Win
 
 Write-FrameworkLog -ModuleName "Developer" -Action "Completed Windows Terminal Install"
 Write-Host "`n[SUCCESS] Windows Terminal has been installed." -ForegroundColor Green
-Start-Sleep -Seconds 2
+
+
+$null = Read-Host "Press Enter to exit..."
