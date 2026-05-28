@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Analyze SSD Health (Tweaks/Storage-Advanced/Analyze_SSD_Health.ps1)
 
@@ -48,3 +53,4 @@ foreach ($Disk in $Disks) {
 
 Write-Host "Press any key to exit..."
 $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+
