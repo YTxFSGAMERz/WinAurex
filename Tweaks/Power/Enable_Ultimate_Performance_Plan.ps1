@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Enable Ultimate Performance Plan (Tweaks/Power/Enable_Ultimate_Performance_Plan.ps1)
 
