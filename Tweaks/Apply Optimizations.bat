@@ -46,17 +46,14 @@ echo *6.- Disable Windows Update
 echo *7.- About the Optimizer
 echo.
 
-:: Options
-set /p op=Option: 
-if "%op%"=="" goto :start
-if "%op%"=="1" goto :recommended
-if "%op%"=="2" goto :optitweakspc
-if "%op%"=="3" goto :restorepoint
-if "%op%"=="4" goto :temp
-if "%op%"=="5" goto :defender
-if "%op%"=="6" goto :update
-if "%op%"=="7" goto :about
-if "%op%"=="" goto :Start
+:: Options (Automated)
+echo.
+echo =======================================================
+echo    APPLYING ALL RECOMMENDED OPTIMIZATIONS AUTOMATICALLY
+echo =======================================================
+echo.
+timeout /t 3 /nobreak
+goto :recommended
 
 :recommended
 cls
@@ -374,6 +371,10 @@ sc config "diagsvc" start= disabled
 echo === Clearing DNS cache ===
 echo.
 ipconfig /flushdns >nul 2>&1
+
+echo.
+echo === Applying Repository Master Recommended Profile ===
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Write-Host 'Applying Workstation Master Profile (Recommended)...'; echo 'y' | & '%~dp0Profiles\Apply_Workstation_Master_Profile.ps1'"
 
 timeout /t 3 /nobreak
 goto :done
