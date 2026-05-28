@@ -43,7 +43,9 @@ Write-FrameworkLog -ModuleName "Apps" -Action "Completed Master Debloat Orchestr
 
 Write-Host "`n[SUCCESS] Debloat Profile deployment complete!" -ForegroundColor Green
 if (-not $Force) {
+    if (-not $Force) {
     Write-Host "Press any key to exit..."
-    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
+}
 }
 
