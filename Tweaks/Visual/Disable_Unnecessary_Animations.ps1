@@ -32,4 +32,6 @@ Set-ItemProperty -Path $RegPathTaskbar -Name $NameTaskbar -Value 0 -Type DWord -
 Write-FrameworkLog -ModuleName "Visual" -Action "Disabled Taskbar Animations" -OldValue $CurrentValTaskbar -NewValue "0"
 
 Write-Host "`n[SUCCESS] Unnecessary window and taskbar animations disabled." -ForegroundColor Green
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."
