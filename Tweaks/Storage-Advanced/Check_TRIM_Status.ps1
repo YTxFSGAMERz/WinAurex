@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Check TRIM Status (Tweaks/Storage-Advanced/Check_TRIM_Status.ps1)
 
@@ -35,7 +40,7 @@ if ($TrimStatus -match "ReFS DisableDeleteNotify = 0") {
 }
 
 Write-Host "`nDo you want to force-enable TRIM for all file systems? (Y/N)"
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -match 'y') {
     Write-Host "`nEnabling TRIM..." -ForegroundColor Yellow
@@ -49,3 +54,4 @@ if ($Confirm -match 'y') {
 
 
 $null = Read-Host "Press Enter to exit..."
+
