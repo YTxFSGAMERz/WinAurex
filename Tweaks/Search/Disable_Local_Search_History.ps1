@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Local Search History (Tweaks/Search/Disable_Local_Search_History.ps1)
 
