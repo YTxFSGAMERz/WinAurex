@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Apply Diagnostics Privacy Profile (Tweaks/Diagnostics/Apply_Diagnostics_Privacy_Profile.ps1)
 
@@ -16,7 +21,7 @@ Write-Host "This profile disables OS-level telemetry and tracking."
 Write-Host "It blocks Windows from sending diagnostic data to Microsoft"
 Write-Host "and disables personalized ads/tips based on your usage."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Diagnostics" -Action "Aborted Diagnostics Privacy Profile Deployment"
@@ -29,13 +34,16 @@ Write-FrameworkLog -ModuleName "Diagnostics" -Action "Starting Master Diagnostic
 $ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/2] Disabling Diagnostic Data Collection (Telemetry)..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Diagnostic_Data.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Diagnostic_Data.ps1") -Force:$Force
 
 Write-Host "`n[2/2] Disabling Tailored Experiences (Ads/Tips)..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Tailored_Experiences.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Tailored_Experiences.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Diagnostics" -Action "Completed Master Diagnostics Privacy Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Diagnostics Privacy Profile deployment complete!" -ForegroundColor Green
-Write-Host "Press any key to exit..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+if (-not $Force) {
+    Write-Host "Press any key to exit..."
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+}
+
