@@ -21,7 +21,7 @@ Write-Host "Starting integration tests on $Total scripts..." -ForegroundColor Cy
 foreach ($Script in $ScriptsToTest) {
     Write-Host "Testing: $($Script.Name)..." -NoNewline
     
-    $Args = "/c echo Y | powershell -NoProfile -ExecutionPolicy Bypass -File `"$($Script.FullName)`""
+    $Args = "/c powershell -NoProfile -ExecutionPolicy Bypass -File `"$($Script.FullName)`" -Force"
     $process = Start-Process cmd -ArgumentList $Args -NoNewWindow -Wait -PassThru -RedirectStandardOutput "temp_out.txt" -RedirectStandardError "temp_err.txt"
     
     $StdOut = Get-Content "temp_out.txt" -Raw -ErrorAction SilentlyContinue
