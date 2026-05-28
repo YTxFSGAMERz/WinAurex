@@ -1,0 +1,13 @@
+Windows Registry Editor Version 5.00
+
+; ==============================================================================
+; TWEAK: Enable Optimizations for Windowed Games
+; TARGET SYSTEM: Windows 11 ONLY (Build 22557 or later)
+; DESCRIPTION: Upgrades presentation model for legacy windowed/borderless games
+;              from traditional blt-model to modern low-latency flip-model.
+;              Enables Variable Refresh Rate (VRR) and Auto HDR in windowed modes.
+; SAFETY LEVEL: Safe & Reversible
+; ==============================================================================
+
+[HKEY_CURRENT_USER\Software\Microsoft\DirectX\UserGpuPreferences]
+"DirectXUserGlobalSettings"="SwapEffectUpgradeEnable=1;VRROptimizeEnable=1;AutoHDREnable=1;"
