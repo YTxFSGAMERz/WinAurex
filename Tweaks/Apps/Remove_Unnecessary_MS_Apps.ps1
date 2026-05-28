@@ -56,4 +56,6 @@ foreach ($App in $MSApps) {
 
 Write-Host "`n[SUCCESS] Successfully removed $RemovedCount unnecessary Microsoft apps." -ForegroundColor Green
 Write-Host "Unused default apps like 3D Viewer and Feedback Hub have been uninstalled." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."
