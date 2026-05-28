@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Transparency Effects (Tweaks/Visual/Disable_Transparency.ps1)
 
