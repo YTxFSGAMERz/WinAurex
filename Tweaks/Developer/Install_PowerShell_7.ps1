@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Install PowerShell 7 (Tweaks/Developer/Install_PowerShell_7.ps1)
 
@@ -15,7 +20,7 @@ Write-Host "================================================="
 Write-Host "PowerShell 7 is the modern, open-source, cross-platform"
 Write-Host "version of PowerShell that runs side-by-side with Windows PowerShell 5.1."
 Write-Host "Press 'Y' to install or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Developer" -Action "Aborted PowerShell 7 Install"
@@ -39,3 +44,4 @@ Write-Host "It will appear in your Start Menu as 'PowerShell' (black icon)."
 
 
 $null = Read-Host "Press Enter to exit..."
+
