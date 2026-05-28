@@ -1,0 +1,8 @@
+The operating system does not include Windows Defender as it consumes too much RAM and processor on very low-end PCs.
+
+I no longer use antivirus. My recommendation is that for every file you analyze, pass it through VirusTotal or tria.ge
+since it analyzes it with multiple antivirus programs and gives you the final verdict.
+
+If you still want to install antivirus, I recommend the following: MalwareBytes, NOD32 (eset), Kaspersky.
+
+DO NOT USE AVG, AVAST, AVIRA OR AVG AS THEY ARE MORE VIRUS THAN ANTIVIRUS (in my experience).
