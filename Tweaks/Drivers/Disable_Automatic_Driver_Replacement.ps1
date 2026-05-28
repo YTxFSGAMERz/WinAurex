@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Automatic Driver Replacement (Tweaks/Drivers/Disable_Automatic_Driver_Replacement.ps1)
 
