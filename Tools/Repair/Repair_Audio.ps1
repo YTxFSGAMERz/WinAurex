@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Repair Audio (Tools/Repair/Repair_Audio.ps1)
 
@@ -16,7 +21,7 @@ Write-Host "This will restart the core Windows Audio services"
 Write-Host "to fix sudden 'No Audio', crackling, or desync issues"
 Write-Host "without needing a full system reboot."
 Write-Host "Press 'Y' to begin or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Repair" -Action "Aborted Audio Repair"
@@ -40,5 +45,8 @@ Write-FrameworkLog -ModuleName "Repair" -Action "Completed Audio Stack Repair"
 Write-Host "`n================================================="
 Write-Host "[SUCCESS] Windows Audio stack has been restarted." -ForegroundColor Green
 Write-Host "If your game/app still has no sound, you may need to restart the app."
-Write-Host "Press any key to exit..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+if (-not $Force) {
+    Write-Host "Press any key to exit..."
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+}
+
