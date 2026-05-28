@@ -1,0 +1,282 @@
+<Window 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Windows Configuration &amp; Optimization Framework" 
+    Height="650" Width="900" 
+    Background="#121212" 
+    WindowStartupLocation="CenterScreen" 
+    FontFamily="Segoe UI" 
+    ResizeMode="CanMinimize">
+    
+    <Window.Resources>
+        <!-- Standard Button Style -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#1e1e1e"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="BorderBrush" Value="#333333"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2a2a2a"/>
+                    <Setter Property="BorderBrush" Value="#00adb5"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#00adb5"/>
+                    <Setter Property="Foreground" Value="#ffffff"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Primary Accent Button -->
+        <Style x:Key="AccentButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#00adb5"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="BorderBrush" Value="#00adb5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#00cfd9"/>
+                    <Setter Property="BorderBrush" Value="#00cfd9"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#008a90"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Danger Button -->
+        <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#1e1e1e"/>
+            <Setter Property="Foreground" Value="#ff5722"/>
+            <Setter Property="BorderBrush" Value="#ff5722"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#ff5722"/>
+                    <Setter Property="Foreground" Value="#ffffff"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- TabControl Style -->
+        <Style TargetType="TabControl">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style TargetType="TabItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#888888"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="#00adb5"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#ffffff"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- TextBlocks -->
+        <Style x:Key="Header1" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#00adb5"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+
+        <Style x:Key="Header2" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,15,0,10"/>
+        </Style>
+
+        <Style x:Key="BodyText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#a0a0a0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <!-- Cards -->
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="#1e1e1e"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Style="{StaticResource Header1}" Text="Optimization Framework"/>
+        </StackPanel>
+
+        <!-- Main Content (Tabs) -->
+        <TabControl Grid.Row="1">
+            <!-- TABS: Profiles -->
+            <TabItem Header="PROFILES">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10,20,10,10">
+                        <TextBlock Style="{StaticResource BodyText}" Text="Select an orchestrator profile below. Applying a profile automatically captures a state snapshot for secure rollback." Margin="0,0,0,20"/>
+                        
+                        <!-- Profile Card 1 -->
+                        <Border Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <TextBlock Style="{StaticResource Header2}" Text="Max Performance Profile" Margin="0,0,0,5"/>
+                                    <TextBlock Style="{StaticResource BodyText}" Text="Target: Esports Gamers, Audio Producers, Latency Obsessives. Strips telemetry, disables mouse acceleration, enforces WASAPI exclusive mode."/>
+                                </StackPanel>
+                                <Button Name="BtnApplyMaxPerf" Grid.Column="1" Style="{StaticResource AccentButton}" Content="Apply Profile" Width="120" Height="40"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Profile Card 2 -->
+                        <Border Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <TextBlock Style="{StaticResource Header2}" Text="Balanced Creator Profile" Margin="0,0,0,5"/>
+                                    <TextBlock Style="{StaticResource BodyText}" Text="Target: Developers, Video Editors, Power Users. Optimizes Explorer and removes UI bloat while retaining Windows Update and standard drivers."/>
+                                </StackPanel>
+                                <Button Name="BtnApplyBalanced" Grid.Column="1" Content="Apply Profile" Width="120" Height="40"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Profile Card 3 -->
+                        <Border Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <TextBlock Style="{StaticResource Header2}" Text="Enterprise Compliance Profile" Margin="0,0,0,5"/>
+                                    <TextBlock Style="{StaticResource BodyText}" Text="Target: SysAdmins, Corporate Devices. Enforces HVCI/Memory Integrity, strict firewall rules, telemetry isolation, blocks consumer bloatware."/>
+                                </StackPanel>
+                                <Button Name="BtnApplyEnterprise" Grid.Column="1" Content="Apply Profile" Width="120" Height="40"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- TABS: Observability -->
+            <TabItem Header="OBSERVABILITY">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10,20,10,10">
+                        <TextBlock Style="{StaticResource BodyText}" Text="Gather native telemetry to diagnose system bottlenecks, frame pacing, and scheduling behavior." Margin="0,0,0,20"/>
+                        
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource Header2}" Text="Native Telemetry Analytics" Margin="0,0,0,10"/>
+                                <TextBlock Style="{StaticResource BodyText}" Text="Measure DPC latency, CPU queue depth, boot time, and generate a complete HTML health report." Margin="0,0,0,20"/>
+                                
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Name="BtnAnalyzeFrameTiming" Grid.Column="0" Content="Analyze Frame Timing &amp; Queues" Height="40"/>
+                                    <Button Name="BtnMeasureBootTime" Grid.Column="2" Content="Measure Boot Time" Height="40"/>
+                                </Grid>
+                                
+                                <Button Name="BtnGenerateReport" Style="{StaticResource AccentButton}" Content="Generate System Performance HTML Report" Height="40" Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource Header2}" Text="Third-Party Integrations" Margin="0,0,0,10"/>
+                                <TextBlock Style="{StaticResource BodyText}" Text="Scan for installed tools like Geekbench or CrystalDiskMark to hook into." Margin="0,0,0,20"/>
+                                <Button Name="BtnDetectThirdParty" Content="Detect Third-Party Benchmarks" Height="40"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- TABS: Rollback Engine -->
+            <TabItem Header="ROLLBACK ENGINE">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10,20,10,10">
+                        <TextBlock Style="{StaticResource BodyText}" Text="View captured snapshots and safely rollback configuration states." Margin="0,0,0,20"/>
+                        
+                        <Border Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <TextBlock Style="{StaticResource Header2}" Text="Transaction Manifests" Margin="0,0,0,10"/>
+                                    <ListView Name="ListTransactions" Background="#121212" Foreground="#ffffff" BorderBrush="#333333" Height="250">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="ID" DisplayMemberBinding="{Binding TransactionID}" Width="150"/>
+                                                <GridViewColumn Header="Profile" DisplayMemberBinding="{Binding Profile}" Width="120"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                    <Button Name="BtnRefreshTransactions" Content="Refresh List" Margin="0,10,0,0"/>
+                                </StackPanel>
+                                
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Style="{StaticResource Header2}" Text="Transaction Details" Margin="0,0,0,10"/>
+                                    <Border Background="#121212" BorderBrush="#333333" BorderThickness="1" CornerRadius="4" Padding="15" Height="250">
+                                        <ScrollViewer>
+                                            <TextBlock Name="TxtTransactionDetails" Style="{StaticResource BodyText}" Text="Select a transaction to preview changes..."/>
+                                        </ScrollViewer>
+                                    </Border>
+                                    <Button Name="BtnRollbackSelected" Style="{StaticResource DangerButton}" Content="Rollback Selected Transaction" Margin="0,10,0,0" Height="40" IsEnabled="False"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+        <!-- Footer -->
+        <Grid Grid.Row="2" Margin="0,20,0,0">
+            <TextBlock Style="{StaticResource BodyText}" Text="v5.0 Enterprise Edition" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Name="TxtStatus" Style="{StaticResource BodyText}" Text="Status: Ready" Foreground="#00adb5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>
