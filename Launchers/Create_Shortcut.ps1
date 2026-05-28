@@ -2,6 +2,8 @@
 # Create Desktop / Start Menu Shortcut
 
 param(
+    [switch]$Force,
+
     [ValidateSet("Desktop", "StartMenu")]
     [string]$Destination = "Desktop",
 
