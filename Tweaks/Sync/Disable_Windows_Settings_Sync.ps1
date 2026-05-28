@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Windows Settings Sync (Tweaks/Sync/Disable_Windows_Settings_Sync.ps1)
 
