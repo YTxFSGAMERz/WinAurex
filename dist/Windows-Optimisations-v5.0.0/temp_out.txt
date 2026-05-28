@@ -1,6 +1,0 @@
-=================================================
-   FRAMEWORK LOG CLEANUP UTILITY
-=================================================
-This will permanently delete all framework operation logs in:
-C:\Users\Admin\Documents\GitHub\Windows-Optimisations\Tools\System-Info\..\..\Logs
-Press 'Y' to confirm deletion or any other key to cancel...

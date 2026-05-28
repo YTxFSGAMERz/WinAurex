@@ -1,3 +1,0 @@
-mkdocs-material[social]>=9.5.0
-mkdocs-mermaid2-plugin>=0.6.0
-mkdocs-glightbox>=0.3.0
