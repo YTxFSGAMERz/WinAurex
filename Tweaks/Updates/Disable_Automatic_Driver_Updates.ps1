@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Automatic Driver Updates (Tweaks/Updates/Disable_Automatic_Driver_Updates.ps1)
 
