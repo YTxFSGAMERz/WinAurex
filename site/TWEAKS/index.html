@@ -1019,10 +1019,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#13-apply-optimizationsbat-walkthrough" class="md-nav__link">
+  <a href="#13-wpf-dashboard-walkthrough" class="md-nav__link">
     <span class="md-ellipsis">
       
-        13. Apply Optimizations.bat Walkthrough
+        13. WPF Dashboard Walkthrough
       
     </span>
   </a>
@@ -1798,10 +1798,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#13-apply-optimizationsbat-walkthrough" class="md-nav__link">
+  <a href="#13-wpf-dashboard-walkthrough" class="md-nav__link">
     <span class="md-ellipsis">
       
-        13. Apply Optimizations.bat Walkthrough
+        13. WPF Dashboard Walkthrough
       
     </span>
   </a>
@@ -1895,7 +1895,7 @@
 10. <a href="#10-storage-tweaks"><strong>Storage</strong></a>: Safe temporary folder cleaners and Storage Sense toggles.
 11. <a href="#11-storage-aggressive-tweaks"><strong>Storage-Aggressive</strong></a>: System component store and WinSXS cleanups via DISM.
 12. <a href="#12-troubleshooting-tweaks"><strong>Troubleshooting</strong></a>: Diagnostic Clean Boot management.
-13. <a href="#13-apply-optimizationsbat-walkthrough"><strong>Apply Optimizations Script</strong></a>: The main interactive control suite.</p>
+13. <a href="#13-wpf-dashboard-walkthrough"><strong>WPF Dashboard Walkthrough</strong></a>: The main interactive control suite.</p>
 <hr>
 <h2 id="1-appearance-tweaks">1. Appearance Tweaks<a class="headerlink" href="#1-appearance-tweaks" title="Permanent link">¶</a></h2>
 <ul>
@@ -2103,26 +2103,21 @@ Disabling transparency and transitions is highly recommended for legacy systems 
 <li><code>Clean Boot Manager.ps1</code>: A PowerShell diagnostic utility that disables all non-Microsoft startup applications and services, creating an isolated boot profile. Extremely useful for identifying game-crashing software components or overlay conflicts.</li>
 </ul>
 <hr>
-<h2 id="13-apply-optimizationsbat-walkthrough">13. Apply Optimizations.bat Walkthrough<a class="headerlink" href="#13-apply-optimizationsbat-walkthrough" title="Permanent link">¶</a></h2>
+<h2 id="13-wpf-dashboard-walkthrough">13. WPF Dashboard Walkthrough<a class="headerlink" href="#13-wpf-dashboard-walkthrough" title="Permanent link">¶</a></h2>
 <ul>
-<li><strong>Path</strong>: <code>Tweaks/Apply Optimizations.bat</code></li>
+<li><strong>Path</strong>: <code>Start.bat</code> -&gt; <code>Launch_Dashboard.ps1</code></li>
 <li><strong>Purpose</strong>: The central menu interface.</li>
 </ul>
-<p>This interactive batch file acts as a centralized dashboard. Right-click and run as Administrator to access these options:</p>
+<p>The framework now features a stunning native PowerShell + WPF XAML graphical dashboard. Double-click <code>Start.bat</code> to launch it. The dashboard consists of multiple tabs:</p>
 <ol>
-<li><strong>Apply Recommended Optimizations</strong>:<ul>
-<li>Alters the <strong>svchost split threshold</strong> according to system RAM to prevent excessive process subdivisions.</li>
-<li>Disables Wi-Fi Sense hotspot reporting.</li>
-<li>Deactivates update-related background tasks and Windows Defender telemetry routines.</li>
-<li>Applies standard MMCSS gaming thread priorities.</li>
-<li>Configures graphics scheduler Mode to HwSchMode = 2.</li>
-<li>Sets slow, telemetry-heavy services to Manual or Disabled.</li>
+<li><strong>Optimization Profiles</strong>:<ul>
+<li><strong>Max Performance Mode</strong>: Targets the absolute lowest DPC latency and highest thread priorities for elite gamers.</li>
+<li><strong>Balanced Creator Mode</strong>: Optimizes Windows Explorer and removes bloatware without disabling Windows Updates or breaking creative apps.</li>
+<li><strong>Enterprise Compliance Mode</strong>: Reverts the OS into a highly secure, privacy-hardened state for corporate usage.</li>
 </ul>
 </li>
-<li><strong>System Optimizations</strong>: A sub-menu to apply localized tweaks such as:<ul>
-<li>Disabling full-screen DXGI game optimizations.</li>
-<li>Disabling background execution apps.</li>
-<li>Disabling Telemetry registries.</li>
+<li><strong>Observability Telemetry</strong>: A real-time dashboard leveraging high-speed <code>.NET Diagnostics</code> to monitor DPC latency proxy speeds, Available RAM, Uptime, and Active Process Counts.</li>
+<li><strong>Rollback Engine</strong>: Safely displays your JSON snapshot history, allowing you to instantly revert any registry/service modifications with a single click.<ul>
 <li>Reducing visual effects quality parameters.</li>
 <li>Applying MMCSS gaming priority.</li>
 <li>Setting active game processes (like CS:GO, CS2, Fortnite, Minecraft, GTA V) to high performance CPU scheduling execution properties.</li>
