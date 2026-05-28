@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Enable Game Mode (Tweaks/GPU/Enable_Game_Mode.ps1)
 
