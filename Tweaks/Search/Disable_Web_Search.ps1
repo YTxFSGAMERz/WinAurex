@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Web Search in Start Menu (Tweaks/Search/Disable_Web_Search.ps1)
 
