@@ -27,4 +27,6 @@ Set-ItemProperty -Path $RegistryPath -Name $Name -Value 0 -Type DWord -Force
 Write-FrameworkLog -ModuleName "Search" -Action "Disabled Local Search History" -OldValue $CurrentValue -NewValue "0"
 
 Write-Host "`n[SUCCESS] Local device search history has been disabled." -ForegroundColor Green
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."
