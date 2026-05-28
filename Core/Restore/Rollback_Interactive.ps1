@@ -6,11 +6,11 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     Exit
 }
 
-$EngineDir = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "Engine"
+$EngineDir = Join-Path -Path $PSScriptRoot -ChildPath "Engine"
 Import-Module (Join-Path -Path $EngineDir -ChildPath "ValidationEngine.psm1") -Force
 Import-Module (Join-Path -Path $EngineDir -ChildPath "RestoreEngine.psm1") -Force
 
-$BackupsDir = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "Backups"
+$BackupsDir = Join-Path -Path $PSScriptRoot -ChildPath "Backups"
 
 function Show-Menu {
     Clear-Host

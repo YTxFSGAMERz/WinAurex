@@ -6,7 +6,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     Exit
 }
 
-$HelpersDir = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "..\..\Core\Helpers"
+$HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
 Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
@@ -26,7 +26,7 @@ if ($Confirm -notmatch 'y') {
 
 Write-FrameworkLog -ModuleName "Services" -Action "Starting Master Clean Services Orchestrator" -Level WARNING
 
-$ScriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
+$ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/1] Disabling Telemetry Background Services..." -ForegroundColor Cyan
 & (Join-Path -Path $ScriptDir -ChildPath "Disable_Telemetry_Services.ps1")

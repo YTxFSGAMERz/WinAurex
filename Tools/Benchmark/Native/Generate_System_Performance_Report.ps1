@@ -6,7 +6,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     Exit
 }
 
-$ReportDir = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "..\Reports"
+$ReportDir = Join-Path -Path $PSScriptRoot -ChildPath "..\Reports"
 if (-not (Test-Path $ReportDir)) { New-Item -Path $ReportDir -ItemType Directory -Force | Out-Null }
 
 $Timestamp = Get-Date -Format "yyyyMMdd_HHmmss"

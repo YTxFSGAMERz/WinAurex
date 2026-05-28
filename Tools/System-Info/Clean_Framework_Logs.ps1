@@ -1,7 +1,7 @@
 # Windows Configuration & Optimization Framework
 # Clean Framework Logs (Tools/System-Info/Clean_Framework_Logs.ps1)
 
-$LogsDir = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "..\..\Logs"
+$LogsDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Logs"
 
 Write-Host "================================================="
 Write-Host "   FRAMEWORK LOG CLEANUP UTILITY" -ForegroundColor Cyan

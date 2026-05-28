@@ -11,7 +11,7 @@ Add-Type -AssemblyName PresentationFramework
 Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName WindowsBase
 
-$RootPath = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
+$RootPath = $PSScriptRoot
 $XamlPath = Join-Path -Path $RootPath -ChildPath "GUI\Dashboard.xaml"
 
 if (-not (Test-Path $XamlPath)) {

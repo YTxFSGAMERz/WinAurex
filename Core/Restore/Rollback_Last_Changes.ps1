@@ -6,10 +6,10 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     Exit
 }
 
-$HelpersDir = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "..\Helpers"
+$HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\Helpers"
 Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-$BackupDir = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "Backups"
+$BackupDir = Join-Path -Path $PSScriptRoot -ChildPath "Backups"
 if (-not (Test-Path $BackupDir)) { 
     Write-Host "[ERROR] No Backups directory found. Cannot rollback." -ForegroundColor Red
     Exit 

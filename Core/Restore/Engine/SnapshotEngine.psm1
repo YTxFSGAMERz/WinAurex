@@ -17,7 +17,7 @@ function New-Transaction {
     $TransactionID = "TXN-$Timestamp-$(Get-Random -Minimum 1000 -Maximum 9999)"
     $OSBuild = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").CurrentBuild
     
-    $BackupRoot = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "..\Backups"
+    $BackupRoot = Join-Path -Path $PSScriptRoot -ChildPath "..\Backups"
     $Global:TransactionDir = Join-Path -Path $BackupRoot -ChildPath "${Timestamp}_${ProfileName}"
     
     if (-not (Test-Path $Global:TransactionDir)) {

@@ -8,7 +8,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 # Import Framework Logging
-$HelpersDir = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "..\Helpers"
+$HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\Helpers"
 Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-FrameworkLog -ModuleName "RestoreEngine" -Action "Initiating System Restore Point Creation"

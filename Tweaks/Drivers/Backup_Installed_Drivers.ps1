@@ -6,9 +6,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     Exit
 }
 
-$HelpersDir = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "..\..\Core\Helpers"
+$HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
 Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
-$BackupRoot = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "..\..\Core\Restore\Drivers"
+$BackupRoot = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Restore\Drivers"
 
 Write-Host "================================================="
 Write-Host "   DRIVER BACKUP UTILITY (DISM)" -ForegroundColor Cyan

@@ -6,7 +6,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     Exit
 }
 
-$HelpersDir = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "..\..\Core\Helpers"
+$HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
 Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
@@ -25,7 +25,7 @@ if ($Confirm -notmatch 'y') {
 
 Write-FrameworkLog -ModuleName "Explorer" -Action "Starting Master Productivity Explorer Orchestrator" -Level WARNING
 
-$ScriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
+$ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/5] Configuring Developer View (Extensions, Hidden Files)..." -ForegroundColor Cyan
 & (Join-Path -Path $ScriptDir -ChildPath "Configure_Developer_View.ps1")

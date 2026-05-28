@@ -1,7 +1,7 @@
 # Windows Configuration & Optimization Framework
 # Centralized Logging Module (Core/Helpers/Logging.psm1)
 
-$Global:LogDirectory = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "..\..\Logs"
+$Global:LogDirectory = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Logs"
 $Global:LogDirectory = [System.IO.Path]::GetFullPath($Global:LogDirectory)
 
 if (-not (Test-Path -Path $Global:LogDirectory)) {

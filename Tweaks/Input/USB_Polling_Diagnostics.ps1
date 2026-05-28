@@ -50,7 +50,7 @@ if ($FoundIssues) {
         Set-ItemProperty -Path $USBRegistryPath -Name "DisableSelectiveSuspend" -Value 1 -Type DWord -Force
         Write-Host "`n[SUCCESS] USB Selective Suspend has been disabled." -ForegroundColor Green
         
-        $HelpersDir = Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent) -ChildPath "..\..\Core\Helpers"
+        $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
         Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force -ErrorAction SilentlyContinue
         Write-FrameworkLog -ModuleName "Input" -Action "Disabled USB Selective Suspend"
     } else {
