@@ -34,4 +34,6 @@ Write-FrameworkLog -ModuleName "Updates" -Action "Disabled Delivery Optimization
 
 Write-Host "`n[SUCCESS] Windows Update Delivery Optimization (P2P) has been disabled." -ForegroundColor Green
 Write-Host "Your PC will no longer silently upload Windows updates to other computers on the internet." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."
