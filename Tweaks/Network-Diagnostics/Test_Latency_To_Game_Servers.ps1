@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Test Latency To Game Servers (Tweaks/Network-Diagnostics/Test_Latency_To_Game_Servers.ps1)
 
@@ -39,3 +44,4 @@ Write-Host "try running 'Reset_Network_Stack.ps1' or check your router."
 Write-Host "================================================="
 Write-Host "Press any key to exit..."
 $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+
