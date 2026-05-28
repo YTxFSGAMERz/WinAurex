@@ -51,6 +51,12 @@ $TxtTransactionDetails = Find-Control "TxtTransactionDetails"
 $BtnRollbackSelected = Find-Control "BtnRollbackSelected"
 $TxtStatus = Find-Control "TxtStatus"
 
+# Observability UI Hooks
+$TxtDpcLatency = Find-Control "TxtDpcLatency"
+$TxtMemAvailable = Find-Control "TxtMemAvailable"
+$TxtUptime = Find-Control "TxtUptime"
+$TxtProcessCount = Find-Control "TxtProcessCount"
+
 # --- STATUS UPDATER ---
 function Set-Status {
     param([string]$Message, [string]$Color = "#00adb5")
@@ -109,6 +115,41 @@ $BtnDetectThirdParty.Add_Click({
     Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"$TempCmd`""
 })
 
+# --- OBSERVABILITY LIVE POLLING (Continuous) ---
+$Timer = New-Object System.Windows.Threading.DispatcherTimer
+$Timer.Interval = [TimeSpan]::FromSeconds(2)
+$Timer.Add_Tick({
+    # 1. Available Memory & Uptime via WMI
+    try {
+        $OS = Get-WmiObject -Class Win32_OperatingSystem -ErrorAction SilentlyContinue
+        if ($OS) {
+            $FreeMemMB = [math]::Round($OS.FreePhysicalMemory / 1024)
+            $TxtMemAvailable.Text = "$FreeMemMB MB"
+
+            $LastBoot = $OS.ConvertToDateTime($OS.LastBootUpTime)
+            $Uptime = (Get-Date) - $LastBoot
+            $TxtUptime.Text = "$($Uptime.Days)d $($Uptime.Hours)h $($Uptime.Minutes)m"
+        }
+    } catch { }
+
+    # 2. Process Count
+    try {
+        $ProcCount = (Get-Process -ErrorAction SilentlyContinue).Count
+        $TxtProcessCount.Text = "$ProcCount"
+    } catch { }
+
+    # 3. DPC Latency (Interrupts/sec or DPCs/sec)
+    try {
+        # Using Interrupts/sec as a proxy for DPC latency spikes
+        $Counter = Get-Counter "\Processor(_Total)\Interrupts/sec" -SampleInterval 1 -MaxSamples 1 -ErrorAction SilentlyContinue
+        if ($Counter) {
+            $Interrupts = [math]::Round($Counter.CounterSamples[0].CookedValue)
+            $TxtDpcLatency.Text = "$Interrupts"
+        }
+    } catch { }
+})
+$Timer.Start()
+
 # --- ROLLBACK TAB LOGIC ---
 function Load-Transactions {
     $ListTransactions.Items.Clear()
@@ -116,10 +157,22 @@ function Load-Transactions {
         $Manifests = Get-ChildItem -Path $BackupsDir -Filter "manifest.json" -Recurse
         foreach ($M in $Manifests) {
             $Data = Get-Content $M.FullName | ConvertFrom-Json
+            
+            # Format the Date nicely
+            $DateFormatted = "Unknown"
+            if ($Data.Timestamp) {
+                try {
+                    $ParsedDate = [datetime]::ParseExact($Data.Timestamp, "yyyyMMdd_HHmmss", $null)
+                    $DateFormatted = $ParsedDate.ToString("yyyy-MM-dd HH:mm:ss")
+                } catch {
+                    $DateFormatted = $Data.Timestamp
+                }
+            }
+
             $Item = [PSCustomObject]@{
                 TransactionID = $Data.TransactionID
                 Profile = $Data.Profile
-                Timestamp = $Data.Timestamp
+                Date = $DateFormatted
                 ManifestPath = $M.FullName
             }
             $ListTransactions.Items.Add($Item) | Out-Null
