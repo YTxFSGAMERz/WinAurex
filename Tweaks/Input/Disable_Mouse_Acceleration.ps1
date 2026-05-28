@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Mouse Acceleration (Tweaks/Input/Disable_Mouse_Acceleration.ps1)
 
