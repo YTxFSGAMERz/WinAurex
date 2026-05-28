@@ -27,4 +27,6 @@ Write-FrameworkLog -ModuleName "Diagnostics" -Action "Disabled Tailored Experien
 
 Write-Host "`n[SUCCESS] Windows Tailored Experiences have been disabled." -ForegroundColor Green
 Write-Host "Microsoft will no longer use your diagnostic data to serve personalized ads, tips, or recommendations." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."
