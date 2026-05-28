@@ -71,14 +71,14 @@ Instead, every modification strictly adheres to our engineering standards:
   
 | MODULE | DOMAIN | FUNCTIONALITY |
 | :--- | :--- | :--- |
-| 🎮 **GAMING** | Execution | Forces dedicated resources, disables background polling, lowers input latency |
-| 🛡️ **PRIVACY** | Security | Severs Microsoft telemetry connections, hardens microphone/camera permissions |
-| ⚡ **STARTUP** | Boot | Eliminates non-critical boot sequences for instantaneous OS initialization |
-| 🌐 **NETWORK** | Connectivity | Adjusts TCP parameters and Delivery Optimization caps for lower ping |
-| 📦 **STORAGE** | File System | Unlocks deep SSD optimizations and aggressive cache purges |
-| 🖥️ **DISPLAY** | Rendering | Tunes desktop window manager (DWM) and bypasses fullscreen optimizations |
-| 🔧 **DIAGNOSTICS** | Troubleshooting | Safe-mode toggles, component isolation, and diagnostic metric collection |
-| 🌙 **BROWSER** | Web | Eradicates background WebView/Edge bloat and background updating processes |
+| 🎮&nbsp;**GAMING** | Execution | Forces dedicated resources, disables background polling, lowers input latency |
+| 🛡️&nbsp;**PRIVACY** | Security | Severs Microsoft telemetry connections, hardens microphone/camera permissions |
+| ⚡&nbsp;**STARTUP** | Boot | Eliminates non-critical boot sequences for instantaneous OS initialization |
+| 🌐&nbsp;**NETWORK** | Connectivity | Adjusts TCP parameters and Delivery Optimization caps for lower ping |
+| 📦&nbsp;**STORAGE** | File System | Unlocks deep SSD optimizations and aggressive cache purges |
+| 🖥️&nbsp;**DISPLAY** | Rendering | Tunes desktop window manager (DWM) and bypasses fullscreen optimizations |
+| 🔧&nbsp;**DIAGNOSTICS** | Troubleshooting | Safe-mode toggles, component isolation, and diagnostic metric collection |
+| 🌙&nbsp;**BROWSER** | Web | Eradicates background WebView/Edge bloat and background updating processes |
 
 </div>
 
