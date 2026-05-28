@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Clipboard History (Tweaks/Clipboard/Disable_Clipboard_History.ps1)
 
