@@ -1,0 +1,14 @@
+Windows Registry Editor Version 5.00
+
+; ==============================================================================
+; TWEAK: Disable Microphone Access
+; TARGET SYSTEM: Windows 10 & Windows 11
+; DESCRIPTION: Denies application permissions to access system microphone/audio input.
+; SAFETY LEVEL: Safe & Reversible
+; ==============================================================================
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone]
+"Value"="Deny"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone]
+"Value"="Deny"
