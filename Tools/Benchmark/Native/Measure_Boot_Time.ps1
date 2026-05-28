@@ -47,5 +47,5 @@ foreach ($Event in $Events) {
 Write-Host "`n[INFO] 'Main Path' is the time taken to reach the desktop and be usable."
 Write-Host "[INFO] 'Total Boot Time' includes all background startup apps loading."
 Write-Host "`nPress any key to exit..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
 
