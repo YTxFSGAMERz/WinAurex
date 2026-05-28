@@ -33,4 +33,6 @@ Write-FrameworkLog -ModuleName "Search" -Action "Disabled Search Box Web Suggest
 
 Write-Host "`n[SUCCESS] Web search and Bing integration in the Start Menu has been disabled." -ForegroundColor Green
 Write-Host "Local file and app search will now be much faster and strictly private." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."
