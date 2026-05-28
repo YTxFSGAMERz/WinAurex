@@ -1,5 +1,5 @@
 @echo off
-title PC Optimizer OptiGames
+title PC Optimizer Farhan
 setlocal enabledelayedexpansion
 
 :: BatchGotAdmin
@@ -20,7 +20,7 @@ if '%errorlevel%' NEQ '0' (
     set params= %*
     echo UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params:"="""%", "", "runas", 1 >> "%temp%\getadmin.vbs"
 
-    "%temp%\getadmin.vbs"
+    cscript //nologo "%temp%\getadmin.vbs"
     del "%temp%\getadmin.vbs"
     exit /B
 
@@ -63,7 +63,7 @@ cls
 
 echo.
 echo === Reducing svchost processes ===
-for /f "tokens=2 delims==" %%i in ('wmic os get TotalVisibleMemorySize /format:value') do set MEM=%%i
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Get-CimInstance Win32_OperatingSystem).TotalVisibleMemorySize"') do set MEM=%%i
 set /a RAM=%MEM% + 1024000
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "%RAM%" /f
 
@@ -79,7 +79,7 @@ schtasks /Change /TN "\Microsoft\Windows\UpdateOrchestrator\*" /Disable
 schtasks /Change /TN "\Microsoft\Windows\UpdateAssistant\*" /Disable
 schtasks /Change /TN "\Microsoft\Windows\WaaSMedic\*" /Disable
 schtasks /Change /TN "\Microsoft\Windows\WindowsUpdate\*" /Disable
-schtasks /Change /TN "\Microsoft\WindowsUpdate\*" /Disable																																																																																	REM ;youtube.com/@OptiProjects
+schtasks /Change /TN "\Microsoft\WindowsUpdate\*" /Disable																																																																																	REM ;youtube.com/@Farhan
 
 echo.
 echo === Optimizing Visual Section ===
@@ -154,7 +154,7 @@ reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" /v SearchOrderConfig /t REG_DWORD /d 1 /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v SystemResponsiveness /t REG_DWORD /d 0 /f
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v NetworkThrottlingIndex /t REG_DWORD /d 4294967295 /f																																																																																	REM ;youtube.com/@OptiProjects
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v NetworkThrottlingIndex /t REG_DWORD /d 4294967295 /f																																																																																	REM ;youtube.com/@Farhan
 reg add "HKLM\SYSTEM\ControlSet001\Services\Ndu" /v Start /t REG_DWORD /d 2 /f
 reg add "HKCU\Control Panel\Mouse" /v MouseHoverTime /t REG_SZ /d "400" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v IRPStackSize /t REG_DWORD /d 30 /f
@@ -795,10 +795,8 @@ goto :done
 cls
 
 echo.
-echo Optimizing Visual Section...
 reg add "HKCU\Control Panel\Desktop" /v DragFullWindows /t REG_SZ /d 0 /f
 reg add "HKCU\Control Panel\Desktop" /v MenuShowDelay /t REG_SZ /d 200 /f
-reg add "HKCU\Control Panel\Desktop" /v MinAnimate /t REG_SZ /d 0 /f
 reg add "HKCU\Control Panel\Desktop" /v KeyboardDelay /t REG_DWORD /d 0 /f
 reg add "HKCU\Control Panel\Desktop" /v ListviewAlphaSelect /t REG_DWORD /d 0 /f
 reg add "HKCU\Control Panel\Desktop" /v ListviewShadow /t REG_DWORD /d 0 /f
@@ -959,7 +957,7 @@ echo                                 Optimizer
 echo ---------------------------------------------------------------------------------
 echo.
 echo A simple and efficient PC optimizer to increase performance on low-end systems.
-echo Special credits to Chris Titus for the optimizations.
+echo Special credits to Farhan for the optimizations.
 echo.
 echo ---------------------------------------------------------------------------------
 echo.

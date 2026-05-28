@@ -36,4 +36,6 @@ Start-Process -FilePath "winget" -ArgumentList "install", "--id", "Microsoft.Pow
 Write-FrameworkLog -ModuleName "Developer" -Action "Completed PowerShell 7 Install"
 Write-Host "`n[SUCCESS] PowerShell 7 has been installed." -ForegroundColor Green
 Write-Host "It will appear in your Start Menu as 'PowerShell' (black icon)."
-Start-Sleep -Seconds 2
+
+
+$null = Read-Host "Press Enter to exit..."

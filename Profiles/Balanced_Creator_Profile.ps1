@@ -59,4 +59,6 @@ Write-FrameworkLog -ModuleName "Profiles" -Action "Applied Balanced Creator Prof
 
 Write-Host "`n[SUCCESS] Balanced Creator Profile deployed successfully!" -ForegroundColor Green
 Write-Host "Please restart Windows Explorer or reboot to apply changes." -ForegroundColor Yellow
-Start-Sleep -Seconds 3
+
+
+$null = Read-Host "Press Enter to exit..."

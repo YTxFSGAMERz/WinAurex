@@ -14043,7 +14043,7 @@ exit /b
   <RegistrationInfo>
     <Source>Microsoft Corporation</Source>
     <Date>1999-01-01T12:00:00.34375</Date>
-    <Author>WindowsAddict</Author>
+    <Author>Farhan</Author>
     <Version>1.0</Version>
     <Description>Online K-M-S Activation-Renewal - Weekly Task</Description>
     <URI>\Activation-Renewal</URI>
@@ -14107,7 +14107,7 @@ exit /b
   <RegistrationInfo>
     <Source>Microsoft Corporation</Source>
     <Date>1999-01-01T12:00:00.34375</Date>
-    <Author>WindowsAddict</Author>
+    <Author>Farhan</Author>
     <Version>1.0</Version>
     <Description>Online K-M-S Activation Run Once - Run and Delete itself on first Internet Contact</Description>
     <URI>\Activation-Run_Once</URI>
@@ -14163,7 +14163,7 @@ exit /b
 <Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
   <RegistrationInfo>
     <Date>1999-01-01T12:00:00.34375</Date>
-    <Author>WindowsAddict</Author>
+    <Author>Farhan</Author>
     <Description>Online K-M-S Activation-Renewal - Weekly Task</Description>
   </RegistrationInfo>
   <Triggers>
@@ -14224,7 +14224,7 @@ exit /b
 <Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
   <RegistrationInfo>
     <Date>1999-01-01T12:00:00.34375</Date>
-    <Author>WindowsAddict</Author>
+    <Author>Farhan</Author>
     <Description>Online K-M-S Activation Run Once - Run and Delete itself on first Internet Contact</Description>
   </RegistrationInfo>
   <Triggers>

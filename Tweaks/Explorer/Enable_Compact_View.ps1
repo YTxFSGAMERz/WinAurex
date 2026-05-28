@@ -25,4 +25,6 @@ Set-ItemProperty -Path $RegistryPath -Name $Name -Value 1 -Type DWord -Force
 Write-FrameworkLog -ModuleName "Explorer" -Action "Enabled Compact View" -OldValue $CurrentValue -NewValue "1"
 
 Write-Host "`n[SUCCESS] File Explorer Compact View has been enabled." -ForegroundColor Green
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

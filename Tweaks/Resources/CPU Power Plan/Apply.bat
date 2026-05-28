@@ -19,7 +19,7 @@ if '%errorlevel%' NEQ '0' (
     set params= %*
     echo UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params:"="""%", "", "runas", 1 >> "%temp%\getadmin.vbs"
 
-    "%temp%\getadmin.vbs"
+    cscript //nologo "%temp%\getadmin.vbs"
     del "%temp%\getadmin.vbs"
     exit /B
 
@@ -28,7 +28,13 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 
 powercfg -h off
-powercfg -import "%~dp0\QuickCPU.pow" a11a11c9-6d83-493e-a38d-d5fa3c620915
-powercfg /setactive a11a11c9-6d83-493e-a38d-d5fa3c620915
+if exist "%~dp0\QuickCPU.pow" (
+    powercfg -import "%~dp0\QuickCPU.pow" a11a11c9-6d83-493e-a38d-d5fa3c620915
+    powercfg /setactive a11a11c9-6d83-493e-a38d-d5fa3c620915
+    echo Power plan imported and activated.
+) else (
+    echo [ERROR] QuickCPU.pow not found in %~dp0
+    echo Skipping power plan import.
+)
 
 timeout /t 3 /nobreak

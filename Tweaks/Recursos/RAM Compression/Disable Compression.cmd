@@ -18,7 +18,7 @@ if '%errorlevel%' NEQ '0' (
     set params= %*
     echo UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params:"=""%", "", "runas", 1 >> "%temp%\getadmin.vbs"
 
-    "%temp%\getadmin.vbs"
+    cscript //nologo "%temp%\getadmin.vbs"
     del "%temp%\getadmin.vbs"
     exit /B
 

@@ -40,4 +40,6 @@ Write-FrameworkLog -ModuleName "Network" -Action "Completed Network Stack Reset"
 
 Write-Host "`n[SUCCESS] Network stack has been successfully reset." -ForegroundColor Green
 Write-Host "Please RESTART YOUR COMPUTER to finish the process." -ForegroundColor Yellow
-Start-Sleep -Seconds 2
+
+
+$null = Read-Host "Press Enter to exit..."

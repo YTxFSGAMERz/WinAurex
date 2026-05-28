@@ -51,4 +51,6 @@ if ($Choice -eq '1') {
 }
 
 Write-Host "A SYSTEM REBOOT is required for HVCI changes to take effect." -ForegroundColor Yellow
-Start-Sleep -Seconds 3
+
+
+$null = Read-Host "Press Enter to exit..."

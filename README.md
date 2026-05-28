@@ -45,6 +45,8 @@ Windows Optimisations is not a blind tweaking tool. It is a precise, modular eng
 
 The Windows optimization ecosystem is heavily polluted with closed-source, automated "debloaters" that run hidden scripts and break essential OS features. This platform was engineered from the ground up to counter that trend. 
 
+In **v5.0.0**, we evolved from a directory of loose scripts into a native **WPF-based GUI Dashboard**. This provides the ease of use of a commercial application (just double-click `Start.bat`) while retaining the absolute transparency of open-source PowerShell scripts.
+
 Every tweak, script, and registry edit in this repository is plain-text, manually inspectable, structurally organized, and rigorously tested. This is a cyber-tech toolkit built for reliability and peak performance without compromising operating system integrity.
 
 ## ⬛ OPTIMIZATION PHILOSOPHY
@@ -55,13 +57,13 @@ This repository explicitly rejects and avoids:
 *   ❌ Fake FPS myths and snake-oil placebo tweaks
 *   ❌ Dangerous, undocumented registry spam
 *   ❌ Irreversible modifications that shatter core Windows functionality
-*   ❌ Shady bundled software or malware-like "RAM boosters"
+*   ❌ Shady compiled binaries or hidden executables
 
 Instead, every modification strictly adheres to our engineering standards:
-*   ✅ **Transparent:** All source code is open and readable.
-*   ✅ **Modular:** Apply only the exact modules your workflow requires.
-*   ✅ **Reversible:** Built-in safeguards and restore architectures.
-*   ✅ **Categorized:** Clean, logical separation of concerns.
+*   ✅ **Transparent:** Pure XAML and PowerShell. No third-party binaries.
+*   ✅ **Native UI:** Hardware-accelerated WPF dashboard for zero-friction execution.
+*   ✅ **Reversible:** Built-in safeguards and automated registry snapshots.
+*   ✅ **Observable:** Live `.NET` telemetry right in the dashboard.
 
 ---
 
@@ -90,6 +92,9 @@ A clean, futuristic blueprint of the optimization matrix.
 
 ```text
 📦 Windows-Optimisations
+ ┣ 📜 Start.bat                # [ENTRY] The zero-friction launcher for the GUI
+ ┣ 📂 GUI/                     # [INTERFACE] The native WPF Dashboard XAML
+ ┣ 📂 Launchers/               # [CONTROLLERS] The PowerShell logic binding the GUI
  ┣ 📂 Tweaks/                  # [CORE] The primary system optimization engine
  ┃  ┣ 📂 Appearance/           # UI decluttering and hardware-accelerated rendering profiles
  ┃  ┣ 📂 Background/           # Background process suspension and app termination logic
@@ -98,17 +103,17 @@ A clean, futuristic blueprint of the optimization matrix.
  ┃  ┣ 📂 Gaming/               # Game Mode enforcement and interrupt moderation tuning
  ┃  ┣ 📂 Network/              # Bandwidth unthrottling and telemetry firewalling
  ┃  ┣ 📂 Privacy/              # Deep system telemetry blacks (Mic, Camera, Metadata)
- ┃  ┣ 📂 Startup/              # Boot time acceleration and startup bloat excision
- ┃  ┣ 📂 Storage/              # Automated garbage collection and prefetch purging
- ┃  ┣ 📂 Troubleshooting/      # Safe-boot parameters and diagnostic resets
- ┃  ┗ 📜 Apply Optimizations.bat # [EXECUTION] Main Interactive Terminal Interface
+ ┃  ┣ 📂 Startup/              # Boot latency reduction and auto-start suppression
+ ┃  ┣ 📂 Storage/              # Disk I/O caching and automated indexer bloat removal
+ ┃  ┗ 📂 Windows/              # Core OS scheduler and task prioritization hooks
+ ┣ 📂 Core/                    # [INFRASTRUCTURE] Logging, state capture, and restore manifests
  ┣ 📂 Activators/              # KMS38 and HWID activation provisioning
  ┣ 📂 Antivirus/               # Elite security deployment frameworks
  ┣ 📂 Browsers/                # Hardened, privacy-first web browsers
  ┣ 📂 Drivers/                 # Next-gen hardware detection and driver initialization
  ┣ 📂 Hardware/                # Deep hardware telemetry probes (CPU-Z, GPU-Z, HWMonitor)
  ┣ 📂 Windows Update/          # Absolute granular control over OS update channels
- ┗ 📜 autounattend.xml         # Automated, zero-telemetry Windows 11 installation blueprint
+ ┗ 📂 docs/                    # [KNOWLEDGE] The central intelligence wiki
 ```
 
 ---

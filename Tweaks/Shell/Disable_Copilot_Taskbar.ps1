@@ -26,4 +26,6 @@ Write-FrameworkLog -ModuleName "Shell" -Action "Disabled Copilot Button" -OldVal
 
 Write-Host "`n[SUCCESS] Windows Copilot Taskbar Button Disabled." -ForegroundColor Green
 Write-Host "A Windows Explorer restart may be required to see changes immediately." -ForegroundColor Yellow
-Start-Sleep -Seconds 2
+
+
+$null = Read-Host "Press Enter to exit..."

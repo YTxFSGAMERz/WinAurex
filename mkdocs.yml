@@ -81,7 +81,15 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+  - Architecture:
+      - System Blueprint: Architecture_Blueprint.md
+      - GUI Architecture: Dashboard_Architecture.md
+      - OS Compatibility: Compatibility_Matrix.md
   - System Tweaks: TWEAKS.md
+  - Deep Dives:
+      - Input Latency Myths: Input_Latency_Myths.md
+      - Myths and Anti-Patterns: Myths_and_Anti_Patterns.md
+      - Registry Reference: Registry_Reference.md
   - Drivers: DRIVERS.md
   - Antivirus & Security: ANTIVIRUS.md
   - Web Browsers: BROWSERS.md

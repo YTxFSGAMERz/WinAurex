@@ -35,4 +35,6 @@ Write-FrameworkLog -ModuleName "Updates" -Action "Disabled Automatic Driver Sear
 
 Write-Host "`n[SUCCESS] Windows will no longer forcibly update your hardware drivers." -ForegroundColor Green
 Write-Host "This prevents Windows Update from overwriting your custom GPU or Audio drivers." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

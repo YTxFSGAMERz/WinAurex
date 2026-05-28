@@ -27,4 +27,6 @@ Write-FrameworkLog -ModuleName "Camera" -Action "Disabled Global App Camera Acce
 
 Write-Host "`n[SUCCESS] Global App access to the Camera has been blocked (Deny)." -ForegroundColor Green
 Write-Host "Note: Traditional desktop apps (like OBS) may still access it, but UWP/Store apps are blocked." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

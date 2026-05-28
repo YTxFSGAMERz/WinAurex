@@ -29,4 +29,6 @@ if ($Success -and $DuplicateOutput -match "([a-fA-F0-9\-]{36})") {
     Write-Host "`n[ERROR] Failed to duplicate the Ultimate Performance scheme." -ForegroundColor Red
 }
 
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

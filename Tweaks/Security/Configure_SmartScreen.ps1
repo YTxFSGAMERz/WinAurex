@@ -54,4 +54,6 @@ if ($Choice -eq '1') {
     Write-Host "[SUCCESS] SmartScreen is DISABLED." -ForegroundColor Red
 }
 
-Start-Sleep -Seconds 2
+
+
+$null = Read-Host "Press Enter to exit..."

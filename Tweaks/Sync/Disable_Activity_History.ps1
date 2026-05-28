@@ -32,4 +32,6 @@ Write-FrameworkLog -ModuleName "Sync" -Action "Disabled Publishing User Activiti
 
 Write-Host "`n[SUCCESS] Windows Activity History and Timeline tracking have been disabled." -ForegroundColor Green
 Write-Host "Windows will no longer secretly track which files/apps you open." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

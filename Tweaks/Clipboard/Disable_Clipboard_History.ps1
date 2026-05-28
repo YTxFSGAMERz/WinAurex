@@ -27,4 +27,6 @@ Write-FrameworkLog -ModuleName "Clipboard" -Action "Disabled Clipboard History" 
 
 Write-Host "`n[SUCCESS] Windows Clipboard History has been disabled." -ForegroundColor Green
 Write-Host "Passwords and sensitive data will no longer be stored indefinitely in RAM." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

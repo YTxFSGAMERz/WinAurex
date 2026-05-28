@@ -25,4 +25,6 @@ Set-ItemProperty -Path $RegistryPath -Name $Name -Value 1 -Type DWord -Force
 Write-FrameworkLog -ModuleName "Shell" -Action "Disabled Recent/Recommended Jumplists" -OldValue $CurrentValue -NewValue "1"
 
 Write-Host "`n[SUCCESS] Start Menu Recommended section and Jump Lists cleared." -ForegroundColor Green
-Start-Sleep -Seconds 2
+
+
+$null = Read-Host "Press Enter to exit..."

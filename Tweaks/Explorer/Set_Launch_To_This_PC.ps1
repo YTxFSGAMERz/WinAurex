@@ -25,4 +25,6 @@ Set-ItemProperty -Path $RegistryPath -Name $Name -Value 1 -Type DWord -Force
 Write-FrameworkLog -ModuleName "Explorer" -Action "Set Explorer Launch to This PC" -OldValue $CurrentValue -NewValue "1"
 
 Write-Host "`n[SUCCESS] File Explorer will now open to 'This PC' by default." -ForegroundColor Green
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

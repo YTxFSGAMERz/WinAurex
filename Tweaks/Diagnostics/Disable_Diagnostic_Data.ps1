@@ -27,4 +27,6 @@ Write-FrameworkLog -ModuleName "Diagnostics" -Action "Disabled Windows Telemetry
 
 Write-Host "`n[SUCCESS] Windows Diagnostic Data collection (Telemetry) has been set to 0 (Disabled)." -ForegroundColor Green
 Write-Host "This blocks the OS from sending usage metrics and system state data to Microsoft." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

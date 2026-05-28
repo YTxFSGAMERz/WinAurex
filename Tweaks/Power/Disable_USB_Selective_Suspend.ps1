@@ -24,4 +24,6 @@ Write-FrameworkLog -ModuleName "Power" -Action "Disabled USB Selective Suspend" 
 Write-Host "`n[SUCCESS] USB Selective Suspend disabled." -ForegroundColor Green
 Write-Host "Your USB peripherals will no longer sleep, fixing disconnects and lowering input latency." -ForegroundColor Yellow
 
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

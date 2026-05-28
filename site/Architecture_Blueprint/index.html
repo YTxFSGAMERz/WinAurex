@@ -10,6 +10,10 @@
         <link rel="canonical" href="https://windows-optimizations.netlify.app/Architecture_Blueprint/">
       
       
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../Dashboard_Architecture/">
       
       
         
@@ -20,7 +24,7 @@
     
     
       
-        <title>Windows-Optimisations: Next-Generation Architecture Blueprint - Windows Optimisations</title>
+        <title>System Blueprint - Windows Optimisations</title>
       
     
     
@@ -117,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Windows-Optimisations: Next-Generation Architecture Blueprint
+              System Blueprint
             
           </span>
         </div>
@@ -240,6 +244,30 @@
 
       </a>
     </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
   
 
       
@@ -501,6 +529,546 @@
   
 
       </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Blueprint
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Blueprint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#executive-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Executive Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architectural-analysis-core-philosophy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architectural Analysis &amp; Core Philosophy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architectural Analysis &amp; Core Philosophy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#folder-structure-module-expansion-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Folder Structure &amp; Module Expansion Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Folder Structure &amp; Module Expansion Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-tweaksexplorer-explorer-productivity-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Tweaks/Explorer/ (Explorer Productivity Pack)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-tweakssearch-search-indexing-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Tweaks/Search/ (Search &amp; Indexing Pack)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-tweaksvisual-visual-effects-ui-responsiveness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Tweaks/Visual/ (Visual Effects &amp; UI Responsiveness)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-tweakspower-power-thermal-efficiency-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Tweaks/Power/ (Power &amp; Thermal Efficiency Pack)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-tweaksshell-shell-widgets-copilot-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Tweaks/Shell/ (Shell / Widgets / Copilot Cleanup)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-tweakssync-onedrive-sync-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Tweaks/Sync/ (OneDrive &amp; Sync Pack)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-tweaksclipboard-clipboard-activity-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Tweaks/Clipboard/ (Clipboard &amp; Activity History)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-tweakscamera-camera-studio-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Tweaks/Camera/ (Camera &amp; Studio Effects)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-corerestore-system-restore-rollback-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Core/Restore/ (System Restore / Rollback Core)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-tweaksservices-advanced-service-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Tweaks/Services/ (Advanced Service Management)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-tweakstasks-task-scheduler-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Tweaks/Tasks/ (Task Scheduler Management)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-tweaksgpu-gpu-display-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Tweaks/GPU/ (GPU &amp; Display Optimization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-tweaksnetwork-diagnostics-network-analytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Tweaks/Network-Diagnostics/ (Network Analytics)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-tweaksupdates-update-control-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Tweaks/Updates/ (Update Control Center)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-toolssystem-info-system-information-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Tools/System-Info/ (System Information Dashboard)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-toolsapps-package-manager-app-installer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Tools/Apps/ (Package Manager / App Installer)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-profiles-state-orchestration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. Profiles/ (State Orchestration)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strategy-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strategy &amp; Standards
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Strategy &amp; Standards">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#script-standards-naming-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script Standards &amp; Naming Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-restore-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logging &amp; Restore Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compatibility-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compatibility Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation-strategy-docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation Strategy (docs/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readme-redesign-direction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        README Redesign Direction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-implementation-priority" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Implementation Priority
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Recommendations
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dashboard_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GUI Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Compatibility_Matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OS Compatibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1160,12 +1728,13 @@
 
 <h1 id="windows-optimisations-next-generation-architecture-blueprint">Windows-Optimisations: Next-Generation Architecture Blueprint<a class="headerlink" href="#windows-optimisations-next-generation-architecture-blueprint" title="Permanent link">¶</a></h1>
 <h2 id="executive-summary">Executive Summary<a class="headerlink" href="#executive-summary" title="Permanent link">¶</a></h2>
-<p>The <strong>Windows-Optimisations</strong> repository is evolving from a standard collection of registry tweaks and batch files into a mature, modular, and professional-grade <strong>Windows Configuration &amp; Optimization Framework</strong>. This transition shifts the focus from blind "tweak dumping" to engineered state management, offering transparency, precise observability, and guaranteed reversibility. This blueprint outlines the strategic expansion of the repository, establishing strict engineering principles, a robust safety backbone, and a modular architecture designed to support casual users, power users, gamers, and system administrators alike.</p>
+<p>The <strong>Windows-Optimisations</strong> repository is evolving from a standard collection of registry tweaks and batch files into a mature, modular, and professional-grade <strong>Windows Configuration &amp; Optimization Framework</strong>. Powered by a native WPF (Windows Presentation Foundation) Dashboard and a robust PowerShell core, this transition shifts the focus from blind "tweak dumping" to engineered state management, offering transparency, precise observability, and guaranteed reversibility. This blueprint outlines the strategic expansion of the repository, establishing strict engineering principles, a robust safety backbone, and a modular architecture designed to support casual users, power users, gamers, and system administrators alike.</p>
 <hr>
 <h2 id="architectural-analysis-core-philosophy">Architectural Analysis &amp; Core Philosophy<a class="headerlink" href="#architectural-analysis-core-philosophy" title="Permanent link">¶</a></h2>
-<p>The framework operates on a dual-path execution strategy:
-1. <strong>PowerShell (<code>.ps1</code>)</strong>: The primary engine for automation. Used whenever state capture, validation, structured logging, OS build detection, or orchestration is required.
-2. <strong>Registry Files (<code>.reg</code>)</strong>: Retained for direct, simple, and reversible static toggles for users who prefer raw configuration files.</p>
+<p>The framework operates on a dual-path execution strategy orchestrated by a central GUI:
+1. <strong>WPF Dashboard (<code>GUI/Dashboard.xaml</code> &amp; <code>Launch_Dashboard.ps1</code>)</strong>: The central nervous system. Provides a native, modern, and zero-friction UI for users to interact with the underlying modules. It is launched via the <code>Start.bat</code> root wrapper.
+2. <strong>PowerShell Modules (<code>.ps1</code>)</strong>: The primary engine for automation. Used whenever state capture, validation, structured logging, OS build detection, or orchestration is required.
+3. <strong>Registry Files (<code>.reg</code>)</strong>: Retained for direct, simple, and reversible static toggles for users who prefer raw configuration files without GUI overhead.</p>
 <h3 id="core-principles">Core Principles<a class="headerlink" href="#core-principles" title="Permanent link">¶</a></h3>
 <ul>
 <li><strong>Transparency Over Mystery:</strong> No hidden operations or obfuscated commands.</li>

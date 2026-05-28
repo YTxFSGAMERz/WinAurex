@@ -37,4 +37,6 @@ Write-FrameworkLog -ModuleName "Developer" -Action "Completed WSL Feature Enable
 Write-Host "`n[SUCCESS] WSL and Virtual Machine Platform are enabled." -ForegroundColor Green
 Write-Host "A SYSTEM RESTART IS REQUIRED for the changes to take effect." -ForegroundColor Red
 Write-Host "After rebooting, you can install a distro via 'wsl --install -d Ubuntu'."
-Start-Sleep -Seconds 3
+
+
+$null = Read-Host "Press Enter to exit..."

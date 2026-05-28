@@ -7,13 +7,13 @@
       
       
       
-        <link rel="canonical" href="https://windows-optimizations.netlify.app/WINDOWS_UPDATE/">
+        <link rel="canonical" href="https://windows-optimizations.netlify.app/Dashboard_Architecture/">
       
       
-        <link rel="prev" href="../BROWSERS/">
+        <link rel="prev" href="../Architecture_Blueprint/">
       
       
-        <link rel="next" href="../WEBVIEW/">
+        <link rel="next" href="../Compatibility_Matrix/">
       
       
         
@@ -24,7 +24,7 @@
     
     
       
-        <title>Windows Update - Windows Optimisations</title>
+        <title>GUI Architecture - Windows Optimisations</title>
       
     
     
@@ -87,7 +87,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#windows-update-management" class="md-skip">
+        <a href="#wpf-dashboard-architecture-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Windows Update
+              GUI Architecture
             
           </span>
         </div>
@@ -251,10 +251,12 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../Architecture_Blueprint/" class="md-tabs__link">
           
   
@@ -349,11 +351,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../WINDOWS_UPDATE/" class="md-tabs__link">
         
   
   
@@ -537,8 +537,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -552,19 +554,22 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -582,7 +587,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -625,10 +630,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../Dashboard_Architecture/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GUI Architecture
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -644,6 +676,120 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Components
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-event-binding-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Event Binding Flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Event Binding Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-add-the-ui-element-in-xaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Add the UI Element in XAML
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-map-the-element-in-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Map the Element in PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-bind-the-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Bind the Logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-telemetry-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance &amp; Telemetry (Observability)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-xaml-over-winforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why XAML over WinForms?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extending-the-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extending the Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -796,37 +942,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Windows Update
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../WINDOWS_UPDATE/" class="md-nav__link">
         
   
   
@@ -842,115 +961,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#management-scripts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🛠️ Management Scripts
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🛠️ Management Scripts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-disable-windows-updatebat" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Disable Windows Update.bat
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-enable-windows-updatebat" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Enable Windows Update.bat
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#performance-vs-compatibility-trade-offs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⚡ Performance vs. Compatibility Trade-offs
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="⚡ Performance vs. Compatibility Trade-offs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#benefits-of-disabling-updates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🟢 Benefits of Disabling Updates:
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#compatibility-issues-dependencies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔴 Compatibility Issues &amp; Dependencies:
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#crucial-security-warnings" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔒 Crucial Security Warnings
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1117,22 +1127,33 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#management-scripts" class="md-nav__link">
+  <a href="#core-components" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🛠️ Management Scripts
+        Core Components
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="🛠️ Management Scripts">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-event-binding-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Event Binding Flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Event Binding Flow">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-disable-windows-updatebat" class="md-nav__link">
+  <a href="#1-add-the-ui-element-in-xaml" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Disable Windows Update.bat
+        1. Add the UI Element in XAML
       
     </span>
   </a>
@@ -1140,10 +1161,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-enable-windows-updatebat" class="md-nav__link">
+  <a href="#2-map-the-element-in-powershell" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Enable Windows Update.bat
+        2. Map the Element in PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-bind-the-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Bind the Logic
       
     </span>
   </a>
@@ -1156,49 +1188,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#performance-vs-compatibility-trade-offs" class="md-nav__link">
+  <a href="#performance-telemetry-observability" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ⚡ Performance vs. Compatibility Trade-offs
+        Performance &amp; Telemetry (Observability)
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="⚡ Performance vs. Compatibility Trade-offs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#benefits-of-disabling-updates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🟢 Benefits of Disabling Updates:
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#compatibility-issues-dependencies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔴 Compatibility Issues &amp; Dependencies:
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#crucial-security-warnings" class="md-nav__link">
+  <a href="#why-xaml-over-winforms" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🔒 Crucial Security Warnings
+        Why XAML over WinForms?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extending-the-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extending the Dashboard
       
     </span>
   </a>
@@ -1225,59 +1240,46 @@
   
 
 
-<h1 id="windows-update-management">🔄 Windows Update Management<a class="headerlink" href="#windows-update-management" title="Permanent link">¶</a></h1>
-<p>This guide explains the tools located in the <code>Windows Update/</code> directory and details the system impact, performance trade-offs, and critical software dependencies associated with controlling Windows Update schedules.</p>
-<hr>
-<h2 id="management-scripts">🛠️ Management Scripts<a class="headerlink" href="#management-scripts" title="Permanent link">¶</a></h2>
-<p>The <code>Windows Update/</code> folder contains two instant-toggle batch scripts that configure Windows Update services:</p>
-<h3 id="1-disable-windows-updatebat">1. Disable Windows Update.bat<a class="headerlink" href="#1-disable-windows-updatebat" title="Permanent link">¶</a></h3>
-<ul>
-<li><strong>Action</strong>: Suspends all background download triggers and stops update services immediately.</li>
-<li><strong>Under-the-Hood Mechanics</strong>:<ol>
-<li><strong>Service Disablement</strong>: Stops and disables the <code>wuauserv</code> (Windows Update), <code>UsoSvc</code> (Update Orchestrator Service), <code>uhssvc</code> (Update Assistant), and <code>WaaSMedicSvc</code> (Windows Update Medic Service) processes.</li>
-<li><strong>Self-Healing Block</strong>: Deactivates the failure action triggers that Windows uses to automatically restart update services when they are killed.</li>
-<li><strong>Binary Renaming (Aggressive Prevention)</strong>: Takes ownership of and renames the core update dll binaries (<code>wuaueng.dll</code> and <code>WaaSMedicSvc.dll</code>) to prevent Windows from self-healing and re-enabling updates behind the scenes.</li>
-<li><strong>Task Deactivation</strong>: Disables scheduled update tasks in Task Scheduler under the <code>Microsoft\Windows\WindowsUpdate</code> tree.</li>
-<li><strong>Telemetry Cleared</strong>: Empties and deletes the active update download cache folder located at <code>C:\Windows\SoftwareDistribution</code>.</li>
-</ol>
-</li>
-</ul>
-<h3 id="2-enable-windows-updatebat">2. Enable Windows Update.bat<a class="headerlink" href="#2-enable-windows-updatebat" title="Permanent link">¶</a></h3>
-<ul>
-<li><strong>Action</strong>: Reverts all service parameters and re-enables standard Microsoft update checks.</li>
-<li><strong>Under-the-Hood Mechanics</strong>:<ol>
-<li><strong>Binary Restoration</strong>: Restores the renamed update dll files (<code>wuaueng.dll</code> and <code>WaaSMedicSvc.dll</code>) back to the <code>System32</code> folder.</li>
-<li><strong>Service Restoration</strong>: Configures <code>wuauserv</code>, <code>UsoSvc</code>, and <code>uhssvc</code> back to <strong>Automatic</strong> and <strong>Delayed-Start</strong> configurations.</li>
-<li><strong>Task Reactivation</strong>: Re-enables all scheduled tasks in Task Scheduler to allow Windows to check for, download, and install cumulative updates normally.</li>
-</ol>
-</li>
-</ul>
-<hr>
-<h2 id="performance-vs-compatibility-trade-offs">⚡ Performance vs. Compatibility Trade-offs<a class="headerlink" href="#performance-vs-compatibility-trade-offs" title="Permanent link">¶</a></h2>
-<p>Disabling Windows Update has significant system-wide consequences. Read the comparison below carefully:</p>
-<h3 id="benefits-of-disabling-updates">🟢 Benefits of Disabling Updates:<a class="headerlink" href="#benefits-of-disabling-updates" title="Permanent link">¶</a></h3>
-<ul>
-<li><strong>Eliminates Stuttering</strong>: Prevents Windows from spawning background update checks and downloading files in the background while you are gaming or working.</li>
-<li><strong>Saves RAM &amp; CPU</strong>: Stops the background CPU consumption associated with update indexing and installation.</li>
-<li><strong>Prevents Forced Restarts</strong>: Eliminates unexpected system restarts during long rendering jobs, benchmarks, or gaming sessions.</li>
-<li><strong>Saves Storage Space</strong>: Stops cumulative updates from filling up your primary drive over time.</li>
-</ul>
-<h3 id="compatibility-issues-dependencies">🔴 Compatibility Issues &amp; Dependencies:<a class="headerlink" href="#compatibility-issues-dependencies" title="Permanent link">¶</a></h3>
-<ul>
-<li><strong>Microsoft Store Breaks</strong>: The Microsoft Store relies directly on the active Windows Update background service (<code>wuauserv</code>) to download, authenticate, and install apps. If updates are disabled, the Store will throw error codes (e.g., <code>0x80070422</code>).</li>
-<li><strong>Xbox app &amp; Gaming Services</strong>: Logging into Xbox, downloading titles via Game Pass, or authenticating multiplayer sessions often fails if Windows Update services are blocked.</li>
-<li><strong>WebView2 Runtime Mismatches</strong>: WebView2 relies on regular Edge updates to maintain compatibility with modern apps. Disabling updates permanently can cause web-based dashboards inside launchers to crash.</li>
-</ul>
-<hr>
-<h2 id="crucial-security-warnings">🔒 Crucial Security Warnings<a class="headerlink" href="#crucial-security-warnings" title="Permanent link">¶</a></h2>
-<blockquote>
-<p>[!CAUTION]
-Windows Updates deliver critical patches for zero-day exploits, hardware vulnerabilities, and security flaws. If you choose to keep Windows Update disabled:</p>
+<h1 id="wpf-dashboard-architecture-guide">WPF Dashboard Architecture Guide<a class="headerlink" href="#wpf-dashboard-architecture-guide" title="Permanent link">¶</a></h1>
+<p>As of version 5.0.0, <strong>Windows-Optimisations</strong> utilizes a native WPF (Windows Presentation Foundation) dashboard powered entirely by PowerShell, removing the need for external compilers or heavy dependencies.</p>
+<p>This document serves as a developer blueprint for the dashboard internals.</p>
+<h2 id="core-components">Core Components<a class="headerlink" href="#core-components" title="Permanent link">¶</a></h2>
+<p>The dashboard relies on a strict separation of concerns:</p>
 <ol>
-<li><strong>Maintain High Security Vigilance</strong>: You must practice extremely safe browsing habits. Avoid untrusted downloads, ignore email links from unknown sources, and scan all executables using <a href="../ANTIVIRUS/#advanced-online-scanners-no-installation"><strong>VirusTotal</strong></a> before executing them.</li>
-<li><strong>Perform Manual Syncs</strong>: Consider running <code>Enable Windows Update.bat</code> once a month to let your system install critical security cumulative updates, then run the disable script again to restore performance.</li>
+<li><strong><code>GUI/Dashboard.xaml</code> (The View)</strong>
+   This file contains pure XML markup. It defines the layout, grids, buttons, colors, and visual logic (like <code>DropShadowEffect</code> hover animations). It contains <strong>zero</strong> execution logic.</li>
+<li><strong><code>Launch_Dashboard.ps1</code> (The Controller)</strong>
+   This script bootstraps the environment, loads the <code>PresentationFramework</code> assemblies, parses the XAML file, and maps the UI elements to PowerShell variables. It binds click events to the actual execution scripts located in the <code>Tweaks/</code> and <code>Core/</code> directories.</li>
 </ol>
-</blockquote>
+<h2 id="the-event-binding-flow">The Event Binding Flow<a class="headerlink" href="#the-event-binding-flow" title="Permanent link">¶</a></h2>
+<p>If you are a developer looking to add a new button or tab to the dashboard, follow this flow:</p>
+<h3 id="1-add-the-ui-element-in-xaml">1. Add the UI Element in XAML<a class="headerlink" href="#1-add-the-ui-element-in-xaml" title="Permanent link">¶</a></h3>
+<p>Open <code>GUI/Dashboard.xaml</code>. Locate the appropriate Tab or Panel, and add your element. 
+<strong>Critical Rule:</strong> You must assign it an <code>x:Name</code>. This is how PowerShell finds it.</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">&lt;Button</span><span class="w"> </span><span class="na">x:Name=</span><span class="s">"BtnApplyMyNewTweak"</span><span class="w"> </span><span class="na">Content=</span><span class="s">"Apply My Tweak"</span><span class="w"> </span><span class="na">Style=</span><span class="s">"{StaticResource ActionButton}"</span><span class="nt">/&gt;</span>
+</span></code></pre></div>
+<h3 id="2-map-the-element-in-powershell">2. Map the Element in PowerShell<a class="headerlink" href="#2-map-the-element-in-powershell" title="Permanent link">¶</a></h3>
+<p>Open <code>Launch_Dashboard.ps1</code>. Find the "Map WPF Elements to PowerShell Variables" region.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">$BtnApplyMyNewTweak</span> <span class="p">=</span> <span class="nv">$Window</span><span class="p">.</span><span class="n">FindName</span><span class="p">(</span><span class="s2">"BtnApplyMyNewTweak"</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="3-bind-the-logic">3. Bind the Logic<a class="headerlink" href="#3-bind-the-logic" title="Permanent link">¶</a></h3>
+<p>Further down in <code>Launch_Dashboard.ps1</code>, bind the click event to your execution script.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">$BtnApplyMyNewTweak</span><span class="p">.</span><span class="n">Add_Click</span><span class="p">({</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="nb">Write-Host</span> <span class="s2">"Running new tweak..."</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="p">&amp;</span> <span class="s2">"$PSScriptRoot\Tweaks\YourCategory\YourScript.ps1"</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">})</span>
+</span></code></pre></div>
+<h2 id="performance-telemetry-observability">Performance &amp; Telemetry (Observability)<a class="headerlink" href="#performance-telemetry-observability" title="Permanent link">¶</a></h2>
+<p>The dashboard features an "Observability" tab that streams live system telemetry.
+We achieve this without freezing the UI thread by using efficient <code>.NET</code> classes rather than slow WMI calls:
+* <strong>CPU:</strong> <code>[System.Diagnostics.PerformanceCounter]</code>
+* <strong>RAM:</strong> <code>GlobalMemoryStatusEx</code> via inline C# P/Invoke.
+* <strong>Uptime:</strong> <code>[Environment]::TickCount64</code></p>
+<p>These metrics are updated via a <code>System.Windows.Threading.DispatcherTimer</code> set to a 1000ms tick interval.</p>
+<h2 id="why-xaml-over-winforms">Why XAML over WinForms?<a class="headerlink" href="#why-xaml-over-winforms" title="Permanent link">¶</a></h2>
+<p>WinForms is legacy, blocking, and difficult to style dynamically. WPF allows us to use sophisticated layout grids (<code>Grid.RowDefinitions</code>, <code>Grid.ColumnDefinitions</code>) and hardware-accelerated rendering effects (like DropShadows and Border radiuses) that look native to Windows 11 without requiring any extra dependencies.</p>
+<h2 id="extending-the-dashboard">Extending the Dashboard<a class="headerlink" href="#extending-the-dashboard" title="Permanent link">¶</a></h2>
+<p>The <code>Launch_Dashboard.ps1</code> script is inherently extensible. If you need to build entirely new views, consider adding new <code>&lt;TabItem&gt;</code> elements within the main <code>&lt;TabControl&gt;</code>. Do not clutter the <code>Dashboard.xaml</code> with inline events (<code>Click="..."</code>) because PowerShell's <code>XamlReader</code> cannot resolve inline code-behind without dynamic compilation. All events <strong>must</strong> be wired via <code>$Element.Add_Click({})</code> in the PowerShell runspace.</p>
 
 
 

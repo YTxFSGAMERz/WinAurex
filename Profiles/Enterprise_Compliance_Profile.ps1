@@ -62,4 +62,6 @@ Write-FrameworkLog -ModuleName "Profiles" -Action "Applied Enterprise Compliance
 
 Write-Host "`n[SUCCESS] Enterprise Compliance Profile deployed successfully!" -ForegroundColor Green
 Write-Host "Please restart your computer to apply HVCI and other security policies." -ForegroundColor Yellow
-Start-Sleep -Seconds 3
+
+
+$null = Read-Host "Press Enter to exit..."

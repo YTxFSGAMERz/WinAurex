@@ -62,4 +62,6 @@ if ($Choice -eq '1') {
 }
 
 Write-Host "You must LOG OUT or RESTART for the cursor curve to fully update." -ForegroundColor Yellow
-Start-Sleep -Seconds 3
+
+
+$null = Read-Host "Press Enter to exit..."

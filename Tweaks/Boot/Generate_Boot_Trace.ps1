@@ -48,4 +48,6 @@ if ($Choice -eq '1') {
     Write-Host "`n[SUCCESS] Any pending boot trace has been cancelled." -ForegroundColor Green
 }
 
-Start-Sleep -Seconds 4
+
+
+$null = Read-Host "Press Enter to exit..."

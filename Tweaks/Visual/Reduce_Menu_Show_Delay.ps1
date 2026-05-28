@@ -25,4 +25,6 @@ Set-ItemProperty -Path $RegistryPath -Name $Name -Value "10" -Type String -Force
 Write-FrameworkLog -ModuleName "Visual" -Action "Reduced Menu Show Delay" -OldValue $CurrentValue -NewValue "10"
 
 Write-Host "`n[SUCCESS] Windows Menu Show Delay reduced for improved responsiveness." -ForegroundColor Green
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

@@ -23,4 +23,6 @@ if ($Success) {
     Write-Host "`n[ERROR] Failed to disable hibernation. Ensure you have administrator rights." -ForegroundColor Red
 }
 
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

@@ -32,4 +32,6 @@ Set-ItemProperty -Path $RegistryPath -Name "ShowSuperHidden" -Value 1 -Type DWor
 Write-FrameworkLog -ModuleName "Explorer" -Action "Show Protected OS Files" -OldValue $SuperHiddenVal -NewValue "1"
 
 Write-Host "`n[SUCCESS] Developer View Configured (Extensions, Hidden Files, and OS Files are now visible)." -ForegroundColor Green
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

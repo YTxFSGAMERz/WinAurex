@@ -32,4 +32,6 @@ Write-FrameworkLog -ModuleName "GPU" -Action "Enabled AllowAutoGameMode" -OldVal
 
 Write-Host "`n[SUCCESS] Windows Game Mode has been enabled." -ForegroundColor Green
 Write-Host "Windows will now prioritize game processes and suppress background updates while gaming." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

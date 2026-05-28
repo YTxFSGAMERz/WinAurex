@@ -1,15 +1,16 @@
 # Windows-Optimisations: Next-Generation Architecture Blueprint
 
 ## Executive Summary
-The **Windows-Optimisations** repository is evolving from a standard collection of registry tweaks and batch files into a mature, modular, and professional-grade **Windows Configuration & Optimization Framework**. This transition shifts the focus from blind "tweak dumping" to engineered state management, offering transparency, precise observability, and guaranteed reversibility. This blueprint outlines the strategic expansion of the repository, establishing strict engineering principles, a robust safety backbone, and a modular architecture designed to support casual users, power users, gamers, and system administrators alike.
+The **Windows-Optimisations** repository is evolving from a standard collection of registry tweaks and batch files into a mature, modular, and professional-grade **Windows Configuration & Optimization Framework**. Powered by a native WPF (Windows Presentation Foundation) Dashboard and a robust PowerShell core, this transition shifts the focus from blind "tweak dumping" to engineered state management, offering transparency, precise observability, and guaranteed reversibility. This blueprint outlines the strategic expansion of the repository, establishing strict engineering principles, a robust safety backbone, and a modular architecture designed to support casual users, power users, gamers, and system administrators alike.
 
 ---
 
 ## Architectural Analysis & Core Philosophy
 
-The framework operates on a dual-path execution strategy:
-1. **PowerShell (`.ps1`)**: The primary engine for automation. Used whenever state capture, validation, structured logging, OS build detection, or orchestration is required.
-2. **Registry Files (`.reg`)**: Retained for direct, simple, and reversible static toggles for users who prefer raw configuration files.
+The framework operates on a dual-path execution strategy orchestrated by a central GUI:
+1. **WPF Dashboard (`GUI/Dashboard.xaml` & `Launch_Dashboard.ps1`)**: The central nervous system. Provides a native, modern, and zero-friction UI for users to interact with the underlying modules. It is launched via the `Start.bat` root wrapper.
+2. **PowerShell Modules (`.ps1`)**: The primary engine for automation. Used whenever state capture, validation, structured logging, OS build detection, or orchestration is required.
+3. **Registry Files (`.reg`)**: Retained for direct, simple, and reversible static toggles for users who prefer raw configuration files without GUI overhead.
 
 ### Core Principles
 - **Transparency Over Mystery:** No hidden operations or obfuscated commands.

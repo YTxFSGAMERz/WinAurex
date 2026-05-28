@@ -25,4 +25,6 @@ Set-ItemProperty -Path $RegistryPath -Name $Name -Value 0 -Type DWord -Force
 Write-FrameworkLog -ModuleName "Visual" -Action "Disabled UI Transparency Effects" -OldValue $CurrentValue -NewValue "0"
 
 Write-Host "`n[SUCCESS] Windows Transparency Effects disabled." -ForegroundColor Green
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

@@ -25,4 +25,6 @@ Set-ItemProperty -Path $RegistryPath -Name $Name -Value 0 -Type DWord -Force
 Write-FrameworkLog -ModuleName "Shell" -Action "Disabled Windows Tips & Suggestions" -OldValue $CurrentValue -NewValue "0"
 
 Write-Host "`n[SUCCESS] Windows tips and suggestion notification spam disabled." -ForegroundColor Green
-Start-Sleep -Seconds 2
+
+
+$null = Read-Host "Press Enter to exit..."

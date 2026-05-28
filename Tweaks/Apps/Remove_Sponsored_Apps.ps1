@@ -57,4 +57,6 @@ foreach ($App in $SponsoredApps) {
 
 Write-Host "`n[SUCCESS] Successfully removed $RemovedCount sponsored apps." -ForegroundColor Green
 Write-Host "Third-party bloatware like Candy Crush and TikTok have been scrubbed from the system." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

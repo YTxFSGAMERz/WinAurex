@@ -67,11 +67,12 @@ Windows-Optimisations/
 ├── Activators/                 # Activation utilities (MAS & AAct)
 ├── Antivirus/                  # Lightweight, resident security installers (NOD32, Kaspersky, MalwareBytes)
 ├── Browsers/                   # Performance installers (Brave, Chrome, Firefox, Opera GX)
+├── Core/                       # Framework Infrastructure (Logging, Snapshots, Restore)
 ├── Drivers/                    # Core hardware driver updaters (3DP Chip, Driver Booster)
 ├── Extra/                      # File compression, screenshotting, and TCP tuning tools
-├── Hardware/                   # Monitoring tools (CPU-Z, GPU-Z, HWMonitor)
 ├── GUI/                        # XAML layout files for the WPF Dashboard
-├── Launchers/                  # Shortcut generation and First-Run logic
+├── Hardware/                   # Monitoring tools (CPU-Z, GPU-Z, HWMonitor)
+├── Launchers/                  # PowerShell controllers and initializers
 ├── Tools/                      # Standalone native performance utilities
 ├── Tweaks/                     # Primary registry modifications and scripts
 │   ├── Appearance/             # Light/dark theme, transparency, Action Center, and Cortana
@@ -81,16 +82,15 @@ Windows-Optimisations/
 │   ├── Gaming/                 # Windows Game Mode configurations
 │   ├── Network/                # Bandwidth throttle reduction registry tweaks
 │   ├── Privacy/                # System permissions locks (Location, Camera, Microphone)
-│   ├── Recursos/               # Standard resources (Priorities, SSD, services, MemReduct)
-│   ├── Resources/              # Duplicate resource mapping for retro-compatibility
 │   ├── Startup/                # Startup program management tools
 │   ├── Storage/                # Temp cleaning scripts and Storage Sense tools
-│   ├── Storage-Aggressive/     # Aggressive DISM / component cleanup scripts
-│   └── Troubleshooting/        # Clean boot and diagnostic script tools
+│   └── Windows/                # Core OS scheduler and task prioritization hooks
 ├── Windows Update/             # Instant toggle batch files for Windows Update
-├── WebView - IMPORTANT/        # Guidelines regarding modern app rendering requirements
 ├── autounattend.xml            # Automated, pre-debloated Windows 11 setup XML
 ├── Start.bat                   # Core Zero-Friction GUI Launcher
+├── CONTRIBUTING.md             # Guidelines for pull requests and adding modules
+├── SECURITY.md                 # Vulnerability reporting protocols
+├── CODE_OF_CONDUCT.md          # Open-source community guidelines
 └── README.md                   # Home page
 ```
 

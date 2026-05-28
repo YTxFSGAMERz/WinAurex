@@ -40,4 +40,6 @@ if ($Choice -eq '1') {
     Write-Host "[WARNING] Windows Firewall is now DISABLED. Your system is vulnerable." -ForegroundColor Red
 }
 
-Start-Sleep -Seconds 2
+
+
+$null = Read-Host "Press Enter to exit..."

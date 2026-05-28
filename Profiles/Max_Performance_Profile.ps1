@@ -80,4 +80,6 @@ Write-FrameworkLog -ModuleName "Profiles" -Action "Applied Max Performance Profi
 
 Write-Host "`n[SUCCESS] Max Performance Profile deployed successfully!" -ForegroundColor Green
 Write-Host "Please restart your computer to apply all state changes." -ForegroundColor Yellow
-Start-Sleep -Seconds 3
+
+
+$null = Read-Host "Press Enter to exit..."

@@ -42,4 +42,6 @@ foreach ($ServiceName in $TelemetryServices) {
 
 Write-Host "`n[SUCCESS] Successfully disabled $DisabledCount background telemetry services." -ForegroundColor Green
 Write-Host "This will reduce idle RAM usage and block Microsoft data collection." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."

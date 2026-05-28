@@ -46,4 +46,6 @@ if ($Confirm -match 'y') {
     Write-Host "`nNo changes made."
 }
 
-Start-Sleep -Seconds 2
+
+
+$null = Read-Host "Press Enter to exit..."
