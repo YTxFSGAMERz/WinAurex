@@ -1,6 +1,33 @@
+Gathering System Information... Please wait.
+
 =================================================
-   FRAMEWORK LOG CLEANUP UTILITY
+       WINDOWS SYSTEM DIAGNOSTIC REPORT
 =================================================
-This will permanently delete all framework operation logs in:
-C:\Users\Admin\Documents\GitHub\Windows-Optimisations\Tools\System-Info\..\..\Logs
-Press 'Y' to confirm deletion or any other key to cancel...
+TIMESTAMP: 2026-05-28 20:00:25
+=================================================
+
+[OPERATING SYSTEM]
+OS Name:      Microsoft Windows 11 Pro
+Architecture: 64-bit
+Build Number: 26200
+Version:      10.0.26200
+
+[CPU]
+Processor:    AMD Ryzen 5 6600H with Radeon Graphics         
+Cores:        6
+Logical:      12
+
+[MEMORY]
+Total RAM:    15.31 GB
+
+[GRAPHICS]
+GPU Name:     NVIDIA GeForce RTX 3050 6GB Laptop GPU AMD Radeon(TM) Graphics
+Driver Ver:   32.0.15.9636 32.0.21043.7012
+
+[POWER]
+Active Plan:  
+
+=================================================
+
+[SUCCESS] Report generated and saved to: C:\Users\Admin\Desktop\System_Report.txt
+Press any key to exit...
