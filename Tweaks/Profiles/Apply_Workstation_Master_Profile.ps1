@@ -26,7 +26,7 @@ Write-Host "- Disable web search in the Start Menu for faster local searches"
 Write-Host "- Keep power settings balanced and driver updates enabled for stability"
 if (-not $Force) {
     Write-Host "Press 'Y' to continue or any other key to abort..."
-    $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+    if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
     if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Workstation Master Profile Deployment"
     Write-Host "`nAborted by user."
@@ -39,24 +39,27 @@ $TweaksDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Tweaks"
 
 # 1. Explorer
 Write-Host "`n[1/4] Applying Productivity Explorer Layout..." -ForegroundColor Cyan
-& (Join-Path -Path $TweaksDir -ChildPath "Explorer\Apply_Productivity_Explorer_Profile.ps1")
+& (Join-Path -Path $TweaksDir -ChildPath "Explorer\Apply_Productivity_Explorer.ps1") -Force:$Force
 
 # 2. Visuals
 Write-Host "`n[2/4] Applying Balanced Aesthetic Visuals..." -ForegroundColor Cyan
-& (Join-Path -Path $TweaksDir -ChildPath "Visual\Apply_Balanced_Aesthetic_Profile.ps1")
+& (Join-Path -Path $TweaksDir -ChildPath "Visual\Apply_Balanced_Aesthetic_Profile.ps1") -Force:$Force
 
 # 3. Telemetry & Services
 Write-Host "`n[3/4] Disabling Heavy Telemetry & Background Tasks..." -ForegroundColor Cyan
-& (Join-Path -Path $TweaksDir -ChildPath "Services\Apply_Clean_Services_Profile.ps1")
-& (Join-Path -Path $TweaksDir -ChildPath "Tasks\Apply_Clean_Tasks_Profile.ps1")
+& (Join-Path -Path $TweaksDir -ChildPath "Services\Apply_Clean_Services_Profile.ps1") -Force:$Force
+& (Join-Path -Path $TweaksDir -ChildPath "Tasks\Apply_Clean_Tasks_Profile.ps1") -Force:$Force
 
 # 4. Search
 Write-Host "`n[4/4] Disabling Web Search in Start Menu..." -ForegroundColor Cyan
-& (Join-Path -Path $TweaksDir -ChildPath "Search\Disable_Web_Search.ps1")
+& (Join-Path -Path $TweaksDir -ChildPath "Search\Disable_Web_Search.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Profiles" -Action "Completed Workstation Master Profile Deployment" -Level WARNING
 
 Write-Host "`n[SUCCESS] Workstation Master Profile deployment complete!" -ForegroundColor Green
 Write-Host "Please RESTART YOUR COMPUTER for all changes to take effect." -ForegroundColor Yellow
-Write-Host "Press any key to exit..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+if (-not $Force) {
+    Write-Host "Press any key to exit..."
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+}
+
