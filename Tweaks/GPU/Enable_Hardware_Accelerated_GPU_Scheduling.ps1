@@ -28,4 +28,6 @@ Write-FrameworkLog -ModuleName "GPU" -Action "Enabled Hardware Accelerated GPU S
 Write-Host "`n[SUCCESS] Hardware Accelerated GPU Scheduling (HAGS) is now enabled." -ForegroundColor Green
 Write-Host "This offloads scheduling from the CPU to the GPU, lowering latency and improving FPS." -ForegroundColor Yellow
 Write-Host "A system reboot is required for this to take effect." -ForegroundColor Red
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."
