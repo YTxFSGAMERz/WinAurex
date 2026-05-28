@@ -44,4 +44,6 @@ Write-FrameworkLog -ModuleName "Search" -Action "Triggered Windows Search Index 
 
 Write-Host "`n[SUCCESS] Search Index rebuild has been initiated in the background." -ForegroundColor Green
 Write-Host "You can monitor the status in 'Indexing Options' in the Control Panel."
-Start-Sleep -Seconds 2
+
+
+$null = Read-Host "Press Enter to exit..."
