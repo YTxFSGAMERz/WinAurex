@@ -14,7 +14,7 @@ Write-Host "================================================="
 Write-Host "This will permanently delete all framework operation logs in:"
 Write-Host "$LogsDir" -ForegroundColor DarkGray
 Write-Host "Press 'Y' to confirm deletion or any other key to cancel..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-Host "`nOperation cancelled."

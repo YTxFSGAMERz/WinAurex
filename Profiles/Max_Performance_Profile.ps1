@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Max Performance Profile (Profiles/Max_Performance_Profile.ps1)
 

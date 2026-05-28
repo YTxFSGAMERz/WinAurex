@@ -21,7 +21,7 @@ Write-Host "This profile restores control over Windows Updates."
 Write-Host "It blocks Windows from automatically overwriting your hardware drivers"
 Write-Host "and disables P2P Delivery Optimization to save network bandwidth."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Updates" -Action "Aborted Update Control Profile Deployment"
@@ -34,10 +34,10 @@ Write-FrameworkLog -ModuleName "Updates" -Action "Starting Master Update Control
 $ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/2] Disabling Automatic Driver Updates..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Automatic_Driver_Updates.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Automatic_Driver_Updates.ps1") -Force:$Force
 
 Write-Host "`n[2/2] Disabling Delivery Optimization (P2P)..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Delivery_Optimization.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Delivery_Optimization.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Updates" -Action "Completed Master Update Control Orchestrator" -Level WARNING
 

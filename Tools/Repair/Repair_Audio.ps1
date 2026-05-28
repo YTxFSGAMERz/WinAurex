@@ -21,7 +21,7 @@ Write-Host "This will restart the core Windows Audio services"
 Write-Host "to fix sudden 'No Audio', crackling, or desync issues"
 Write-Host "without needing a full system reboot."
 Write-Host "Press 'Y' to begin or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Repair" -Action "Aborted Audio Repair"

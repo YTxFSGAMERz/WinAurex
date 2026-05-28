@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Firewall Profile Manager (Tweaks/Security/Firewall_Profile_Manager.ps1)
 

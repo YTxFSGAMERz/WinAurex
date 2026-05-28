@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Diagnostic Data (Tweaks/Diagnostics/Disable_Diagnostic_Data.ps1)
 

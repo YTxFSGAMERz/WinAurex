@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Restore Classic Context Menu (Tweaks/Explorer/Restore_Classic_ContextMenu.ps1)
 

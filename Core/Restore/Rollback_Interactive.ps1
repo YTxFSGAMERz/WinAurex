@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Interactive Rollback Menu (Core/Restore/Rollback_Interactive.ps1)
 

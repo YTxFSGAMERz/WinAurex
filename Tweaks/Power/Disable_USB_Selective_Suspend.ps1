@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable USB Selective Suspend (Tweaks/Power/Disable_USB_Selective_Suspend.ps1)
 

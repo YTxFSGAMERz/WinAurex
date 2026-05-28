@@ -22,7 +22,7 @@ Write-Host "It disables hibernation (freeing SSD space), sets Ultimate Performan
 Write-Host "and prevents USB devices from sleeping."
 Write-Host "WARNING: DO NOT use this on a laptop that runs on battery." -ForegroundColor Red
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Power" -Action "Aborted Desktop Power Profile Deployment"
@@ -35,13 +35,13 @@ Write-FrameworkLog -ModuleName "Power" -Action "Starting Master Desktop Power Or
 $ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/3] Disabling Hibernation..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Hibernation.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Hibernation.ps1") -Force:$Force
 
 Write-Host "`n[2/3] Enabling Ultimate Performance Plan..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Enable_Ultimate_Performance_Plan.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Enable_Ultimate_Performance_Plan.ps1") -Force:$Force
 
 Write-Host "`n[3/3] Disabling USB Selective Suspend..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_USB_Selective_Suspend.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_USB_Selective_Suspend.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Power" -Action "Completed Master Desktop Power Orchestrator" -Level WARNING
 

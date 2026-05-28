@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Memory Integrity Manager (Tweaks/Security/Memory_Integrity_Manager.ps1)
 

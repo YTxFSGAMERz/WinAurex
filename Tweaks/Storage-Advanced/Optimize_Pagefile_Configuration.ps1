@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Optimize Pagefile (Tweaks/Storage-Advanced/Optimize_Pagefile_Configuration.ps1)
 

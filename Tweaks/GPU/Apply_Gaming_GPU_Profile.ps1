@@ -21,7 +21,7 @@ Write-Host "This profile configures Windows to prioritize game performance."
 Write-Host "It enables Hardware Accelerated GPU Scheduling (HAGS) for higher FPS"
 Write-Host "and enables Windows Game Mode to suppress background activity."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "GPU" -Action "Aborted Gaming GPU Profile Deployment"
@@ -34,10 +34,10 @@ Write-FrameworkLog -ModuleName "GPU" -Action "Starting Master Gaming GPU Orchest
 $ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/2] Enabling Hardware Accelerated GPU Scheduling..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Enable_Hardware_Accelerated_GPU_Scheduling.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Enable_Hardware_Accelerated_GPU_Scheduling.ps1") -Force:$Force
 
 Write-Host "`n[2/2] Enabling Windows Game Mode..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Enable_Game_Mode.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Enable_Game_Mode.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "GPU" -Action "Completed Master Gaming GPU Orchestrator" -Level WARNING
 

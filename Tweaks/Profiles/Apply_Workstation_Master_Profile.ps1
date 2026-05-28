@@ -26,7 +26,7 @@ Write-Host "- Disable web search in the Start Menu for faster local searches"
 Write-Host "- Keep power settings balanced and driver updates enabled for stability"
 if (-not $Force) {
     Write-Host "Press 'Y' to continue or any other key to abort..."
-    $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+    if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
     if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Workstation Master Profile Deployment"
     Write-Host "`nAborted by user."

@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Tailored Experiences (Tweaks/Diagnostics/Disable_Tailored_Experiences.ps1)
 

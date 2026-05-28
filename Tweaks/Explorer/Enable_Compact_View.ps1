@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Enable Compact View for Explorer (Tweaks/Explorer/Enable_Compact_View.ps1)
 

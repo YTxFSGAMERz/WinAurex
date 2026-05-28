@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable App Camera Access (Tweaks/Camera/Disable_App_Camera_Access.ps1)
 

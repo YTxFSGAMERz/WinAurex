@@ -21,7 +21,7 @@ Write-Host "   WARNING: MASTER DEFAULT RESTORATION INIT" -ForegroundColor Yellow
 Write-Host "================================================="
 Write-Host "This will restore Windows back to its unoptimized default state."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "RestoreEngine" -Action "Aborted Master Default Restoration"

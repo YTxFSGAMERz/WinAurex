@@ -21,7 +21,7 @@ Write-Host "This profile configures your system to preserve battery life and the
 Write-Host "It enables hibernation, sets the Balanced power plan, and allows"
 Write-Host "USB devices to sleep when not in use."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Power" -Action "Aborted Laptop Battery Profile Deployment"

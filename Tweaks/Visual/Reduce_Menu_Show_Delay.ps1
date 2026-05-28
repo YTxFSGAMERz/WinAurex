@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Reduce Menu Show Delay (Tweaks/Visual/Reduce_Menu_Show_Delay.ps1)
 

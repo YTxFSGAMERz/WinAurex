@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Windows Copilot Taskbar Integration (Tweaks/Shell/Disable_Copilot_Taskbar.ps1)
 

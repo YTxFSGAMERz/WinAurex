@@ -27,7 +27,7 @@ Write-Host "- Disable Lock Screen & App Camera Access"
 Write-Host "- Remove Sponsored Apps (Debloat)"
 if (-not $Force) {
     Write-Host "Press 'Y' to continue or any other key to abort..."
-    $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+    if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
     if ($Confirm -notmatch 'y') {
         Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Privacy Master Profile Deployment"
         Write-Host "`nAborted by user."

@@ -33,7 +33,7 @@ Write-Host "================================================="
 Write-Host "Found snapshot: $($LatestSnapshot.Name)"
 Write-Host "This will merge all .reg files from this snapshot back into the registry."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "RestoreEngine" -Action "Aborted Registry Rollback"

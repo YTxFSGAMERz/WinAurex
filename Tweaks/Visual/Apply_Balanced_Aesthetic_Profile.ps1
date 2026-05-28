@@ -20,7 +20,7 @@ Write-Host "================================================="
 Write-Host "This profile speeds up Windows by disabling slow animations and menu delays,"
 Write-Host "while keeping UI Transparency (Mica/Acrylic) and Font Smoothing intact."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Visual" -Action "Aborted Balanced Aesthetic Deployment"
@@ -37,10 +37,10 @@ $RegPathTransp = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Persona
 Set-ItemProperty -Path $RegPathTransp -Name "EnableTransparency" -Value 1 -Type DWord -Force -ErrorAction SilentlyContinue
 
 Write-Host "`n[2/3] Reducing Menu Show Delay for snappier navigation..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Reduce_Menu_Show_Delay.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Reduce_Menu_Show_Delay.ps1") -Force:$Force
 
 Write-Host "`n[3/3] Disabling Unnecessary Taskbar and Window Animations..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Unnecessary_Animations.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Unnecessary_Animations.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Visual" -Action "Completed Master Balanced Aesthetic Orchestrator" -Level WARNING
 

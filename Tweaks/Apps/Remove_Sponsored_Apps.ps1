@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Remove Sponsored Apps (Tweaks/Apps/Remove_Sponsored_Apps.ps1)
 

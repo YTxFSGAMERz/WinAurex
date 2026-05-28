@@ -22,7 +22,7 @@ Write-Host "Developer Mode enables side-loading apps, relaxes"
 Write-Host "execution policies for local scripts, and exposes"
 Write-Host "advanced file explorer tools."
 Write-Host "Press 'Y' to enable Developer Mode or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Developer" -Action "Aborted Developer Mode config"

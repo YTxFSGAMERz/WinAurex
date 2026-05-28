@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Configure SmartScreen (Tweaks/Security/Configure_SmartScreen.ps1)
 

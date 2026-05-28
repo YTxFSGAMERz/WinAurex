@@ -21,7 +21,7 @@ Write-Host "This profile removes sponsored bloatware (TikTok, Candy Crush)"
 Write-Host "and unnecessary default Microsoft apps (3D Viewer, Feedback Hub)."
 Write-Host "This cleans up the Start Menu and reclaims disk space."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Apps" -Action "Aborted Debloat Profile Deployment"
@@ -34,10 +34,10 @@ Write-FrameworkLog -ModuleName "Apps" -Action "Starting Master Debloat Orchestra
 $ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/2] Removing Sponsored Bloatware..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Remove_Sponsored_Apps.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Remove_Sponsored_Apps.ps1") -Force:$Force
 
 Write-Host "`n[2/2] Removing Unnecessary Microsoft Apps..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Remove_Unnecessary_MS_Apps.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Remove_Unnecessary_MS_Apps.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Apps" -Action "Completed Master Debloat Orchestrator" -Level WARNING
 

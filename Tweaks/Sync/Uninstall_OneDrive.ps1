@@ -24,7 +24,7 @@ Write-Host "and remove its icon from the Windows Explorer sidebar."
 Write-Host "WARNING: Any files stored ONLY in OneDrive (Files On-Demand)"
 Write-Host "will become inaccessible unless downloaded first!"
 Write-Host "Press 'Y' to confirm or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Sync" -Action "Aborted OneDrive Uninstall"

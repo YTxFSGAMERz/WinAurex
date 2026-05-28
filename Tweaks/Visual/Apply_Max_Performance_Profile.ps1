@@ -21,7 +21,7 @@ Write-Host "This profile strips Windows visuals to the bare minimum to maximize 
 Write-Host "It disables transparency, animations, and menu delays."
 Write-Host "(Font Smoothing is intentionally kept enabled so text remains readable)."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Visual" -Action "Aborted Max Performance Deployment"
@@ -34,13 +34,13 @@ Write-FrameworkLog -ModuleName "Visual" -Action "Starting Master Max Performance
 $ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/3] Disabling UI Transparency Effects..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Transparency.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Transparency.ps1") -Force:$Force
 
 Write-Host "`n[2/3] Reducing Menu Show Delay for snappier navigation..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Reduce_Menu_Show_Delay.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Reduce_Menu_Show_Delay.ps1") -Force:$Force
 
 Write-Host "`n[3/3] Disabling Unnecessary Taskbar and Window Animations..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Unnecessary_Animations.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Unnecessary_Animations.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Visual" -Action "Completed Master Max Performance Orchestrator" -Level WARNING
 

@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Remove Unnecessary MS Apps (Tweaks/Apps/Remove_Unnecessary_MS_Apps.ps1)
 

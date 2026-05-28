@@ -26,7 +26,7 @@ Write-Host "- Disable heavy background telemetry and services"
 Write-Host "- Disable Windows Update driver downloads"
 if (-not $Force) {
     Write-Host "Press 'Y' to continue or any other key to abort..."
-    $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+    if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
     if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Gaming Master Profile Deployment"
     Write-Host "`nAborted by user."

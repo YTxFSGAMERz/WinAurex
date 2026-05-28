@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Lock Screen Camera (Tweaks/Camera/Disable_LockScreen_Camera.ps1)
 

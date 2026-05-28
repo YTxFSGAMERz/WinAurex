@@ -20,7 +20,7 @@ Write-Host "================================================="
 Write-Host "This will configure Developer View, This PC launch, Compact View, Classic Context Menus,"
 Write-Host "and disable Recent/Frequent file tracking."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Explorer" -Action "Aborted Productivity Explorer Deployment"
@@ -33,19 +33,19 @@ Write-FrameworkLog -ModuleName "Explorer" -Action "Starting Master Productivity 
 $ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/5] Configuring Developer View (Extensions, Hidden Files)..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Configure_Developer_View.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Configure_Developer_View.ps1") -Force:$Force
 
 Write-Host "`n[2/5] Setting File Explorer default to 'This PC'..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Set_Launch_To_This_PC.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Set_Launch_To_This_PC.ps1") -Force:$Force
 
 Write-Host "`n[3/5] Disabling Recent Files and Frequent Folders tracking..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Recent_Frequent.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Recent_Frequent.ps1") -Force:$Force
 
 Write-Host "`n[4/5] Enabling Compact View for higher information density..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Enable_Compact_View.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Enable_Compact_View.ps1") -Force:$Force
 
 Write-Host "`n[5/5] Restoring Classic Context Menus..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Restore_Classic_ContextMenu.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Restore_Classic_ContextMenu.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Explorer" -Action "Completed Master Productivity Explorer Orchestrator" -Level WARNING
 

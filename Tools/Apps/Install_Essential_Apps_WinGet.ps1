@@ -18,7 +18,7 @@ Write-Host "This script will use Microsoft's native package manager (WinGet)"
 Write-Host "to silently install essential utilities for a fresh Windows setup."
 Write-Host "Apps to install: 7-Zip, VLC, Notepad++, Brave Browser, Discord."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-Host "`nAborted by user."

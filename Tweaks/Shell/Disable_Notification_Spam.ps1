@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Notification Spam & Windows Tips (Tweaks/Shell/Disable_Notification_Spam.ps1)
 

@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Telemetry Services (Tweaks/Services/Disable_Telemetry_Services.ps1)
 

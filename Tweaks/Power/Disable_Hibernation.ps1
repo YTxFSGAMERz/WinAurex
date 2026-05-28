@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Hibernation (Tweaks/Power/Disable_Hibernation.ps1)
 

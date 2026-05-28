@@ -22,7 +22,7 @@ Write-Host "and SFC (System File Checker) to detect and repair corrupted"
 Write-Host "core Windows files."
 Write-Host "Note: This process may take 10-30 minutes."
 Write-Host "Press 'Y' to begin or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Repair" -Action "Aborted SFC/DISM Repair"

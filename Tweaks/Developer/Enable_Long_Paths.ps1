@@ -22,7 +22,7 @@ Write-Host "This will remove the 260-character path limit in Windows."
 Write-Host "This is highly recommended for developers using Git, Node.js,"
 Write-Host "and deeply nested folder structures."
 Write-Host "Press 'Y' to enable or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Developer" -Action "Aborted Long Paths config"

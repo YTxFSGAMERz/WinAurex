@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Audio Enhancements (Tweaks/Audio/Disable_Audio_Enhancements.ps1)
 

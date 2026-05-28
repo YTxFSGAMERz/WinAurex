@@ -21,7 +21,7 @@ Write-Host "This will flush DNS, reset Winsock, release/renew IP,"
 Write-Host "and reset the TCP/IP stack to fix 'No Internet' issues."
 Write-Host "WARNING: You will briefly lose connection."
 Write-Host "Press 'Y' to begin or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Repair" -Action "Aborted Network Repair"

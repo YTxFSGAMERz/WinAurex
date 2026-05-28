@@ -21,7 +21,7 @@ Write-Host "WARNING: Rebuilding the search index will cause a temporary CPU and 
 Write-Host "Search results will be incomplete until the rebuild finishes (usually 15-60 minutes)."
 Write-Host "It is highly recommended to do this when the PC is idle."
 Write-Host "Press 'Y' to initiate rebuild, or any other key to abort..." -ForegroundColor Yellow
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Search" -Action "Aborted Search Index Rebuild"

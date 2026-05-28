@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Enterprise Compliance Profile (Profiles/Enterprise_Compliance_Profile.ps1)
 

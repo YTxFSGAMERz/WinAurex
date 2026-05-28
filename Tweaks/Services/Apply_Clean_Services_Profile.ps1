@@ -21,7 +21,7 @@ Write-Host "This profile disables background telemetry services like DiagTrack."
 Write-Host "It frees up background RAM and stops Windows from transmitting"
 Write-Host "diagnostic/usage data to Microsoft servers."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Services" -Action "Aborted Clean Services Profile Deployment"
@@ -34,7 +34,7 @@ Write-FrameworkLog -ModuleName "Services" -Action "Starting Master Clean Service
 $ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/1] Disabling Telemetry Background Services..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Telemetry_Services.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Telemetry_Services.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Services" -Action "Completed Master Clean Services Orchestrator" -Level WARNING
 

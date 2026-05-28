@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Activity History (Tweaks/Sync/Disable_Activity_History.ps1)
 

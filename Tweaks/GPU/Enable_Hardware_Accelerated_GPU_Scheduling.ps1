@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Enable Hardware Accelerated GPU Scheduling (Tweaks/GPU/Enable_Hardware_Accelerated_GPU_Scheduling.ps1)
 

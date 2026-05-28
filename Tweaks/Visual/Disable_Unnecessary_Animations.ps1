@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Unnecessary Animations (Tweaks/Visual/Disable_Unnecessary_Animations.ps1)
 

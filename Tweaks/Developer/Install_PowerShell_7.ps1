@@ -20,7 +20,7 @@ Write-Host "================================================="
 Write-Host "PowerShell 7 is the modern, open-source, cross-platform"
 Write-Host "version of PowerShell that runs side-by-side with Windows PowerShell 5.1."
 Write-Host "Press 'Y' to install or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Developer" -Action "Aborted PowerShell 7 Install"

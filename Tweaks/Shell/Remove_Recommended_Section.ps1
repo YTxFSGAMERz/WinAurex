@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Remove Start Menu Recommended Section (Tweaks/Shell/Remove_Recommended_Section.ps1)
 

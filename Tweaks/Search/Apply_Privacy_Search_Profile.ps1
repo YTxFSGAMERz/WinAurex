@@ -20,7 +20,7 @@ Write-Host "================================================="
 Write-Host "This profile locks down Windows Search to strictly local files and apps."
 Write-Host "It disables Bing web results, dynamic search highlights, and local search history."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Search" -Action "Aborted Privacy Search Profile Deployment"
@@ -33,13 +33,13 @@ Write-FrameworkLog -ModuleName "Search" -Action "Starting Master Privacy Search 
 $ScriptDir = $PSScriptRoot
 
 Write-Host "`n[1/3] Disabling Web Search (Bing) integration..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Web_Search.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Web_Search.ps1") -Force:$Force
 
 Write-Host "`n[2/3] Disabling Dynamic Search Highlights..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Search_Highlights.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Search_Highlights.ps1") -Force:$Force
 
 Write-Host "`n[3/3] Disabling Local Search History tracking..." -ForegroundColor Cyan
-& (Join-Path -Path $ScriptDir -ChildPath "Disable_Local_Search_History.ps1")
+& (Join-Path -Path $ScriptDir -ChildPath "Disable_Local_Search_History.ps1") -Force:$Force
 
 Write-FrameworkLog -ModuleName "Search" -Action "Completed Master Privacy Search Orchestrator" -Level WARNING
 

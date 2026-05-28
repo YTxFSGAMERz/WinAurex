@@ -20,7 +20,7 @@ Write-Host "================================================="
 Write-Host "This will stop update services, clear the SoftwareDistribution"
 Write-Host "cache, and restart the services to fix stuck or broken updates."
 Write-Host "Press 'Y' to begin or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Repair" -Action "Aborted Windows Update Repair"

@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Clipboard Cloud Sync (Tweaks/Clipboard/Disable_Clipboard_Cloud_Sync.ps1)
 

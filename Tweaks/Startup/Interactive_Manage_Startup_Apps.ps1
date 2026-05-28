@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # ==============================================================================
 # SCRIPT: Manage Startup Apps
 # TARGET SYSTEM: Windows 10 & Windows 11

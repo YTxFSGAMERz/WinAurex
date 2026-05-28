@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Exclusive Mode Manager (Tweaks/Audio/Exclusive_Mode_Manager.ps1)
 

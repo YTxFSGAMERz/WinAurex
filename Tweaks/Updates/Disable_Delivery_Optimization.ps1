@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Delivery Optimization (Tweaks/Updates/Disable_Delivery_Optimization.ps1)
 

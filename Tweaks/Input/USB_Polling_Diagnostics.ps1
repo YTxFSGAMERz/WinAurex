@@ -49,7 +49,7 @@ if ($SelectiveSuspend.DisableSelectiveSuspend -eq 1) {
 
 if ($FoundIssues) {
     Write-Host "`nDo you want to disable USB Selective Suspend globally to fix input latency? (Y/N)"
-    $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+    if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
     
     if ($Confirm -match 'y') {
         Set-ItemProperty -Path $USBRegistryPath -Name "DisableSelectiveSuspend" -Value 1 -Type DWord -Force

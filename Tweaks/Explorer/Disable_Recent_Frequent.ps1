@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Disable Recent Files and Frequent Folders (Tweaks/Explorer/Disable_Recent_Frequent.ps1)
 

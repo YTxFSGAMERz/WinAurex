@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Balanced Creator Profile (Profiles/Balanced_Creator_Profile.ps1)
 

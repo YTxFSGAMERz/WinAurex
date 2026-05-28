@@ -22,7 +22,7 @@ Write-Host "This will export all third-party drivers currently installed"
 Write-Host "on your system to a safe backup directory. This is critical"
 Write-Host "before doing major optimizations or GPU driver cleanups (DDU)."
 Write-Host "Press 'Y' to begin the backup or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
 if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Drivers" -Action "Aborted Driver Backup"
