@@ -26,4 +26,6 @@ Set-ItemProperty -Path $RegistryPath -Name $Name -Value 1 -Type DWord -Force
 Write-FrameworkLog -ModuleName "Camera" -Action "Disabled Lock Screen Camera" -OldValue $CurrentValue -NewValue "1"
 
 Write-Host "`n[SUCCESS] The camera can no longer be activated from the Windows Lock Screen." -ForegroundColor Green
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."
