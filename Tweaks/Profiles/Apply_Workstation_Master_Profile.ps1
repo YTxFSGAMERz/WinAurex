@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Apply Workstation Master Profile (Tweaks/Profiles/Apply_Workstation_Master_Profile.ps1)
 
@@ -19,13 +24,14 @@ Write-Host "- Apply Balanced Aesthetic Visuals"
 Write-Host "- Disable heavy background telemetry and tracking"
 Write-Host "- Disable web search in the Start Menu for faster local searches"
 Write-Host "- Keep power settings balanced and driver updates enabled for stability"
-Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
-
-if ($Confirm -notmatch 'y') {
+if (-not $Force) {
+    Write-Host "Press 'Y' to continue or any other key to abort..."
+    $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+    if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Workstation Master Profile Deployment"
     Write-Host "`nAborted by user."
-    Exit
+        Exit
+    }
 }
 
 Write-FrameworkLog -ModuleName "Profiles" -Action "Starting Workstation Master Profile Deployment" -Level WARNING

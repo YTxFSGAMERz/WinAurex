@@ -374,7 +374,7 @@ ipconfig /flushdns >nul 2>&1
 
 echo.
 echo === Applying Repository Master Recommended Profile ===
-powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Write-Host 'Applying Workstation Master Profile (Recommended)...'; echo 'y' | & '%~dp0Profiles\Apply_Workstation_Master_Profile.ps1'"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Write-Host 'Applying Workstation Master Profile (Recommended)...'; & '%~dp0Profiles\Apply_Workstation_Master_Profile.ps1' -Force"
 
 timeout /t 3 /nobreak
 goto :done

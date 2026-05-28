@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Apply Privacy Master Profile (Tweaks/Profiles/Apply_Privacy_Master_Profile.ps1)
 
@@ -20,13 +25,14 @@ Write-Host "- Disable Cloud Clipboard and Sync"
 Write-Host "- Disable Settings Sync & Activity History"
 Write-Host "- Disable Lock Screen & App Camera Access"
 Write-Host "- Remove Sponsored Apps (Debloat)"
-Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
-
-if ($Confirm -notmatch 'y') {
-    Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Privacy Master Profile Deployment"
-    Write-Host "`nAborted by user."
-    Exit
+if (-not $Force) {
+    Write-Host "Press 'Y' to continue or any other key to abort..."
+    $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+    if ($Confirm -notmatch 'y') {
+        Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Privacy Master Profile Deployment"
+        Write-Host "`nAborted by user."
+        Exit
+    }
 }
 
 Write-FrameworkLog -ModuleName "Profiles" -Action "Starting Privacy Master Profile Deployment" -Level WARNING

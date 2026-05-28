@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Apply Gaming Master Profile (Tweaks/Profiles/Apply_Gaming_Master_Profile.ps1)
 
@@ -19,13 +24,14 @@ Write-Host "- Enable Hardware Accelerated GPU Scheduling"
 Write-Host "- Disable visual animations for maximum responsiveness"
 Write-Host "- Disable heavy background telemetry and services"
 Write-Host "- Disable Windows Update driver downloads"
-Write-Host "Press 'Y' to continue or any other key to abort..."
-$Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
-
-if ($Confirm -notmatch 'y') {
+if (-not $Force) {
+    Write-Host "Press 'Y' to continue or any other key to abort..."
+    $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character
+    if ($Confirm -notmatch 'y') {
     Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Gaming Master Profile Deployment"
     Write-Host "`nAborted by user."
-    Exit
+        Exit
+    }
 }
 
 Write-FrameworkLog -ModuleName "Profiles" -Action "Starting Gaming Master Profile Deployment" -Level WARNING
