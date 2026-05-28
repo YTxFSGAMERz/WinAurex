@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param (
+    [switch]$Force
+)
+
 # Windows Configuration & Optimization Framework
 # Configure Developer View for Explorer (Tweaks/Explorer/Configure_Developer_View.ps1)
 
