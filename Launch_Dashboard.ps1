@@ -115,36 +115,38 @@ $BtnDetectThirdParty.Add_Click({
     Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"$TempCmd`""
 })
 
-# --- OBSERVABILITY LIVE POLLING (Continuous) ---
+# --- OBSERVABILITY LIVE POLLING (Optimized) ---
+# Initialize compiled .NET counters outside the loop to prevent UI blocking
+try {
+    $MemCounter = New-Object System.Diagnostics.PerformanceCounter("Memory", "Available MBytes")
+    $DpcCounter = New-Object System.Diagnostics.PerformanceCounter("Processor", "Interrupts/sec", "_Total")
+} catch { }
+
 $Timer = New-Object System.Windows.Threading.DispatcherTimer
 $Timer.Interval = [TimeSpan]::FromSeconds(2)
 $Timer.Add_Tick({
-    # 1. Available Memory & Uptime via WMI
+    # 1. Available Memory (.NET Counter)
     try {
-        $OS = Get-WmiObject -Class Win32_OperatingSystem -ErrorAction SilentlyContinue
-        if ($OS) {
-            $FreeMemMB = [math]::Round($OS.FreePhysicalMemory / 1024)
-            $TxtMemAvailable.Text = "$FreeMemMB MB"
-
-            $LastBoot = $OS.ConvertToDateTime($OS.LastBootUpTime)
-            $Uptime = (Get-Date) - $LastBoot
-            $TxtUptime.Text = "$($Uptime.Days)d $($Uptime.Hours)h $($Uptime.Minutes)m"
+        if ($null -ne $MemCounter) {
+            $TxtMemAvailable.Text = "$([math]::Round($MemCounter.NextValue())) MB"
         }
     } catch { }
 
-    # 2. Process Count
+    # 2. System Uptime (.NET Environment TickCount - extremely fast)
     try {
-        $ProcCount = (Get-Process -ErrorAction SilentlyContinue).Count
-        $TxtProcessCount.Text = "$ProcCount"
+        $Uptime = [TimeSpan]::FromMilliseconds([Environment]::TickCount64)
+        $TxtUptime.Text = "$($Uptime.Days)d $($Uptime.Hours)h $($Uptime.Minutes)m"
     } catch { }
 
-    # 3. DPC Latency (Interrupts/sec or DPCs/sec)
+    # 3. Process Count (.NET Diagnostics - fast array count)
     try {
-        # Using Interrupts/sec as a proxy for DPC latency spikes
-        $Counter = Get-Counter "\Processor(_Total)\Interrupts/sec" -SampleInterval 1 -MaxSamples 1 -ErrorAction SilentlyContinue
-        if ($Counter) {
-            $Interrupts = [math]::Round($Counter.CounterSamples[0].CookedValue)
-            $TxtDpcLatency.Text = "$Interrupts"
+        $TxtProcessCount.Text = "$([System.Diagnostics.Process]::GetProcesses().Count)"
+    } catch { }
+
+    # 4. DPC Latency Proxy (.NET Counter)
+    try {
+        if ($null -ne $DpcCounter) {
+            $TxtDpcLatency.Text = "$([math]::Round($DpcCounter.NextValue()))"
         }
     } catch { }
 })
