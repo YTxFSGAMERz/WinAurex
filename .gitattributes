@@ -1,1 +1,12 @@
 Winhance_Windows.iso filter=lfs diff=lfs merge=lfs -text
+
+# Exclude website, documentation, and test files from GitHub Releases (Source code archives)
+site/ export-ignore
+docs/ export-ignore
+mkdocs.yml export-ignore
+netlify.toml export-ignore
+requirements.txt export-ignore
+.github/ export-ignore
+test.ps1 export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
