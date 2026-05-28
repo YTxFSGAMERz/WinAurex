@@ -1,0 +1,27 @@
+Windows Registry Editor Version 5.00
+
+; ==============================================================================
+; TWEAK: Enable Game Mode & Disable Game DVR Background Recording
+; TARGET SYSTEM: Windows 10 & Windows 11
+; DESCRIPTION: Enables Game Mode to prioritize CPU and GPU scheduling for games.
+;              Disables Game DVR background recording to prevent random stuttering 
+;              and save CPU/GPU overhead.
+; SAFETY LEVEL: Safe & Reversible
+; ==============================================================================
+
+; --- Enable Game Mode ---
+[HKEY_CURRENT_USER\Software\Microsoft\GameBar]
+"AllowAutoGameMode"=dword:00000001
+
+; --- Disable Game DVR and Background Recording ---
+[HKEY_CURRENT_USER\System\GameConfigStore]
+"GameDVR_Enabled"=dword:00000000
+"GameDVR_FSEBehaviorMode"=dword:00000002
+"GameDVR_HonorUserFSEBehaviorMode"=dword:00000001
+"GameDVR_DXGIHonorFSEWindowsCompatible"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR]
+"AllowGameDVR"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR]
+"AppCaptureEnabled"=dword:00000000
