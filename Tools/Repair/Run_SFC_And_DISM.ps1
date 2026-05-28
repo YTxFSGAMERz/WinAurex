@@ -48,7 +48,9 @@ Write-Host "[SUCCESS] Repair operations have finished." -ForegroundColor Green
 Write-Host "Please review the output above for any unresolved corruptions."
 Write-Host "A SYSTEM REBOOT is highly recommended if errors were fixed."
 if (-not $Force) {
+    if (-not $Force) {
     Write-Host "Press any key to exit..."
-    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
+}
 }
 
