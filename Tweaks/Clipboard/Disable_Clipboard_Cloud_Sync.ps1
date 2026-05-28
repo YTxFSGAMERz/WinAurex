@@ -27,4 +27,6 @@ Write-FrameworkLog -ModuleName "Clipboard" -Action "Disabled Clipboard Cloud Syn
 
 Write-Host "`n[SUCCESS] Windows Clipboard Cloud Sync has been disabled." -ForegroundColor Green
 Write-Host "Your copied text and images will no longer be uploaded to Microsoft servers." -ForegroundColor Yellow
-Start-Sleep -Seconds 1
+
+
+$null = Read-Host "Press Enter to exit..."
