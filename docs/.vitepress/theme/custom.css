@@ -1,0 +1,88 @@
+:root {
+  /* Dynamic Gradients & Colors */
+  --vp-c-brand-1: #00bcd4;
+  --vp-c-brand-2: #3f51b5;
+  --vp-c-brand-3: #9c27b0;
+  
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, var(--vp-c-brand-1) 30%, var(--vp-c-brand-3));
+  
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, var(--vp-c-brand-2) 50%, var(--vp-c-brand-1) 50%);
+  --vp-home-hero-image-filter: blur(40px);
+
+  /* Nav Bar Glassmorphism */
+  --vp-nav-bg-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.dark {
+  --vp-nav-bg-color: rgba(24, 24, 27, 0.6) !important;
+  --vp-c-bg: #0f1016; /* Deep rich dark background */
+  --vp-c-bg-alt: #1a1b23;
+  --vp-c-bg-elv: #252630;
+}
+
+/* Base Glassmorphism for Top Nav */
+.VPNav {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.dark .VPNav {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Glassmorphism for Home Features (Cards) */
+.VPHomeFeatures .VPFeature {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.3s ease !important;
+}
+
+.dark .VPHomeFeatures .VPFeature {
+  background: rgba(30, 30, 35, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.VPHomeFeatures .VPFeature:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 188, 212, 0.3) !important;
+  border-color: rgba(0, 188, 212, 0.5) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .VPHomeFeatures .VPFeature:hover {
+  background: rgba(40, 40, 45, 0.6) !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 188, 212, 0.4) !important;
+}
+
+/* Sidebar styling for glassmorphism */
+.VPSidebar {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .VPSidebar {
+  background: rgba(24, 24, 27, 0.6) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Glassmorphism for Admonitions (Info boxes) */
+.custom-block.info {
+  background: rgba(0, 188, 212, 0.05) !important;
+  border: 1px solid rgba(0, 188, 212, 0.2) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 12px;
+}
+
+.dark .custom-block.info {
+  background: rgba(0, 188, 212, 0.1) !important;
+  border: 1px solid rgba(0, 188, 212, 0.3) !important;
+}
