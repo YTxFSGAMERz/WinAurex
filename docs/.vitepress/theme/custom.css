@@ -154,9 +154,12 @@ div[class*="language-"]:hover {
   box-shadow: 0 0 20px rgba(0, 188, 212, 0.4) !important;
 }
 
-/* Premium Matrix Table - Aggressive Override of VitePress Defaults */
-.vp-doc .matrix-table-container {
+/* Premium Markdown Tables - Aggressive Override of VitePress Defaults for ALL tables */
+.vp-doc table {
+  display: block !important;
+  width: 100% !important;
   overflow-x: auto !important;
+  border-collapse: collapse !important;
   margin: 30px 0 !important;
   border-radius: 12px !important;
   background: rgba(255, 255, 255, 0.02) !important;
@@ -164,23 +167,14 @@ div[class*="language-"]:hover {
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+  text-align: left !important;
 }
 
-.dark .vp-doc .matrix-table-container {
+.dark .vp-doc table {
   background: rgba(20, 22, 30, 0.4) !important;
 }
 
-.vp-doc table.matrix-table {
-  display: table !important;
-  width: 100% !important;
-  border-collapse: collapse !important;
-  margin: 0 !important;
-  text-align: left !important;
-  border: none !important;
-  background: transparent !important;
-}
-
-.vp-doc table.matrix-table th {
+.vp-doc table th {
   background: rgba(0, 188, 212, 0.08) !important;
   color: var(--vp-c-text-1) !important;
   padding: 16px !important;
@@ -190,7 +184,7 @@ div[class*="language-"]:hover {
   white-space: nowrap !important;
 }
 
-.vp-doc table.matrix-table td {
+.vp-doc table td {
   background: transparent !important;
   padding: 16px !important;
   border: none !important;
@@ -199,25 +193,25 @@ div[class*="language-"]:hover {
   vertical-align: middle !important;
 }
 
-.vp-doc table.matrix-table tr {
+.vp-doc table tr {
   background: transparent !important;
   transition: background 0.2s ease !important;
   border: none !important;
 }
 
-.vp-doc table.matrix-table tr:nth-child(2n) {
+.vp-doc table tr:nth-child(2n) {
   background: transparent !important; /* Remove VitePress zebra striping */
 }
 
-.vp-doc table.matrix-table tr:hover {
+.vp-doc table tr:hover {
   background: rgba(255, 255, 255, 0.05) !important;
 }
 
-.vp-doc table.matrix-table tr:hover td {
+.vp-doc table tr:hover td {
   color: var(--vp-c-text-1) !important;
 }
 
-.vp-doc table.matrix-table tr:last-child td {
+.vp-doc table tr:last-child td {
   border-bottom: none !important;
 }
 
