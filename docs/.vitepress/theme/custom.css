@@ -11,23 +11,23 @@
   --vp-home-hero-image-filter: blur(40px);
 
   /* Nav Bar Glassmorphism */
-  --vp-nav-bg-color: rgba(255, 255, 255, 0.5);
+  --vp-nav-bg-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
 
 .dark {
-  --vp-nav-bg-color: rgba(24, 24, 27, 0.6) !important;
-  --vp-c-bg: #0f1016; /* Deep rich dark background */
-  --vp-c-bg-alt: #1a1b23;
-  --vp-c-bg-elv: #252630;
+  --vp-nav-bg-color: rgba(15, 16, 22, 0.5) !important;
+  --vp-c-bg: #0b0c10; /* Deep rich dark background */
+  --vp-c-bg-alt: #13151c;
+  --vp-c-bg-elv: #1a1c26;
 }
 
 /* Base Glassmorphism for Top Nav */
 .VPNav {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 .dark .VPNav {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -35,41 +35,43 @@
 
 /* Glassmorphism for Home Features (Cards) */
 .VPHomeFeatures .VPFeature {
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
   border-radius: 16px !important;
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.3s ease !important;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.4s ease !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
 }
 
 .dark .VPHomeFeatures .VPFeature {
-  background: rgba(30, 30, 35, 0.4) !important;
+  background: rgba(20, 22, 30, 0.4) !important;
   border: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
+/* Feature Cards Hover: Glow the external shadow, keep inside background same */
 .VPHomeFeatures .VPFeature:hover {
   transform: translateY(-5px) !important;
-  box-shadow: 0 10px 30px -10px rgba(0, 188, 212, 0.3) !important;
-  border-color: rgba(0, 188, 212, 0.5) !important;
-  background: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 15px 40px -10px rgba(0, 188, 212, 0.6) !important;
+  border-color: rgba(0, 188, 212, 0.4) !important;
+  /* Intentionally NOT changing background so it doesn't shine inside */
 }
 
 .dark .VPHomeFeatures .VPFeature:hover {
-  background: rgba(40, 40, 45, 0.6) !important;
-  box-shadow: 0 10px 30px -10px rgba(0, 188, 212, 0.4) !important;
+  box-shadow: 0 15px 40px -10px rgba(0, 188, 212, 0.6) !important;
+  border-color: rgba(0, 188, 212, 0.4) !important;
 }
 
 /* Sidebar styling for glassmorphism */
 .VPSidebar {
-  background: rgba(255, 255, 255, 0.7) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
+  background: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .dark .VPSidebar {
-  background: rgba(24, 24, 27, 0.6) !important;
+  background: rgba(15, 16, 22, 0.5) !important;
   border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -77,12 +79,23 @@
 .custom-block.info {
   background: rgba(0, 188, 212, 0.05) !important;
   border: 1px solid rgba(0, 188, 212, 0.2) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 12px;
 }
 
 .dark .custom-block.info {
-  background: rgba(0, 188, 212, 0.1) !important;
+  background: rgba(0, 188, 212, 0.08) !important;
   border: 1px solid rgba(0, 188, 212, 0.3) !important;
+}
+
+/* Glassmorphism for Code Blocks */
+div[class*="language-"] {
+  background: rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+.dark div[class*="language-"] {
+  background: rgba(0, 0, 0, 0.4) !important;
 }
