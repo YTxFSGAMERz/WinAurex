@@ -1,4 +1,35 @@
-# Windows Optimisations
+---
+layout: home
+
+hero:
+  name: "Windows Optimisations"
+  text: "Ultimate Performance Suite"
+  tagline: "Comprehensive collection of scripts and tools to optimize Windows 10/11 for peak performance, gaming, and privacy."
+  actions:
+    - theme: brand
+      text: Unattended Install
+      link: /AUTOUNATTEND
+    - theme: alt
+      text: System Tweaks
+      link: /TWEAKS
+  image:
+    src: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+    alt: Windows Optimisations
+
+features:
+  - title: Performance First
+    details: Registry tweaks for thread priority alignment, SSD alignments, network routing, and custom power plans.
+    icon: 🚀
+  - title: Privacy & Telemetry
+    details: Broad-spectrum telemetry disablement, background app execution filters, and Edge telemetry cleanups.
+    icon: 🔒
+  - title: Seamless Automation
+    details: All scripts now support zero-prompt unattended execution via the -Force flag.
+    icon: 🤖
+  - title: Automated OS Setup
+    details: autounattend.xml automation templates that bypass TPM, Secure Boot, and RAM restrictions automatically.
+    icon: 🛠️
+---
 
 <p align="center">
   <a href="https://github.com/YTxFSGAMERz/Windows-Optimisations" target="_blank">
@@ -12,57 +43,21 @@
   </a>
 </p>
 
-!!! info "Ultimate Windows Performance, Debloating, and Privacy Suite"
-    Welcome to the official documentation site for the **Windows Optimisations** repository. This suite provides a curated, high-performance ecosystem of registry tweaks, automated installation files (`autounattend.xml`), toggle scripts, and utility configurations. Whether you want to boost gaming FPS, debloat background processes, or regain complete privacy on Windows 10/11, you'll find comprehensive step-by-step guides here.
-
----
-
-## 🚀 Key Optimization Areas
-
-<div class="grid cards" markdown="1">
-
--   :material-rocket-launch:{ .lg .middle } **Performance First**
-
-    ---
-
-    Registry tweaks for thread priority alignment, SSD alignments, network routing, and custom power plans (`QuickCPU`).
-
--   :material-shield-lock:{ .lg .middle } **Privacy & Telemetry**
-
-    ---
-
-    Broad-spectrum telemetry disablement, background app execution filters, and Edge telemetry cleanups.
-
--   :material-robot-outline:{ .lg .middle } **Seamless Automation**
-
-    ---
-
-    All scripts now support zero-prompt unattended execution via the `-Force` flag. Build custom automated pipelines effortlessly.
-
--   :material-auto-fix:{ .lg .middle } **Automated OS Setup**
-
-    ---
-
-    `autounattend.xml` automation templates that bypass TPM, Secure Boot, and RAM restrictions automatically.
-
--   :material-toolbox:{ .lg .middle } **Curated Toolset**
-
-    ---
-
-    Hand-picked utilities for latency optimization (MSI Utility), custom resolutions (CRU), and hardware temperature tracking.
-
-</div>
+::: info Ultimate Windows Performance, Debloating, and Privacy Suite
+Welcome to the official documentation site for the **Windows Optimisations** repository. This suite provides a curated, high-performance ecosystem of registry tweaks, automated installation files (`autounattend.xml`), toggle scripts, and utility configurations. Whether you want to boost gaming FPS, debloat background processes, or regain complete privacy on Windows 10/11, you'll find comprehensive step-by-step guides here.
+:::
 
 ---
 
 ## 👑 About the Author
 
-!!! abstract "Farhan | Windows Optimization Specialist"
-    Hi! I'm **Farhan**, the designer and maintainer of this optimization catalog. My passion is to streamline Windows performance and eliminate background bloat, enabling high-responsiveness computing even on legacy hardware configurations.
+::: info Farhan | Windows Optimization Specialist
+Hi! I'm **Farhan**, the designer and maintainer of this optimization catalog. My passion is to streamline Windows performance and eliminate background bloat, enabling high-responsiveness computing even on legacy hardware configurations.
     
-    - :octicons-mark-github-16: **GitHub Profile:** [@YTxFSGAMERz](https://github.com/YTxFSGAMERz)
-    - :fontawesome-brands-telegram: **Telegram Channel:** [Telegram News Feed](https://t.me/YTxFSGAMERz)
-    - :material-whatsapp: **WhatsApp Direct:** [WhatsApp Channel Support (+91 7778906798)](https://wa.me/917778906798)
+- :octicons-mark-github-16: **GitHub Profile:** [@YTxFSGAMERz](https://github.com/YTxFSGAMERz)
+- :fontawesome-brands-telegram: **Telegram Channel:** [Telegram News Feed](https://t.me/YTxFSGAMERz)
+- :material-whatsapp: **WhatsApp Direct:** [WhatsApp Channel Support (+91 7778906798)](https://wa.me/917778906798)
+:::
 
 ---
 
