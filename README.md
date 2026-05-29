@@ -8,13 +8,13 @@
 <br>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Architecture-Modular_Ecosystem-00bcd4?style=for-the-badge&logo=windows&logoColor=white" alt="Modular Ecosystem">
-  <img src="https://img.shields.io/badge/OS-Windows_11_Verified-00bcd4?style=for-the-badge&logo=windows11&logoColor=white" alt="Windows 11 Verified">
-  <img src="https://img.shields.io/badge/OS-Windows_10_Supported-00bcd4?style=for-the-badge&logo=windows&logoColor=white" alt="Windows 10 Supported">
-  <img src="https://img.shields.io/badge/Engine-PowerShell_Powered-00bcd4?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell Powered">
-  <img src="https://img.shields.io/badge/Control-Reversible_Tweaks-00bcd4?style=for-the-badge&logo=reverbnation&logoColor=white" alt="Reversible Tweaks">
-  <img src="https://img.shields.io/badge/Security-Privacy_Hardened-00bcd4?style=for-the-badge&logo=shield&logoColor=white" alt="Privacy Hardened">
-  <img src="https://img.shields.io/badge/Performance-Low_Latency-00bcd4?style=for-the-badge&logo=speedtest&logoColor=white" alt="Low Latency">
+  <img src="https://img.shields.io/badge/Architecture-Modular_Ecosystem-00bcd4?style=flat&logo=windows&logoColor=white" alt="Modular Ecosystem">
+  <img src="https://img.shields.io/badge/OS-Windows_11_Verified-00bcd4?style=flat&logo=windows11&logoColor=white" alt="Windows 11 Verified">
+  <img src="https://img.shields.io/badge/OS-Windows_10_Supported-00bcd4?style=flat&logo=windows&logoColor=white" alt="Windows 10 Supported">
+  <img src="https://img.shields.io/badge/Engine-PowerShell_Powered-00bcd4?style=flat&logo=powershell&logoColor=white" alt="PowerShell Powered">
+  <img src="https://img.shields.io/badge/Control-Reversible_Tweaks-00bcd4?style=flat&logo=reverbnation&logoColor=white" alt="Reversible Tweaks">
+  <img src="https://img.shields.io/badge/Security-Privacy_Hardened-00bcd4?style=flat&logo=shield&logoColor=white" alt="Privacy Hardened">
+  <img src="https://img.shields.io/badge/Performance-Low_Latency-00bcd4?style=flat&logo=speedtest&logoColor=white" alt="Low Latency">
 </p>
 
 *A premium, flagship open-source control platform engineered to maximize raw hardware potential, eradicate system latency, and restore absolute privacy.*
