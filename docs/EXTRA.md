@@ -70,6 +70,11 @@ The `Extra/` directory contains a curated selection of lightweight, high-perform
 
 ## ⚙️ 5. General Utilities
 
+### RestartDWM (`RestartDWM.exe`)
+*   **Purpose**: Safely and instantly restarts the Desktop Window Manager (DWM) process. 
+*   **Why Use**: Restarting DWM is highly useful for fixing visual glitches, resetting Multiplane Overlay (MPO) states, and clearing VRAM buffers to fix input latency without needing to reboot the entire PC.
+*   **[Download RestartDWM.exe](https://github.com/YTxFSGAMERz/Windows-Optimisations/raw/master/RestartDWM.exe){ .md-button }**
+
 ### Rufus (`rufus-3.22p.exe`)
 *   **Purpose**: Highly reliable utility to format and create bootable USB installation media from ISO images (used for clean unattended OS installations).
 

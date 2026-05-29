@@ -2,6 +2,8 @@
 
 The `autounattend.xml` file located in the root of this repository is a highly optimized configuration script designed to automate the installation of **Windows 11 Pro** (and Windows 10 Pro) from scratch, creating a streamlined, high-performance, and debloated baseline immediately upon first boot.
 
+[Download autounattend.xml](https://github.com/YTxFSGAMERz/Windows-Optimisations/raw/master/autounattend.xml){ .md-button .md-button--primary }
+
 ---
 
 ## ⚡ Core Automation Features
