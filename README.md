@@ -1,87 +1,70 @@
 <div align="center">
 
-<img src="docs/assets/banner.png" alt="WinAurex Cyber Dashboard" width="1000" style="border-radius: 12px; border: 2px solid #00bcd4; box-shadow: 0 0 40px rgba(0, 188, 212, 0.4);">
-
-<br><br>
-
-<h1>⚡ Ｗ Ｉ Ｎ Ａ Ｕ Ｒ Ｅ Ｘ ⚡</h1>
-<h3>A modular Windows configuration & observability framework engineered for <br> <b>responsiveness, transparency, and rollback-safe control.</b></h3>
+<!-- ANIMATED CAPSULE-RENDER VENOM HEADER -->
+![Header](https://capsule-render.vercel.app/api?type=venom&color=0:000000,100:00bcd4&height=220&text=WINAUREX&fontColor=00bcd4&fontSize=80&fontAlignY=55&animation=twinkling&desc=Windows+Engineering+Framework&descColor=ffffff&descAlignY=75&descSize=22)
 
 <br>
 
-<kbd>&nbsp;Windows Engineering Framework&nbsp;</kbd> • <kbd>&nbsp;Rollback-Safe&nbsp;</kbd> • <kbd>&nbsp;PowerShell + WPF&nbsp;</kbd> • <kbd>&nbsp;Open Source&nbsp;</kbd>
+<img src="docs/assets/banner.png" alt="WinAurex Cyber Dashboard" width="900" style="border-radius: 12px; border: 2px solid #00bcd4; box-shadow: 0 0 40px rgba(0, 188, 212, 0.4);">
 
 <br><br>
 
-<table>
-<tr>
-<td>
-
-```powershell
-[ 0.001s ] OK : Rollback Engine Initialized
-[ 0.042s ] OK : Observability Layer Online
-[ 0.119s ] OK : Logging Framework Active
-[ 0.180s ] OK : Master Profiles Loaded
-```
-
-</td>
-</tr>
-</table>
+<!-- ANIMATED TYPEWRITER BOOT SEQUENCE -->
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&duration=1800&pause=500&color=00BCD4&background=0D1117&center=true&vCenter=true&multiline=true&width=620&height=130&lines=%5B+0.001s+%5D+OK+%3A+Rollback+Engine+Initialized;%5B+0.042s+%5D+OK+%3A+Observability+Layer+Online;%5B+0.119s+%5D+OK+%3A+Logging+Framework+Active;%5B+0.180s+%5D+OK+%3A+Master+Profiles+Loaded;%3E+SYSTEM+STATUS+%3A+ONLINE+%E2%96%88)](https://github.com/YTxFSGAMERz/WinAurex)
 
 <br>
 
+<kbd>&nbsp;Windows Engineering Framework&nbsp;</kbd> &nbsp;•&nbsp; <kbd>&nbsp;Rollback-Safe&nbsp;</kbd> &nbsp;•&nbsp; <kbd>&nbsp;PowerShell + WPF&nbsp;</kbd> &nbsp;•&nbsp; <kbd>&nbsp;Open Source&nbsp;</kbd>
+
+<br><br>
+
+<!-- BADGE GRID -->
 <p align="center">
-  <a href="#"><img src="https://img.shields.io/badge/ENGINE-MODULAR_ARCHITECTURE-00bcd4?style=for-the-badge&logo=windows&logoColor=white" alt="Modular Architecture"></a>
-  <a href="#"><img src="https://img.shields.io/badge/ENGINE-NO_COMPILED_BINARIES-00bcd4?style=for-the-badge&logo=powershell&logoColor=white" alt="No Compiled Binaries"></a>
-  <a href="#"><img src="https://img.shields.io/badge/SAFETY-ROLLBACK_READY-00bcd4?style=for-the-badge&logo=shield&logoColor=white" alt="Rollback Ready"></a>
+  <a href="#"><img src="https://img.shields.io/badge/ENGINE-MODULAR_ARCHITECTURE-00bcd4?style=for-the-badge&logo=windows&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/ENGINE-NO_COMPILED_BINARIES-00bcd4?style=for-the-badge&logo=powershell&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/SAFETY-ROLLBACK_READY-00bcd4?style=for-the-badge&logo=shield&logoColor=white"></a>
   <br>
-  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WINDOWS_11_VERIFIED-00bcd4?style=for-the-badge&logo=windows11&logoColor=white" alt="Windows 11 Verified"></a>
-  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WINDOWS_10_SUPPORTED-00bcd4?style=for-the-badge&logo=windows&logoColor=white" alt="Windows 10 Supported"></a>
-  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WPF_DASHBOARD-00bcd4?style=for-the-badge&logo=reverbnation&logoColor=white" alt="WPF Dashboard"></a>
+  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WINDOWS_11_VERIFIED-00bcd4?style=for-the-badge&logo=windows11&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WINDOWS_10_SUPPORTED-00bcd4?style=for-the-badge&logo=windows&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WPF_DASHBOARD-00bcd4?style=for-the-badge&logo=reverbnation&logoColor=white"></a>
   <br>
-  <a href="#"><img src="https://img.shields.io/badge/OBSERVABILITY-LOGGING_ACTIVE-00bcd4?style=for-the-badge&logo=speedtest&logoColor=white" alt="Logging Active"></a>
-  <a href="#"><img src="https://img.shields.io/badge/OBSERVABILITY-NATIVE_APIs-00bcd4?style=for-the-badge&logo=windows&logoColor=white" alt="Native APIs"></a>
+  <a href="#"><img src="https://img.shields.io/badge/OBSERVABILITY-LOGGING_ACTIVE-00bcd4?style=for-the-badge&logo=speedtest&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/OBSERVABILITY-NATIVE_APIs-00bcd4?style=for-the-badge&logo=windows&logoColor=white"></a>
 </p>
-
-<br>
-
-<blockquote>
-<code>
-  ███████╗██╗   ██╗███████╗████████╗███████╗███╗   ███╗<br>
-  ██╔════╝╚██╗ ██╔╝██╔════╝╚══██╔══╝██╔════╝████╗ ████║<br>
-  ███████╗ ╚████╔╝ ███████╗   ██║   █████╗  ██╔████╔██║<br>
-  ╚════██║  ╚██╔╝  ╚════██║   ██║   ██╔══╝  ██║╚██╔╝██║<br>
-  ███████║   ██║   ███████║   ██║   ███████╗██║ ╚═╝ ██║<br>
-  ╚══════╝   ╚═╝   ╚══════╝   ╚═╝   ╚══════╝╚═╝     ╚═╝<br>
-  > SYSTEM STATUS : ONLINE<br>
-  > FRAMEWORK VERSION : v5.0.0
-</code>
-</blockquote>
 
 </div>
 
-<br><br>
+<!-- ═══ ANIMATED DIVIDER ═══ -->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 <h2 align="center">⬛ WHAT WINAUREX IS</h2>
 
-> **This is NOT a tweak pack. It is NOT a fake FPS booster, and it is NOT a random registry dump.**
+<div align="center">
+
+<!-- RED MANIFESTO TYPING ANIMATION -->
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&pause=400&color=FF4444&center=true&vCenter=true&width=620&lines=This+is+NOT+a+tweak+pack.;NOT+a+fake+FPS+booster.;NOT+a+random+registry+dump.;This+is+a+Windows+engineering+framework.)](https://github.com/YTxFSGAMERz/WinAurex)
+
+</div>
+
+<br>
 
 WinAurex is a modular state management and observability-first framework. Modern operating systems are saturated with background telemetry, unnecessary scheduled tasks, and sub-optimal resource allocation. This repository exists to place the control back into the hands of the hardware owner.
 
 <div align="center">
-  
+
 ```text
-[ USER ] ──> [ PROFILES ] ──> [ MODULES ] ──> [ LOGS & SNAPSHOTS ] ──> [ OS CORE ]
+[ USER ] ──▶ [ PROFILES ] ──▶ [ MODULES ] ──▶ [ LOGS & SNAPSHOTS ] ──▶ [ OS CORE ]
 ```
 
 </div>
 
-<br>
+<!-- ═══ ANIMATED DIVIDER ═══ -->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 <h2 align="center">⬛ CORE ARCHITECTURE</h2>
 
 <details>
-<summary><b>View Infrastructure Blueprint (Click to Expand)</b></summary>
+<summary><b>📡 [ CLICK TO ACCESS INFRASTRUCTURE BLUEPRINT ]</b></summary>
 <br>
 
 ```text
@@ -96,11 +79,17 @@ WinAurex is a modular state management and observability-first framework. Modern
 
 </details>
 
-<br>
+<!-- ═══ ANIMATED DIVIDER ═══ -->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 <h2 align="center">⬛ MODULE ECOSYSTEM</h2>
 
 <div align="center">
+
+<!-- SCANNING ANIMATION -->
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=15&pause=1000&color=00BCD4&center=true&vCenter=true&width=520&lines=Scanning+Operational+Domains...;30%2B+Modules+Detected.;All+Systems+Reversible.+%E2%9C%94)](https://github.com/YTxFSGAMERz/WinAurex)
+
+<br>
 
 | 🎮 GAMING DOMAIN | 🛡️ PRIVACY DOMAIN |
 | :--- | :--- |
@@ -118,26 +107,28 @@ WinAurex is a modular state management and observability-first framework. Modern
 
 </div>
 
-<br>
+<!-- ═══ ANIMATED DIVIDER ═══ -->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 <h2 align="center">⬛ SAFETY & ROLLBACK ENGINE</h2>
 
 <div align="center">
-  
-<kbd>Snapshot</kbd> ➔ <kbd>Configure</kbd> ➔ <kbd>Log</kbd> ➔ <kbd>Manifest</kbd> ➔ <kbd>Rollback Ready</kbd>
+
+<!-- GREEN MATRIX SAFETY PIPELINE ANIMATION -->
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&duration=2000&pause=800&color=00FF41&background=0D1117&center=true&vCenter=true&multiline=true&width=620&height=130&lines=STEP+1+%3A+Snapshot+Current+State++++%E2%9C%94;STEP+2+%3A+Apply+Configuration+++++%E2%9C%94;STEP+3+%3A+Log+All+Changes+++++++++%E2%9C%94;STEP+4+%3A+Generate+Manifest+++++++++%E2%9C%94;STEP+5+%3A+Rollback+Ready+++++++++++%E2%9C%94)](https://github.com/YTxFSGAMERz/WinAurex)
 
 </div>
+
 <br>
 
-Absolute power requires absolute safety. This repository is built upon a **Reversible Tweaks Architecture**. 
+Absolute power requires absolute safety. This repository is built upon a **Reversible Tweaks Architecture**. Every change acts as an isolated transaction, enabling complete system state exports and rollback manifests.
 
 * 🛑 **NO** destructive service deletion.
 * 🛑 **NO** irreversible registry wiping.
 * 🛑 **NO** hidden scheduled task removal.
 
-Every change acts as an isolated transaction, enabling complete system state exports and rollback manifests.
-
-<br>
+<!-- ═══ ANIMATED DIVIDER ═══ -->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 <h2 align="center">⬛ PERFORMANCE PHILOSOPHY</h2>
 
@@ -164,11 +155,17 @@ Every change acts as an isolated transaction, enabling complete system state exp
   </tr>
 </table>
 
-<br>
+<!-- ═══ ANIMATED DIVIDER ═══ -->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 <h2 align="center">⬛ DEPLOYMENT FLOW</h2>
 
 <div align="center">
+
+<!-- CYAN DEPLOYMENT ANIMATION -->
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&pause=700&color=00BCD4&center=true&vCenter=true&width=600&lines=Initializing+WinAurex+Framework...;Verifying+System+Integrity...;Loading+Optimization+Profiles...;%3E+READY+FOR+DEPLOYMENT.)](https://github.com/YTxFSGAMERz/WinAurex)
+
+<br>
 
 ```powershell
 PS> .\Initialize_Framework.ps1
@@ -179,24 +176,27 @@ PS> .\Initialize_Framework.ps1
 
 </div>
 
-<br>
+<!-- ═══ ANIMATED DIVIDER ═══ -->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 <h2 align="center">⬛ OBSERVABILITY & TELEMETRY</h2>
 
 Enterprise-grade observability is built into the core. Monitor system health natively without third-party bloat.
 
 <div align="center">
-  <kbd>DPC Latency</kbd> | <kbd>Boot Duration</kbd> | <kbd>CPU Queue Length</kbd> | <kbd>Memory Commit</kbd> | <kbd>GPU Scheduling</kbd> | <kbd>Background Tasks</kbd>
+  <kbd>DPC Latency</kbd> &nbsp;|&nbsp; <kbd>Boot Duration</kbd> &nbsp;|&nbsp; <kbd>CPU Queue Length</kbd> &nbsp;|&nbsp; <kbd>Memory Commit</kbd> &nbsp;|&nbsp; <kbd>GPU Scheduling</kbd> &nbsp;|&nbsp; <kbd>Background Tasks</kbd>
 </div>
 
-<br>
+<!-- ═══ ANIMATED DIVIDER ═══ -->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 <h2 align="center">⬛ DOCUMENTATION MATRIX</h2>
 
 <div align="center">
-  
-`[ Architecture ]` `[ Compatibility ]` `[ Registry Reference ]` 
-`[ Rollback Engine ]` `[ Logging Standards ]` `[ Myths & Anti-Patterns ]`
+
+`[ Architecture ]` &nbsp; `[ Compatibility ]` &nbsp; `[ Registry Reference ]`
+
+`[ Rollback Engine ]` &nbsp; `[ Logging Standards ]` &nbsp; `[ Myths & Anti-Patterns ]`
 
 <br>
 
@@ -204,27 +204,25 @@ Enterprise-grade observability is built into the core. Monitor system health nat
 
 </div>
 
-<br>
+<!-- ═══ ANIMATED DIVIDER ═══ -->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 <h2 align="center">⬛ ROADMAP</h2>
 
 <div align="center">
 
-**[ PHASE 1 ]** Core Architecture & Safety Engine <br>
-**[ PHASE 2 ]** Observability Layer & Telemetry <br>
-**[ PHASE 3 ]** WPF Dashboard Integration <br>
-**[ PHASE 4 ]** Packaging & Distribution
+**`[ PHASE 1 ]`** &nbsp; Core Architecture & Safety Engine<br>
+**`[ PHASE 2 ]`** &nbsp; Observability Layer & Telemetry<br>
+**`[ PHASE 3 ]`** &nbsp; WPF Dashboard Integration<br>
+**`[ PHASE 4 ]`** &nbsp; Packaging & Distribution
 
 </div>
 
 <br><br>
 
+<!-- ANIMATED CAPSULE-RENDER WAVING FOOTER -->
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png">
-
-`Engineered for transparency.`<br>
-`Designed for control.`<br>
-`Built for Windows power users.`
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=0:00bcd4,100:000000&height=140&section=footer&text=Engineered+for+Control&fontColor=00bcd4&fontSize=26&fontAlignY=65&animation=twinkling)
 
 </div>
