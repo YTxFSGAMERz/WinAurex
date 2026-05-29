@@ -12,6 +12,9 @@ hero:
     - theme: alt
       text: System Tweaks
       link: /TWEAKS
+    - theme: alt
+      text: Releases
+      link: https://github.com/YTxFSGAMERz/WinAurex/releases
   image:
     src: /logo.png
     alt: WinAurex Logo
