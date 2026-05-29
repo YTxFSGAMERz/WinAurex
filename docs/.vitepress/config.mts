@@ -13,6 +13,12 @@ export default defineConfig({
             return false;
           }
         });
+        window.addEventListener('dragstart', function(e) {
+          if (e.target.closest && e.target.closest('.VPHero .image-src, .VPHero .image-container, .VPHero .image-bg')) {
+            e.preventDefault();
+            return false;
+          }
+        });
       }
     `]
   ],
