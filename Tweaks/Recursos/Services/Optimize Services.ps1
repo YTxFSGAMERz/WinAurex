@@ -46,3 +46,5 @@ foreach ($service in $services.Keys) {
 Write-Output "========================================================================"
 Write-Output "                     SERVICES OPTIMIZATION APPLIED"
 Write-Output "========================================================================"
+
+Read-Host -Prompt "Press Enter to exit"
