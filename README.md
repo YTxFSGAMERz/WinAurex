@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ WINDOWS OPTIMISATIONS ⚡
+# ⚡ WINAUREX ⚡
 ### PERFORMANCE • PRIVACY • GAMING • CONTROL
 
 <img src="docs/assets/banner.png" alt="Futuristic Windows Optimization Cyber Dashboard with Neon Cyan Overlays, CPU/GPU Monitoring Graphs, Abstract Circuits, and Performance Analytics" width="1000" style="border-radius: 8px; border: 1px solid #00bcd4; box-shadow: 0 0 20px rgba(0, 188, 212, 0.25);">
@@ -39,7 +39,7 @@
 
 ## ⬛ CORE PHILOSOPHY
 
-Windows Optimisations is not a blind tweaking tool. It is a precise, modular engineering framework designed for power users who demand total system transparency. Modern operating systems are saturated with background telemetry, unnecessary scheduled tasks, and sub-optimal resource allocation. This repository exists to place the control back into the hands of the hardware owner.
+WinAurex is not a blind tweaking tool. It is a precise, modular engineering framework designed for power users who demand total system transparency. Modern operating systems are saturated with background telemetry, unnecessary scheduled tasks, and sub-optimal resource allocation. This repository exists to place the control back into the hands of the hardware owner.
 
 ## ⬛ WHY THIS REPOSITORY EXISTS
 
@@ -91,7 +91,7 @@ Instead, every modification strictly adheres to our engineering standards:
 A clean, futuristic blueprint of the massive optimization matrix. 
 
 ```text
-📦 Windows-Optimisations
+📦 WinAurex
  ┣ 📜 Start.bat                 # [ENTRY] The zero-friction launcher for the GUI
  ┣ 📜 Launch_Dashboard.ps1      # [CONTROLLER] The main WPF dashboard driver
  ┣ 📂 GUI/                      # [INTERFACE] The native WPF Dashboard XAML components
