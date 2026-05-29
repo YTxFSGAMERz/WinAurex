@@ -18,18 +18,21 @@
 
 <br><br>
 
-<!-- BADGE GRID -->
+<!-- BADGE GRID — TWO-TONE DARK+NEON -->
 <p align="center">
-  <a href="#"><img src="https://img.shields.io/badge/ENGINE-MODULAR_ARCHITECTURE-00bcd4?style=for-the-badge&logo=windows&logoColor=white"></a>
-  <a href="#"><img src="https://img.shields.io/badge/ENGINE-NO_COMPILED_BINARIES-00bcd4?style=for-the-badge&logo=powershell&logoColor=white"></a>
-  <a href="#"><img src="https://img.shields.io/badge/SAFETY-ROLLBACK_READY-00bcd4?style=for-the-badge&logo=shield&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/ENGINE-MODULAR_ARCHITECTURE-00bcd4?style=for-the-badge&logo=windows&logoColor=00bcd4&labelColor=0D1117"></a>
+  <a href="#"><img src="https://img.shields.io/badge/ENGINE-NO_COMPILED_BINARIES-00bcd4?style=for-the-badge&logo=powershell&logoColor=00bcd4&labelColor=0D1117"></a>
+  <a href="#"><img src="https://img.shields.io/badge/SAFETY-ROLLBACK_READY-00FF41?style=for-the-badge&logo=checkmarx&logoColor=00FF41&labelColor=0D1117"></a>
   <br>
-  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WINDOWS_11_VERIFIED-00bcd4?style=for-the-badge&logo=windows11&logoColor=white"></a>
-  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WINDOWS_10_SUPPORTED-00bcd4?style=for-the-badge&logo=windows&logoColor=white"></a>
-  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WPF_DASHBOARD-00bcd4?style=for-the-badge&logo=reverbnation&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WINDOWS_11_VERIFIED-00bcd4?style=for-the-badge&logo=windows11&logoColor=00bcd4&labelColor=0D1117"></a>
+  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WINDOWS_10_SUPPORTED-00bcd4?style=for-the-badge&logo=windows&logoColor=00bcd4&labelColor=0D1117"></a>
+  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WPF_DASHBOARD-9B59B6?style=for-the-badge&logo=dotnet&logoColor=9B59B6&labelColor=0D1117"></a>
   <br>
-  <a href="#"><img src="https://img.shields.io/badge/OBSERVABILITY-LOGGING_ACTIVE-00bcd4?style=for-the-badge&logo=speedtest&logoColor=white"></a>
-  <a href="#"><img src="https://img.shields.io/badge/OBSERVABILITY-NATIVE_APIs-00bcd4?style=for-the-badge&logo=windows&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/OBSERVABILITY-LOGGING_ACTIVE-F39C12?style=for-the-badge&logo=grafana&logoColor=F39C12&labelColor=0D1117"></a>
+  <a href="#"><img src="https://img.shields.io/badge/OBSERVABILITY-NATIVE_APIs-F39C12?style=for-the-badge&logo=prometheus&logoColor=F39C12&labelColor=0D1117"></a>
+  <br>
+  <a href="#"><img src="https://img.shields.io/badge/SCRIPTS-OPEN_SOURCE-E74C3C?style=for-the-badge&logo=github&logoColor=E74C3C&labelColor=0D1117"></a>
+  <a href="#"><img src="https://img.shields.io/badge/LANGUAGE-POWERSHELL_7%2B-00bcd4?style=for-the-badge&logo=powershell&logoColor=00bcd4&labelColor=0D1117"></a>
 </p>
 
 </div>
@@ -238,15 +241,15 @@ Enterprise-grade observability is built into the core. Monitor system health nat
 <br>
 
 <a href="https://github.com/YTxFSGAMERz">
-  <img src="https://img.shields.io/badge/GITHUB-YTxFSGAMERz-00bcd4?style=for-the-badge&logo=github&logoColor=white">
+  <img src="https://img.shields.io/badge/GitHub-YTxFSGAMERz-white?style=for-the-badge&logo=github&logoColor=white&labelColor=181717&color=181717">
 </a>
-&nbsp;
+&nbsp;&nbsp;
 <a href="https://t.me/YTxFSGAMERz">
-  <img src="https://img.shields.io/badge/TELEGRAM-YTxFSGAMERz-00bcd4?style=for-the-badge&logo=telegram&logoColor=white">
+  <img src="https://img.shields.io/badge/Telegram-YTxFSGAMERz-white?style=for-the-badge&logo=telegram&logoColor=white&labelColor=229ED9&color=229ED9">
 </a>
-&nbsp;
+&nbsp;&nbsp;
 <a href="https://wa.me/917778906798">
-  <img src="https://img.shields.io/badge/WHATSAPP-CONNECT-00bcd4?style=for-the-badge&logo=whatsapp&logoColor=white">
+  <img src="https://img.shields.io/badge/WhatsApp-Connect-white?style=for-the-badge&logo=whatsapp&logoColor=white&labelColor=25D366&color=25D366">
 </a>
 
 </div>
