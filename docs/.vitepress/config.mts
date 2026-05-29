@@ -5,7 +5,7 @@ export default defineConfig({
   description: "Comprehensive collection of scripts and tools to optimize Windows 10/11 for peak performance, gaming, and privacy.",
   appearance: 'dark', // Native dark mode first
   head: [
-    ['link', { rel: 'icon', href: '/logo.png' }],
+    ['link', { rel: 'icon', href: '/favicon.png' }],
     ['script', {}, `
       if (typeof window !== 'undefined') {
         window.addEventListener('contextmenu', function(e) {
@@ -24,7 +24,7 @@ export default defineConfig({
     `]
   ],
   themeConfig: {
-    logo: '/logo.png',
+    logo: '/favicon.png',
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Installation', items: [
