@@ -6,6 +6,16 @@ export default defineConfig({
   appearance: 'dark', // Native dark mode first
   head: [
     ['link', { rel: 'icon', href: '/favicon.png' }],
+    ['meta', { name: 'description', content: 'Comprehensive collection of scripts and tools to optimize Windows 10/11 for peak performance, gaming, and privacy.' }],
+    ['meta', { property: 'og:title', content: 'WinAurex | Next-Gen Windows Optimization & Customization Framework' }],
+    ['meta', { property: 'og:description', content: 'Comprehensive collection of scripts and tools to optimize Windows 10/11 for peak performance, gaming, and privacy.' }],
+    ['meta', { property: 'og:image', content: 'https://winaurex.netlify.app/og-preview.png' }],
+    ['meta', { property: 'og:url', content: 'https://winaurex.netlify.app/' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { name: 'twitter:card', content: 'summary' }],
+    ['meta', { name: 'twitter:title', content: 'WinAurex | Next-Gen Windows Optimization Framework' }],
+    ['meta', { name: 'twitter:description', content: 'Comprehensive collection of scripts and tools to optimize Windows 10/11 for peak performance, gaming, and privacy.' }],
+    ['meta', { name: 'twitter:image', content: 'https://winaurex.netlify.app/og-preview.png' }],
     ['script', {}, `
       if (typeof window !== 'undefined') {
         window.addEventListener('contextmenu', function(e) {
