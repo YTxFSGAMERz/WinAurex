@@ -4,6 +4,18 @@ export default defineConfig({
   title: "WinAurex",
   description: "Comprehensive collection of scripts and tools to optimize Windows 10/11 for peak performance, gaming, and privacy.",
   appearance: 'dark', // Native dark mode first
+  head: [
+    ['script', {}, `
+      if (typeof window !== 'undefined') {
+        window.addEventListener('contextmenu', function(e) {
+          if (e.target.closest && e.target.closest('.VPHero .image-src, .VPHero .image-container, .VPHero .image-bg')) {
+            e.preventDefault();
+            return false;
+          }
+        });
+      }
+    `]
+  ],
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },

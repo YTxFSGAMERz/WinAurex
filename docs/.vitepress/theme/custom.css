@@ -26,7 +26,7 @@
   user-select: none !important;
   -webkit-user-select: none !important;
   -webkit-user-drag: none !important;
-  pointer-events: none !important;
+  /* pointer-events removed so JS can block the right click specifically */
 }
 
 .dark {
