@@ -21,6 +21,14 @@
   display: none !important;
 }
 
+/* Prevent selection, dragging, and right-clicking on the logo */
+.VPHero .image-src {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-user-drag: none !important;
+  pointer-events: none !important;
+}
+
 .dark {
   --vp-nav-bg-color: rgba(15, 16, 22, 0.5) !important;
   --vp-c-bg: #0b0c10; /* Deep rich dark background */
