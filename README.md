@@ -19,16 +19,16 @@
 
 *A premium, flagship open-source control platform engineered to maximize raw hardware potential, eradicate system latency, and restore absolute privacy.*
 
----
+<br>
 
 ```text
 ╔═══════════════════════════════════════════════════════════════════╗
 ║                 S Y S T E M   S T A T U S : O N L I N E           ║
 ╠═══════════════════════════════════════════════════════════════════╣
-║  [+] PERFORMANCE MODULES     [██████████████████████]  ACTIVE     ║
-║  [+] GAMING OPTIMIZATIONS    [██████████████████████]  ENABLED    ║
-║  [+] PRIVACY HARDENING       [██████████████████████]  ACTIVE     ║
-║  [+] RESTORE ENGINE          [██████████████████████]  READY      ║
+║  [+] FRAMEWORK STATUS        [██████████████████████]  ACTIVE     ║
+║  [+] ROLLBACK ENGINE         [██████████████████████]  READY      ║
+║  [+] LOGGING SYSTEM          [██████████████████████]  ONLINE     ║
+║  [+] OBSERVABILITY MODULE    [██████████████████████]  ENABLED    ║
 ║  [+] WINDOWS 10 INTEGRATION  [██████████████████████]  VERIFIED   ║
 ║  [+] WINDOWS 11 INTEGRATION  [██████████████████████]  VERIFIED   ║
 ╚═══════════════════════════════════════════════════════════════════╝
@@ -37,37 +37,45 @@
 
 ---
 
-## ⬛ CORE PHILOSOPHY
+## ⬛ FRAMEWORK OVERVIEW
 
-WinAurex is not a blind tweaking tool. It is a precise, modular engineering framework designed for power users who demand total system transparency. Modern operating systems are saturated with background telemetry, unnecessary scheduled tasks, and sub-optimal resource allocation. This repository exists to place the control back into the hands of the hardware owner.
+**WinAurex** is not a blind tweaking tool. It is a precise, modular engineering framework designed for power users who demand total system transparency. Modern operating systems are saturated with background telemetry, unnecessary scheduled tasks, and sub-optimal resource allocation. This repository exists to place the control back into the hands of the hardware owner.
 
-## ⬛ WHY THIS REPOSITORY EXISTS
-
-The Windows optimization ecosystem is heavily polluted with closed-source, automated "debloaters" that run hidden scripts and break essential OS features. This platform was engineered from the ground up to counter that trend. 
-
-In **v5.0.0**, we evolved from a directory of loose scripts into a native **WPF-based GUI Dashboard**. This provides the ease of use of a commercial application (just double-click `Start.bat`) while retaining the absolute transparency of open-source PowerShell scripts.
-
-Every tweak, script, and registry edit in this repository is plain-text, manually inspectable, structurally organized, and rigorously tested. This is a cyber-tech toolkit built for reliability and peak performance without compromising operating system integrity.
-
-## ⬛ OPTIMIZATION PHILOSOPHY
-
-> **Trust, Transparency, and Reversibility.**
-
-This repository explicitly rejects and avoids:
-*   ❌ Fake FPS myths and snake-oil placebo tweaks
-*   ❌ Dangerous, undocumented registry spam
-*   ❌ Irreversible modifications that shatter core Windows functionality
-*   ❌ Shady compiled binaries or hidden executables
-
-Instead, every modification strictly adheres to our engineering standards:
-*   ✅ **Transparent:** Pure XAML and PowerShell. No third-party binaries.
-*   ✅ **Native UI:** Hardware-accelerated WPF dashboard for zero-friction execution.
-*   ✅ **Reversible:** Built-in safeguards and automated registry snapshots.
-*   ✅ **Observable:** Live `.NET` telemetry right in the dashboard.
+In **v5.0.0**, we evolved from a directory of loose scripts into a native **WPF-based GUI Dashboard**. This provides the ease of use of a commercial application while retaining the absolute transparency of open-source PowerShell scripts. Every tweak, script, and registry edit in this repository is plain-text, manually inspectable, structurally organized, and rigorously tested.
 
 ---
 
-## ⬛ MAIN FEATURE MODULES
+## ⬛ CORE ARCHITECTURE
+
+A clean, futuristic blueprint of the massive optimization matrix. 
+
+```text
+📦 WinAurex
+ ┣ 📜 Start.bat                 # [ENTRY] The zero-friction launcher for the GUI
+ ┣ 📜 Launch_Dashboard.ps1      # [CONTROLLER] The main WPF dashboard driver
+ ┣ 📂 GUI/                      # [INTERFACE] The native WPF Dashboard XAML components
+ ┣ 📂 Launchers/                # [CONTROLLERS] Initialization logic and shortcuts
+ ┣ 📂 Core/                     # [INFRASTRUCTURE] Advanced Restore & Validation Engines
+ ┣ 📂 Tweaks/                   # [CORE] The primary system optimization engine
+ ┃  ┣ 📂 Appearance/            # UI decluttering and aesthetic enhancements
+ ┃  ┣ 📂 Browser/               # Chromium/Edge background telemetry destruction
+ ┃  ┣ 📂 Gaming/                # Game Mode enforcement and interrupt moderation tuning
+ ┃  ┣ 📂 Network/               # Bandwidth unthrottling and latency tweaks
+ ┃  ┣ 📂 Privacy/               # Deep system telemetry blocks and tracking prevention
+ ┃  ┣ 📂 Services/              # Unnecessary Windows Service disabling
+ ┃  ┣ 📂 Storage/               # Disk I/O caching and pagefile configuration
+ ┃  ┗ ... (30+ Modules)
+ ┣ 📂 Tools/                    # [UTILITIES] Benchmarking, System Info, and App installations
+ ┣ 📂 Profiles/                 # [PROFILES] Global combined optimization profiles
+ ┣ 📂 Logs/                     # [TELEMETRY] Execution logs and diagnostics tracking
+ ┗ 📂 docs/                     # [KNOWLEDGE] The central MkDocs source files
+```
+
+---
+
+## ⬛ MODULE ECOSYSTEM
+
+Our modules are highly organized into specific operational domains. We avoid chaotic registry dumps in favor of targeted, precise configurations.
 
 <div align="center">
   
@@ -86,138 +94,79 @@ Instead, every modification strictly adheres to our engineering standards:
 
 ---
 
-## ⬛ REPOSITORY ARCHITECTURE
-
-A clean, futuristic blueprint of the massive optimization matrix. 
-
-```text
-📦 WinAurex
- ┣ 📜 Start.bat                 # [ENTRY] The zero-friction launcher for the GUI
- ┣ 📜 Launch_Dashboard.ps1      # [CONTROLLER] The main WPF dashboard driver
- ┣ 📂 GUI/                      # [INTERFACE] The native WPF Dashboard XAML components
- ┣ 📂 Launchers/                # [CONTROLLERS] Initialization logic and shortcuts
- ┣ 📂 Core/                     # [INFRASTRUCTURE] Advanced Restore & Validation Engines
- ┣ 📂 Tweaks/                   # [CORE] The primary system optimization engine
- ┃  ┣ 📂 Appearance/            # UI decluttering and aesthetic enhancements
- ┃  ┣ 📂 Apps/                  # Windows bloatware removal and sponsored app annihilation
- ┃  ┣ 📂 Audio/                 # Audio latency and device telemetry tweaks
- ┃  ┣ 📂 Background/            # Background process suspension
- ┃  ┣ 📂 Boot/                  # Boot latency reduction and sequence optimization
- ┃  ┣ 📂 Browser/               # Chromium/Edge background telemetry destruction
- ┃  ┣ 📂 Camera/                # Webcam privacy lockdowns
- ┃  ┣ 📂 Clipboard/             # Clipboard history and telemetry removal
- ┃  ┣ 📂 Developer/             # WSL, Terminal, and Developer Mode configuration
- ┃  ┣ 📂 Diagnostics/           # Telemetry and activity history suppression
- ┃  ┣ 📂 Display/               # Fullscreen focus overrides and MPO tweaks
- ┃  ┣ 📂 Drivers/               # Hardware polling and driver telemetry controls
- ┃  ┣ 📂 Explorer/              # File Explorer productivity and layout optimizations
- ┃  ┣ 📂 Gaming/                # Game Mode enforcement and interrupt moderation tuning
- ┃  ┣ 📂 GPU/                   # GPU hardware acceleration and routing preferences
- ┃  ┣ 📂 Input/                 # Mouse and keyboard input latency reduction
- ┃  ┣ 📂 Network/               # Bandwidth unthrottling and latency tweaks
- ┃  ┣ 📂 Network-Diagnostics/   # Network stack resetting and troubleshooting
- ┃  ┣ 📂 Power/                 # High-performance power plans and idle suppression
- ┃  ┣ 📂 Privacy/               # Deep system telemetry blocks and tracking prevention
- ┃  ┣ 📂 Profiles/              # Tweak-specific optimization profiles
- ┃  ┣ 📂 Recursos/              # Legacy resources and translations
- ┃  ┣ 📂 Resources/             # Core scripts and execution resources
- ┃  ┣ 📂 Search/                # Local search privacy and web-results disabling
- ┃  ┣ 📂 Security/              # SmartScreen, Firewall, and Defender tuning
- ┃  ┣ 📂 Services/              # Unnecessary Windows Service disabling
- ┃  ┣ 📂 Shell/                 # Taskbar, widgets, and context menu debloating
- ┃  ┣ 📂 Startup/               # Auto-start suppression for reduced memory footprint
- ┃  ┣ 📂 Storage/               # Disk I/O caching and pagefile configuration
- ┃  ┣ 📂 Storage-Advanced/      # Deep NTFS optimization and hibernation management
- ┃  ┣ 📂 Storage-Aggressive/    # Aggressive disk cleanup and indexer bloat removal
- ┃  ┣ 📂 Sync/                  # OneDrive and Windows Settings sync removal
- ┃  ┣ 📂 Tasks/                 # Scheduled task tuning and telemetry job deletion
- ┃  ┣ 📂 Troubleshooting/       # Clean boot managers and diagnostic mode toggles
- ┃  ┣ 📂 Updates/               # Granular Windows Update and driver update blocks
- ┃  ┣ 📂 Visual/                # Hardware-accelerated rendering profiles and animation control
- ┃  ┗ 📜 Apply Optimizations.bat # The unified batch execution script for the tweaks
- ┣ 📂 Tools/                    # [UTILITIES] Benchmarking, System Info, and App installations
- ┣ 📂 Profiles/                 # [PROFILES] Global combined optimization profiles
- ┣ 📂 Logs/                     # [TELEMETRY] Execution logs and diagnostics tracking
- ┣ 📂 Activators/               # KMS38 and HWID activation provisioning
- ┣ 📂 Antivirus/                # Elite security deployment frameworks
- ┣ 📂 Browsers/                 # Hardened, privacy-first web browsers
- ┣ 📂 Build/                    # Compilation and distribution generation scripts
- ┣ 📂 Drivers/                  # Next-gen hardware detection and driver initialization
- ┣ 📂 Extra/                    # Third-party utilities (Rufus, Mem Reduct, IObit Unlocker)
- ┣ 📂 Hardware/                 # Deep hardware telemetry probes (CPU-Z, GPU-Z, HWMonitor)
- ┣ 📂 Windows Update/           # Absolute granular control over OS update channels
- ┣ 📂 ReleaseNotes/             # Version tracking and changelogs
- ┣ 📂 docs/                     # [KNOWLEDGE] The central MkDocs source files
- ┗ 📂 site/                     # [WIKI] The compiled static documentation site
-```
-
----
-
-## ⬛ OPTIMIZATION CATEGORIES
-
-### 🎮 Gaming Optimization
-Designed specifically for competitive environments where input lag is fatal. These tweaks force Windows to respect fullscreen exclusivity, prioritize game rendering threads above all background tasks, and disable interruptive background polling routines.
-
-### 🖥️ Display Optimization
-Overrides standard Desktop Window Manager (DWM) behaviors. Adjusts multiplane overlays (MPO) and bypasses unnecessary visual scaling processes to ensure frame pacing remains completely stable.
-
-### ⚡ Startup Optimization
-Strips away the massive list of bloatware that injects itself into the boot sequence. Focuses purely on critical OS services, dramatically reducing cold-boot times to seconds.
-
-### 🛑 Background Apps Management
-Annihilates UWP (Universal Windows Platform) background applications. Reclaims wasted CPU cycles and RAM by denying apps the ability to run in suspended states unless explicitly launched.
-
-### 📦 Storage Optimization
-Includes aggressive disk maintenance scripts. Flushes deep systemic caches, invalid prefetch data, and Windows Update leftovers that traditional disk cleanup utilities ignore.
-
-### 🌐 Network Optimization
-Optimizes the TCP/IP stack for raw throughput and low latency. Disables Windows Delivery Optimization (P2P updates) to ensure your bandwidth is never hijacked mid-game.
-
-### 🌙 Browser Optimization
-Focuses heavily on taming Microsoft Edge and WebView2 runtimes. Prevents Chromium-based engines from perpetually running telemetry and update services in the background.
-
-### 🛡️ Privacy Hardening
-A systemic lock-down of Windows data exfiltration. Disables advertising IDs, cortana indexing, diagnostic data uploads, and restricts app access to location, camera, and microphone hardware.
-
-### 🔧 Troubleshooting Toolkit
-If an issue arises, the system features a dedicated troubleshooting module containing rapid diagnostic scripts, network resets, and clean boot environment toggles to isolate hardware vs. software faults.
-
----
-
-## ⬛ SAFETY & RESTORE SYSTEM
+## ⬛ SAFETY & ROLLBACK ENGINE
 
 > **CRITICAL ARCHITECTURE NOTE**
 
-Absolute power requires absolute safety. This repository is built upon a **Reversible Tweaks Architecture**. 
-We do not believe in permanent, destructive modifications. 
+Absolute power requires absolute safety. This repository is built upon a **Reversible Tweaks Architecture**. We do not believe in permanent, destructive modifications. 
 
 1. **System Restore Integration:** The execution sequence aggressively promotes the creation of Windows System Restore points prior to applying *any* module.
 2. **Reversible Registry:** Wherever a registry key is modified, its exact default counterpart is strictly documented or provided.
 3. **Modular Control:** By utilizing separate `.reg` and `.bat` files for specific categories (e.g., *only* Network, or *only* Privacy), you retain the power to test and isolate changes safely.
+4. **Transaction-Style Safety:** Every change acts as an isolated transaction, enabling complete system state exports and rollback manifests.
 
 ---
 
-## ⬛ DOCUMENTATION
+## ⬛ PERFORMANCE PHILOSOPHY
+
+> **Trust, Transparency, and Reversibility.**
+
+This repository explicitly rejects and avoids:
+*   ❌ Fake FPS myths and snake-oil placebo tweaks
+*   ❌ Dangerous, undocumented registry spam
+*   ❌ Irreversible modifications that shatter core Windows functionality
+*   ❌ Shady compiled binaries or hidden executables
+
+Instead, every modification strictly adheres to our engineering standards to:
+*   ✅ Reduce scheduling overhead
+*   ✅ Improve UI responsiveness
+*   ✅ Minimize latency sources
+*   ✅ Improve observability and transparency
+*   ✅ Grant users ultimate system control
+
+---
+
+## ⬛ INSTALLATION & INITIALIZATION
+
+> [!NOTE]  
+> **ELEVATED PRIVILEGES REQUIRED:** All optimization modules must interface directly with the Windows Kernel, Registry, and Services layer. The launcher will automatically request Administrator rights upon execution.
+
+```powershell
+# 1. Download the Release ZIP
+# 2. Extract to a secure directory (e.g., C:\Optimizations)
+# 3. Double-click Start.bat
+# 4. Initialize Framework & Create Restore Point
+# 5. Deploy Modules from the Dashboard
+```
+
+---
+
+## ⬛ MASTER PROFILES
+
+Pre-configured master profiles allow rapid deployment of optimized states without individually toggling every module. Deploy standard Gamer Profiles, Maximum Privacy Profiles, or Ultra-Low Latency configurations directly from the Dashboard.
+
+---
+
+## ⬛ DOCUMENTATION CONSOLE
 
 Our complete documentation exists as a beautifully crafted, live dashboard interface. Access the archives to understand the deep technical reasoning behind every script.
 
 🔗 **[ACCESS THE LIVE DASHBOARD](https://windows-optimizations.netlify.app/)**
 
+*   **Architecture Blueprint:** Deep dive into the framework's internal layout.
+*   **Compatibility Matrix:** Verify feature support across Windows 10/11 versions.
+*   **Registry Reference:** Transparent mapping of every modified registry key.
+*   **Myths & Anti-Patterns:** Learn why we avoid placebo tweaks.
+
 ---
 
-## ⬛ USAGE GUIDE
+## ⬛ OBSERVABILITY & LOGGING
 
-> [!NOTE]  
-> **ELEVATED PRIVILEGES REQUIRED:** All optimization modules must interface directly with the Windows Kernel, Registry, and Services layer. The launcher will automatically request Administrator rights upon execution.
-
-1. **Download the Release**  
-   Download the latest ZIP release and extract all files to a secure directory (e.g., `C:\Optimizations`).
-2. **Launch the Dashboard**  
-   Double-click the `Start.bat` file located in the root directory. 
-3. **First-Run Initialization**  
-   The framework will gracefully initialize, offer to create a native Windows System Restore point for absolute safety, and place a shortcut on your Desktop.
-4. **Deploy Profiles**  
-   Use the stunning new WPF Dashboard to apply your desired Optimization Profiles, monitor real-time System Telemetry, or safely roll back any changes via the integrated Rollback Engine tab.
+Enterprise-grade observability is built into the core. 
+*   **Real-time Analytics:** Monitor system health natively.
+*   **Logging Engine:** Centralized logs for all script executions (`/Logs`).
+*   **Performance Counters:** WMI telemetry and DPC latency monitoring integration.
+*   **Diagnostic Precision:** Isolate software faults using integrated diagnostic toggles.
 
 ---
 
@@ -235,7 +184,13 @@ Our complete documentation exists as a beautifully crafted, live dashboard inter
 
 ---
 
-## ⬛ WARNINGS
+## ⬛ ROADMAP & RELEASE NOTES
+
+For full version history and upcoming modular enhancements, refer to our [GitHub Releases](https://github.com/YTxFSGAMERz/WinAurex/releases) and the integrated dashboard Changelog.
+
+---
+
+## ⬛ WARNINGS & LICENSE
 
 > [!WARNING]  
 > This toolkit modifies core operating system behaviors. 
@@ -243,17 +198,7 @@ Our complete documentation exists as a beautifully crafted, live dashboard inter
 > * Aggressive telemetry disabling may interfere with Windows Insider feedback pipelines.
 > * Proceed with knowledge, and always maintain a tested rollback strategy.
 
----
-
-## ⬛ ADVANCED NOTES
-
-For deep systems engineers: Review the `autounattend.xml` file. This blueprint allows you to bake these optimizations directly into a fresh Windows ISO installation, completely bypassing TPM/Secure Boot checks and skipping Microsoft Account enforcement (OOBE bypass).
-
----
-
-## ⬛ CONTRIBUTING
-
-We welcome pull requests from fellow system engineers and optimization enthusiasts. All submitted tweaks must meet our philosophy: they must be documented, they must be reversible, and they must demonstrate a measurable technical benefit. 
+Licensed under the MIT License. Contributions are welcome! All submitted tweaks must be documented, reversible, and demonstrate a measurable technical benefit.
 
 ---
 
@@ -266,14 +211,13 @@ We welcome pull requests from fellow system engineers and optimization enthusias
 > 📡 **Telegram Network:** [Access News Feed](https://t.me/YTxFSGAMERz)  
 > 📡 **Direct WhatsApp COMMS:** [Initialize Connection](https://wa.me/917778906798)
 
-Engineered, tested, and maintained by **Farhan**. 
-Leveraging the power of the open-source community to keep hardware fast, clean, and private.
-
 ---
 
-## ⬛ END OF FILE
-
 <div align="center">
+
+`Engineered for control. Built for transparency. Designed for Windows power users.`
+
+<br>
 
 `[ SYSTEM OPTIMIZATION SEQUENCE COMPLETE ]`
 
