@@ -1,0 +1,14 @@
+Windows Registry Editor Version 5.00
+
+; WinAurex Windows Optimization Framework
+; Tweaks\Input\Disable Mouse Acceleration.reg
+; Disables Enhance Pointer Precision and flattens cursor scaling curves for 1:1 input.
+
+[HKEY_CURRENT_USER\Control Panel\Mouse]
+"MouseSpeed"="0"
+"MouseThreshold1"="0"
+"MouseThreshold2"="0"
+"SmoothMouseXCurve"=hex:00,00,00,00,00,00,00,00,15,6e,00,00,00,00,00,00,00,40,\
+  01,00,00,00,00,00,29,dc,03,00,00,00,00,00,00,00,28,00,00,00,00,00
+"SmoothMouseYCurve"=hex:00,00,00,00,00,00,00,00,15,6e,00,00,00,00,00,00,00,40,\
+  01,00,00,00,00,00,29,dc,03,00,00,00,00,00,00,00,28,00,00,00,00,00
