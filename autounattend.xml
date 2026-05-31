@@ -483,13 +483,13 @@ $regTweaks = @(
     { reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v EnablePrefetcher /t REG_DWORD /d 0 /f; };
     { reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v EnableSuperfetch /t REG_DWORD /d 0 /f; };
     # Extreme Performance / Animation Kills
-	{
+    {
         reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation" /v Manufacturer /t REG_SZ /d "Farhan Shaikh" /f;
         reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation" /v Model /t REG_SZ /d "WinAurex OS 11 Pro 25H2" /f;
         reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation" /v SupportPhone /t REG_SZ /d "mail: f98561965@gmail.com" /f;
         reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation" /v SupportURL /t REG_SZ /d "https://t.me/FFShaikh69" /f;
-	};
-	{
+    };
+    {
 		Set-ItemProperty -LiteralPath "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\ControlAnimations" -Name 'DefaultValue' -Value 0 -Type 'DWord' -Force;
 		Set-ItemProperty -LiteralPath "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\AnimateMinMax" -Name 'DefaultValue' -Value 0 -Type 'DWord' -Force;
 		Set-ItemProperty -LiteralPath "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\TaskbarAnimations" -Name 'DefaultValue' -Value 0 -Type 'DWord' -Force;
@@ -1612,7 +1612,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -2295,7 +2296,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -2428,7 +2430,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -2768,7 +2771,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -3255,7 +3259,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -3383,7 +3388,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -3560,7 +3566,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -3707,7 +3714,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -3927,7 +3935,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -3988,7 +3997,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -4249,7 +4259,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -4328,7 +4339,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -4398,7 +4410,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -5330,7 +5343,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -5709,7 +5723,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -5825,7 +5840,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -6652,7 +6668,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -6997,6 +7014,11 @@ Set-Service -Name &quot;UsoSvc&quot; -StartupType Disabled -ErrorAction Silently
 reg.exe add &quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer&quot; /v DisableEdgeDesktopShortcutCreation /t REG_DWORD /d 1 /f
 Get-ScheduledTask -TaskName &quot;*EdgeUpdate*&quot; -ErrorAction SilentlyContinue | Unregister-ScheduledTask -Confirm:$false
 
+# 9. Ultimate Microsoft Appx Purge
+Write-Host &quot;Purging all non-essential Microsoft apps...&quot;
+Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -match &quot;Microsoft&quot; -and $_.DisplayName -notmatch &quot;DesktopAppInstaller|SecHealthUI|VCLibs|UI.Xaml|Store|Native&quot; } | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue
+Get-AppxPackage -AllUsers | Where-Object { $_.Name -match &quot;Microsoft&quot; -and $_.NonRemovable -eq $false } | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue
+
 Write-Host &quot;Extreme Debloat Completed.&quot;
 
     </File>
@@ -7046,7 +7068,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -7465,7 +7488,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -7620,7 +7644,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
@@ -7680,7 +7705,8 @@ if (-not $Force) {
     if (-not $Force) {
     Write-Host &quot;Press any key to exit...&quot;
     if (-not $Force) { $null = $Host.UI.RawUI.ReadKey(&quot;NoEcho,IncludeKeyDown&quot;) }
-}
+}
+
 }
 
 
