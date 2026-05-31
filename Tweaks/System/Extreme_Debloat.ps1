@@ -110,4 +110,9 @@ Set-Service -Name "UsoSvc" -StartupType Disabled -ErrorAction SilentlyContinue
 reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v DisableEdgeDesktopShortcutCreation /t REG_DWORD /d 1 /f
 Get-ScheduledTask -TaskName "*EdgeUpdate*" -ErrorAction SilentlyContinue | Unregister-ScheduledTask -Confirm:$false
 
+# 9. Ultimate Microsoft Appx Purge
+Write-Host "Purging all non-essential Microsoft apps..."
+Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -match "Microsoft" -and $_.DisplayName -notmatch "DesktopAppInstaller|SecHealthUI|VCLibs|UI.Xaml|Store|Native" } | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue
+Get-AppxPackage -AllUsers | Where-Object { $_.Name -match "Microsoft" -and $_.NonRemovable -eq $false } | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue
+
 Write-Host "Extreme Debloat Completed."
