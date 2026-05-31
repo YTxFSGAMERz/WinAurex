@@ -6823,6 +6823,100 @@ $null = Read-Host &quot;Press Enter to exit...&quot;
 
 
     </File>
+    <File path="C:\Windows\Setup\Scripts\Tweaks\System\Extreme_Debloat.ps1">
+# ==========================================
+# Extreme Debloat Script for WinAurex
+# ==========================================
+Write-Host &quot;Running Extreme Debloat...&quot;
+
+# 1. Disable More Telemetry &amp; Bloat Services
+$servicesToDisable = @(
+    &quot;DiagTrack&quot;,       # Connected User Experiences and Telemetry
+    &quot;dmwappushservice&quot;,# WAP Push Message Routing Service
+    &quot;WSearch&quot;,         # Windows Search (extreme debloat often disables indexing)
+    &quot;MapsBroker&quot;,      # Downloaded Maps Manager
+    &quot;lfsvc&quot;,           # Geolocation Service
+    &quot;XblAuthManager&quot;,  # Xbox Live Auth Manager
+    &quot;XblGameSave&quot;,     # Xbox Live Game Save
+    &quot;XboxNetApiSvc&quot;,   # Xbox Live Networking Service
+    &quot;WaaSMedicSvc&quot;,    # Windows Update Medic Service
+    &quot;DusmSvc&quot;          # Data Usage
+)
+foreach ($svc in $servicesToDisable) {
+    Set-Service -Name $svc -StartupType Disabled -ErrorAction SilentlyContinue
+}
+
+# 2. Prevent OneDrive Setup
+reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive&quot; /v DisableFileSyncNGSC /t REG_DWORD /d 1 /f
+reg.exe delete &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Run&quot; /v &quot;OneDriveSetup&quot; /f
+Remove-Item -Path &quot;$env:SystemRoot\SysWOW64\OneDriveSetup.exe&quot; -Force -ErrorAction SilentlyContinue
+Remove-Item -Path &quot;$env:SystemRoot\System32\OneDriveSetup.exe&quot; -Force -ErrorAction SilentlyContinue
+
+# 3. Disable Automatic App Downloads (Candy Crush, etc)
+reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent&quot; /v DisableWindowsConsumerFeatures /t REG_DWORD /d 1 /f
+reg.exe add &quot;HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager&quot; /v SilentInstalledAppsEnabled /t REG_DWORD /d 0 /f
+
+# 4. Remove Capabilities (Features on Demand)
+$caps = @(
+    &quot;App.StepsRecorder~~~~0.0.1.0&quot;,
+    &quot;MathRecognizer~~~~0.0.1.0&quot;,
+    &quot;Microsoft.Windows.WordPad~~~~0.0.1.0&quot;,
+    &quot;Print.Fax.Scan~~~~0.0.1.0&quot;,
+    &quot;WMI-SNMP-Provider.Client~~~~0.0.1.0&quot;,
+    &quot;Browser.InternetExplorer~~~~0.0.11.0&quot;,
+    &quot;Media.WindowsMediaPlayer~~~~0.0.12.0&quot;,
+    &quot;Hello.Face.18967~~~~0.0.1.0&quot;
+)
+foreach ($cap in $caps) {
+    Remove-WindowsCapability -Online -Name $cap -ErrorAction SilentlyContinue
+}
+
+# 5. Disable More Scheduled Tasks
+$tasksToDisable = @(
+    &quot;\Microsoft\Windows\Windows Error Reporting\QueueReporting&quot;,
+    &quot;\Microsoft\Windows\Feedback\Siuf\DmClient&quot;,
+    &quot;\Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload&quot;,
+    &quot;\Microsoft\Windows\AppID\SmartScreenSpecific&quot;,
+    &quot;\Microsoft\Windows\Location\Notifications&quot;,
+    &quot;\Microsoft\Windows\Maps\MapsToastTask&quot;,
+    &quot;\Microsoft\Windows\Maps\MapsUpdateTask&quot;
+)
+foreach ($task in $tasksToDisable) {
+    Disable-ScheduledTask -TaskPath (Split-Path $task) -TaskName (Split-Path $task -Leaf) -ErrorAction SilentlyContinue
+}
+
+# 6. Disable Windows Defender (Basic Registry Method)
+reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\Windows Defender&quot; /v DisableAntiSpyware /t REG_DWORD /d 1 /f
+reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection&quot; /v DisableRealtimeMonitoring /t REG_DWORD /d 1 /f
+reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection&quot; /v DisableBehaviorMonitoring /t REG_DWORD /d 1 /f
+
+# 7. Disable System Intelligence, AI, and Copilot Features
+# Disable Copilot
+reg.exe add &quot;HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot&quot; /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f
+reg.exe add &quot;HKLM\Software\Policies\Microsoft\Windows\WindowsCopilot&quot; /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f
+
+# Disable Recall (Windows 11 24H2+)
+reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsAI&quot; /v DisableRecall /t REG_DWORD /d 1 /f
+reg.exe add &quot;HKCU\SOFTWARE\Policies\Microsoft\Windows\WindowsAI&quot; /v DisableRecall /t REG_DWORD /d 1 /f
+
+# Disable SmartScreen for Edge and Windows
+reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\System&quot; /v EnableSmartScreen /t REG_DWORD /d 0 /f
+reg.exe add &quot;HKCU\SOFTWARE\Policies\Microsoft\MicrosoftEdge\PhishingFilter&quot; /v EnabledV9 /t REG_DWORD /d 0 /f
+
+# Disable Windows Ink Workspace
+reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\WindowsInkWorkspace&quot; /v AllowWindowsInkWorkspace /t REG_DWORD /d 0 /f
+
+# Disable Typing Insights and Auto-Correction (AI typing features)
+reg.exe add &quot;HKCU\Software\Microsoft\Input\Settings&quot; /v &quot;MultilingualEnabled&quot; /t REG_DWORD /d 0 /f
+reg.exe add &quot;HKCU\Software\Microsoft\Input\TIPC&quot; /v &quot;Enabled&quot; /t REG_DWORD /d 0 /f
+
+# Disable Taskbar Web Search (Prevents Bing AI web results)
+reg.exe add &quot;HKCU\Software\Policies\Microsoft\Windows\Explorer&quot; /v DisableSearchBoxSuggestions /t REG_DWORD /d 1 /f
+reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search&quot; /v DisableWebSearch /t REG_DWORD /d 1 /f
+
+Write-Host &quot;Extreme Debloat Completed.&quot;
+
+    </File>
     <File path="C:\Windows\Setup\Scripts\Tweaks\Tasks\Apply_Clean_Tasks_Profile.ps1">
 [CmdletBinding()]
 param (
