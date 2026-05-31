@@ -88,4 +88,26 @@ reg.exe add "HKCU\Software\Microsoft\Input\TIPC" /v "Enabled" /t REG_DWORD /d 0 
 reg.exe add "HKCU\Software\Policies\Microsoft\Windows\Explorer" /v DisableSearchBoxSuggestions /t REG_DWORD /d 1 /f
 reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v DisableWebSearch /t REG_DWORD /d 1 /f
 
+# 8. Disable Core OS Functionality (Extreme Minimalist)
+# Disable Action Center and Notification Center
+reg.exe add "HKCU\Software\Policies\Microsoft\Windows\Explorer" /v DisableNotificationCenter /t REG_DWORD /d 1 /f
+reg.exe add "HKLM\Software\Policies\Microsoft\Windows\Explorer" /v DisableNotificationCenter /t REG_DWORD /d 1 /f
+
+# Disable User Account Control (UAC) entirely
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableLUA /t REG_DWORD /d 0 /f
+
+# Disable System Restore
+reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore" /v DisableSR /t REG_DWORD /d 1 /f
+
+# Disable Background Intelligent Transfer Service (BITS) & Windows Error Reporting (WER)
+Set-Service -Name "BITS" -StartupType Disabled -ErrorAction SilentlyContinue
+Set-Service -Name "WerSvc" -StartupType Disabled -ErrorAction SilentlyContinue
+
+# Disable Windows Update Orchestrator Service
+Set-Service -Name "UsoSvc" -StartupType Disabled -ErrorAction SilentlyContinue
+
+# Remove Edge Remnants
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v DisableEdgeDesktopShortcutCreation /t REG_DWORD /d 1 /f
+Get-ScheduledTask -TaskName "*EdgeUpdate*" -ErrorAction SilentlyContinue | Unregister-ScheduledTask -Confirm:$false
+
 Write-Host "Extreme Debloat Completed."
