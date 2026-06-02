@@ -10,11 +10,12 @@ export default defineConfig({
   site: 'https://winaurex.netlify.app',
   integrations: [starlight({
 			title: 'WinAurex',
-			defaultColorScheme: 'dark',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/YTxFSGAMERz/Windows-Optimisations' }],
 			customCss: ['./src/styles/custom.css'],
-			components: {},
-			disable404Route: false,
+			// Override ThemeSelect with an empty component to permanently hide the light/dark toggle
+			components: {
+				ThemeSelect: './src/components/ThemeSelect.astro',
+			},
 			sidebar: [
           {
               label: 'OS Image Building',
