@@ -170,3 +170,38 @@ nav.sidebar a:hover {
     animation: fadeInUpStaggered 0.5s ease forwards;
   }
 }
+
+/* 8. Glowing Hover for Blocks & Terminal Snippets */
+.card,
+aside,
+.aside,
+blockquote,
+pre {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+pre {
+  border: 1px solid rgba(0, 255, 0, 0.15) !important;
+}
+
+.card:hover,
+aside:hover,
+.aside:hover,
+blockquote:hover,
+pre:hover {
+  border-color: #00ff00 !important;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.15) !important;
+}
+
+/* 9. Green Text Selection Highlight */
+::selection {
+  background-color: rgba(0, 255, 0, 0.25) !important;
+  color: #00ff00 !important;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.8) !important;
+}
+::-moz-selection {
+  background-color: rgba(0, 255, 0, 0.25) !important;
+  color: #00ff00 !important;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.8) !important;
+}
+
