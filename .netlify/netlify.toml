@@ -7,13 +7,13 @@ plugins = []
 [functions."*"]
 
 [build]
-publish = "C:\\Users\\Admin\\Documents\\GitHub\\Windows-Optimisations\\site"
+publish = "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\docs\\dist"
 publishOrigin = "config"
 commandOrigin = "config"
-command = "pip install -r requirements.txt && mkdocs build"
+command = "npm run docs:build"
 
 [build.environment]
-PYTHON_VERSION = "3.11"
+NODE_VERSION = "22"
 
 [build.processing]
 
