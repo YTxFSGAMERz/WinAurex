@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+:root {
+  --sl-color-accent-low: #001a00;
+  --sl-color-accent: #00ff00;
+  --sl-color-accent-high: #99ff99;
+  --sl-color-text-accent: #00ff00;
+  --sl-color-bg: #050505;
+  --sl-color-bg-nav: #0a0a0a;
+  --sl-color-bg-sidebar: #050505;
+  --sl-color-gray-1: #e0e0e0;
+  --sl-color-gray-2: #c0c0c0;
+  --sl-color-gray-3: #a0a0a0;
+  --sl-color-gray-4: #808080;
+  --sl-color-gray-5: #606060;
+  --sl-color-gray-6: #404040;
+}
+
+/* Enforce dark mode hacker aesthetic */
+body {
+  font-family: 'Consolas', 'Courier New', monospace;
+  background-color: var(--sl-color-bg);
+  background-image: 
+    linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Glowing text for links and headers */
+a {
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+.sl-markdown-content h1, 
+.sl-markdown-content h2, 
+.sl-markdown-content h3 {
+  color: var(--sl-color-accent);
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Subtle CRT Scanline effect over the entire page */
+body::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+  z-index: 9999;
+  background-size: 100% 4px;
+  pointer-events: none;
+}
