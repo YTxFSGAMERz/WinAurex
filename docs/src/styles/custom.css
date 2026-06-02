@@ -102,11 +102,25 @@ starlight-theme-select {
   to   { opacity: 1; transform: translateY(3rem); }
 }
 
-/* 3. Glowing H1 Breathing pulse */
+@keyframes floatBot {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1.5deg);
+  }
+}
+
+/* 3. Glowing H1 Breathing pulse & Floating Hero Bot */
 .sl-markdown-content h1,
 .hero h1 {
   animation: neonPulse 4s ease-in-out infinite !important;
 }
+
+.hero img {
+  animation: floatBot 6s ease-in-out infinite !important;
+}
+
 
 /* 4. Moving CRT Scanline Sweep */
 body::before {
