@@ -54,3 +54,98 @@ body::after {
   background-size: 100% 4px;
   pointer-events: none;
 }
+
+/* ============================================================
+   WINAUREX ANIMATIONS & INTERACTIVE EFFECTS
+   ============================================================ */
+
+/* 1. Permanent Dark Mode Force */
+html {
+  color-scheme: dark !important;
+}
+
+starlight-theme-select {
+  display: none !important;
+}
+
+/* 2. Keyframes for Animations */
+@keyframes neonPulse {
+  0%, 100% { text-shadow: 0 0 8px rgba(0, 255, 0, 0.6), 0 0 20px rgba(0, 255, 0, 0.3); }
+  50%       { text-shadow: 0 0 3px rgba(0, 255, 0, 0.3), 0 0 8px rgba(0, 255, 0, 0.1); }
+}
+
+@keyframes scanMove {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 3. Glowing H1 Breathing pulse */
+.sl-markdown-content h1 {
+  animation: neonPulse 4s ease-in-out infinite;
+}
+
+/* 4. Moving CRT Scanline Sweep */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, transparent, rgba(0, 255, 0, 0.15), transparent);
+  z-index: 9998;
+  pointer-events: none;
+  animation: scanMove 12s linear infinite;
+}
+
+/* 5. Sidebar Slide-in & Hover Slide Right */
+nav.sidebar a {
+  animation: fadeInLeft 0.4s ease forwards;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease, background-color 0.2s ease;
+}
+
+nav.sidebar a:hover {
+  transform: translateX(6px);
+}
+
+/* 6. Custom Glowing Green Terminal Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 0, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff00;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+/* 7. Fade-up Entrance on page load */
+.content-panel,
+.main-pane,
+.hero,
+.card {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.2s; }
+.card:nth-child(4) { animation-delay: 0.3s; }
