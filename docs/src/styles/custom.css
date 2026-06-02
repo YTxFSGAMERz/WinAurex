@@ -21,9 +21,17 @@ body {
   font-family: 'Consolas', 'Courier New', monospace;
   background-color: var(--sl-color-bg);
   background-image: 
-    linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
-  background-size: 20px 20px;
+    linear-gradient(rgba(0, 255, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 0, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Make content containers transparent so the grid shows through */
+.main-pane,
+.content-panel,
+.sidebar-pane,
+nav.sidebar {
+  background-color: transparent !important;
 }
 
 /* Glowing text for links and headers */
