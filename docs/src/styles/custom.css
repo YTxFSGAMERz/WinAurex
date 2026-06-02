@@ -90,8 +90,9 @@ starlight-theme-select {
 }
 
 /* 3. Glowing H1 Breathing pulse */
-.sl-markdown-content h1 {
-  animation: neonPulse 4s ease-in-out infinite;
+.sl-markdown-content h1,
+.hero h1 {
+  animation: neonPulse 4s ease-in-out infinite !important;
 }
 
 /* 4. Moving CRT Scanline Sweep */
@@ -101,11 +102,11 @@ body::before {
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(to right, transparent, rgba(0, 255, 0, 0.15), transparent);
-  z-index: 9998;
+  height: 10px;
+  background: linear-gradient(to bottom, transparent, rgba(0, 255, 0, 0.35), transparent);
+  z-index: 10000;
   pointer-events: none;
-  animation: scanMove 12s linear infinite;
+  animation: scanMove 8s linear infinite;
 }
 
 /* 5. Sidebar Slide-in & Hover Slide Right */
