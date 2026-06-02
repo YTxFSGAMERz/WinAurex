@@ -7,9 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
+    "docs:dev": "npm run dev --prefix docs",
+    "docs:build": "npm install --prefix docs && npm run build --prefix docs",
+    "docs:preview": "npm run preview --prefix docs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
