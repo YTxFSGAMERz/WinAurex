@@ -176,24 +176,53 @@ nav.sidebar a:hover {
 aside,
 .aside,
 blockquote,
-pre {
+pre,
+.expressive-code .frame {
   transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-pre {
+/* Base border for plain pre tags */
+pre:not(.expressive-code pre) {
   border: 1px solid rgba(0, 255, 0, 0.15) !important;
+}
+
+/* Frame container borders transition */
+.expressive-code .frame pre,
+.expressive-code .frame .header {
+  transition: border-color 0.3s ease !important;
 }
 
 .card:hover,
 aside:hover,
 .aside:hover,
 blockquote:hover,
-pre:hover {
+pre:not(.expressive-code pre):hover {
   border-color: #00ff00 !important;
   box-shadow: 0 0 20px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.15) !important;
 }
 
-/* 9. Green Text Selection Highlight */
+/* Whole terminal/code frame glow */
+.expressive-code .frame:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.5) !important;
+  border-color: #00ff00 !important;
+}
+
+.expressive-code .frame:hover pre,
+.expressive-code .frame:hover .header {
+  border-color: #00ff00 !important;
+}
+
+.expressive-code .frame:hover pre {
+  box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.15) !important;
+}
+
+/* 9. macOS-style colored terminal buttons */
+.expressive-code .frame.is-terminal .header::before {
+  background: linear-gradient(to right, #ff5f56 33%, #ffbd2e 33%, #ffbd2e 66%, #27c93f 66%) !important;
+  opacity: 1 !important;
+}
+
+/* 10. Green Text Selection Highlight */
 ::selection {
   background-color: rgba(0, 255, 0, 0.25) !important;
   color: #00ff00 !important;
