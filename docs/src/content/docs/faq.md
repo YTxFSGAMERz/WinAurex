@@ -1,6 +1,6 @@
 ---
-title: "Frequently Asked Questions (FAQ)"
-description: "Answers to the most commonly asked questions regarding Windows 11 optimization, debloating, and custom ISO building."
+title: "FAQ — Windows 11 Optimization & Custom ISO Questions Answered"
+description: "Answers to common questions about Windows 11 debloating, custom ISO building, gaming optimization, and telemetry removal."
 ---
 
 # ❓ Frequently Asked Questions

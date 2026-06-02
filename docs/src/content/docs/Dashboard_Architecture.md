@@ -1,5 +1,6 @@
 ---
-title: "Dashboard_Architecture"
+title: "WPF Dashboard Architecture — PowerShell GUI Framework"
+description: "Technical guide to the WinAurex WPF XAML dashboard. PowerShell-driven GUI architecture, tab system, and extensibility patterns."
 ---
 
 # WPF Dashboard Architecture Guide

@@ -1,4 +1,4 @@
-# Netlify Configuration for Windows Optimisations Documentation
+# Netlify Configuration for WinAurex Documentation
 
 [build]
   publish = "docs/dist"
@@ -7,7 +7,7 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# Custom headers for premium caching and security
+# Custom headers for SEO, caching, and security
 [[headers]]
   for = "/*"
   [headers.values]
@@ -16,9 +16,37 @@
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "no-referrer-when-downgrade"
     Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: https:; font-src 'self' data: https:;"
+    X-Robots-Tag = "all"
 
-# Redirect rules (if any legacy docs pages were moved)
+# Aggressive caching for immutable Astro hashed assets
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache fonts and images
+[[headers]]
+  for = "*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Redirect rules
 [[redirects]]
   from = "/TWEAKS"
-  to = "/TWEAKS/"
+  to = "/tweaks/"
+  status = 301
+
+[[redirects]]
+  from = "/tweaks"
+  to = "/tweaks/"
+  status = 301
+
+[[redirects]]
+  from = "/FAQ"
+  to = "/faq/"
   status = 301

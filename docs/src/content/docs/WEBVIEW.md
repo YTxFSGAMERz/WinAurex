@@ -1,5 +1,6 @@
 ---
-title: "WEBVIEW"
+title: "WebView2 Runtime on Windows 11 — Impact & Management"
+description: "Understand Microsoft Edge WebView2 runtime on Windows 11. Learn its resource impact, dependencies, and safe removal options."
 ---
 
 # 🖥️ WebView2 Runtime & Resource Impact

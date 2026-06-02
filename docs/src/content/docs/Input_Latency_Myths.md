@@ -1,5 +1,6 @@
 ---
-title: "Input_Latency_Myths"
+title: "Input Latency Myths Debunked — Facts About Mouse & Keyboard Lag"
+description: "Debunking common myths about input latency, mouse polling rates, and keyboard lag on Windows 11. Evidence-based optimization facts."
 ---
 
 # Input Latency Myths & Facts

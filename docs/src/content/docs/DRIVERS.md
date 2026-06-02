@@ -1,5 +1,6 @@
 ---
-title: "DRIVERS"
+title: "Windows 11 Driver Management — GPU, Audio & Chipset Guide"
+description: "Complete driver management guide for Windows 11. Install GPU, audio, chipset, and network drivers safely without bloatware."
 ---
 
 # 🔌 Driver Management Guide

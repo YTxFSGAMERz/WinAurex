@@ -1,5 +1,6 @@
 ---
-title: "Myths_and_Anti_Patterns"
+title: "Windows Optimization Myths — Dangerous Tweaks to Avoid"
+description: "Exposing dangerous Windows optimization myths and anti-patterns. Learn which popular tweaks actually harm your system performance."
 ---
 
 # Windows Optimization Myths & Anti-Patterns

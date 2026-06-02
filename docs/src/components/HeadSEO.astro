@@ -1,0 +1,59 @@
+---
+// HeadSEO.astro — Starlight Head override that adds JSON-LD + OG tags
+// MUST import and render the default Head component to preserve all built-in tags
+import type { Props } from '@astrojs/starlight/props';
+import Default from '@astrojs/starlight/components/Head.astro';
+
+// JSON-LD Structured Data for SEO
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "WinAurex",
+  "url": "https://winaurex.netlify.app",
+  "description": "Free open-source Windows 11 optimization framework. Debloat, boost gaming FPS, build custom ISOs, and disable telemetry.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://winaurex.netlify.app/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Farhan",
+    "url": "https://github.com/YTxFSGAMERz"
+  }
+};
+
+const softwareJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "WinAurex",
+  "operatingSystem": "Windows 11, Windows 10",
+  "applicationCategory": "UtilitiesApplication",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Free open-source Windows 11 optimization toolkit to debloat, boost gaming performance, build custom ISOs, and disable telemetry natively.",
+  "url": "https://winaurex.netlify.app",
+  "downloadUrl": "https://github.com/YTxFSGAMERz/Windows-Optimisations",
+  "softwareVersion": "1.0",
+  "author": {
+    "@type": "Person",
+    "name": "Farhan"
+  }
+};
+---
+
+<!-- Render ALL default Starlight head tags first -->
+<Default {...Astro.props}><slot /></Default>
+
+<!-- Append custom SEO tags -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+<script type="application/ld+json" set:html={JSON.stringify(softwareJsonLd)} />
+<meta property="og:image" content="https://winaurex.netlify.app/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://winaurex.netlify.app/og-image.png" />

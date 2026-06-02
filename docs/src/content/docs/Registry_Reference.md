@@ -1,5 +1,6 @@
 ---
-title: "Registry_Reference"
+title: "Windows 11 Registry Tweaks Reference — Complete Key List"
+description: "Comprehensive reference of Windows 11 registry keys for performance, privacy, and gaming optimization with safe default values."
 ---
 
 # Registry Reference Guide

@@ -1,5 +1,6 @@
 ---
-title: "HARDWARE"
+title: "Hardware Monitoring & Diagnostics for Windows 11"
+description: "Monitor CPU temps, GPU usage, disk health, and system diagnostics on Windows 11 with recommended lightweight tools."
 ---
 
 # 🌡️ Hardware Monitoring & Diagnostics Guide

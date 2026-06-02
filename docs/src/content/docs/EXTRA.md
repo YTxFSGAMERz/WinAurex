@@ -1,5 +1,6 @@
 ---
-title: "EXTRA"
+title: "Essential Windows 11 Utilities — Must-Have Tools"
+description: "Curated list of essential Windows 11 utilities for power users. File managers, archivers, media players, and system tools."
 ---
 
 # 🛠️ Extra Utilities Guide

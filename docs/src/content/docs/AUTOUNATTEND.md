@@ -1,5 +1,6 @@
 ---
-title: "AUTOUNATTEND"
+title: "Unattended Windows 11 Installation — AutoUnattend.xml Guide"
+description: "Create fully automated Windows 11 installations with AutoUnattend.xml. Skip OOBE, bypass Microsoft account, and preconfigure settings."
 ---
 
 # 💿 Unattended Windows Installation Guide

@@ -1,5 +1,6 @@
 ---
-title: "Compatibility_Matrix"
+title: "Windows OS Compatibility Matrix — Supported Versions & Editions"
+description: "Compatibility matrix for WinAurex across Windows 10 and 11 editions. Check which features work on Home, Pro, Enterprise, and LTSC."
 ---
 
 # Compatibility Matrix

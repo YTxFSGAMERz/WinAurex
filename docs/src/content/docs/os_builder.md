@@ -1,6 +1,6 @@
 ---
-title: "OS Builder Framework"
-description: "Complete guide on using WinAurexMaker.ps1 to build a zero-bloat Windows 11 ISO."
+title: "Build a Custom Windows 11 ISO — Zero-Bloat OS Builder Framework"
+description: "Step-by-step guide to building lightweight, telemetry-free Windows 11 ISOs with TPM and Secure Boot bypass using WinAurex OS Builder."
 ---
 
 # 🏗️ OS Builder Framework

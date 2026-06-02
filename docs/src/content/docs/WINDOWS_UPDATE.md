@@ -1,5 +1,6 @@
 ---
-title: "WINDOWS_UPDATE"
+title: "Manage Windows Update on Windows 11 — Pause, Disable & Control"
+description: "Control Windows Update behavior on Windows 11. Pause, defer, or safely disable automatic updates without breaking your system."
 ---
 
 # 🔄 Windows Update Management

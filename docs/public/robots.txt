@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /pagefind/
+
+Sitemap: https://winaurex.netlify.app/sitemap-index.xml

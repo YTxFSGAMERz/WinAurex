@@ -1,5 +1,6 @@
 ---
-title: "ACTIVATORS"
+title: "Windows & Office Activation Guide — MAS, KMS, HWID Methods"
+description: "Guide to Windows and Office activation methods including Microsoft Activation Scripts (MAS), KMS, and HWID digital license activation."
 ---
 
 # 🔑 Windows & Office Activators Guide

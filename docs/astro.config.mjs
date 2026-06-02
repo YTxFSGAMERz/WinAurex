@@ -15,6 +15,7 @@ export default defineConfig({
 			// Override ThemeSelect with an empty component to permanently hide the light/dark toggle
 			components: {
 				ThemeSelect: './src/components/ThemeSelect.astro',
+				Head: './src/components/HeadSEO.astro',
 			},
 			sidebar: [
           {

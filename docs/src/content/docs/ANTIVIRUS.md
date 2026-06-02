@@ -1,5 +1,6 @@
 ---
-title: "ANTIVIRUS"
+title: "Best Antivirus for Windows 11 — Security Recommendations"
+description: "Curated antivirus and security recommendations for optimized Windows 11 systems. Lightweight, effective protection without bloat."
 ---
 
 # 🛡️ Antivirus & Security Recommendations

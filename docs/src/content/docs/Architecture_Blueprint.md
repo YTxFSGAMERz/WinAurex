@@ -1,5 +1,6 @@
 ---
-title: "Architecture_Blueprint"
+title: "WinAurex System Architecture — Technical Blueprint"
+description: "Technical architecture of the WinAurex optimization framework. Module structure, script pipeline, and system design overview."
 ---
 
 # Windows-Optimisations: Next-Generation Architecture Blueprint

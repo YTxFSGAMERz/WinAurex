@@ -1,5 +1,6 @@
 ---
-title: "TWEAKS"
+title: "Windows 11 Tweaks & Optimization Guide — Registry, Services, Gaming"
+description: "Complete guide to Windows 11 registry tweaks, service optimizations, gaming performance boosts, privacy fixes, and SSD tuning."
 ---
 
 # 🛠️ Windows Tweaks & Optimizations Guide
