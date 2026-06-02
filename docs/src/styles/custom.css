@@ -1,56 +1,461 @@
 @import "tailwindcss";
 
-:root {
-  --sl-color-accent-low: #001a00;
-  --sl-color-accent: #00ff00;
-  --sl-color-accent-high: #99ff99;
-  --sl-color-text-accent: #00ff00;
-  --sl-color-bg: #050505;
-  --sl-color-bg-nav: #0a0a0a;
-  --sl-color-bg-sidebar: #050505;
-  --sl-color-gray-1: #e0e0e0;
-  --sl-color-gray-2: #c0c0c0;
-  --sl-color-gray-3: #a0a0a0;
-  --sl-color-gray-4: #808080;
-  --sl-color-gray-5: #606060;
-  --sl-color-gray-6: #404040;
+/* ============================================================
+   WINAUREX — FULL DARK HACKER THEME + ANIMATIONS
+   ============================================================ */
+
+/* ---------- Keyframe Animations ---------- */
+
+@keyframes neonPulse {
+  0%, 100% { text-shadow: 0 0 5px #00ff00, 0 0 15px #00ff00, 0 0 30px #00ff00; }
+  50%       { text-shadow: 0 0 2px #00ff00, 0 0 6px #00ff00; }
 }
 
-/* Enforce dark mode hacker aesthetic */
+@keyframes borderGlow {
+  0%, 100% { box-shadow: 0 0 6px #00ff00, inset 0 0 6px rgba(0,255,0,0.05); }
+  50%       { box-shadow: 0 0 18px #00ff00, inset 0 0 12px rgba(0,255,0,0.1); }
+}
+
+@keyframes scanline {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 100vh; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 22%, 24%, 55% { opacity: 0.4; }
+}
+
+@keyframes heroGradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes matrixRain {
+  0%   { opacity: 0.08; }
+  50%  { opacity: 0.18; }
+  100% { opacity: 0.08; }
+}
+
+@keyframes cardHoverGlow {
+  from { box-shadow: 0 0 0px rgba(0,255,0,0); }
+  to   { box-shadow: 0 0 20px rgba(0,255,0,0.35), 0 0 40px rgba(0,255,0,0.12); }
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Starlight CSS Variable Overrides (Force Dark) ---------- */
+
+:root,
+[data-theme="dark"],
+[data-theme="light"] {
+  --sl-color-accent-low:  #001a00;
+  --sl-color-accent:      #00e600;
+  --sl-color-accent-high: #80ff80;
+  --sl-color-text-accent: #00e600;
+  --sl-color-bg:          #050505;
+  --sl-color-bg-nav:      #070707;
+  --sl-color-bg-sidebar:  #040404;
+  --sl-color-hairline:    rgba(0,230,0,0.15);
+  --sl-color-gray-1: #e0ffe0;
+  --sl-color-gray-2: #b0d4b0;
+  --sl-color-gray-3: #88a888;
+  --sl-color-gray-4: #557055;
+  --sl-color-gray-5: #3a4f3a;
+  --sl-color-gray-6: #1e2e1e;
+  --sl-color-white:  #e8ffe8;
+  --sl-color-black:  #050505;
+}
+
+/* Hard-lock the html element to dark so the toggle can never switch it */
+html {
+  color-scheme: dark !important;
+}
+
+/* Hide the theme switcher button entirely */
+starlight-theme-select,
+[data-theme-toggle],
+.sl-theme-toggle {
+  display: none !important;
+}
+
+/* ---------- Base Body ---------- */
+
 body {
   font-family: 'Consolas', 'Courier New', monospace;
-  background-color: var(--sl-color-bg);
-  background-image: 
-    linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
-  background-size: 20px 20px;
+  background-color: #050505;
+  color: #b0d4b0;
+
+  /* Animated matrix grid background */
+  background-image:
+    linear-gradient(rgba(0, 230, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 230, 0, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  animation: matrixRain 4s ease-in-out infinite;
 }
 
-/* Glowing text for links and headers */
-a {
-  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+/* ---------- CRT Scanline Overlay ---------- */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  animation: scanline 8s linear infinite;
 }
 
-.sl-markdown-content h1, 
-.sl-markdown-content h2, 
-.sl-markdown-content h3 {
-  color: var(--sl-color-accent);
-  text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+/* Vignette edge effect */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* ---------- Navigation / Header ---------- */
+
+header.header {
+  background: rgba(5, 5, 5, 0.92) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 230, 0, 0.2);
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+/* Site title flicker effect */
+.site-title {
+  animation: flicker 8s infinite;
+  color: #00e600 !important;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* ---------- Sidebar ---------- */
+
+nav.sidebar {
+  background: rgba(4, 4, 4, 0.95) !important;
+  border-right: 1px solid rgba(0, 230, 0, 0.15);
+}
+
+/* Sidebar group labels */
+.group-label span {
+  color: #00e600 !important;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+/* Sidebar nav links — slide in on load */
+nav.sidebar a {
+  animation: fadeInLeft 0.5s ease forwards;
+  border-radius: 4px;
+  transition: all 0.25s ease;
+  border-left: 2px solid transparent;
+}
+
+nav.sidebar a:hover {
+  border-left: 2px solid #00e600;
+  background: rgba(0, 230, 0, 0.06) !important;
+  color: #00e600 !important;
+  text-shadow: 0 0 8px rgba(0, 230, 0, 0.6);
+  transform: translateX(4px);
+}
+
+nav.sidebar a[aria-current="page"] {
+  border-left: 2px solid #00e600 !important;
+  background: rgba(0, 230, 0, 0.08) !important;
+  color: #00e600 !important;
+  text-shadow: 0 0 8px rgba(0, 230, 0, 0.5);
+}
+
+/* ---------- Main Content Fade-In ---------- */
+
+.content-panel {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* ---------- Headings ---------- */
+
+.sl-markdown-content h1 {
+  animation: neonPulse 3s ease-in-out infinite;
+  color: #00e600 !important;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  border-bottom: 1px solid rgba(0, 230, 0, 0.2);
+  padding-bottom: 0.4em;
+}
+
+.sl-markdown-content h2 {
+  color: #00cc00 !important;
+  text-shadow: 0 0 8px rgba(0, 200, 0, 0.4);
   text-transform: uppercase;
   letter-spacing: 2px;
+  margin-top: 2rem;
+  position: relative;
 }
 
-/* Subtle CRT Scanline effect over the entire page */
-body::after {
-  content: " ";
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
-  z-index: 9999;
-  background-size: 100% 4px;
-  pointer-events: none;
+.sl-markdown-content h2::before {
+  content: "▶ ";
+  color: #00e600;
+  opacity: 0.7;
+}
+
+.sl-markdown-content h3 {
+  color: #80ff80 !important;
+  text-shadow: 0 0 6px rgba(0, 230, 0, 0.3);
+  letter-spacing: 1px;
+}
+
+/* ---------- Links ---------- */
+
+.sl-markdown-content a {
+  color: #00e600;
+  text-shadow: 0 0 4px rgba(0, 230, 0, 0.4);
+  transition: all 0.2s ease;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 230, 0, 0.3);
+}
+
+.sl-markdown-content a:hover {
+  color: #80ff80;
+  text-shadow: 0 0 12px rgba(0, 255, 0, 0.8);
+  border-bottom-color: #00e600;
+}
+
+/* ---------- Code Blocks ---------- */
+
+.sl-markdown-content pre {
+  border: 1px solid rgba(0, 230, 0, 0.2);
+  border-left: 3px solid #00e600;
+  background: rgba(0, 20, 0, 0.6) !important;
+  border-radius: 6px;
+  box-shadow: 0 0 20px rgba(0, 230, 0, 0.05), inset 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+
+.sl-markdown-content pre:hover {
+  box-shadow: 0 0 30px rgba(0, 230, 0, 0.15), inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.sl-markdown-content code {
+  color: #80ff80;
+  background: rgba(0, 30, 0, 0.7);
+  border: 1px solid rgba(0, 230, 0, 0.15);
+  border-radius: 3px;
+  padding: 0.1em 0.4em;
+}
+
+/* ---------- Blockquotes / Aside ---------- */
+
+.sl-markdown-content blockquote,
+.starlight-aside {
+  border-left: 3px solid #00e600 !important;
+  background: rgba(0, 30, 0, 0.5) !important;
+  box-shadow: 0 0 15px rgba(0, 230, 0, 0.08);
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+/* ---------- Tables ---------- */
+
+.sl-markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.sl-markdown-content th {
+  background: rgba(0, 50, 0, 0.8);
+  color: #00e600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid rgba(0, 230, 0, 0.4);
+}
+
+.sl-markdown-content td {
+  border-bottom: 1px solid rgba(0, 230, 0, 0.1);
+  transition: background 0.2s ease;
+}
+
+.sl-markdown-content tr:hover td {
+  background: rgba(0, 230, 0, 0.05);
+}
+
+/* ---------- Hero Section (Homepage) ---------- */
+
+.hero {
+  animation: fadeInUp 0.8s ease forwards;
+  position: relative;
+}
+
+.hero h1 {
+  animation: neonPulse 2.5s ease-in-out infinite;
+  font-size: clamp(2rem, 6vw, 4rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #00ff00, #00cc00, #00ff99, #00e600);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: heroGradientShift 4s ease infinite, neonPulse 3s ease-in-out infinite;
+}
+
+.hero .tagline {
+  color: #88a888 !important;
+  letter-spacing: 1px;
+  animation: fadeInUp 1s ease 0.2s both;
+}
+
+/* Hero action buttons */
+.hero .action {
+  animation: fadeInUp 1s ease 0.4s both;
+  transition: all 0.3s ease !important;
+}
+
+.hero .action.primary {
+  background: rgba(0, 230, 0, 0.12) !important;
+  border: 1px solid #00e600 !important;
+  color: #00e600 !important;
+  box-shadow: 0 0 12px rgba(0, 230, 0, 0.25);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.hero .action.primary:hover {
+  background: rgba(0, 230, 0, 0.25) !important;
+  box-shadow: 0 0 25px rgba(0, 230, 0, 0.5), 0 0 50px rgba(0, 230, 0, 0.2) !important;
+  transform: translateY(-2px) scale(1.03);
+}
+
+.hero .action.secondary {
+  border: 1px solid rgba(0, 230, 0, 0.3) !important;
+  color: #80ff80 !important;
+  transition: all 0.3s ease;
+}
+
+.hero .action.secondary:hover {
+  border-color: #00e600 !important;
+  box-shadow: 0 0 15px rgba(0, 230, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ---------- Card Grid (Homepage) ---------- */
+
+.card {
+  background: rgba(5, 15, 5, 0.9) !important;
+  border: 1px solid rgba(0, 230, 0, 0.15) !important;
+  border-radius: 8px;
+  transition: all 0.35s ease;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.card:hover {
+  border-color: rgba(0, 230, 0, 0.5) !important;
+  background: rgba(0, 25, 0, 0.95) !important;
+  transform: translateY(-6px);
+  box-shadow: 0 8px 30px rgba(0, 230, 0, 0.2), 0 0 60px rgba(0, 230, 0, 0.08);
+}
+
+.card .icon {
+  color: #00e600 !important;
+  filter: drop-shadow(0 0 6px rgba(0, 230, 0, 0.6));
+}
+
+.card strong {
+  color: #00e600 !important;
+}
+
+/* ---------- Right-of-Page TOC ---------- */
+
+starlight-toc nav a {
+  transition: all 0.2s ease;
+  border-left: 2px solid transparent;
+}
+
+starlight-toc nav a:hover {
+  color: #00e600 !important;
+  border-left-color: #00e600;
+  text-shadow: 0 0 6px rgba(0, 230, 0, 0.5);
+  padding-left: 6px;
+}
+
+starlight-toc nav a[aria-current="true"] {
+  color: #00e600 !important;
+  border-left: 2px solid #00e600;
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+  border-top: 1px solid rgba(0, 230, 0, 0.15) !important;
+  color: #3a4f3a !important;
+}
+
+/* ---------- Scrollbar Styling ---------- */
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #050505; }
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 230, 0, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 230, 0, 0.6);
+  box-shadow: 0 0 6px #00e600;
+}
+
+/* ---------- Selection ---------- */
+
+::selection {
+  background: rgba(0, 230, 0, 0.25);
+  color: #00ff00;
+}
+
+/* ---------- Pagination Buttons ---------- */
+
+.pagination-links a {
+  border: 1px solid rgba(0, 230, 0, 0.2);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.pagination-links a:hover {
+  border-color: #00e600;
+  box-shadow: 0 0 15px rgba(0, 230, 0, 0.3);
+  transform: scale(1.02);
 }
