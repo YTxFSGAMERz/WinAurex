@@ -13,7 +13,7 @@ This section covers the most common questions regarding **Windows 11 Optimizatio
 Debloating refers to the process of stripping away pre-installed, non-essential applications (bloatware), disabling intrusive background services, and turning off telemetry (Microsoft's data collection). By removing these, Windows 11 frees up CPU cycles, lowers RAM usage, and significantly improves system responsiveness.
 
 ### Why is my Windows 11 so slow or lagging?
-Windows 11 comes packed with heavy background features such as Copilot, Widgets, Edge background preloading, and aggressive telemetry tasks. These processes run continuously and consume valuable system resources, especially on systems with older CPUs or less than 16GB of RAM. Applying the [System Tweaks](./TWEAKS.md) disables these resource hogs.
+Windows 11 comes packed with heavy background features such as Copilot, Widgets, Edge background preloading, and aggressive telemetry tasks. These processes run continuously and consume valuable system resources, especially on systems with older CPUs or less than 16GB of RAM. Applying the [System Tweaks](/tweaks/) disables these resource hogs.
 
 ### Is it safe to debloat Windows 11 using scripts?
 **Yes, but caution is required.** Many generic "one-click" debloat scripts from the internet blindly delete critical system files, which can break the Microsoft Store, Windows Update, and cause blue screens. 
@@ -21,7 +21,7 @@ The **WinAurex** suite is specifically engineered to be safe. It uses Microsoft'
 
 ### How do I get maximum performance for gaming in Windows 11?
 For elite gaming performance, you need to minimize input lag and prevent background tasks from interrupting your CPU. 
-1. Use the [OS Builder](./os_builder.md) to create a totally clean Windows installation.
+1. Use the [OS Builder](/os_builder/) to create a totally clean Windows installation.
 2. Apply the **Multimedia Class Scheduler (MMCSS)** registry tweaks to force 80% of CPU allocation directly to your game.
 3. Enable **Windowed Game Optimizations** (flip model) in display tweaks.
 4. Import the `QuickCPU.pow` custom power plan to prevent CPU core parking during intensive loads.
