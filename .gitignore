@@ -2,4 +2,8 @@
 Logs/
 Core/Restore/Backups/
 node_modules/  
+
+# Wrangler files
+.wrangler/
+.dev.vars
  
