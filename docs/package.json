@@ -16,6 +16,7 @@
     "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "astro": "^6.3.1",
     "framer-motion": "^12.40.0",
     "react": "^19.2.7",
