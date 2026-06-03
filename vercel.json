@@ -1,0 +1,60 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/TWEAKS", "destination": "/tweaks/", "permanent": true },
+    { "source": "/TWEAKS/", "destination": "/tweaks/", "permanent": true },
+    { "source": "/FAQ", "destination": "/faq/", "permanent": true },
+    { "source": "/FAQ/", "destination": "/faq/", "permanent": true },
+    { "source": "/ACTIVATORS", "destination": "/activators/", "permanent": true },
+    { "source": "/ACTIVATORS/", "destination": "/activators/", "permanent": true },
+    { "source": "/ANTIVIRUS", "destination": "/antivirus/", "permanent": true },
+    { "source": "/ANTIVIRUS/", "destination": "/antivirus/", "permanent": true },
+    { "source": "/AUTOUNATTEND", "destination": "/autounattend/", "permanent": true },
+    { "source": "/AUTOUNATTEND/", "destination": "/autounattend/", "permanent": true },
+    { "source": "/BROWSERS", "destination": "/browsers/", "permanent": true },
+    { "source": "/BROWSERS/", "destination": "/browsers/", "permanent": true },
+    { "source": "/DRIVERS", "destination": "/drivers/", "permanent": true },
+    { "source": "/DRIVERS/", "destination": "/drivers/", "permanent": true },
+    { "source": "/EXTRA", "destination": "/extra/", "permanent": true },
+    { "source": "/EXTRA/", "destination": "/extra/", "permanent": true },
+    { "source": "/HARDWARE", "destination": "/hardware/", "permanent": true },
+    { "source": "/HARDWARE/", "destination": "/hardware/", "permanent": true },
+    { "source": "/WEBVIEW", "destination": "/webview/", "permanent": true },
+    { "source": "/WEBVIEW/", "destination": "/webview/", "permanent": true },
+    { "source": "/WINDOWS_UPDATE", "destination": "/windows_update/", "permanent": true },
+    { "source": "/WINDOWS_UPDATE/", "destination": "/windows_update/", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "no-referrer-when-downgrade" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: https:; font-src 'self' data: https:;" },
+        { "key": "X-Robots-Tag", "value": "all" }
+      ]
+    },
+    {
+      "source": "/_astro/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.woff2",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.webp",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800" }
+      ]
+    }
+  ]
+}
