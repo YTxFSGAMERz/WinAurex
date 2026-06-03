@@ -53,6 +53,6 @@ Disabling Windows Update has significant system-wide consequences. Read the comp
 > [!CAUTION]
 > Windows Updates deliver critical patches for zero-day exploits, hardware vulnerabilities, and security flaws. If you choose to keep Windows Update disabled:
 > 
-> 1.  **Maintain High Security Vigilance**: You must practice extremely safe browsing habits. Avoid untrusted downloads, ignore email links from unknown sources, and scan all executables using [**VirusTotal**](ANTIVIRUS.md#advanced-online-scanners-no-installation) before executing them.
+> 1.  **Maintain High Security Vigilance**: You must practice extremely safe browsing habits. Avoid untrusted downloads, ignore email links from unknown sources, and scan all executables using [**VirusTotal**](/antivirus/#advanced-online-scanners-no-installation) before executing them.
 > 2.  **Perform Manual Syncs**: Consider running `Enable Windows Update.bat` once a month to let your system install critical security cumulative updates, then run the disable script again to restore performance.
 
