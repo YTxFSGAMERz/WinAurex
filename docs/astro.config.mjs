@@ -8,6 +8,7 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://winaurex.vercel.app',
+  prefetch: true,
   integrations: [starlight({
 			title: 'WinAurex',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/YTxFSGAMERz/Windows-Optimisations' }],
