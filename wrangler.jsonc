@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "winaurex",
+  "compatibility_date": "2026-06-03",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "docs/dist"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
