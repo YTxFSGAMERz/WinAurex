@@ -16,6 +16,10 @@
 
 <kbd>&nbsp;Windows Engineering Framework&nbsp;</kbd> &nbsp;•&nbsp; <kbd>&nbsp;Rollback-Safe&nbsp;</kbd> &nbsp;•&nbsp; <kbd>&nbsp;PowerShell + WPF&nbsp;</kbd> &nbsp;•&nbsp; <kbd>&nbsp;Open Source&nbsp;</kbd>
 
+<br>
+
+<a href="https://winaurex.netlify.app/"><img src="https://img.shields.io/badge/📖_DOCUMENTATION-winaurex.netlify.app-00FF41?style=for-the-badge&labelColor=0D1117"></a>
+
 <br><br>
 
 <!-- BADGE GRID — TWO-TONE DARK+NEON -->
@@ -203,7 +207,11 @@ Enterprise-grade observability is built into the core. Monitor system health nat
 
 <br>
 
-🔗 **[ACCESS THE LIVE ENGINEERING DASHBOARD](https://winaurex.vercel.app/)**
+<a href="https://winaurex.netlify.app/"><img src="https://img.shields.io/badge/📖_DOCUMENTATION-winaurex.netlify.app-00FF41?style=for-the-badge&labelColor=0D1117"></a>
+
+<br>
+
+🔗 **[ACCESS THE LIVE DOCUMENTATION](https://winaurex.netlify.app/)**
 
 </div>
 

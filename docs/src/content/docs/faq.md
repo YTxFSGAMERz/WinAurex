@@ -1,6 +1,57 @@
 ---
 title: "FAQ — Windows 11 Optimization & Custom ISO Questions Answered"
 description: "Answers to common questions about Windows 11 debloating, custom ISO building, gaming optimization, and telemetry removal."
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What does debloating Windows 11 actually mean?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Debloating refers to stripping away pre-installed bloatware apps, disabling intrusive background services, and turning off Microsoft telemetry. This frees up CPU cycles, lowers RAM usage, and significantly improves system responsiveness."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is my Windows 11 so slow or lagging?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Windows 11 comes packed with heavy background features like Copilot, Widgets, Edge preloading, and aggressive telemetry tasks. These consume valuable system resources, especially on systems with older CPUs or less than 16GB RAM."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is it safe to debloat Windows 11 using scripts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, when using safe tools like WinAurex. It uses Microsoft's native DISM and Group Policy tools to disable bloatware without corrupting OS components. Always create a System Restore point first."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I get maximum performance for gaming in Windows 11?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use the WinAurex OS Builder for a clean install, apply MMCSS registry tweaks for 80% CPU allocation to games, enable Windowed Game Optimizations, and import a custom power plan to prevent CPU core parking."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I build a Custom Windows 11 ISO without TPM or Secure Boot?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The WinAurex OS Builder uses native LabConfig registry injection to bypass TPM 2.0, Secure Boot, and 4GB RAM requirements, allowing you to install debloated Windows 11 on legacy hardware."
+            }
+          }
+        ]
+      }
 ---
 
 # ❓ Frequently Asked Questions
