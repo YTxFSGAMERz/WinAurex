@@ -18,7 +18,7 @@
 
 <br>
 
-<a href="https://winaurex.netlify.app/"><img src="https://img.shields.io/badge/📖_DOCUMENTATION-winaurex.netlify.app-00FF41?style=for-the-badge&labelColor=0D1117"></a>
+<a href="https://winaurex.vercel.app/"><img src="https://img.shields.io/badge/📖_DOCUMENTATION-winaurex.vercel.app-00FF41?style=for-the-badge&labelColor=0D1117"></a>
 
 <br><br>
 
@@ -207,11 +207,11 @@ Enterprise-grade observability is built into the core. Monitor system health nat
 
 <br>
 
-<a href="https://winaurex.netlify.app/"><img src="https://img.shields.io/badge/📖_DOCUMENTATION-winaurex.netlify.app-00FF41?style=for-the-badge&labelColor=0D1117"></a>
+<a href="https://winaurex.vercel.app/"><img src="https://img.shields.io/badge/📖_DOCUMENTATION-winaurex.vercel.app-00FF41?style=for-the-badge&labelColor=0D1117"></a>
 
 <br>
 
-🔗 **[ACCESS THE LIVE DOCUMENTATION](https://winaurex.netlify.app/)**
+🔗 **[ACCESS THE LIVE DOCUMENTATION](https://winaurex.vercel.app/)**
 
 </div>
 
