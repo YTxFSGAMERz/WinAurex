@@ -45,6 +45,9 @@ const softwareJsonLd = {
     "name": "Farhan"
   }
 };
+
+import heroImage from '../assets/houston.webp';
+const isHomepage = Astro.props.slug === '' || Astro.props.slug === undefined;
 ---
 
 <!-- Render ALL default Starlight head tags first -->
@@ -59,7 +62,8 @@ const softwareJsonLd = {
 <meta property="og:image:type" content="image/png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://winaurex.vercel.app/og-image.png" />
-<meta name="google-site-verification" content="fSZw_xAUusVrNAvHheJq5wyCHjCf5VLKLe7_4s6bFoA" />
+<meta name="google-site-verification" content="E7D16t2Y65R_0-WG7qXbGPU2dksmCFIorHa5b5RkKbQ" />
+{isHomepage && <link rel="preload" href={heroImage.src} as="image" type="image/webp" fetchpriority="high" />}
 
 <Analytics />
 <SpeedInsights />
