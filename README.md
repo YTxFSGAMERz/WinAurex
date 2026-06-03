@@ -203,7 +203,7 @@ Enterprise-grade observability is built into the core. Monitor system health nat
 
 <br>
 
-🔗 **[ACCESS THE LIVE ENGINEERING DASHBOARD](https://windows-optimizations.netlify.app/)**
+🔗 **[ACCESS THE LIVE ENGINEERING DASHBOARD](https://winaurex.vercel.app/)**
 
 </div>
 
