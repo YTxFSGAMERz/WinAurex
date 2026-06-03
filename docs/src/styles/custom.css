@@ -61,6 +61,7 @@ body::after {
   z-index: 9999;
   background-size: 100% 4px;
   pointer-events: none;
+  transform: translate3d(0, 0, 0); /* Force GPU compositing layer */
 }
 
 /* ============================================================
@@ -119,6 +120,7 @@ starlight-theme-select {
 
 .hero img {
   animation: floatBot 6s ease-in-out infinite !important;
+  will-change: transform;
 }
 
 
@@ -134,6 +136,7 @@ body::before {
   z-index: 10000;
   pointer-events: none;
   animation: scanMove 8s linear infinite;
+  will-change: transform;
 }
 
 /* 5. Sidebar Slide-in & Hover Slide Right */
