@@ -4,5 +4,5 @@ contact_links:
     url: "https://github.com/YTxFSGAMERz/WinAurex/discussions"
     about: "Ask questions, share optimization configurations, and show off your customized Windows dashboards."
   - name: "📖 WinAurex Documentation"
-    url: "https://windows-optimizations.netlify.app/"
+    url: "https://winaurex.vercel.app/"
     about: "Read our comprehensive guides, safety manual, and rollback philosophy before reporting bugs."
