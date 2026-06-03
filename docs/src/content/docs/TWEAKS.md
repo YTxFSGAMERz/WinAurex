@@ -236,7 +236,7 @@ The framework now features a stunning native PowerShell + WPF XAML graphical das
 -   Run Option 1 (Apply Recommended Optimizations) to reduce MMCSS process delays and optimize service responsiveness.
 -   Import `Tweaks/Recursos/CPU Power Plan/QuickCPU.pow` and active the profile.
 -   Apply `Tweaks/Display/Enable Windowed Game Optimizations.reg`.
--   Verify sensor temperatures using diagnostics inside [**Hardware Monitoring**](HARDWARE.md).
+-   Verify sensor temperatures using diagnostics inside [**Hardware Monitoring**](/hardware/).
 
 ### 💻 Legacy / Low-End Hardware (<8GB RAM)
 -   Apply `Tweaks/Appearance/Disable Transparency.reg` to lighten graphics processor loads.
@@ -248,4 +248,4 @@ The framework now features a stunning native PowerShell + WPF XAML graphical das
 -   Apply `Tweaks/Recursos/Telemetry/Disable Telemetry.reg` and `Tweaks/Privacy/Disable App Metadata Access.reg`.
 -   Run `Tweaks/Background/Manage Background Apps.ps1` to stop closed applications from executing in the background.
 -   Lock application permissions using the scripts in `Tweaks/Privacy/`.
--   Consult the [**Web Browsers Guide**](BROWSERS.md) to choose privacy-respecting navigation software.
+-   Consult the [**Web Browsers Guide**](/browsers/) to choose privacy-respecting navigation software.
