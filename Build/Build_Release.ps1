@@ -30,7 +30,7 @@ $ExcludeList = @(
     ".gitignore",
     ".github",
     ".cache",
-    ".netlify",
+    ".vercel",
     ".antigravitycli",
     "venv",
     "dist",
@@ -47,7 +47,7 @@ $ExcludeList = @(
     "test.ps1",
     "mkdocs.yml",
     "requirements.txt",
-    "netlify.toml"
+    "vercel.json"
 )
 
 # 3. Copy Files to Staging Directory
@@ -66,8 +66,8 @@ $RoboArgs = @(
     $RootPath,
     $ReleasePath,
     "/E",
-    "/XD", ".git", ".github", ".cache", ".netlify", ".antigravitycli", "venv", "dist", "docs", "site", "Build", "ReleaseNotes", "Logs", "Backups",
-    "/XF", ".gitignore", "Run_Integration_Tests.ps1", "*.bak", "temp_out.txt", "temp_err.txt", "test.ps1", "mkdocs.yml", "requirements.txt", "netlify.toml",
+    "/XD", ".git", ".github", ".cache", ".vercel", ".antigravitycli", "venv", "dist", "docs", "site", "Build", "ReleaseNotes", "Logs", "Backups",
+    "/XF", ".gitignore", "Run_Integration_Tests.ps1", "*.bak", "temp_out.txt", "temp_err.txt", "test.ps1", "mkdocs.yml", "requirements.txt", "vercel.json",
     "/NJH", "/NJS", "/NDL", "/NC", "/NS"
 )
 & robocopy @RoboArgs | Out-Null
