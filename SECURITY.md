@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Currently, only the latest major release of the **Windows-Optimisations** framework is supported with security updates.
+Currently, only the latest major release of the **WinAurex** framework is supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
