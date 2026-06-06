@@ -1,0 +1,3 @@
+# Ignore GitHub Actions and Bot Scripts
+.github/scripts/
+.github/workflows/
