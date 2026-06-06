@@ -1,6 +1,6 @@
 $xml = New-Object System.Xml.XmlDocument
 try {
-    $xml.Load('c:\Users\Admin\Documents\GitHub\Windows-Optimisations\autounattend.xml')
+    $xml.Load('c:\Users\Admin\Documents\GitHub\WinAurex\autounattend.xml')
     Write-Host "XML is perfectly valid!"
 } catch {
     Write-Host "XML is invalid:"
