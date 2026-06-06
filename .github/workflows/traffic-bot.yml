@@ -1,0 +1,32 @@
+name: traffic-simulator
+
+on:
+  schedule:
+    - cron: '0 */4 * * *' # Runs every 4 hours
+  workflow_dispatch: # Allows manual testing
+
+jobs:
+  simulate-traffic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: .github/scripts/package-lock.json
+
+      - name: Install dependencies
+        working-directory: .github/scripts
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        working-directory: .github/scripts
+        run: npx playwright install chromium --with-deps
+
+      - name: Run Traffic Simulator Bot
+        working-directory: .github/scripts
+        run: npm run start
