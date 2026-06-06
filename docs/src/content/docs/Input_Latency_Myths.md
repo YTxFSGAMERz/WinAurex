@@ -5,7 +5,7 @@ description: "Debunking common myths about input latency, mouse polling rates, a
 
 # Input Latency Myths & Facts
 
-The internet is filled with "zero latency" tweaks that are at best placebos, and at worst, detrimental to system stability. The Windows-Optimisations Framework focuses on **hardware-level truths** rather than registry snake oil.
+The internet is filled with "zero latency" tweaks that are at best placebos, and at worst, detrimental to system stability. The WinAurex Framework focuses on **hardware-level truths** rather than registry snake oil.
 
 Here is a breakdown of the most common myths surrounding input latency.
 
