@@ -10,7 +10,7 @@ param (
 $Version = "5.0.0"
 $RootPath = Join-Path $PSScriptRoot ".."
 $DistDir = Join-Path $RootPath "dist"
-$ReleaseName = "Windows-Optimisations-v$Version"
+$ReleaseName = "WinAurex-v$Version"
 $ReleasePath = Join-Path $DistDir $ReleaseName
 $ZipPath = Join-Path $DistDir "$ReleaseName.zip"
 
