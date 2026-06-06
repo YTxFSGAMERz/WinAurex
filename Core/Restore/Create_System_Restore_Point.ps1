@@ -23,7 +23,7 @@ try {
     $OSDrive = $env:SystemDrive + "\"
     Enable-ComputerRestore -Drive $OSDrive -ErrorAction SilentlyContinue
 
-    $Description = "Windows-Optimisations Framework Baseline - $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+    $Description = "WinAurex Framework Baseline - $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
     Checkpoint-Computer -Description $Description -RestorePointType "MODIFY_SETTINGS" -ErrorAction Stop
     
     Write-FrameworkLog -ModuleName "RestoreEngine" -Action "Successfully created restore point: $Description"
