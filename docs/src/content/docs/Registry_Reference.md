@@ -5,7 +5,7 @@ description: "Comprehensive reference of Windows 11 registry keys for performanc
 
 # Registry Reference Guide
 
-This document provides total transparency into the exact registry keys and values modified by the **Windows-Optimisations Framework**. This is intended for power users, system administrators, and security auditors who want to know exactly what is happening under the hood.
+This document provides total transparency into the exact registry keys and values modified by the **WinAurex Framework**. This is intended for power users, system administrators, and security auditors who want to know exactly what is happening under the hood.
 
 ---
 
