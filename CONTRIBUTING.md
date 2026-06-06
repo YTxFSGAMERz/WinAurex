@@ -1,6 +1,6 @@
-# Contributing to Windows-Optimisations
+# Contributing to WinAurex
 
-Thank you for your interest in contributing to **Windows-Optimisations**! This framework aims to be the gold standard for safe, modular, and observable Windows configuration. We welcome contributions ranging from bug fixes and documentation improvements to entirely new configuration modules.
+Thank you for your interest in contributing to **WinAurex**! This framework aims to be the gold standard for safe, modular, and observable Windows configuration. We welcome contributions ranging from bug fixes and documentation improvements to entirely new configuration modules.
 
 ## Architecture Philosophy
 Before proposing changes, please understand the core architecture introduced in **v5.0.0**:
