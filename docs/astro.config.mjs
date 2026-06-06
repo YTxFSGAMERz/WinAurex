@@ -11,7 +11,7 @@ export default defineConfig({
   prefetch: true,
   integrations: [starlight({
 			title: 'WinAurex',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/YTxFSGAMERz/Windows-Optimisations' }],
+			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/YTxFSGAMERz/WinAurex' }],
 			customCss: ['./src/styles/custom.css'],
 			// Override ThemeSelect with an empty component to permanently hide the light/dark toggle
 			components: {
