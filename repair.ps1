@@ -1,5 +1,5 @@
-$xmlPath = 'c:\Users\Admin\Documents\GitHub\Windows-Optimisations\autounattend.xml'
-$tweaksDir = 'c:\Users\Admin\Documents\GitHub\Windows-Optimisations\Tweaks'
+$xmlPath = 'c:\Users\Admin\Documents\GitHub\WinAurex\autounattend.xml'
+$tweaksDir = 'c:\Users\Admin\Documents\GitHub\WinAurex\Tweaks'
 $content = [System.IO.File]::ReadAllText($xmlPath)
 
 # 1. Clean up previously injected files (we know they all start with <File path="C:\Windows\Setup\Scripts\Tweaks\)
