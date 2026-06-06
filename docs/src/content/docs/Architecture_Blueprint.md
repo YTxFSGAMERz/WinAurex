@@ -3,10 +3,10 @@ title: "WinAurex System Architecture — Technical Blueprint"
 description: "Technical architecture of the WinAurex optimization framework. Module structure, script pipeline, and system design overview."
 ---
 
-# Windows-Optimisations: Next-Generation Architecture Blueprint
+# WinAurex: Next-Generation Architecture Blueprint
 
 ## Executive Summary
-The **Windows-Optimisations** repository is evolving from a standard collection of registry tweaks and batch files into a mature, modular, and professional-grade **Windows Configuration & Optimization Framework**. Powered by a native WPF (Windows Presentation Foundation) Dashboard and a robust PowerShell core, this transition shifts the focus from blind "tweak dumping" to engineered state management, offering transparency, precise observability, and guaranteed reversibility. This blueprint outlines the strategic expansion of the repository, establishing strict engineering principles, a robust safety backbone, and a modular architecture designed to support casual users, power users, gamers, and system administrators alike.
+The **WinAurex** repository is evolving from a standard collection of registry tweaks and batch files into a mature, modular, and professional-grade **Windows Configuration & Optimization Framework**. Powered by a native WPF (Windows Presentation Foundation) Dashboard and a robust PowerShell core, this transition shifts the focus from blind "tweak dumping" to engineered state management, offering transparency, precise observability, and guaranteed reversibility. This blueprint outlines the strategic expansion of the repository, establishing strict engineering principles, a robust safety backbone, and a modular architecture designed to support casual users, power users, gamers, and system administrators alike.
 
 ---
 
@@ -166,5 +166,5 @@ To balance safety, demand, and visibility, the modules will be developed in the 
 ---
 
 ## Final Recommendations
-This blueprint transitions **Windows-Optimisations** from a basic script repository into an **OS State Orchestration System**. By strictly adhering to the backup-first mentality, centralized logging, and modular profile design, this framework will stand as a flagship standard for safe, transparent, and professional Windows configuration.
+This blueprint transitions **WinAurex** from a basic script repository into an **OS State Orchestration System**. By strictly adhering to the backup-first mentality, centralized logging, and modular profile design, this framework will stand as a flagship standard for safe, transparent, and professional Windows configuration.
 
