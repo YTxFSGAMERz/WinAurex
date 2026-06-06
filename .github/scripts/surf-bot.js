@@ -152,8 +152,10 @@ async function runSession(proxyStr) {
         }
 
         console.log(`[+] Session complete.`);
+        return true;
     } catch (err) {
         console.error(`[-] Session failed (proxy might be dead): ${err.message}`);
+        return false;
     } finally {
         if (browser) {
             await browser.close();
@@ -175,21 +177,31 @@ async function runSession(proxyStr) {
         process.exit(1);
     }
 
-    // Run 2 distinct sessions per cron job trigger to simulate multiple users
-    const SESSIONS_PER_RUN = 2;
+    // We want 2 successful sessions per run
+    const TARGET_SUCCESSFUL_SESSIONS = 2;
+    const MAX_ATTEMPTS = 15;
+    let successfulSessions = 0;
     
-    for (let i = 0; i < SESSIONS_PER_RUN; i++) {
+    for (let i = 0; i < MAX_ATTEMPTS; i++) {
+        if (successfulSessions >= TARGET_SUCCESSFUL_SESSIONS) {
+            break;
+        }
+
         // Grab a random proxy
         const proxy = proxies[Math.floor(Math.random() * proxies.length)];
         
-        await runSession(proxy);
+        const success = await runSession(proxy);
         
-        if (i < SESSIONS_PER_RUN - 1) {
-            console.log(`[*] Waiting before next session...`);
-            await randomSleep(10000, 20000); // Wait 10-20 seconds between users
+        if (success) {
+            successfulSessions++;
+        }
+        
+        if (successfulSessions < TARGET_SUCCESSFUL_SESSIONS) {
+            console.log(`[*] Waiting before next session attempt...`);
+            await randomSleep(3000, 7000); 
         }
     }
     
-    console.log('\n[+] All sessions finished successfully.');
+    console.log(`\n[+] Finished with ${successfulSessions}/${TARGET_SUCCESSFUL_SESSIONS} successful sessions.`);
     process.exit(0);
 })();
