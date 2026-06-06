@@ -1,5 +1,5 @@
 {
-  "name": "windows-optimisations",
+  "name": "winaurex",
   "version": "1.0.0",
   "description": "<div align=\"center\">",
   "main": "index.js",
@@ -16,15 +16,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YTxFSGAMERz/Windows-Optimisations.git"
+    "url": "git+https://github.com/YTxFSGAMERz/WinAurex.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/YTxFSGAMERz/Windows-Optimisations/issues"
+    "url": "https://github.com/YTxFSGAMERz/WinAurex/issues"
   },
-  "homepage": "https://github.com/YTxFSGAMERz/Windows-Optimisations#readme",
+  "homepage": "https://github.com/YTxFSGAMERz/WinAurex#readme",
   "devDependencies": {
     "vitepress": "^1.6.4",
     "vue": "^3.5.35",
