@@ -5,7 +5,7 @@ description: "Technical guide to the WinAurex WPF XAML dashboard. PowerShell-dri
 
 # WPF Dashboard Architecture Guide
 
-As of version 5.0.0, **Windows-Optimisations** utilizes a native WPF (Windows Presentation Foundation) dashboard powered entirely by PowerShell, removing the need for external compilers or heavy dependencies.
+As of version 5.0.0, **WinAurex** utilizes a native WPF (Windows Presentation Foundation) dashboard powered entirely by PowerShell, removing the need for external compilers or heavy dependencies.
 
 This document serves as a developer blueprint for the dashboard internals.
 
