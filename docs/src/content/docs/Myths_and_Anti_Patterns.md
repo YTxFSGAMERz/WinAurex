@@ -5,11 +5,11 @@ description: "Exposing dangerous Windows optimization myths and anti-patterns. L
 
 # Windows Optimization Myths & Anti-Patterns
 
-Welcome to the **Myths & Anti-Patterns** guide for the Windows-Optimisations framework. 
+Welcome to the **Myths & Anti-Patterns** guide for the WinAurex framework. 
 
 The internet is full of "FPS Boost" scripts, mysterious `.reg` files, and YouTubers claiming that disabling critical system components will somehow double your gaming performance. 
 
-At **Windows-Optimisations**, we believe in **Engineering Discipline over Tweak Spam**. This document debunks the most dangerous and placebo-driven myths in the Windows tweaking community, explaining *why* we refuse to include them in this repository.
+At **WinAurex**, we believe in **Engineering Discipline over Tweak Spam**. This document debunks the most dangerous and placebo-driven myths in the Windows tweaking community, explaining *why* we refuse to include them in this repository.
 
 ---
 
@@ -70,5 +70,5 @@ Our **Power Pack** orchestrates native `powercfg` commands to enable the Ultimat
 
 ## Conclusion
 
-A fast PC is a stable PC. By avoiding destructive anti-patterns, the **Windows-Optimisations Framework** ensures your machine runs at peak efficiency without sacrificing reliability, security, or core functionality.
+A fast PC is a stable PC. By avoiding destructive anti-patterns, the **WinAurex Framework** ensures your machine runs at peak efficiency without sacrificing reliability, security, or core functionality.
 
