@@ -69,7 +69,7 @@ $Html = @"
     </style>
 </head>
 <body>
-    <h1>Windows-Optimisations System Health Report</h1>
+    <h1>WinAurex System Health Report</h1>
     
     <div class="card">
         <h2>Hardware & OS</h2>
