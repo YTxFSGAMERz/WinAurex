@@ -19,8 +19,8 @@ const SEARCH_QUERIES = [
 async function fetchProxies() {
     console.log('[+] Fetching elite proxies...');
     try {
-        // Fetch HTTP/S elite anonymity proxies
-        const url = 'https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=elite';
+        // Fetch HTTP/S elite anonymity proxies that support SSL
+        const url = 'https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=yes&anonymity=elite';
         
         // Dynamically import node-fetch as it is an ESM module
         const { default: fetch } = await import('node-fetch');
@@ -84,7 +84,7 @@ async function runSession(proxyStr) {
         // ---------------------------------------------------------
         console.log(`[*] Navigating to search engine...`);
         try {
-            await page.goto('https://duckduckgo.com', { waitUntil: 'networkidle', timeout: 30000 });
+            await page.goto('https://duckduckgo.com', { waitUntil: 'domcontentloaded', timeout: 20000 });
             await randomSleep(2000, 4000);
             
             const query = SEARCH_QUERIES[Math.floor(Math.random() * SEARCH_QUERIES.length)];
@@ -95,21 +95,29 @@ async function runSession(proxyStr) {
             await randomSleep(500, 1500);
             await page.keyboard.press('Enter');
             
-            await page.waitForNavigation({ waitUntil: 'networkidle', timeout: 30000 });
+            await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 20000 });
             await randomSleep(3000, 5000);
             
             // Scroll a bit
             await page.evaluate(() => window.scrollBy(0, 300));
             await randomSleep(1000, 2000);
         } catch (e) {
-            console.warn(`[-] Search engine step failed or timed out. Skipping to direct navigation. Error: ${e.message}`);
+            console.warn(`[-] Search engine step failed or timed out. Error: ${e.message}`);
+            // If the proxy is completely dead, don't even bother continuing
+            if (e.message.includes('ERR_PROXY_CONNECTION_FAILED') || 
+                e.message.includes('ERR_TUNNEL_CONNECTION_FAILED') ||
+                e.message.includes('ERR_CONNECTION_CLOSED') ||
+                e.message.includes('ERR_EMPTY_RESPONSE') ||
+                e.message.includes('Timeout')) {
+                throw new Error(`Proxy is dead or too slow during search. Aborting session. (${e.message})`);
+            }
         }
 
         // ---------------------------------------------------------
         // 2. Navigate to WinAurex Target
         // ---------------------------------------------------------
         console.log(`[*] Navigating to https://${TARGET_DOMAIN}...`);
-        await page.goto(`https://${TARGET_DOMAIN}`, { waitUntil: 'networkidle', timeout: 45000 });
+        await page.goto(`https://${TARGET_DOMAIN}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
         
         console.log(`[+] Reached homepage. Simulating reading...`);
         // Simulate reading: scroll down, pause, scroll up
@@ -137,7 +145,7 @@ async function runSession(proxyStr) {
                 // Click the first matching link organically
                 console.log(`[*] Clicking link to: ${targetPath}`);
                 await cursor.click(linkElements[0]);
-                await page.waitForLoadState('networkidle', { timeout: 30000 });
+                await page.waitForLoadState('domcontentloaded', { timeout: 30000 });
                 
                 console.log(`[+] Page loaded. Simulating reading...`);
                 await randomSleep(4000, 8000);
