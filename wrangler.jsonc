@@ -2,6 +2,9 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "winaurex",
   "compatibility_date": "2026-06-03",
+  "build": {
+    "command": "npm run docs:build"
+  },
   "observability": {
     "enabled": true
   },
