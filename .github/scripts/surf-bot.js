@@ -8,7 +8,7 @@ const TARGET_DOMAIN = 'winaurex.vercel.app';
 const HIGH_VALUE_PATHS = ['/os_builder/', '/tweaks/', '/activators/'];
 const SEARCH_QUERIES = [
     'WinAurex',
-    'WinAurex Windows Optimisation',
+    'WinAurex',
     'WinAurex OS Builder free',
     'Windows 11 debloater WinAurex'
 ];
