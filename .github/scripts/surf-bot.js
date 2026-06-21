@@ -99,18 +99,11 @@ async function runSession(proxyStr) {
             await randomSleep(3000, 5000);
             
             // Scroll a bit
-            await page.evaluate(() => window.scrollBy(0, 300));
-            await randomSleep(1000, 2000);
         } catch (e) {
             console.warn(`[-] Search engine step failed or timed out. Error: ${e.message}`);
-            // If the proxy is completely dead, don't even bother continuing
-            if (e.message.includes('ERR_PROXY_CONNECTION_FAILED') || 
-                e.message.includes('ERR_TUNNEL_CONNECTION_FAILED') ||
-                e.message.includes('ERR_CONNECTION_CLOSED') ||
-                e.message.includes('ERR_EMPTY_RESPONSE') ||
-                e.message.includes('Timeout')) {
-                throw new Error(`Proxy is dead or too slow during search. Aborting session. (${e.message})`);
-            }
+            // If the proxy fails to load or times out on the search engine, it's dead/too slow.
+            // Abort immediately instead of wasting time trying the target domain.
+            throw new Error(`Proxy is dead or too slow during search. Aborting session. (${e.message})`);
         }
 
         // ---------------------------------------------------------
@@ -187,7 +180,7 @@ async function runSession(proxyStr) {
 
     // We want 2 successful sessions per run
     const TARGET_SUCCESSFUL_SESSIONS = 2;
-    const MAX_ATTEMPTS = 15;
+    const MAX_ATTEMPTS = 50;
     let successfulSessions = 0;
     
     for (let i = 0; i < MAX_ATTEMPTS; i++) {
