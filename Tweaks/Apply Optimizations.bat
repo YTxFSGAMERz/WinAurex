@@ -44,6 +44,7 @@ echo *4.- Delete temporary files
 echo *5.- Disable Windows Defender
 echo *6.- Disable Windows Update
 echo *7.- About the Optimizer
+echo *8.- Explore Modular Tweaks
 echo.
 
 :: Options
@@ -56,6 +57,7 @@ if "%op%"=="4" goto :temp
 if "%op%"=="5" goto :defender
 if "%op%"=="6" goto :update
 if "%op%"=="7" goto :about
+if "%op%"=="8" goto :modulartweaks
 if "%op%"=="" goto :Start
 
 :recommended
@@ -376,8 +378,20 @@ echo.
 ipconfig /flushdns 2>nul
 
 echo.
-echo === Applying Repository Master Recommended Profile ===
-powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Write-Host 'Applying Workstation Master Profile (Recommended)...'; & '%~dp0Profiles\Apply_Workstation_Master_Profile.ps1' -Force"
+echo === Select a Master Profile to Apply ===
+echo *1.- Apply Workstation Master Profile (Recommended for Productivity)
+echo *2.- Apply Gaming Master Profile
+echo *3.- Apply Privacy Master Profile
+echo *4.- Skip Profile Application
+echo.
+set /p profop=Option: 
+if "%profop%"=="1" (
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Write-Host 'Applying Workstation Master Profile...'; & '%~dp0Profiles\Apply_Workstation_Master_Profile.ps1' -Force"
+) else if "%profop%"=="2" (
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Write-Host 'Applying Gaming Master Profile...'; & '%~dp0Profiles\Apply_Gaming_Master_Profile.ps1' -Force"
+) else if "%profop%"=="3" (
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Write-Host 'Applying Privacy Master Profile...'; & '%~dp0Profiles\Apply_Privacy_Master_Profile.ps1' -Force"
+)
 
 timeout /t 3 /nobreak
 goto :done
@@ -411,14 +425,16 @@ echo.
 :: Options to select
 echo *1.- Disable Defender
 echo *2.- Enable Defender
-echo *3.- Go Back.
+echo *3.- Delete Windows Defender (Irreversible)
+echo *4.- Go Back.
 echo.
 
 :: Code to go to menu with Options
 set /p oput=Option: 
 if "%oput%"=="1" goto :DF
 if "%oput%"=="2" goto :DE
-if "%oput%"=="3" goto :Start
+if "%oput%"=="3" goto :DELDEF
+if "%oput%"=="4" goto :Start
 if "%oput%"=="" goto :Start
 
 
@@ -430,22 +446,43 @@ echo --------------------------------------------------
 echo        Disabling Windows Defender
 echo --------------------------------------------------
 echo.
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend" /v "Start" /t REG_DWORD /d 4 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SecurityHealthService" /v "Start" /t REG_DWORD /d 4 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdNisSvc" /v "Start" /t REG_DWORD /d 4 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Sense" /v "Start" /t REG_DWORD /d 4 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wscsvc" /v "Start" /t REG_DWORD /d 4 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 1 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableRoutinelyTakingAction" /t REG_DWORD /d 1 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v "ServiceKeepAlive" /t REG_DWORD /d 0 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /t REG_DWORD /d 1 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableIOAVProtection" /t REG_DWORD /d 1 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /t REG_DWORD /d 1 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRealtimeMonitoring" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiVirus" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableSpecialRunningModes" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableRoutinelyTakingAction" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "ServiceKeepAlive" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender" /v "DisableAntiVirus" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender" /v "ServiceStartStates" /t REG_DWORD /d 1 /f 2>nul
+
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRealtimeMonitoring" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableScanOnRealtimeEnable" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableIOAVProtection" /t REG_DWORD /d 1 /f 2>nul
+
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "DisableBlockAtFirstSeen" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "SubmitSamplesConsent" /t REG_DWORD /d 2 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "SpynetReporting" /t REG_DWORD /d 0 /f 2>nul
+
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Signature Updates" /v "ForceUpdateFromMU" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontOfferThroughWUA" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontReportInfectionInformation" /t REG_DWORD /d 1 /f 2>nul
+
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender\Features" /v "TamperProtection" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\SmartScreen" /v "ConfigureAppInstallControlEnabled" /t REG_DWORD /d 0 /f 2>nul
+
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d 1 /f 2>nul
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Notifications" /v "DisableNotifications" /t REG_DWORD /d 1 /f 2>nul
 reg add "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications" /v "NoToastApplicationNotification" /t REG_DWORD /d 1 /f 2>nul
 reg add "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications" /v "NoToastApplicationNotificationOnLockScreen" /t REG_DWORD /d 1 /f 2>nul
+
+sc config WinDefend start= disabled 2>nul
+sc config SecurityHealthService start= disabled 2>nul
+sc config Sense start= disabled 2>nul
+sc config WdNisDrv start= disabled 2>nul
+sc config WdNisSvc start= disabled 2>nul
+
 timeout /t 3 /nobreak
 goto :Start
 
@@ -458,22 +495,120 @@ echo --------------------------------------------------
 echo            Enabling Windows Defender.
 echo --------------------------------------------------
 echo.
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend" /v "Start" /t REG_DWORD /d 2 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SecurityHealthService" /v "Start" /t REG_DWORD /d 2 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdNisSvc" /v "Start" /t REG_DWORD /d 2 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Sense" /v "Start" /t REG_DWORD /d 2 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wscsvc" /v "Start" /t REG_DWORD /d 2 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 0 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableRoutinelyTakingAction" /t REG_DWORD /d 0 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v "ServiceKeepAlive" /t REG_DWORD /d 1 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /t REG_DWORD /d 0 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableIOAVProtection" /t REG_DWORD /d 0 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /t REG_DWORD /d 0 /f 2>nul
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRealtimeMonitoring" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiVirus" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableSpecialRunningModes" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableRoutinelyTakingAction" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "ServiceKeepAlive" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender" /v "DisableAntiVirus" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender" /v "ServiceStartStates" /t REG_DWORD /d 0 /f 2>nul
+
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRealtimeMonitoring" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableScanOnRealtimeEnable" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableIOAVProtection" /t REG_DWORD /d 0 /f 2>nul
+
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "DisableBlockAtFirstSeen" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "SubmitSamplesConsent" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "SpynetReporting" /t REG_DWORD /d 2 /f 2>nul
+
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Signature Updates" /v "ForceUpdateFromMU" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontOfferThroughWUA" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontReportInfectionInformation" /t REG_DWORD /d 0 /f 2>nul
+
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender\Features" /v "TamperProtection" /t REG_DWORD /d 1 /f 2>nul
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\SmartScreen" /v "ConfigureAppInstallControlEnabled" /f 2>nul
+
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d 0 /f 2>nul
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Notifications" /v "DisableNotifications" /t REG_DWORD /d 0 /f 2>nul
 reg add "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications" /v "NoToastApplicationNotification" /t REG_DWORD /d 0 /f 2>nul
 reg add "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications" /v "NoToastApplicationNotificationOnLockScreen" /t REG_DWORD /d 0 /f 2>nul
+
+sc config WinDefend start= auto 2>nul
+sc config SecurityHealthService start= auto 2>nul
+sc config Sense start= auto 2>nul
+sc config WdNisDrv start= auto 2>nul
+sc config WdNisSvc start= auto 2>nul
+
+timeout /t 3 /nobreak
+goto :start
+
+
+
+:DELDEF
+cls
+echo.
+echo --------------------------------------------------
+echo      DELETING Windows Defender (Irreversible)
+echo --------------------------------------------------
+echo.
+echo WARNING: This action is irreversible. Windows Defender will be completely removed.
+echo Press CTRL+C to cancel, or press any key to continue...
+pause >nul
+echo.
+
+:: Registry Tweaks (Disabling all features just in case)
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiVirus" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableSpecialRunningModes" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableRoutinelyTakingAction" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "ServiceKeepAlive" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender" /v "DisableAntiVirus" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender" /v "ServiceStartStates" /t REG_DWORD /d 1 /f 2>nul
+
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRealtimeMonitoring" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableScanOnRealtimeEnable" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableIOAVProtection" /t REG_DWORD /d 1 /f 2>nul
+
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "DisableBlockAtFirstSeen" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "SubmitSamplesConsent" /t REG_DWORD /d 2 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "SpynetReporting" /t REG_DWORD /d 0 /f 2>nul
+
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Signature Updates" /v "ForceUpdateFromMU" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontOfferThroughWUA" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontReportInfectionInformation" /t REG_DWORD /d 1 /f 2>nul
+
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender\Features" /v "TamperProtection" /t REG_DWORD /d 0 /f 2>nul
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\SmartScreen" /v "ConfigureAppInstallControlEnabled" /t REG_DWORD /d 0 /f 2>nul
+
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Notifications" /v "DisableNotifications" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications" /v "NoToastApplicationNotification" /t REG_DWORD /d 1 /f 2>nul
+reg add "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications" /v "NoToastApplicationNotificationOnLockScreen" /t REG_DWORD /d 1 /f 2>nul
+
+:: Stop and Delete Services
+sc stop WinDefend 2>nul
+sc delete WinDefend 2>nul
+sc stop SecurityHealthService 2>nul
+sc delete SecurityHealthService 2>nul
+sc stop Sense 2>nul
+sc delete Sense 2>nul
+sc stop WdNisDrv 2>nul
+sc delete WdNisDrv 2>nul
+sc stop WdNisSvc 2>nul
+sc delete WdNisSvc 2>nul
+sc stop wscsvc 2>nul
+sc delete wscsvc 2>nul
+
+:: Take Ownership and Delete Directories
+takeown /f "%ProgramFiles%\Windows Defender" /r /d y 2>nul
+icacls "%ProgramFiles%\Windows Defender" /grant administrators:F /t 2>nul
+rd /s /q "%ProgramFiles%\Windows Defender" 2>nul
+
+takeown /f "%ProgramFiles(x86)%\Windows Defender" /r /d y 2>nul
+icacls "%ProgramFiles(x86)%\Windows Defender" /grant administrators:F /t 2>nul
+rd /s /q "%ProgramFiles(x86)%\Windows Defender" 2>nul
+
+takeown /f "%ProgramData%\Microsoft\Windows Defender" /r /d y 2>nul
+icacls "%ProgramData%\Microsoft\Windows Defender" /grant administrators:F /t 2>nul
+rd /s /q "%ProgramData%\Microsoft\Windows Defender" 2>nul
+
+echo Windows Defender has been completely removed.
 timeout /t 3 /nobreak
 goto :start
 
@@ -933,6 +1068,115 @@ schtasks /change /tn "\Microsoft\WindowsUpdate\*" /enable 2>nul
 :: Go Back
 timeout /t 3 /nobreak
 goto :update
+
+:modulartweaks
+cls
+echo --------------------------------------------------
+echo             Explore Modular Tweaks
+echo --------------------------------------------------
+echo.
+echo *1.- Performance ^& Gaming (Boot, Gaming, GPU, Power)
+echo *2.- Privacy ^& Security (Privacy, Security)
+echo *3.- System ^& Services (Services, System, Tasks, Troubleshooting, Apps)
+echo *4.- Network ^& Internet (Network, Network-Diagnostics, Browser)
+echo *5.- UI ^& Explorer (Appearance, Explorer, Visual)
+echo *6.- Storage ^& Cleanup (Storage, Storage-Advanced, Storage-Aggressive)
+echo *7.- Go Back
+echo.
+set /p mtwk=Option: 
+if "%mtwk%"=="1" set "CATS=Boot Gaming GPU Power" & goto :modulartweaks_action
+if "%mtwk%"=="2" set "CATS=Privacy Security" & goto :modulartweaks_action
+if "%mtwk%"=="3" set "CATS=Services System Tasks Troubleshooting Apps" & goto :modulartweaks_action
+if "%mtwk%"=="4" set "CATS=Network Network-Diagnostics Browser" & goto :modulartweaks_action
+if "%mtwk%"=="5" set "CATS=Appearance Explorer Visual" & goto :modulartweaks_action
+if "%mtwk%"=="6" set "CATS=Storage Storage-Advanced Storage-Aggressive" & goto :modulartweaks_action
+if "%mtwk%"=="7" goto :start
+goto :modulartweaks
+
+:modulartweaks_action
+cls
+echo --------------------------------------------------
+echo             Select Action
+echo --------------------------------------------------
+echo.
+echo *1.- Apply Tweaks (Disable / Optimize)
+echo *2.- Restore Tweaks (Enable / Revert)
+echo *3.- Go Back
+echo.
+set /p mact=Option: 
+if "%mact%"=="1" set "ACTION=Apply" & goto :modulartweaks_list
+if "%mact%"=="2" set "ACTION=Restore" & goto :modulartweaks_list
+if "%mact%"=="3" goto :modulartweaks
+goto :modulartweaks_action
+
+:modulartweaks_list
+cls
+echo --------------------------------------------------
+echo             Available Tweaks (%ACTION%)
+echo --------------------------------------------------
+echo.
+
+setlocal enabledelayedexpansion
+set "idx=1"
+set "file!idx!=Go Back"
+echo *!idx!.- Go Back
+set /a idx+=1
+
+for %%C in (%CATS%) do (
+    if exist "%~dp0%%C" (
+        for %%F in ("%~dp0%%C\*.*") do (
+            set "skip=0"
+            set "filename=%%~nxF"
+            
+            if "%ACTION%"=="Apply" (
+                echo !filename! ^| findstr /i /c:"Restore" /c:"Enable" >nul
+                if not errorlevel 1 set "skip=1"
+            ) else (
+                echo !filename! ^| findstr /i /c:"Restore" /c:"Enable" >nul
+                if errorlevel 1 set "skip=1"
+            )
+            
+            if "!skip!"=="0" (
+                echo *!idx!.- [%%C] !filename!
+                set "file!idx!=%%F"
+                set /a idx+=1
+            )
+        )
+    )
+)
+echo.
+set /p sel=Select tweak to run (1-!idx!): 
+
+if "!sel!"=="" endlocal & goto :modulartweaks_list
+if "!sel!"=="1" endlocal & goto :modulartweaks_action
+
+set "chosen=!file%sel%!"
+if "!chosen!"=="" (
+    echo Invalid selection.
+    timeout /t 2 /nobreak
+    endlocal
+    goto :modulartweaks_list
+)
+
+echo.
+echo Executing: "!chosen!"
+set "ext=!chosen:~-4!"
+if /i "!ext!"==".reg" (
+    reg import "!chosen!"
+) else if /i "!ext!"==".ps1" (
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File "!chosen!"
+) else if /i "!ext!"==".bat" (
+    call "!chosen!"
+) else if /i "!ext!"==".cmd" (
+    call "!chosen!"
+) else (
+    echo Unsupported file type.
+)
+echo.
+echo Done.
+pause
+endlocal
+goto :modulartweaks_action
 
 :about
 cls
