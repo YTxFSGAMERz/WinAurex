@@ -49,5 +49,4 @@ Write-FrameworkLog -ModuleName "Developer" -Action "Enabled Developer Mode"
 Write-Host "`n[SUCCESS] Windows Developer Mode has been enabled." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
 
