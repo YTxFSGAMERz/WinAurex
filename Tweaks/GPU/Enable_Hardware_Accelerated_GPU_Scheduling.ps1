@@ -35,4 +35,3 @@ Write-Host "This offloads scheduling from the CPU to the GPU, lowering latency a
 Write-Host "A system reboot is required for this to take effect." -ForegroundColor Red
 
 
-$null = Read-Host "Press Enter to exit..."
