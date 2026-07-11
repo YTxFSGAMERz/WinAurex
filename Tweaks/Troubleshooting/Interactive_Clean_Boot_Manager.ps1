@@ -57,7 +57,6 @@ if (-not $isAdmin) {
     Write-Host "[!] ERROR: This script must be run as an Administrator." -ForegroundColor Red
     Write-Host "    Right-click your PowerShell window and select 'Run as Administrator'." -ForegroundColor Yellow
     Write-Host ""
-    Read-Host "Press Enter to exit..."
     exit
 }
 
@@ -79,7 +78,6 @@ while ($true) {
     Write-Host "  3. Exit" -ForegroundColor Red
     Write-Host ""
 
-    $choice = Read-Host "Option (1-3)"
 
     switch ($choice) {
         "1" {
@@ -142,7 +140,6 @@ while ($true) {
             Write-Host "    Found $($startupApps.Count) active startup items." -ForegroundColor Gray
             Write-Host ""
 
-            $confirm = Read-Host "Proceed with disabling these items for troubleshooting? (y/n)"
             if ($confirm -ne "y") { continue }
 
             # Prepare Backup Payload
@@ -218,7 +215,6 @@ while ($true) {
             Write-Host " [!] IMPORTANT: Please RESTART your computer now to isolate issues." -ForegroundColor Yellow
             Write-Host " ======================================================================" -ForegroundColor Green
             Write-Host ""
-            Read-Host "Press Enter to return to main menu..."
         }
 
         "2" {
@@ -238,7 +234,6 @@ while ($true) {
                 $backupData = Get-Content -Raw -Path $ProfileFile | ConvertFrom-Json
             } catch {
                 Write-Host "[!] Error loading boot_profile.json. Backup file might be corrupt." -ForegroundColor Red
-                Read-Host "Press Enter to return..."
                 continue
             }
 
@@ -300,7 +295,6 @@ while ($true) {
             Write-Host " [+] Please RESTART your computer to complete the normal boot restoration." -ForegroundColor Yellow
             Write-Host " ======================================================================" -ForegroundColor Green
             Write-Host ""
-            Read-Host "Press Enter to return to main menu..."
         }
 
         "3" {
