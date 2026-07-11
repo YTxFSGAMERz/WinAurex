@@ -15,7 +15,6 @@ if %errorlevel% neq 0 (
     echo [!] ERROR: This script must be run as Administrator.
     echo Please right-click the script and select 'Run as Administrator'.
     echo.
-    pause
     exit /b
 )
 
@@ -72,5 +71,4 @@ echo [+] Windows Update Download Cache cleared.
 echo --------------------------------------------------
 echo [+] Safe maintenance cleanup finished successfully!
 echo.
-pause
 exit /b
