@@ -1,0 +1,12 @@
+<Solution>
+  <Project Path="WinAurex.App/WinAurex.App.csproj">
+    <Platform Project="x86" />
+  </Project>
+  <Project Path="WinAurex.Contracts/WinAurex.Contracts.csproj" />
+  <Project Path="WinAurex.Core/WinAurex.Core.csproj" />
+  <Project Path="WinAurex.Infrastructure/WinAurex.Infrastructure.csproj" />
+  <Project Path="WinAurex.Localization/WinAurex.Localization.csproj" />
+  <Project Path="WinAurex.Models/WinAurex.Models.csproj" />
+  <Project Path="WinAurex.Modules/WinAurex.Modules.csproj" />
+  <Project Path="WinAurex.Services/WinAurex.Services.csproj" />
+</Solution>
