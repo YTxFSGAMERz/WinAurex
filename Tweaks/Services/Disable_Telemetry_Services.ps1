@@ -49,4 +49,3 @@ Write-Host "`n[SUCCESS] Successfully disabled $DisabledCount background telemetr
 Write-Host "This will reduce idle RAM usage and block Microsoft data collection." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
