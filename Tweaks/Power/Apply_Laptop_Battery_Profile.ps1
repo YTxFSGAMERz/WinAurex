@@ -51,8 +51,7 @@ Write-FrameworkLog -ModuleName "Power" -Action "Completed Master Laptop Battery 
 Write-Host "`n[SUCCESS] Laptop Battery Profile deployment complete!" -ForegroundColor Green
 if (-not $Force) {
     if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
+}
+
 }
 
