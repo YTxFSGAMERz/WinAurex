@@ -34,4 +34,3 @@ Write-Host "`n[SUCCESS] Global App access to the Camera has been blocked (Deny).
 Write-Host "Note: Traditional desktop apps (like OBS) may still access it, but UWP/Store apps are blocked." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
