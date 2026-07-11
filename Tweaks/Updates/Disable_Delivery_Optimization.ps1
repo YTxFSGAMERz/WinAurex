@@ -41,4 +41,3 @@ Write-Host "`n[SUCCESS] Windows Update Delivery Optimization (P2P) has been disa
 Write-Host "Your PC will no longer silently upload Windows updates to other computers on the internet." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
