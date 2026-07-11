@@ -42,4 +42,3 @@ Write-Host "`n[SUCCESS] Windows will no longer forcibly update your hardware dri
 Write-Host "This prevents Windows Update from overwriting your custom GPU or Audio drivers." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
