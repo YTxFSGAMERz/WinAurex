@@ -28,7 +28,6 @@ Write-Host "1. Enable Exclusive Mode (Recommended for Gamers/Producers)"
 Write-Host "2. Disable Exclusive Mode (Forces all audio through Windows Mixer)"
 Write-Host "3. Abort"
 Write-Host "================================================="
-$Choice = Read-Host "Select an option [1-3]"
 
 if ($Choice -notmatch '^[1-2]$') {
     Write-FrameworkLog -ModuleName "Audio" -Action "Aborted Exclusive Mode config"
@@ -79,4 +78,3 @@ if ($Choice -eq '1') {
 Write-Host "Please restart the Windows Audio service or reboot to apply changes." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
