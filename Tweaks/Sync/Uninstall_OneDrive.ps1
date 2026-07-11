@@ -69,5 +69,4 @@ if (Test-Path $RegistryPath64) {
 Write-Host "`n[SUCCESS] OneDrive has been uninstalled." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
 
