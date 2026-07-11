@@ -52,7 +52,5 @@ foreach ($Disk in $Disks) {
 }
 
 if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
 }
 
