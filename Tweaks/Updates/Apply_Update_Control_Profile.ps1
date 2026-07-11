@@ -44,8 +44,7 @@ Write-FrameworkLog -ModuleName "Updates" -Action "Completed Master Update Contro
 Write-Host "`n[SUCCESS] Update Control Profile deployment complete!" -ForegroundColor Green
 if (-not $Force) {
     if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
+}
+
 }
 
