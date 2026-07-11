@@ -1,0 +1,17 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="AppBackgroundBrush" Color="{ThemeResource SystemAltHighColor}" />
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{ThemeResource SystemChromeMediumColor}" />
+    <SolidColorBrush x:Key="CardBorderBrush" Color="{ThemeResource SystemBaseLowColor}" />
+
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{ThemeResource SystemBaseHighColor}" />
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{ThemeResource SystemBaseMediumColor}" />
+
+    <!-- Semantic / Status Colors -->
+    <SolidColorBrush x:Key="StatusSuccessBrush" Color="#10893E" />
+    <SolidColorBrush x:Key="StatusWarningBrush" Color="#D83B01" />
+    <SolidColorBrush x:Key="StatusDangerBrush" Color="#E81123" />
+    
+</ResourceDictionary>
