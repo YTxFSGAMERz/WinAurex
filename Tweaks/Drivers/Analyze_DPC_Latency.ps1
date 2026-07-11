@@ -59,6 +59,4 @@ if ($MaxDPC -gt 5.0) {
     Write-Host "System should be responsive and free of audio crackling."
 }
 
-Write-Host "`nPress any key to exit..."
-if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
 
