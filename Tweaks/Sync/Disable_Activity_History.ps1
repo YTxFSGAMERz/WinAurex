@@ -39,4 +39,3 @@ Write-Host "`n[SUCCESS] Windows Activity History and Timeline tracking have been
 Write-Host "Windows will no longer secretly track which files/apps you open." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
