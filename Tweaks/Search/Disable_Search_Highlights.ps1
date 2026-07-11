@@ -34,4 +34,3 @@ Write-FrameworkLog -ModuleName "Search" -Action "Disabled Dynamic Search Highlig
 Write-Host "`n[SUCCESS] Windows Search Highlights (daily images, trivia, news) disabled." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
