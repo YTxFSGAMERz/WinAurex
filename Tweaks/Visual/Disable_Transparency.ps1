@@ -32,4 +32,3 @@ Write-FrameworkLog -ModuleName "Visual" -Action "Disabled UI Transparency Effect
 Write-Host "`n[SUCCESS] Windows Transparency Effects disabled." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
