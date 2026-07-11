@@ -30,4 +30,3 @@ if ($Success) {
 
 
 
-$null = Read-Host "Press Enter to exit..."
