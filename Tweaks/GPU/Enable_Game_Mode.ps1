@@ -39,4 +39,3 @@ Write-Host "`n[SUCCESS] Windows Game Mode has been enabled." -ForegroundColor Gr
 Write-Host "Windows will now prioritize game processes and suppress background updates while gaming." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
