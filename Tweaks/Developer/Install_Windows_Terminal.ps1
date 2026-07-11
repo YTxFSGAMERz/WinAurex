@@ -42,5 +42,4 @@ Write-FrameworkLog -ModuleName "Developer" -Action "Completed Windows Terminal I
 Write-Host "`n[SUCCESS] Windows Terminal has been installed." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
 
