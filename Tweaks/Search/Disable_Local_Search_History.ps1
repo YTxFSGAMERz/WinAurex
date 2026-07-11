@@ -34,4 +34,3 @@ Write-FrameworkLog -ModuleName "Search" -Action "Disabled Local Search History" 
 Write-Host "`n[SUCCESS] Local device search history has been disabled." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
