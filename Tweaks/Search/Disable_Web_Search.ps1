@@ -40,4 +40,3 @@ Write-Host "`n[SUCCESS] Web search and Bing integration in the Start Menu has be
 Write-Host "Local file and app search will now be much faster and strictly private." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
