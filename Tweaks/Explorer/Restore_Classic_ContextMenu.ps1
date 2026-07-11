@@ -36,4 +36,3 @@ Write-FrameworkLog -ModuleName "Explorer" -Action "Restored Classic Context Menu
 Write-Host "`n[SUCCESS] Classic Context Menu has been restored." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
