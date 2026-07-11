@@ -27,7 +27,6 @@ Write-Host "1. System Managed (Recommended/Safe Default)"
 Write-Host "2. Fixed Size (16GB) (For Heavy Gaming/Simulators)"
 Write-Host "3. Abort"
 Write-Host "================================================="
-$Choice = Read-Host "Select an option [1-3]"
 
 if ($Choice -notmatch '^[1-2]$') {
     Write-FrameworkLog -ModuleName "Storage" -Action "Aborted Pagefile config"
@@ -72,4 +71,3 @@ if ($Choice -eq '1') {
 Write-Host "A SYSTEM REBOOT is required for virtual memory changes to take effect." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
