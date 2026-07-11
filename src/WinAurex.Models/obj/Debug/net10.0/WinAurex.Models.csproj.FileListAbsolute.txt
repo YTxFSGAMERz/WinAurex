@@ -1,0 +1,13 @@
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\bin\Debug\net10.0\WinAurex.Models.deps.json
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\bin\Debug\net10.0\WinAurex.Models.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\bin\Debug\net10.0\WinAurex.Models.pdb
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\obj\Debug\net10.0\WinAurex.Models.csproj.AssemblyReference.cache
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\obj\Debug\net10.0\WinAurex.Models.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\obj\Debug\net10.0\WinAurex.Models.AssemblyInfoInputs.cache
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\obj\Debug\net10.0\WinAurex.Models.AssemblyInfo.cs
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\obj\Debug\net10.0\WinAurex.Models.csproj.CoreCompileInputs.cache
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\obj\Debug\net10.0\WinAurex.Models.sourcelink.json
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\obj\Debug\net10.0\WinAurex.Models.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\obj\Debug\net10.0\refint\WinAurex.Models.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\obj\Debug\net10.0\WinAurex.Models.pdb
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Models\obj\Debug\net10.0\ref\WinAurex.Models.dll
