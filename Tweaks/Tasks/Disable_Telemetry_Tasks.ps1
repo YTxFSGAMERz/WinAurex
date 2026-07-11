@@ -45,4 +45,3 @@ Write-Host "`n[SUCCESS] Successfully disabled $DisabledCount background telemetr
 Write-Host "This will reduce background CPU spikes and disk I/O." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
