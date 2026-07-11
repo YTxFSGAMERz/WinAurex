@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "CQ1D/pPgFSM=",
+  "success": true,
+  "projectFilePath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\WinAurex.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\communitytoolkit.mvvm\\8.4.2\\communitytoolkit.mvvm.8.4.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.9\\microsoft.extensions.dependencyinjection.abstractions.10.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}
