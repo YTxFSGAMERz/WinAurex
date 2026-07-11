@@ -64,4 +64,3 @@ Write-Host "`n[SUCCESS] Successfully removed $RemovedCount sponsored apps." -For
 Write-Host "Third-party bloatware like Candy Crush and TikTok have been scrubbed from the system." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
