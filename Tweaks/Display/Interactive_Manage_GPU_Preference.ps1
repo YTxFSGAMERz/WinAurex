@@ -81,12 +81,10 @@ function List-Profiles {
 
 while ($true) {
     Show-Menu
-    $choice = Read-Host "Choose an option (1-4)"
     
     switch ($choice) {
         "1" {
             List-Profiles | Out-Null
-            Read-Host "Press Enter to return to menu..."
             Clear-Host
         }
         
@@ -95,7 +93,6 @@ while ($true) {
             Write-Host "=== Add/Modify Graphics Profile ===" -ForegroundColor Cyan
             Write-Host ""
             Write-Host "Enter the absolute path to the game executable (.exe):" -ForegroundColor Gray
-            $exePath = Read-Host "Path"
             
             # Remove quotes if user dragged and dropped the file
             $exePath = $exePath.Trim('"').Trim("'")
@@ -104,7 +101,6 @@ while ($true) {
                 Write-Host ""
                 Write-Host "[!] Warning: The path specified was not found locally." -ForegroundColor Yellow
                 Write-Host "    Make sure the path is correct or double check if the game is installed." -ForegroundColor Yellow
-                $confirm = Read-Host "Do you want to save it anyway? (y/n)"
                 if ($confirm -ne "y") {
                     Clear-Host
                     continue
@@ -116,7 +112,6 @@ while ($true) {
             Write-Host "  1. High Performance GPU (Discrete / Dedicated graphics card)" -ForegroundColor Green
             Write-Host "  2. Power Saving GPU (Integrated graphics chip)" -ForegroundColor Yellow
             Write-Host "  3. System Default" -ForegroundColor Gray
-            $prefChoice = Read-Host "Choice (1-3)"
 
             $prefVal = ""
             switch ($prefChoice) {
@@ -125,7 +120,6 @@ while ($true) {
                 "3" { $prefVal = "GpuPreference=0;" }
                 default {
                     Write-Host "Invalid preference selection." -ForegroundColor Red
-                    Read-Host "Press Enter to return..."
                     Clear-Host
                     continue
                 }
@@ -142,19 +136,16 @@ while ($true) {
                 Write-Host $_.Exception.Message -ForegroundColor Gray
             }
             Write-Host ""
-            Read-Host "Press Enter to return..."
             Clear-Host
         }
         
         "3" {
             $profiles = List-Profiles
             if (-not $profiles) {
-                Read-Host "Press Enter to return..."
                 Clear-Host
                 continue
             }
             
-            $delChoice = Read-Host "Select profile number to remove (or 'q' to cancel)"
             if ($delChoice -eq "q") {
                 Clear-Host
                 continue
@@ -173,7 +164,6 @@ while ($true) {
                 Write-Host "Invalid selection." -ForegroundColor Red
             }
             Write-Host ""
-            Read-Host "Press Enter to return..."
             Clear-Host
         }
         
