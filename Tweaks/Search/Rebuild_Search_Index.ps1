@@ -51,5 +51,4 @@ Write-Host "`n[SUCCESS] Search Index rebuild has been initiated in the backgroun
 Write-Host "You can monitor the status in 'Indexing Options' in the Control Panel."
 
 
-$null = Read-Host "Press Enter to exit..."
 
