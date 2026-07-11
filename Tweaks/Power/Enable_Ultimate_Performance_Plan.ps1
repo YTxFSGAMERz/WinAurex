@@ -36,4 +36,3 @@ if ($Success -and $DuplicateOutput -match "([a-fA-F0-9\-]{36})") {
 
 
 
-$null = Read-Host "Press Enter to exit..."
