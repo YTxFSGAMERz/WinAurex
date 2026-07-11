@@ -32,4 +32,3 @@ Write-FrameworkLog -ModuleName "Explorer" -Action "Enabled Compact View" -OldVal
 Write-Host "`n[SUCCESS] File Explorer Compact View has been enabled." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
