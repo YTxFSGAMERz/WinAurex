@@ -24,7 +24,6 @@ Write-Host "1. Enable SmartScreen (Recommended for Security)"
 Write-Host "2. Disable SmartScreen (For Developers/Power Users)"
 Write-Host "3. Abort"
 Write-Host "================================================="
-$Choice = Read-Host "Select an option [1-3]"
 
 if ($Choice -notmatch '^[1-2]$') {
     Write-FrameworkLog -ModuleName "Security" -Action "Aborted SmartScreen config"
@@ -61,4 +60,3 @@ if ($Choice -eq '1') {
 
 
 
-$null = Read-Host "Press Enter to exit..."
