@@ -39,4 +39,3 @@ Write-FrameworkLog -ModuleName "Explorer" -Action "Show Protected OS Files" -Old
 Write-Host "`n[SUCCESS] Developer View Configured (Extensions, Hidden Files, and OS Files are now visible)." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
