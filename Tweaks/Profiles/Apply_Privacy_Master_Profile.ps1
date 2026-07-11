@@ -69,8 +69,7 @@ Write-Host "`n[SUCCESS] Maximum Privacy Master Profile deployment complete!" -Fo
 Write-Host "Please RESTART YOUR COMPUTER for all changes to take effect." -ForegroundColor Yellow
 if (-not $Force) {
     if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
+}
+
 }
 
