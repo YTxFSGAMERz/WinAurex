@@ -359,13 +359,7 @@ We are actively looking for senior C# and PowerShell developers to help expand o
 
 <div align="center">
 
-<a href="https://star-history.com/#YTxFSGAMERz/WinAurex&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=YTxFSGAMERz/WinAurex&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=YTxFSGAMERz/WinAurex&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=YTxFSGAMERz/WinAurex&type=Date" width="600" />
-  </picture>
-</a>
+[![Star History Chart](https://api.star-history.com/chart?repos=YTxFSGAMERz/WinAurex&type=date&legend=top-left&sealed_token=O6gaEYSE9WUeT28NYS1H_35C6fQ-ZR1FtS5zcfBzxmZabr2M07ySOZ5s6YlexcOvpC-gvagNrjA5or2jSmONm236DUgoUhS_KIm1hwVxVas23X0WTJhv7roisFz6gAPt3E0JAk9kP4CCjsWaXH1T4mHlVESocpxGFEG8AJr7rQD5yUXlPDTHypuXrKHH)](https://www.star-history.com/?repos=YTxFSGAMERz%2FWinAurex&type=date&legend=top-left)
 
 </div>
 
