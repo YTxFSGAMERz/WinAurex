@@ -43,5 +43,4 @@ Write-FrameworkLog -ModuleName "Developer" -Action "Enabled Win32 Long Paths"
 Write-Host "`n[SUCCESS] Long Paths have been enabled. A restart may be required for some apps." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
 
