@@ -33,4 +33,3 @@ Write-FrameworkLog -ModuleName "Explorer" -Action "Disable Show Frequent Folders
 Write-Host "`n[SUCCESS] Recent files and Frequent folders have been hidden from Explorer." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
