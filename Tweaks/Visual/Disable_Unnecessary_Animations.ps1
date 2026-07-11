@@ -39,4 +39,3 @@ Write-FrameworkLog -ModuleName "Visual" -Action "Disabled Taskbar Animations" -O
 Write-Host "`n[SUCCESS] Unnecessary window and taskbar animations disabled." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
