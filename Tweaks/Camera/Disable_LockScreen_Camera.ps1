@@ -33,4 +33,3 @@ Write-FrameworkLog -ModuleName "Camera" -Action "Disabled Lock Screen Camera" -O
 Write-Host "`n[SUCCESS] The camera can no longer be activated from the Windows Lock Screen." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
