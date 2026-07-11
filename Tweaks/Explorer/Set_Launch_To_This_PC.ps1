@@ -32,4 +32,3 @@ Write-FrameworkLog -ModuleName "Explorer" -Action "Set Explorer Launch to This P
 Write-Host "`n[SUCCESS] File Explorer will now open to 'This PC' by default." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
