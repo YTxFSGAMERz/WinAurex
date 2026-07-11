@@ -32,4 +32,3 @@ Write-FrameworkLog -ModuleName "Visual" -Action "Reduced Menu Show Delay" -OldVa
 Write-Host "`n[SUCCESS] Windows Menu Show Delay reduced for improved responsiveness." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
