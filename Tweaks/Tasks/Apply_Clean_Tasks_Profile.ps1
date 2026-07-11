@@ -41,8 +41,7 @@ Write-FrameworkLog -ModuleName "Tasks" -Action "Completed Master Clean Tasks Orc
 Write-Host "`n[SUCCESS] Clean Tasks Profile deployment complete!" -ForegroundColor Green
 if (-not $Force) {
     if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
+}
+
 }
 
