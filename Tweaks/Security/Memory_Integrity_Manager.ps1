@@ -27,7 +27,6 @@ Write-Host "1. Enable Memory Integrity (High Security)"
 Write-Host "2. Disable Memory Integrity (Max Performance/Legacy Drivers)"
 Write-Host "3. Abort"
 Write-Host "================================================="
-$Choice = Read-Host "Select an option [1-3]"
 
 if ($Choice -notmatch '^[1-2]$') {
     Write-FrameworkLog -ModuleName "Security" -Action "Aborted HVCI config"
@@ -58,4 +57,3 @@ if ($Choice -eq '1') {
 Write-Host "A SYSTEM REBOOT is required for HVCI changes to take effect." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
