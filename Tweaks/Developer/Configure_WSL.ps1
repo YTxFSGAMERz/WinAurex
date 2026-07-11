@@ -44,5 +44,4 @@ Write-Host "A SYSTEM RESTART IS REQUIRED for the changes to take effect." -Foreg
 Write-Host "After rebooting, you can install a distro via 'wsl --install -d Ubuntu'."
 
 
-$null = Read-Host "Press Enter to exit..."
 
