@@ -34,4 +34,3 @@ Write-Host "`n[SUCCESS] Windows Tailored Experiences have been disabled." -Foreg
 Write-Host "Microsoft will no longer use your diagnostic data to serve personalized ads, tips, or recommendations." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
