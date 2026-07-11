@@ -39,4 +39,3 @@ Write-Host "`n[SUCCESS] Windows Settings Sync has been disabled." -ForegroundCol
 Write-Host "Your passwords, themes, and preferences will remain strictly local." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
