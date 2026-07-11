@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "8rxhYD9Zx+I=",
+  "success": true,
+  "projectFilePath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\communitytoolkit.mvvm\\8.4.2\\communitytoolkit.mvvm.8.4.2.nupkg.sha512"
+  ],
+  "logs": []
+}
