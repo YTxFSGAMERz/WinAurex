@@ -18,7 +18,6 @@ Write-Host "1. Arm the system for a Boot Trace (Requires Reboot)"
 Write-Host "2. Cancel a pending Boot Trace"
 Write-Host "3. Abort"
 Write-Host "================================================="
-$Choice = Read-Host "Select an option [1-3]"
 
 if ($Choice -notmatch '^[1-2]$') {
     Write-Host "`nAborted by user."
@@ -50,4 +49,3 @@ if ($Choice -eq '1') {
 
 
 
-$null = Read-Host "Press Enter to exit..."
