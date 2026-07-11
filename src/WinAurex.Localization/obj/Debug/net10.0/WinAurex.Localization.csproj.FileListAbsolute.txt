@@ -1,0 +1,12 @@
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Localization\bin\Debug\net10.0\WinAurex.Localization.deps.json
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Localization\bin\Debug\net10.0\WinAurex.Localization.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Localization\bin\Debug\net10.0\WinAurex.Localization.pdb
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Localization\obj\Debug\net10.0\WinAurex.Localization.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Localization\obj\Debug\net10.0\WinAurex.Localization.AssemblyInfoInputs.cache
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Localization\obj\Debug\net10.0\WinAurex.Localization.AssemblyInfo.cs
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Localization\obj\Debug\net10.0\WinAurex.Localization.csproj.CoreCompileInputs.cache
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Localization\obj\Debug\net10.0\WinAurex.Localization.sourcelink.json
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Localization\obj\Debug\net10.0\WinAurex.Localization.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Localization\obj\Debug\net10.0\refint\WinAurex.Localization.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Localization\obj\Debug\net10.0\WinAurex.Localization.pdb
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Localization\obj\Debug\net10.0\ref\WinAurex.Localization.dll
