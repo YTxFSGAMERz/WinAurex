@@ -45,4 +45,3 @@ Write-Host "[SUCCESS] Mouse Acceleration is ENABLED. Windows default acceleratio
 
 Write-Host "You must LOG OUT or RESTART for the cursor curve to fully update." -ForegroundColor Yellow
 
-$null = Read-Host "Press Enter to exit..."
