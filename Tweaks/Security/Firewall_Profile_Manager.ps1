@@ -25,7 +25,6 @@ Write-Host "1. Restore Default Firewall State (ON for all profiles)"
 Write-Host "2. Disable Firewall entirely (DANGEROUS)"
 Write-Host "3. Abort"
 Write-Host "================================================="
-$Choice = Read-Host "Select an option [1-3]"
 
 if ($Choice -notmatch '^[1-2]$') {
     Write-FrameworkLog -ModuleName "Security" -Action "Aborted Firewall config"
@@ -47,4 +46,3 @@ if ($Choice -eq '1') {
 
 
 
-$null = Read-Host "Press Enter to exit..."
