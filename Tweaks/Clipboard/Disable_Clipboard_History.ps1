@@ -34,4 +34,3 @@ Write-Host "`n[SUCCESS] Windows Clipboard History has been disabled." -Foregroun
 Write-Host "Passwords and sensitive data will no longer be stored indefinitely in RAM." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
