@@ -1,0 +1,16 @@
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\obj\Debug\net10.0\WinAurex.Contracts.csproj.AssemblyReference.cache
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\obj\Debug\net10.0\WinAurex.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\obj\Debug\net10.0\WinAurex.Contracts.AssemblyInfoInputs.cache
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\obj\Debug\net10.0\WinAurex.Contracts.AssemblyInfo.cs
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\obj\Debug\net10.0\WinAurex.Contracts.csproj.CoreCompileInputs.cache
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\obj\Debug\net10.0\WinAurex.Contracts.sourcelink.json
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\bin\Debug\net10.0\WinAurex.Contracts.deps.json
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\bin\Debug\net10.0\WinAurex.Contracts.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\bin\Debug\net10.0\WinAurex.Contracts.pdb
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\bin\Debug\net10.0\WinAurex.Models.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\bin\Debug\net10.0\WinAurex.Models.pdb
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\obj\Debug\net10.0\WinAurex.BBFD3FF6.Up2Date
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\obj\Debug\net10.0\WinAurex.Contracts.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\obj\Debug\net10.0\refint\WinAurex.Contracts.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\obj\Debug\net10.0\WinAurex.Contracts.pdb
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Contracts\obj\Debug\net10.0\ref\WinAurex.Contracts.dll
