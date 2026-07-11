@@ -53,5 +53,4 @@ if ($Confirm -match 'y') {
 
 
 
-$null = Read-Host "Press Enter to exit..."
 
