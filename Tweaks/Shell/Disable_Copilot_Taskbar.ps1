@@ -33,4 +33,3 @@ Write-Host "`n[SUCCESS] Windows Copilot Taskbar Button Disabled." -ForegroundCol
 Write-Host "A Windows Explorer restart may be required to see changes immediately." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
