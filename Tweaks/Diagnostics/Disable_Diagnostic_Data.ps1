@@ -34,4 +34,3 @@ Write-Host "`n[SUCCESS] Windows Diagnostic Data collection (Telemetry) has been 
 Write-Host "This blocks the OS from sending usage metrics and system state data to Microsoft." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
