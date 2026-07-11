@@ -46,4 +46,3 @@ Write-Output "==================================================================
 Write-Output "                     SERVICES REVERTED SUCCESSFULLY"
 Write-Output "========================================================================"
 
-Read-Host -Prompt "Press Enter to exit"
