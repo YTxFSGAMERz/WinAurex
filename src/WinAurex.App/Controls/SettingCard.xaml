@@ -1,0 +1,49 @@
+<UserControl
+    x:Class="WinAurex_App.Controls.SettingCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Border Background="{ThemeResource CardBackgroundBrush}"
+            BorderBrush="{ThemeResource CardBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource CardCornerRadius}"
+            Padding="{StaticResource CardPadding}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Spacing="{StaticResource SpacingSmall}" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock Text="{x:Bind Action.DisplayName, Mode=OneWay}" Style="{StaticResource SubtitleTextStyle}" VerticalAlignment="Center" />
+                    <Button Click="InfoButton_Click" Background="Transparent" BorderThickness="0" Padding="4" ToolTipService.ToolTip="View Tweak Details">
+                        <FontIcon Glyph="&#xE946;" FontSize="14" Foreground="{ThemeResource TextSecondaryBrush}" />
+                    </Button>
+                </StackPanel>
+                <TextBlock Text="{x:Bind Action.Description, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" TextWrapping="Wrap" />
+                
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource SpacingMedium}" Margin="0,4,0,0">
+                    <!-- Example metadata tags -->
+                    <Border Background="{ThemeResource StatusWarningBrush}" CornerRadius="4" Padding="6,2">
+                        <TextBlock Text="{Binding Action.RiskLevel, Mode=OneWay}" Foreground="White" Style="{StaticResource CaptionTextStyle}" FontWeight="SemiBold"/>
+                    </Border>
+                    <TextBlock Text="{x:Bind Action.Category, Mode=OneWay}" Style="{StaticResource CaptionTextStyle}" VerticalAlignment="Center" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center" Margin="16,0,0,0">
+                <ComboBox ItemsSource="{x:Bind Action.AvailableMethods, Mode=OneWay}" 
+                          SelectedItem="{x:Bind Action.SelectedMethod, Mode=TwoWay}" 
+                          DisplayMemberPath="Name" 
+                          MinWidth="100"
+                          Visibility="{x:Bind HasMultipleMethods(Action.AvailableMethods), Mode=OneWay}" />
+                <ProgressRing IsActive="{x:Bind Action.IsExecuting, Mode=OneWay}" Width="20" Height="20" />
+                <ToggleSwitch IsOn="{x:Bind Action.IsApplied, Mode=OneWay}" Toggled="ToggleSwitch_Toggled" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>
