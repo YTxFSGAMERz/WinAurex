@@ -43,5 +43,4 @@ Write-Host "`n[SUCCESS] PowerShell 7 has been installed." -ForegroundColor Green
 Write-Host "It will appear in your Start Menu as 'PowerShell' (black icon)."
 
 
-$null = Read-Host "Press Enter to exit..."
 
