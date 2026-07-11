@@ -63,4 +63,3 @@ Write-Host "`n[SUCCESS] Successfully removed $RemovedCount unnecessary Microsoft
 Write-Host "Unused default apps like 3D Viewer and Feedback Hub have been uninstalled." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
