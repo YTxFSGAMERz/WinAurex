@@ -67,8 +67,7 @@ Write-Host "`nNOTE: High-polling rate mice (4000Hz - 8000Hz) require raw CPU per
 Write-Host "If you experience stutter at 8000Hz, drop your mouse software to 2000Hz."
 if (-not $Force) {
     if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
+}
+
 }
 
