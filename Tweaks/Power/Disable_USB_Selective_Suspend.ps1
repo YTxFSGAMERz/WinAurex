@@ -31,4 +31,3 @@ Write-Host "Your USB peripherals will no longer sleep, fixing disconnects and lo
 
 
 
-$null = Read-Host "Press Enter to exit..."
