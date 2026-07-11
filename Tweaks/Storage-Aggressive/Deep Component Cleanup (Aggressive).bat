@@ -17,7 +17,6 @@ if %errorlevel% neq 0 (
     echo [!] ERROR: This script must be run as Administrator.
     echo Please right-click the script and select 'Run as Administrator'.
     echo.
-    pause
     exit /b
 )
 
@@ -67,5 +66,4 @@ echo [+] Deep Component Store Cleanup finished successfully!
 echo [+] Gigabytes of disk space have been reclaimed.
 echo --------------------------------------------------
 echo.
-pause
 exit /b
