@@ -1174,7 +1174,6 @@ if /i "!ext!"==".reg" (
 )
 echo.
 echo Done.
-pause
 endlocal
 goto :modulartweaks_action
 
@@ -1192,7 +1191,6 @@ echo ---------------------------------------------------------------------------
 echo.
 
 :: Code to go to menu with Options
-pause
 goto :start
 
 :done
