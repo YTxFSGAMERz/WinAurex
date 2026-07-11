@@ -49,8 +49,7 @@ Write-Host "[SUCCESS] Drivers have been exported safely." -ForegroundColor Green
 Write-Host "Backup Location: $ExportDir"
 if (-not $Force) {
     if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
+}
+
 }
 
