@@ -47,4 +47,3 @@ Write-Host "[SUCCESS] Mouse Acceleration is DISABLED. You now have 1:1 input." -
 
 Write-Host "You must LOG OUT or RESTART for the cursor curve to fully update." -ForegroundColor Yellow
 
-$null = Read-Host "Press Enter to exit..."
