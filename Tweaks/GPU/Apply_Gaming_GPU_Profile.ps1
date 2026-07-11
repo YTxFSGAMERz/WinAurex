@@ -45,8 +45,7 @@ Write-Host "`n[SUCCESS] Gaming GPU Profile deployment complete!" -ForegroundColo
 Write-Host "A system reboot is highly recommended to apply GPU scheduling changes." -ForegroundColor Red
 if (-not $Force) {
     if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
+}
+
 }
 
