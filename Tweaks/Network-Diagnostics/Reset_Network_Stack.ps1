@@ -47,5 +47,4 @@ Write-Host "`n[SUCCESS] Network stack has been successfully reset." -ForegroundC
 Write-Host "Please RESTART YOUR COMPUTER to finish the process." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
 
