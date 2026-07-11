@@ -50,7 +50,6 @@ while ($true) {
     Write-Host "  4. Exit" -ForegroundColor Red
     Write-Host ""
     
-    $choice = Read-Host "Option (1-4)"
 
     switch ($choice) {
         "1" {
@@ -123,7 +122,6 @@ while ($true) {
                 }
 
                 Write-Host ""
-                $select = Read-Host "Select app number to toggle Deny/Allow (or 'q' to go back)"
                 if ($select -eq "q") { break }
 
                 $match = $appList | Where-Object { $_.Index -eq $select }
