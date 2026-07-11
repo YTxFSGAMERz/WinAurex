@@ -1,0 +1,12 @@
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Modules\bin\Debug\net10.0\WinAurex.Modules.deps.json
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Modules\bin\Debug\net10.0\WinAurex.Modules.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Modules\bin\Debug\net10.0\WinAurex.Modules.pdb
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Modules\obj\Debug\net10.0\WinAurex.Modules.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Modules\obj\Debug\net10.0\WinAurex.Modules.AssemblyInfoInputs.cache
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Modules\obj\Debug\net10.0\WinAurex.Modules.AssemblyInfo.cs
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Modules\obj\Debug\net10.0\WinAurex.Modules.csproj.CoreCompileInputs.cache
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Modules\obj\Debug\net10.0\WinAurex.Modules.sourcelink.json
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Modules\obj\Debug\net10.0\WinAurex.Modules.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Modules\obj\Debug\net10.0\refint\WinAurex.Modules.dll
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Modules\obj\Debug\net10.0\WinAurex.Modules.pdb
+c:\Users\Admin\Documents\GitHub\WinAurex\src\WinAurex.Modules\obj\Debug\net10.0\ref\WinAurex.Modules.dll
