@@ -27,7 +27,6 @@ Write-Host "1. Disable Driver Updates via Windows Update (Recommended)"
 Write-Host "2. Enable Driver Updates via Windows Update (Default)"
 Write-Host "3. Abort"
 Write-Host "================================================="
-$Choice = Read-Host "Select an option [1-3]"
 
 if ($Choice -notmatch '^[1-2]$') {
     Write-FrameworkLog -ModuleName "Drivers" -Action "Aborted Driver Update config"
@@ -57,4 +56,3 @@ if ($Choice -eq '1') {
 
 
 
-$null = Read-Host "Press Enter to exit..."
