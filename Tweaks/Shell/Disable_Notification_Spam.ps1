@@ -32,4 +32,3 @@ Write-FrameworkLog -ModuleName "Shell" -Action "Disabled Windows Tips & Suggesti
 Write-Host "`n[SUCCESS] Windows tips and suggestion notification spam disabled." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
