@@ -48,8 +48,7 @@ Write-FrameworkLog -ModuleName "Power" -Action "Completed Master Desktop Power O
 Write-Host "`n[SUCCESS] Desktop Power Profile deployment complete!" -ForegroundColor Green
 if (-not $Force) {
     if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
+}
+
 }
 
