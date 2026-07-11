@@ -32,4 +32,3 @@ Write-FrameworkLog -ModuleName "Shell" -Action "Disabled Recent/Recommended Jump
 Write-Host "`n[SUCCESS] Start Menu Recommended section and Jump Lists cleared." -ForegroundColor Green
 
 
-$null = Read-Host "Press Enter to exit..."
