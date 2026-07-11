@@ -54,6 +54,4 @@ Write-Host "- Third-party Antivirus (McAfee, Norton)"
 Write-Host "`nRecommendation: Open Task Manager (Ctrl+Shift+Esc), go to the" -ForegroundColor Cyan
 Write-Host "'Startup Apps' tab, and disable everything except your critical audio/GPU drivers."
 
-Write-Host "`nPress any key to exit..."
-if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
 
