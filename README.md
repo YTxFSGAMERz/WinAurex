@@ -44,6 +44,24 @@
 <!-- ═══ ANIMATED DIVIDER ═══ -->
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
+<h2 align="center">⬛ THE C# & WPF EVOLUTION (V2.0)</h2>
+
+<div align="center">
+
+> Over **500+ Commits** later, WinAurex has evolved from a collection of raw PowerShell scripts into a **Robust C# WPF Engineering Platform**.
+
+| 🚀 MAJOR UPGRADES | 🛡️ ENTERPRISE-GRADE SAFETY |
+| :--- | :--- |
+| **MVVM Architecture:** Clean separation of UI and business logic. | **C# Execution Engine:** Transactional state management in native .NET. |
+| **WPF Dashboard UI:** A beautiful, responsive, cyber-aesthetic client. | **Validation & Dry-Runs:** Conflict detection before execution starts. |
+| **Automated Testing:** Extensive xUnit test coverage ensuring reliability. | **Immutable Journaling:** Event-sourced audit trails for every operation. |
+| **New Optimization Profiles:** Advanced PowerShell capability providers. | **Dependency Injection:** Loosely coupled components via `Contracts`. |
+
+</div>
+
+<!-- ═══ ANIMATED DIVIDER ═══ -->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+
 <h2 align="center">⬛ WHAT WINAUREX IS</h2>
 
 <div align="center">
@@ -75,14 +93,16 @@ WinAurex is a modular state management and observability-first framework. Modern
 <br>
 
 ```text
-📦 WinAurex
- ┣ 📂 Core/       # Advanced Restore & Validation Engines
- ┣ 📂 Tweaks/     # Primary System Optimization Engine (30+ Domains)
- ┣ 📂 Tools/      # Benchmarking, System Info, and Installations
- ┣ 📂 Profiles/   # Global Combined Optimization Profiles
- ┣ 📂 Logs/       # Execution Logs and Diagnostics Tracking
- ┗ 📂 docs/       # Central Documentation Knowledge Base
+📦 WinAurex.slnx (Strict Layered .NET Architecture)
+ ┣ 📂 WinAurex.App/            # WPF UI Layer & ViewModels
+ ┣ 📂 WinAurex.Services/       # Business Logic & Orchestration
+ ┣ 📂 WinAurex.Infrastructure/ # Capability Providers (Registry, Services, PowerShell)
+ ┣ 📂 WinAurex.Core/           # Validation, Dry-Run, & Safety Engines
+ ┣ 📂 WinAurex.Contracts/      # Shared Interfaces & Event Bus
+ ┗ 📂 WinAurex.Tests/          # xUnit Test Suites
 ```
+
+*Architectural Boundary Enforcement: The ExecutionEngine orchestrates a strict pipeline: Validation → Dry Run → Authorization → Execution → Journaling. No bypassed layers.*
 
 </details>
 
@@ -148,16 +168,16 @@ Absolute power requires absolute safety. This repository is built upon a **Rever
     <td>
       • Fake RAM boosters<br>
       • Placebo registry hacks<br>
-      • Aggressive Defender removal<br>
-      • Broken BCDEDIT timer tweaks<br>
+      • Spaghetti code and untestable scripts<br>
+      • Opaque background telemetry<br>
       • Blind service nuking
     </td>
     <td>
-      • Scheduling optimization<br>
-      • UI responsiveness<br>
-      • Background overhead reduction<br>
-      • Observability<br>
-      • Rollback safety
+      • <b>Native .NET & C# Performance</b><br>
+      • UI responsiveness (Async/MVVM)<br>
+      • Automated xUnit reliability<br>
+      • Observability & Event Journaling<br>
+      • Rollback safety & Manifest validation
     </td>
   </tr>
 </table>
@@ -170,16 +190,31 @@ Absolute power requires absolute safety. This repository is built upon a **Rever
 <div align="center">
 
 <!-- CYAN DEPLOYMENT ANIMATION -->
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&pause=700&color=00BCD4&center=true&vCenter=true&width=600&lines=Initializing+WinAurex+Framework...;Verifying+System+Integrity...;Loading+Optimization+Profiles...;%3E+READY+FOR+DEPLOYMENT.)](https://github.com/YTxFSGAMERz/WinAurex)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&pause=700&color=00BCD4&center=true&vCenter=true&width=600&lines=Initializing+C%23+Execution+Engine...;Verifying+xUnit+Test+Integrity...;Resolving+Dependency+Injection...;%3E+WPF+CLIENT+READY.)](https://github.com/YTxFSGAMERz/WinAurex)
 
 <br>
 
 ```powershell
-PS> .\Initialize_Framework.ps1
-[ OK ] Framework Initialized
-[ OK ] Restore Point Created
-[ OK ] Dashboard Shortcut Installed
+PS> .\WinAurex.App.exe --elevated
+[ OK ] C# Execution Engine Initialized
+[ OK ] Providers Resolved via DI
+[ OK ] Dashboard UI Rendered
 ```
+
+</div>
+
+<!-- ═══ ANIMATED DIVIDER ═══ -->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+
+<h2 align="center">⬛ THE ENGINEERING GAUNTLET</h2>
+
+<div align="center">
+
+> **"The hardest challenge we faced wasn't disabling telemetry—it was building an execution pipeline that couldn't fail catastrophically."**
+
+Transitioning from flat PowerShell scripts to a transactional **C# Execution Engine** was our most complex engineering feat. We had to design an **atomic, polymorphic execution pipeline** that could seamlessly bridge native Windows APIs, Registry operations, and raw PowerShell execution via Capability Providers, all while maintaining strict memory safety and UI responsiveness. 
+
+Implementing the **Rollback Manifest System** inside C# meant mapping every destructive OS operation to an immutable "undo" state *before* execution, persisting it to a JSON journal, and ensuring that if a thread crashed mid-execution, the system was never left in an unrecoverable state. It was a masterclass in concurrent state management.
 
 </div>
 
