@@ -153,7 +153,6 @@ while ($true) {
     Write-Host "  3. Exit" -ForegroundColor Red
     Write-Host ""
     
-    $op = Read-Host "Option (1-3)"
 
     if ($op -eq "1") {
         while ($true) {
@@ -165,7 +164,6 @@ while ($true) {
             if ($actives.Count -eq 0) {
                 Write-Host "No active startup applications found!" -ForegroundColor Yellow
                 Write-Host ""
-                Read-Host "Press Enter to return to main menu..."
                 break
             }
 
@@ -176,7 +174,6 @@ while ($true) {
                 Write-Host ""
             }
 
-            $select = Read-Host "Select number to DISABLE (or 'q' to go back)"
             if ($select -eq "q") { break }
 
             $match = $actives | Where-Object { $_.Id -eq $select }
@@ -198,7 +195,6 @@ while ($true) {
                     Write-Host ""
                     Write-Host "[!] Error: Failed to disable $($match.Name). Make sure you run this script as Administrator if modifying System startup items." -ForegroundColor Red
                     Write-Host $_.Exception.Message -ForegroundColor Gray
-                    Read-Host "Press Enter to continue..."
                 }
             } else {
                 Write-Host "Invalid selection." -ForegroundColor Red
@@ -216,7 +212,6 @@ while ($true) {
             if ($disableds.Count -eq 0) {
                 Write-Host "No disabled startup applications found!" -ForegroundColor Yellow
                 Write-Host ""
-                Read-Host "Press Enter to return to main menu..."
                 break
             }
 
@@ -227,7 +222,6 @@ while ($true) {
                 Write-Host ""
             }
 
-            $select = Read-Host "Select number to RE-ENABLE (or 'q' to go back)"
             if ($select -eq "q") { break }
 
             $match = $disableds | Where-Object { $_.Id -eq $select }
@@ -249,7 +243,6 @@ while ($true) {
                     Write-Host ""
                     Write-Host "[!] Error: Failed to re-enable $($match.Name). Make sure you run this script as Administrator if modifying System startup items." -ForegroundColor Red
                     Write-Host $_.Exception.Message -ForegroundColor Gray
-                    Read-Host "Press Enter to continue..."
                 }
             } else {
                 Write-Host "Invalid selection." -ForegroundColor Red
