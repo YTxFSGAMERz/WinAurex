@@ -41,8 +41,7 @@ Write-FrameworkLog -ModuleName "Services" -Action "Completed Master Clean Servic
 Write-Host "`n[SUCCESS] Clean Services Profile deployment complete!" -ForegroundColor Green
 if (-not $Force) {
     if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
+}
+
 }
 
