@@ -5,7 +5,7 @@ description: "Monitor CPU temps, GPU usage, disk health, and system diagnostics 
 
 # 🌡️ Hardware Monitoring & Diagnostics Guide
 
-The `Hardware/` directory contains portable, industry-standard diagnostic tools designed to monitor hardware specifications, track temperatures, and verify that system optimizations are active and stable.
+The `Tools/Apps/Hardware/` directory contains portable, industry-standard diagnostic tools designed to monitor hardware specifications, track temperatures, and verify that system optimizations are active and stable.
 
 ---
 
@@ -63,4 +63,5 @@ To confirm your optimizations are successful and safe, follow this baseline diag
     * Review the **Max Column** in HWMonitor:
         * Ensure motherboard VRMs, NVMe SSDs, and CPU cores stay well within safe limits.
         * If temperatures exceed safe limits (CPU > 90°C or GPU > 85°C), disable custom power plan optimizations or restore CPU mitigations in `InSpectre.exe` to reduce thermal pressure.
+
 
