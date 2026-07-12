@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 $SnapshotDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Restore\Audio"
 
 if (-not (Test-Path $SnapshotDir)) { New-Item -Path $SnapshotDir -ItemType Directory -Force | Out-Null }
@@ -30,7 +30,7 @@ Write-Host "3. Abort"
 Write-Host "================================================="
 
 if ($Choice -notmatch '^[1-2]$') {
-    Write-FrameworkLog -ModuleName "Audio" -Action "Aborted Audio Enhancements config"
+#     Write-FrameworkLog -ModuleName "Audio" -Action "Aborted Audio Enhancements config"
     Write-Host "`nAborted by user."
     Exit
 }
@@ -74,7 +74,7 @@ if ($Choice -eq '1') {
     Write-Host "Disabling enhancements on Input devices..." -ForegroundColor Yellow
     Toggle-Enhancements -KeyPath $CapturePath -Value 1
     
-    Write-FrameworkLog -ModuleName "Audio" -Action "Disabled Audio Enhancements globally"
+#     Write-FrameworkLog -ModuleName "Audio" -Action "Disabled Audio Enhancements globally"
     Write-Host "`n[SUCCESS] Audio Enhancements are DISABLED." -ForegroundColor Green
 } else {
     Write-Host "Enabling enhancements on Output devices..." -ForegroundColor Yellow
@@ -82,7 +82,7 @@ if ($Choice -eq '1') {
     Write-Host "Enabling enhancements on Input devices..." -ForegroundColor Yellow
     Toggle-Enhancements -KeyPath $CapturePath -Value 0
 
-    Write-FrameworkLog -ModuleName "Audio" -Action "Enabled Audio Enhancements globally"
+#     Write-FrameworkLog -ModuleName "Audio" -Action "Enabled Audio Enhancements globally"
     Write-Host "`n[SUCCESS] Audio Enhancements are ENABLED." -ForegroundColor Green
 }
 
