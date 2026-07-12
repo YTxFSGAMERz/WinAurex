@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Apps" -Action "Initiating Sponsored Apps Removal"
+# Write-FrameworkLog -ModuleName "Apps" -Action "Initiating Sponsored Apps Removal"
 
 # Array of known sponsored apps/bloatware
 $SponsoredApps = @(
@@ -45,7 +45,7 @@ foreach ($App in $SponsoredApps) {
     if ($Packages) {
         foreach ($Pkg in $Packages) {
             Remove-AppxPackage -Package $Pkg.PackageFullName -ErrorAction SilentlyContinue
-            Write-FrameworkLog -ModuleName "Apps" -Action "Removed Sponsored App" -OldValue $Pkg.Name -NewValue "Removed"
+#             Write-FrameworkLog -ModuleName "Apps" -Action "Removed Sponsored App" -OldValue $Pkg.Name -NewValue "Removed"
             $RemovedCount++
         }
     }
@@ -55,7 +55,7 @@ foreach ($App in $SponsoredApps) {
     if ($Provisioned) {
         foreach ($Prov in $Provisioned) {
             Remove-AppxProvisionedPackage -Online -PackageName $Prov.PackageName -ErrorAction SilentlyContinue | Out-Null
-            Write-FrameworkLog -ModuleName "Apps" -Action "Deprovisioned Sponsored App" -OldValue $Prov.DisplayName -NewValue "Removed"
+#             Write-FrameworkLog -ModuleName "Apps" -Action "Deprovisioned Sponsored App" -OldValue $Prov.DisplayName -NewValue "Removed"
         }
     }
 }
