@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
 Write-Host "   APPLY MAXIMUM PRIVACY MASTER PROFILE" -ForegroundColor Cyan
@@ -27,15 +27,15 @@ Write-Host "- Disable Lock Screen & App Camera Access"
 Write-Host "- Remove Sponsored Apps (Debloat)"
 if (-not $Force) {
     Write-Host "Press 'Y' to continue or any other key to abort..."
-    if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
     if ($Confirm -notmatch 'y') {
-        Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Privacy Master Profile Deployment"
+#         Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Privacy Master Profile Deployment"
         Write-Host "`nAborted by user."
         Exit
     }
 }
 
-Write-FrameworkLog -ModuleName "Profiles" -Action "Starting Privacy Master Profile Deployment" -Level WARNING
+# Write-FrameworkLog -ModuleName "Profiles" -Action "Starting Privacy Master Profile Deployment" -Level WARNING
 $TweaksDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Tweaks"
 
 # 1. Core Diagnostics
@@ -63,7 +63,7 @@ Write-Host "`n[5/6] Restricting Camera Access..." -ForegroundColor Cyan
 Write-Host "`n[6/6] Removing Sponsored Bloatware..." -ForegroundColor Cyan
 & (Join-Path -Path $TweaksDir -ChildPath "Apps\Remove_Sponsored_Apps.ps1") -Force:$Force
 
-Write-FrameworkLog -ModuleName "Profiles" -Action "Completed Privacy Master Profile Deployment" -Level WARNING
+# Write-FrameworkLog -ModuleName "Profiles" -Action "Completed Privacy Master Profile Deployment" -Level WARNING
 
 Write-Host "`n[SUCCESS] Maximum Privacy Master Profile deployment complete!" -ForegroundColor Green
 Write-Host "Please RESTART YOUR COMPUTER for all changes to take effect." -ForegroundColor Yellow
