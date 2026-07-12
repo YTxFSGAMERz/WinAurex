@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Camera" -Action "Initiating Global App Camera Access Disablement"
+# Write-FrameworkLog -ModuleName "Camera" -Action "Initiating Global App Camera Access Disablement"
 
 $RegistryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam"
 if (-not (Test-Path $RegistryPath)) { New-Item -Path $RegistryPath -Force | Out-Null }
@@ -28,7 +28,7 @@ if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value "Deny" -Type String -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "Camera" -Action "Disabled Global App Camera Access" -OldValue $CurrentValue -NewValue "Deny"
+# Write-FrameworkLog -ModuleName "Camera" -Action "Disabled Global App Camera Access" -OldValue $CurrentValue -NewValue "Deny"
 
 Write-Host "`n[SUCCESS] Global App access to the Camera has been blocked (Deny)." -ForegroundColor Green
 Write-Host "Note: Traditional desktop apps (like OBS) may still access it, but UWP/Store apps are blocked." -ForegroundColor Yellow
