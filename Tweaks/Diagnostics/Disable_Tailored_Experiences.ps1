@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Diagnostics" -Action "Initiating Tailored Experiences Disablement"
+# Write-FrameworkLog -ModuleName "Diagnostics" -Action "Initiating Tailored Experiences Disablement"
 
 $RegistryPath = "HKCU:\Software\Policies\Microsoft\Windows\CloudContent"
 if (-not (Test-Path $RegistryPath)) { New-Item -Path $RegistryPath -Force | Out-Null }
@@ -28,7 +28,7 @@ if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value 1 -Type DWord -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "Diagnostics" -Action "Disabled Tailored Experiences" -OldValue $CurrentValue -NewValue "1"
+# Write-FrameworkLog -ModuleName "Diagnostics" -Action "Disabled Tailored Experiences" -OldValue $CurrentValue -NewValue "1"
 
 Write-Host "`n[SUCCESS] Windows Tailored Experiences have been disabled." -ForegroundColor Green
 Write-Host "Microsoft will no longer use your diagnostic data to serve personalized ads, tips, or recommendations." -ForegroundColor Yellow
