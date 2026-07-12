@@ -47,5 +47,6 @@ Offline registry injection guarantees privacy from the first boot:
 4.  Finally, the script calls `oscdimg.exe` to package the modified files into a new, bootable ISO file (e.g., `WinAurex_NoWinSxS.iso`).
 5.  Use a tool like Rufus to flash this custom ISO to a USB drive and install Windows as usual.
 
-> [!CAUTION]
-> Creating custom ISOs modifies core Windows files. Always test your generated ISO in a Virtual Machine (like VMware or VirtualBox) before deploying it to physical hardware to ensure stability.
+:::danger
+Creating custom ISOs modifies core Windows files. Always test your generated ISO in a Virtual Machine (like VMware or VirtualBox) before deploying it to physical hardware to ensure stability.
+:::
