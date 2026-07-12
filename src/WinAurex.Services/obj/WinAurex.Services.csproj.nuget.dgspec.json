@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Services\\WinAurex.Services.csproj": {}
+    "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Services\\WinAurex.Services.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj": {
+    "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj",
         "projectName": "WinAurex.Contracts",
-        "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj",
+        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,8 +33,8 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj": {
-                "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj"
+              "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj"
               }
             }
           }
@@ -66,6 +66,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[10.0.9, 10.0.9]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[10.0.9, 10.0.9]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+              "version": "[10.0.9, 10.0.9]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -347,16 +361,21 @@
             "System.Xml.XPath.XDocument": "(,5.0.32767]"
           }
         }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
       }
     },
-    "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\WinAurex.Core.csproj": {
+    "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\WinAurex.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\WinAurex.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\WinAurex.Core.csproj",
         "projectName": "WinAurex.Core",
-        "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\WinAurex.Core.csproj",
+        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\WinAurex.Core.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -378,11 +397,11 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj": {
-                "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj"
+              "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj"
               },
-              "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj": {
-                "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj"
+              "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj"
               }
             }
           }
@@ -420,6 +439,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[10.0.9, 10.0.9]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[10.0.9, 10.0.9]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+              "version": "[10.0.9, 10.0.9]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -701,16 +734,21 @@
             "System.Xml.XPath.XDocument": "(,5.0.32767]"
           }
         }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
       }
     },
-    "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj": {
+    "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj",
         "projectName": "WinAurex.Models",
-        "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj",
+        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -767,6 +805,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[10.0.9, 10.0.9]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[10.0.9, 10.0.9]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+              "version": "[10.0.9, 10.0.9]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -1048,16 +1100,21 @@
             "System.Xml.XPath.XDocument": "(,5.0.32767]"
           }
         }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
       }
     },
-    "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Services\\WinAurex.Services.csproj": {
+    "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Services\\WinAurex.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Services\\WinAurex.Services.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Services\\WinAurex.Services.csproj",
         "projectName": "WinAurex.Services",
-        "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Services\\WinAurex.Services.csproj",
+        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Services\\WinAurex.Services.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Services\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Services\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1079,14 +1136,14 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj": {
-                "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj"
+              "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj"
               },
-              "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\WinAurex.Core.csproj": {
-                "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\WinAurex.Core.csproj"
+              "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\WinAurex.Core.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Core\\WinAurex.Core.csproj"
               },
-              "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj": {
-                "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj"
+              "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj"
               }
             }
           }
@@ -1118,6 +1175,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[10.0.9, 10.0.9]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[10.0.9, 10.0.9]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+              "version": "[10.0.9, 10.0.9]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -1398,6 +1469,11 @@
             "System.Xml.XPath": "(,4.3.32767]",
             "System.Xml.XPath.XDocument": "(,5.0.32767]"
           }
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
         }
       }
     }
