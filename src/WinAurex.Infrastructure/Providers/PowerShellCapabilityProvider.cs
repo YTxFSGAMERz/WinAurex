@@ -58,18 +58,38 @@ namespace WinAurex.Infrastructure.Providers
                     executionPolicyArgs = "-ExecutionPolicy Bypass ";
                 }
 
-                psi.Arguments = $"-NoProfile -NonInteractive {executionPolicyArgs}-File \"{operation.Target.FilePath}\" {args}";
+                psi.Arguments = $"-NoProfile -NonInteractive {executionPolicyArgs}-Command \"& '{operation.Target.FilePath}' {args} *>&1\"";
 
                 using var process = new Process { StartInfo = psi };
-                process.Start();
+                var outputBuilder = new System.Text.StringBuilder();
+                var errorBuilder = new System.Text.StringBuilder();
 
-                var outputTask = process.StandardOutput.ReadToEndAsync();
-                var errorTask = process.StandardError.ReadToEndAsync();
+                process.OutputDataReceived += (sender, e) =>
+                {
+                    if (e.Data != null)
+                    {
+                        outputBuilder.AppendLine(e.Data);
+                        context.Logger?.LogInfo(e.Data, "PowerShell");
+                    }
+                };
+
+                process.ErrorDataReceived += (sender, e) =>
+                {
+                    if (e.Data != null)
+                    {
+                        errorBuilder.AppendLine(e.Data);
+                        context.Logger?.LogWarning(e.Data, "PowerShell");
+                    }
+                };
+
+                process.Start();
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
 
                 await process.WaitForExitAsync(context.CancellationToken);
 
-                string output = await outputTask;
-                string error = await errorTask;
+                string output = outputBuilder.ToString();
+                string error = errorBuilder.ToString();
 
                 if (process.ExitCode != 0)
                 {
