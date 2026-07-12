@@ -44,6 +44,50 @@
           "bin/placeholder/WinAurex.Models.dll": {}
         }
       }
+    },
+    "net10.0-windows10.0.19041.0/win-x64": {
+      "CommunityToolkit.Mvvm/8.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0-windows10.0.17763/CommunityToolkit.Mvvm.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows10.0.17763/CommunityToolkit.Mvvm.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/CommunityToolkit.Mvvm.targets": {}
+        }
+      },
+      "WinAurex.Contracts/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "WinAurex.Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WinAurex.Contracts.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WinAurex.Contracts.dll": {}
+        }
+      },
+      "WinAurex.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "CommunityToolkit.Mvvm": "8.4.2"
+        },
+        "compile": {
+          "bin/placeholder/WinAurex.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WinAurex.Models.dll": {}
+        }
+      }
     }
   },
   "libraries": {
@@ -110,11 +154,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Infrastructure\\WinAurex.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Infrastructure\\WinAurex.Infrastructure.csproj",
       "projectName": "WinAurex.Infrastructure",
-      "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Infrastructure\\WinAurex.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Infrastructure\\WinAurex.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Infrastructure\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -136,8 +180,8 @@
           "framework": "net10.0-windows10.0.19041",
           "targetAlias": "net10.0-windows10.0.19041.0",
           "projectReferences": {
-            "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj": {
-              "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj"
+            "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj": {
+              "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Contracts\\WinAurex.Contracts.csproj"
             }
           }
         }
@@ -171,8 +215,20 @@
         "warn": true,
         "downloadDependencies": [
           {
+            "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+            "version": "[10.0.9, 10.0.9]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Runtime.win-x64",
+            "version": "[10.0.9, 10.0.9]"
+          },
+          {
             "name": "Microsoft.Windows.SDK.NET.Ref",
             "version": "[10.0.19041.57, 10.0.19041.57]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+            "version": "[10.0.9, 10.0.9]"
           }
         ],
         "frameworkReferences": {
@@ -458,6 +514,11 @@
           "System.Xml.XPath": "(,4.3.32767]",
           "System.Xml.XPath.XDocument": "(,5.0.32767]"
         }
+      }
+    },
+    "runtimes": {
+      "win-x64": {
+        "#import": []
       }
     }
   }
