@@ -69,7 +69,7 @@
 
 Get up and running in under 60 seconds.
 
-```text
+```powershell
 1. Download the latest release from the Releases Tab.
 2. Extract and run WinAurex.App.exe as Administrator.
 3. Select your desired profile (e.g., Gaming, Workstation) and click Execute.
@@ -230,7 +230,7 @@ Absolute power requires absolute safety. This repository is built upon a **Rever
 
 <br>
 
-```text
+```powershell
 PS> .\WinAurex.App.exe --elevated
 [ OK ] C# Execution Engine Initialized
 [ OK ] Providers Resolved via DI
@@ -272,11 +272,9 @@ Enterprise-grade observability is built into the core. Monitor system health nat
 
 <div align="center">
 
-<kbd>&nbsp;Architecture&nbsp;</kbd> &nbsp;&nbsp; <kbd>&nbsp;Compatibility&nbsp;</kbd> &nbsp;&nbsp; <kbd>&nbsp;Registry Reference&nbsp;</kbd>
+`[ Architecture ]` &nbsp; `[ Compatibility ]` &nbsp; `[ Registry Reference ]`
 
-<br><br>
-
-<kbd>&nbsp;Rollback Engine&nbsp;</kbd> &nbsp;&nbsp; <kbd>&nbsp;Logging Standards&nbsp;</kbd> &nbsp;&nbsp; <kbd>&nbsp;Myths & Anti-Patterns&nbsp;</kbd>
+`[ Rollback Engine ]` &nbsp; `[ Logging Standards ]` &nbsp; `[ Myths & Anti-Patterns ]`
 
 <br>
 
@@ -312,12 +310,10 @@ We are actively looking for senior C# and PowerShell developers to help expand o
 
 <div align="center">
 
-| PHASE | MILESTONE |
-| :--- | :--- |
-| **`[ PHASE 1 ]`** | Core Architecture & Safety Engine |
-| **`[ PHASE 2 ]`** | Observability Layer & Telemetry |
-| **`[ PHASE 3 ]`** | WPF Dashboard Integration |
-| **`[ PHASE 4 ]`** | Packaging & Distribution |
+**`[ PHASE 1 ]`** &nbsp; Core Architecture & Safety Engine<br>
+**`[ PHASE 2 ]`** &nbsp; Observability Layer & Telemetry<br>
+**`[ PHASE 3 ]`** &nbsp; WPF Dashboard Integration<br>
+**`[ PHASE 4 ]`** &nbsp; Packaging & Distribution
 
 </div>
 
@@ -363,13 +359,7 @@ We are actively looking for senior C# and PowerShell developers to help expand o
 
 <div align="center">
 
-<a href="https://www.star-history.com/?repos=YTxFSGAMERz%2FWinAurex&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=YTxFSGAMERz/WinAurex&type=date&theme=dark&legend=top-left&sealed_token=O6gaEYSE9WUeT28NYS1H_35C6fQ-ZR1FtS5zcfBzxmZabr2M07ySOZ5s6YlexcOvpC-gvagNrjA5or2jSmONm236DUgoUhS_KIm1hwVxVas23X0WTJhv7roisFz6gAPt3E0JAk9kP4CCjsWaXH1T4mHlVESocpxGFEG8AJr7rQD5yUXlPDTHypuXrKHH" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=YTxFSGAMERz/WinAurex&type=date&legend=top-left&sealed_token=O6gaEYSE9WUeT28NYS1H_35C6fQ-ZR1FtS5zcfBzxmZabr2M07ySOZ5s6YlexcOvpC-gvagNrjA5or2jSmONm236DUgoUhS_KIm1hwVxVas23X0WTJhv7roisFz6gAPt3E0JAk9kP4CCjsWaXH1T4mHlVESocpxGFEG8AJr7rQD5yUXlPDTHypuXrKHH" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=YTxFSGAMERz/WinAurex&type=date&legend=top-left&sealed_token=O6gaEYSE9WUeT28NYS1H_35C6fQ-ZR1FtS5zcfBzxmZabr2M07ySOZ5s6YlexcOvpC-gvagNrjA5or2jSmONm236DUgoUhS_KIm1hwVxVas23X0WTJhv7roisFz6gAPt3E0JAk9kP4CCjsWaXH1T4mHlVESocpxGFEG8AJr7rQD5yUXlPDTHypuXrKHH" />
- </picture>
-</a>
+[![Star History SVG](https://api.star-history.com/svg?repos=YTxFSGAMERz/WinAurex&type=date&legend=top-left&sealed_token=O6gaEYSE9WUeT28NYS1H_35C6fQ-ZR1FtS5zcfBzxmZabr2M07ySOZ5s6YlexcOvpC-gvagNrjA5or2jSmONm236DUgoUhS_KIm1hwVxVas23X0WTJhv7roisFz6gAPt3E0JAk9kP4CCjsWaXH1T4mHlVESocpxGFEG8AJr7rQD5yUXlPDTHypuXrKHH)](https://www.star-history.com/?repos=YTxFSGAMERz%2FWinAurex&type=date&legend=top-left)
 
 </div>
 
