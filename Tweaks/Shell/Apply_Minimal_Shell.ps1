@@ -12,22 +12,22 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
 Write-Host "   APPLY MINIMAL SHELL PRESET" -ForegroundColor Cyan
 Write-Host "================================================="
 Write-Host "This will disable Copilot, Widgets, Start Menu Recommendations, and Notification Spam."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
 
 if ($Confirm -notmatch 'y') {
-    Write-FrameworkLog -ModuleName "Shell" -Action "Aborted Minimal Shell Deployment"
+#     Write-FrameworkLog -ModuleName "Shell" -Action "Aborted Minimal Shell Deployment"
     Write-Host "`nAborted by user."
     Exit
 }
 
-Write-FrameworkLog -ModuleName "Shell" -Action "Starting Master Minimal Shell Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Shell" -Action "Starting Master Minimal Shell Orchestrator" -Level WARNING
 
 $ScriptDir = $PSScriptRoot
 
@@ -43,7 +43,7 @@ Write-Host "`n[3/4] Removing Recommended Section from Start Menu..." -Foreground
 Write-Host "`n[4/4] Disabling Notification Spam..." -ForegroundColor Cyan
 & (Join-Path -Path $ScriptDir -ChildPath "Disable_Notification_Spam.ps1") -Force:$Force
 
-Write-FrameworkLog -ModuleName "Shell" -Action "Completed Master Minimal Shell Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Shell" -Action "Completed Master Minimal Shell Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Minimal Shell deployment complete!" -ForegroundColor Green
 Write-Host "Restarting Windows Explorer to apply all visual changes immediately..." -ForegroundColor Yellow
