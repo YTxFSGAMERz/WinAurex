@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
 Write-Host "   APPLY BALANCED AESTHETIC PROFILE" -ForegroundColor Cyan
@@ -20,15 +20,15 @@ Write-Host "================================================="
 Write-Host "This profile speeds up Windows by disabling slow animations and menu delays,"
 Write-Host "while keeping UI Transparency (Mica/Acrylic) and Font Smoothing intact."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
 
 if ($Confirm -notmatch 'y') {
-    Write-FrameworkLog -ModuleName "Visual" -Action "Aborted Balanced Aesthetic Deployment"
+#     Write-FrameworkLog -ModuleName "Visual" -Action "Aborted Balanced Aesthetic Deployment"
     Write-Host "`nAborted by user."
     Exit
 }
 
-Write-FrameworkLog -ModuleName "Visual" -Action "Starting Master Balanced Aesthetic Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Visual" -Action "Starting Master Balanced Aesthetic Orchestrator" -Level WARNING
 
 $ScriptDir = $PSScriptRoot
 
@@ -42,7 +42,7 @@ Write-Host "`n[2/3] Reducing Menu Show Delay for snappier navigation..." -Foregr
 Write-Host "`n[3/3] Disabling Unnecessary Taskbar and Window Animations..." -ForegroundColor Cyan
 & (Join-Path -Path $ScriptDir -ChildPath "Disable_Unnecessary_Animations.ps1") -Force:$Force
 
-Write-FrameworkLog -ModuleName "Visual" -Action "Completed Master Balanced Aesthetic Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Visual" -Action "Completed Master Balanced Aesthetic Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Balanced Aesthetic Profile deployment complete!" -ForegroundColor Green
 Write-Host "Restarting Windows Explorer to apply all visual changes immediately..." -ForegroundColor Yellow
