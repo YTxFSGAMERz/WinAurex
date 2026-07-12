@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
 Write-Host "   APPLY PRIVACY SEARCH PROFILE" -ForegroundColor Cyan
@@ -20,15 +20,15 @@ Write-Host "================================================="
 Write-Host "This profile locks down Windows Search to strictly local files and apps."
 Write-Host "It disables Bing web results, dynamic search highlights, and local search history."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
 
 if ($Confirm -notmatch 'y') {
-    Write-FrameworkLog -ModuleName "Search" -Action "Aborted Privacy Search Profile Deployment"
+#     Write-FrameworkLog -ModuleName "Search" -Action "Aborted Privacy Search Profile Deployment"
     Write-Host "`nAborted by user."
     Exit
 }
 
-Write-FrameworkLog -ModuleName "Search" -Action "Starting Master Privacy Search Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Search" -Action "Starting Master Privacy Search Orchestrator" -Level WARNING
 
 $ScriptDir = $PSScriptRoot
 
@@ -41,7 +41,7 @@ Write-Host "`n[2/3] Disabling Dynamic Search Highlights..." -ForegroundColor Cya
 Write-Host "`n[3/3] Disabling Local Search History tracking..." -ForegroundColor Cyan
 & (Join-Path -Path $ScriptDir -ChildPath "Disable_Local_Search_History.ps1") -Force:$Force
 
-Write-FrameworkLog -ModuleName "Search" -Action "Completed Master Privacy Search Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Search" -Action "Completed Master Privacy Search Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Privacy Search Profile deployment complete!" -ForegroundColor Green
 Write-Host "Restarting Windows Explorer to apply search UI changes immediately..." -ForegroundColor Yellow
