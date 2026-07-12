@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Clipboard" -Action "Initiating Clipboard History Disablement"
+# Write-FrameworkLog -ModuleName "Clipboard" -Action "Initiating Clipboard History Disablement"
 
 $RegistryPath = "HKCU:\Software\Microsoft\Clipboard"
 if (-not (Test-Path $RegistryPath)) { New-Item -Path $RegistryPath -Force | Out-Null }
@@ -28,7 +28,7 @@ if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value 0 -Type DWord -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "Clipboard" -Action "Disabled Clipboard History" -OldValue $CurrentValue -NewValue "0"
+# Write-FrameworkLog -ModuleName "Clipboard" -Action "Disabled Clipboard History" -OldValue $CurrentValue -NewValue "0"
 
 Write-Host "`n[SUCCESS] Windows Clipboard History has been disabled." -ForegroundColor Green
 Write-Host "Passwords and sensitive data will no longer be stored indefinitely in RAM." -ForegroundColor Yellow
