@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
 Write-Host "   APPLY GAMING MASTER PROFILE" -ForegroundColor Cyan
@@ -26,15 +26,15 @@ Write-Host "- Disable heavy background telemetry and services"
 Write-Host "- Disable Windows Update driver downloads"
 if (-not $Force) {
     Write-Host "Press 'Y' to continue or any other key to abort..."
-    if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
     if ($Confirm -notmatch 'y') {
-    Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Gaming Master Profile Deployment"
+#     Write-FrameworkLog -ModuleName "Profiles" -Action "Aborted Gaming Master Profile Deployment"
     Write-Host "`nAborted by user."
         Exit
     }
 }
 
-Write-FrameworkLog -ModuleName "Profiles" -Action "Starting Gaming Master Profile Deployment" -Level WARNING
+# Write-FrameworkLog -ModuleName "Profiles" -Action "Starting Gaming Master Profile Deployment" -Level WARNING
 $TweaksDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Tweaks"
 
 # 1. Power
@@ -63,7 +63,7 @@ Write-Host "`n[5/6] Disabling Driver Updates & Delivery Optimization..." -Foregr
 Write-Host "`n[6/6] Disabling Web Search in Start Menu..." -ForegroundColor Cyan
 & (Join-Path -Path $TweaksDir -ChildPath "Search\Disable_Web_Search.ps1") -Force:$Force
 
-Write-FrameworkLog -ModuleName "Profiles" -Action "Completed Gaming Master Profile Deployment" -Level WARNING
+# Write-FrameworkLog -ModuleName "Profiles" -Action "Completed Gaming Master Profile Deployment" -Level WARNING
 
 Write-Host "`n[SUCCESS] Gaming Master Profile deployment complete!" -ForegroundColor Green
 Write-Host "Please RESTART YOUR COMPUTER for all changes to take effect." -ForegroundColor Yellow
