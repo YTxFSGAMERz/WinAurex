@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Diagnostics" -Action "Initiating Diagnostic Data Disablement"
+# Write-FrameworkLog -ModuleName "Diagnostics" -Action "Initiating Diagnostic Data Disablement"
 
 $RegistryPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection"
 if (-not (Test-Path $RegistryPath)) { New-Item -Path $RegistryPath -Force | Out-Null }
@@ -28,7 +28,7 @@ if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value 0 -Type DWord -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "Diagnostics" -Action "Disabled Windows Telemetry (AllowTelemetry)" -OldValue $CurrentValue -NewValue "0"
+# Write-FrameworkLog -ModuleName "Diagnostics" -Action "Disabled Windows Telemetry (AllowTelemetry)" -OldValue $CurrentValue -NewValue "0"
 
 Write-Host "`n[SUCCESS] Windows Diagnostic Data collection (Telemetry) has been set to 0 (Disabled)." -ForegroundColor Green
 Write-Host "This blocks the OS from sending usage metrics and system state data to Microsoft." -ForegroundColor Yellow
