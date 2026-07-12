@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -ErrorAction SilentlyContinue
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -ErrorAction SilentlyContinue
 $SnapshotDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Restore\Input"
 
 if (-not (Test-Path $SnapshotDir)) { New-Item -Path $SnapshotDir -ItemType Directory -Force | Out-Null }
@@ -25,7 +25,7 @@ Write-Host "mouse movement based on speed, which destroys muscle"
 Write-Host "memory in competitive FPS games."
 Write-Host "================================================="
 
-Write-FrameworkLog -ModuleName "Input" -Action "Backing up Mouse registry keys before disabling" -ErrorAction SilentlyContinue
+# Write-FrameworkLog -ModuleName "Input" -Action "Backing up Mouse registry keys before disabling" -ErrorAction SilentlyContinue
 $RegPath1 = "HKCU\Control Panel\Mouse"
 $BackupFile = Join-Path -Path $SnapshotDir -ChildPath "Mouse_Backup_BeforeDisable_$(Get-Date -Format 'yyyyMMdd_HHmmss').reg"
 & reg export $RegPath1 $BackupFile /y | Out-Null
@@ -42,7 +42,7 @@ $SmoothCurve = [byte[]](0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x15,0x6e,0x00,0
 Set-ItemProperty -Path $MouseKey -Name "SmoothMouseXCurve" -Value $SmoothCurve -Type Binary -Force
 Set-ItemProperty -Path $MouseKey -Name "SmoothMouseYCurve" -Value $SmoothCurve -Type Binary -Force
 
-Write-FrameworkLog -ModuleName "Input" -Action "Disabled Mouse Acceleration (EPP)" -ErrorAction SilentlyContinue
+# Write-FrameworkLog -ModuleName "Input" -Action "Disabled Mouse Acceleration (EPP)" -ErrorAction SilentlyContinue
 Write-Host "[SUCCESS] Mouse Acceleration is DISABLED. You now have 1:1 input." -ForegroundColor Green
 
 Write-Host "You must LOG OUT or RESTART for the cursor curve to fully update." -ForegroundColor Yellow
