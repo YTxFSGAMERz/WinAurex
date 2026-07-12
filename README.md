@@ -69,14 +69,14 @@
 
 Get up and running in under 60 seconds.
 
+</div>
+
 ```text
 1. Download the latest release from the Releases Tab.
 2. Extract to your preferred directory.
 3. Launch the new C# compiled client flow:
 .\WinAurex.App.exe --elevated
 ```
-
-</div>
 
 <!-- ═══ ANIMATED DIVIDER ═══ -->
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
@@ -231,14 +231,14 @@ Absolute power requires absolute safety. This repository is built upon a **Rever
 
 <br>
 
+</div>
+
 ```text
 PS> .\WinAurex.App.exe --elevated
 [ OK ] C# Execution Engine Initialized
 [ OK ] Providers Resolved via DI
 [ OK ] Dashboard UI Rendered
 ```
-
-</div>
 
 <!-- ═══ ANIMATED DIVIDER ═══ -->
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
