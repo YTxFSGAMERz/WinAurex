@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Camera" -Action "Initiating Lock Screen Camera Disablement"
+# Write-FrameworkLog -ModuleName "Camera" -Action "Initiating Lock Screen Camera Disablement"
 
 $RegistryPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization"
 if (-not (Test-Path $RegistryPath)) { New-Item -Path $RegistryPath -Force | Out-Null }
@@ -28,7 +28,7 @@ if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value 1 -Type DWord -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "Camera" -Action "Disabled Lock Screen Camera" -OldValue $CurrentValue -NewValue "1"
+# Write-FrameworkLog -ModuleName "Camera" -Action "Disabled Lock Screen Camera" -OldValue $CurrentValue -NewValue "1"
 
 Write-Host "`n[SUCCESS] The camera can no longer be activated from the Windows Lock Screen." -ForegroundColor Green
 
