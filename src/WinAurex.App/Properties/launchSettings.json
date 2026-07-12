@@ -1,8 +1,5 @@
 {
   "profiles": {
-    "WinAurex.App (Package)": {
-      "commandName": "MsixPackage"
-    },
     "WinAurex.App (Unpackaged)": {
       "commandName": "Project"
     }
