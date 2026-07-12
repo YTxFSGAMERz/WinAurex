@@ -46,7 +46,7 @@ After a clean Windows installation (e.g., using our `autounattend.xml`), update 
 
 ## 🛠️ Integrated Driver Utilities
 
-The `Drivers/` directory contains tools to assist with automatic scanning, identification, and update processes:
+The `Tools/Apps/Drivers/` directory contains tools to assist with automatic scanning, identification, and update processes:
 
 ### 1. Driver Booster
 *   **File**: `Driver Booster.exe` (by IObit)
@@ -100,3 +100,4 @@ Confirm your drivers are working correctly:
 2.  **Verify High Refresh Rate**:
     *   Navigate to **Settings > System > Display > Advanced Display**.
     *   Confirm your monitor is set to its maximum supported refresh rate (e.g., 144Hz, 240Hz) rather than the default 60Hz.
+
