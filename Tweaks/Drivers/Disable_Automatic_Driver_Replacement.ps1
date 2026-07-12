@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 $SnapshotDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Restore"
 
 Write-Host "================================================="
@@ -29,12 +29,12 @@ Write-Host "3. Abort"
 Write-Host "================================================="
 
 if ($Choice -notmatch '^[1-2]$') {
-    Write-FrameworkLog -ModuleName "Drivers" -Action "Aborted Driver Update config"
+#     Write-FrameworkLog -ModuleName "Drivers" -Action "Aborted Driver Update config"
     Write-Host "`nAborted by user."
     Exit
 }
 
-Write-FrameworkLog -ModuleName "Drivers" -Action "Backing up Driver Update registry keys"
+# Write-FrameworkLog -ModuleName "Drivers" -Action "Backing up Driver Update registry keys"
 $RegPath1 = "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate"
 $BackupFile = Join-Path -Path $SnapshotDir -ChildPath "DriverUpdates_Backup_$(Get-Date -Format 'yyyyMMdd_HHmmss').reg"
 & reg export $RegPath1 $BackupFile /y 2>$null | Out-Null
@@ -45,12 +45,12 @@ if (-not (Test-Path $KeyPath)) { New-Item -Path $KeyPath -Force | Out-Null }
 if ($Choice -eq '1') {
     Write-Host "`nDisabling driver inclusion in Windows Update..." -ForegroundColor Yellow
     Set-ItemProperty -Path $KeyPath -Name "ExcludeWUDriversInQualityUpdate" -Value 1 -Type DWord -Force
-    Write-FrameworkLog -ModuleName "Drivers" -Action "Disabled Windows Update from installing drivers"
+#     Write-FrameworkLog -ModuleName "Drivers" -Action "Disabled Windows Update from installing drivers"
     Write-Host "[SUCCESS] Windows Update will no longer replace your drivers." -ForegroundColor Green
 } else {
     Write-Host "`nEnabling driver inclusion in Windows Update..." -ForegroundColor Yellow
     Set-ItemProperty -Path $KeyPath -Name "ExcludeWUDriversInQualityUpdate" -Value 0 -Type DWord -Force
-    Write-FrameworkLog -ModuleName "Drivers" -Action "Enabled Windows Update to install drivers"
+#     Write-FrameworkLog -ModuleName "Drivers" -Action "Enabled Windows Update to install drivers"
     Write-Host "[SUCCESS] Windows Update will manage your drivers." -ForegroundColor Green
 }
 
