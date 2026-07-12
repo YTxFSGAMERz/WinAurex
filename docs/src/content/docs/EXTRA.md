@@ -40,14 +40,15 @@ The `Tools/Apps/Extra/` directory contains a curated selection of lightweight, h
 ### MSI Utility V3 (`MSI Utility V3.exe`)
 *   **Purpose**: Configures devices to use **Message Signaled-Based Interrupts (MSI)** instead of legacy Line-Based Interrupts (Pin-Based).
 
-> [!IMPORTANT]
-> **MSI Optimization Steps (Reduces Audio Crackling & GPU Latency)**:
-> 1. Right-click `MSI Utility V3.exe` and select **Run as administrator**.
-> 2. Locate your primary **Graphics Card (GPU)** in the hardware list.
-> 3. Check the box in the **MSI** column for your GPU.
-> 4. Change the **Interrupt Priority** column from "Undefined" or "Normal" to **High**.
-> 5. Click **Apply** in the top right corner.
-> 6. *Warning*: Do not set priority to High for non-essential components (like USB or network adapters) as this can lead to system instability.
+:::note
+**MSI Optimization Steps (Reduces Audio Crackling & GPU Latency)**:
+1. Right-click `MSI Utility V3.exe` and select **Run as administrator**.
+2. Locate your primary **Graphics Card (GPU)** in the hardware list.
+3. Check the box in the **MSI** column for your GPU.
+4. Change the **Interrupt Priority** column from "Undefined" or "Normal" to **High**.
+5. Click **Apply** in the top right corner.
+6. *Warning*: Do not set priority to High for non-essential components (like USB or network adapters) as this can lead to system instability.
+:::
 
 ---
 
@@ -89,14 +90,15 @@ The `Tools/Apps/Extra/` directory contains a curated selection of lightweight, h
 ### Custom Resolution Utility - CRU (`CRU.exe`)
 *   **Purpose**: Bypasses EDID display limits to create custom desktop resolutions and refresh rates.
 
-> [!TIP]
-> **Using CRU to Overclock Monitors**:
-> 1. Open `CRU.exe` as Administrator.
-> 2. Select your active display from the dropdown menu at the top.
-> 3. Click **Add...** under the *Detailed resolutions* box.
-> 4. Keep settings on "Automatic" and increase the refresh rate incrementally (e.g., from 60Hz to 74Hz). Click OK.
-> 5. Run the included `restart.exe` (or `restart64.exe`) inside the CRU folder to reset the graphics driver.
-> 6. Right-click Desktop > Display Settings > Advanced Display and change your refresh rate to test stability.
+:::tip
+**Using CRU to Overclock Monitors**:
+1. Open `CRU.exe` as Administrator.
+2. Select your active display from the dropdown menu at the top.
+3. Click **Add...** under the *Detailed resolutions* box.
+4. Keep settings on "Automatic" and increase the refresh rate incrementally (e.g., from 60Hz to 74Hz). Click OK.
+5. Run the included `restart.exe` (or `restart64.exe`) inside the CRU folder to reset the graphics driver.
+6. Right-click Desktop > Display Settings > Advanced Display and change your refresh rate to test stability.
+:::
 
 ### Lightshot (`Lightshot.exe`)
 *   **Purpose**: Lightweight screenshot program. It overrides the `Print Screen` key to allow custom cropping, highlighting, and immediate cloud uploading.
