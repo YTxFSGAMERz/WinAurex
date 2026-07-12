@@ -1,0 +1,24 @@
+{
+  "Configure_Developer_Mode": {
+    "Type": "Registry",
+    "Hive": "LocalMachine",
+    "Key": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock",
+    "ValueName": "AllowDevelopmentWithoutDevLicense",
+    "ExpectedValue": 1
+  },
+  "Install_PowerShell_7": {
+    "Type": "File",
+    "Path": "%PROGRAMFILES%\\PowerShell\\7\\pwsh.exe"
+  },
+  "Install_Windows_Terminal": {
+    "Type": "File",
+    "Path": "%LOCALAPPDATA%\\Microsoft\\WindowsApps\\wt.exe"
+  },
+  "Enable_Long_Paths": {
+    "Type": "Registry",
+    "Hive": "LocalMachine",
+    "Key": "SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+    "ValueName": "LongPathsEnabled",
+    "ExpectedValue": 1
+  }
+}
