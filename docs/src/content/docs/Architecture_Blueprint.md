@@ -13,7 +13,7 @@ The **WinAurex** repository is evolving from a standard collection of registry t
 ## Architectural Analysis & Core Philosophy
 
 The framework operates on a dual-path execution strategy orchestrated by a central GUI:
-1. **WPF Dashboard (`GUI/Dashboard.xaml` & `Launch_Dashboard.ps1`)**: The central nervous system. Provides a native, modern, and zero-friction UI for users to interact with the underlying modules. It is launched via the `Start.bat` root wrapper.
+1. **WPF Dashboard (`src/`)**: The central nervous system. Built as a fully compiled, strictly layered C# .NET application (`WinAurex.App`). It provides a native, modern, and zero-friction UI for users to interact with the underlying modules. It is launched via the `Start.bat` root wrapper.
 2. **PowerShell Modules (`.ps1`)**: The primary engine for automation. Used whenever state capture, validation, structured logging, OS build detection, or orchestration is required.
 3. **Registry Files (`.reg`)**: Retained for direct, simple, and reversible static toggles for users who prefer raw configuration files without GUI overhead.
 
