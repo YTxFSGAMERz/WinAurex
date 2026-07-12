@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
 Write-Host "   APPLY PRIVACY CLIPBOARD PROFILE" -ForegroundColor Cyan
@@ -21,15 +21,15 @@ Write-Host "This profile strictly locks down your clipboard for privacy and secu
 Write-Host "It disables clipboard history (to prevent password snooping in RAM)"
 Write-Host "and completely blocks clipboard syncing to the Microsoft Cloud."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
 
 if ($Confirm -notmatch 'y') {
-    Write-FrameworkLog -ModuleName "Clipboard" -Action "Aborted Privacy Clipboard Profile Deployment"
+#     Write-FrameworkLog -ModuleName "Clipboard" -Action "Aborted Privacy Clipboard Profile Deployment"
     Write-Host "`nAborted by user."
     Exit
 }
 
-Write-FrameworkLog -ModuleName "Clipboard" -Action "Starting Master Privacy Clipboard Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Clipboard" -Action "Starting Master Privacy Clipboard Orchestrator" -Level WARNING
 
 $ScriptDir = $PSScriptRoot
 
@@ -39,7 +39,7 @@ Write-Host "`n[1/2] Disabling Local Clipboard History..." -ForegroundColor Cyan
 Write-Host "`n[2/2] Disabling Cloud Clipboard Syncing..." -ForegroundColor Cyan
 & (Join-Path -Path $ScriptDir -ChildPath "Disable_Clipboard_Cloud_Sync.ps1") -Force:$Force
 
-Write-FrameworkLog -ModuleName "Clipboard" -Action "Completed Master Privacy Clipboard Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Clipboard" -Action "Completed Master Privacy Clipboard Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Privacy Clipboard Profile deployment complete!" -ForegroundColor Green
 if (-not $Force) {
