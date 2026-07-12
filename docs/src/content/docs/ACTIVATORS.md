@@ -39,8 +39,9 @@ This directory contains highly reliable tools for activating various editions of
 
 ## ⚖️ Legal & Ethical Notice
 
-> [!WARNING]
-> These activation utilities are shared purely for educational, testing, and system diagnostic environments. 
-> 
-> Under local laws, commercial or long-term production use of software products requires purchasing legitimate licensing keys directly from Microsoft or authorized retail channels. Users are fully responsible for understanding the legal implications of using activation scripts on their personal or commercial hardware.
+:::caution
+These activation utilities are shared purely for educational, testing, and system diagnostic environments. 
+
+Under local laws, commercial or long-term production use of software products requires purchasing legitimate licensing keys directly from Microsoft or authorized retail channels. Users are fully responsible for understanding the legal implications of using activation scripts on their personal or commercial hardware.
+:::
 
