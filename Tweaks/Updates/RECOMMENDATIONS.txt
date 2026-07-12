@@ -1,0 +1,6 @@
+These are the installers for the most used browsers nowadays.
+
+DO NOT USE OPERA GX. IT HAS THE WORST PERFORMANCE ON BAD PCs (from experience).
+NOT EVEN EDGE OR CHROME, THEY HAVE MORE TELEMETRY IMPOSSIBLE!!!
+
+In my opinion, the best one here is Brave. Although the most optimized browser is Thorium.
