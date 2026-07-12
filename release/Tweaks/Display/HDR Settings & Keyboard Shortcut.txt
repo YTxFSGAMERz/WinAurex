@@ -1,0 +1,31 @@
+==============================================================================
+GUIDE: HDR Settings & Fast Toggle Keyboard Shortcut
+TARGET SYSTEM: Windows 10 & Windows 11
+==============================================================================
+
+To achieve the best visual fidelity and gaming latency, Windows 10/11 supports 
+High Dynamic Range (HDR) for compatible monitors.
+
+--- THE FAST SHORTCUT ---
+You do not need to dive into Windows Settings every time you start or end a game!
+You can toggle HDR instantly on your active display by pressing:
+
+    [ Windows Key ] + [ Alt ] + [ B ]
+
+* Note: This shortcut requires the "Xbox Game Bar" application installed (bundled 
+  by default with Windows 10 and 11) to be running or enabled in background.
+
+--- AUTO HDR (Windows 11 Only) ---
+Auto HDR uses deep learning to automatically upgrade DirectX 11 and 12 SDR games 
+to rich HDR colors without requiring any developer updates.
+- Auto HDR works only when global HDR is active.
+- To enable or configure it:
+  1. Open Windows Settings (Win + I).
+  2. Navigate to System > Display > HDR.
+  3. Toggle "Auto HDR" to ON.
+
+--- RESTORING / RESETTING ---
+If your display flickers or looks washed out:
+- Press [ Win + Alt + B ] again to instantly disable HDR.
+- Or open standard Display Settings and verify your color profile / monitor calibration.
+==============================================================================
