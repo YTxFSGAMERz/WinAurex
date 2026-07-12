@@ -93,11 +93,13 @@ namespace WinAurex.Infrastructure.Providers
                 if (operation.Intent is DeleteRegistryValueIntent)
                 {
                     subKey.DeleteValue(operation.Target.ValueName, throwOnMissingValue: false);
+                    context.Logger?.LogInfo($"Deleted registry value '{operation.Target.ValueName}' from '{operation.Target.KeyPath}'.", "Registry");
                 }
                 else if (operation.Intent is SetRegistryValueIntent setIntent)
                 {
                     var kind = MapKind(setIntent.ValueKind);
                     subKey.SetValue(operation.Target.ValueName, setIntent.Value, kind);
+                    context.Logger?.LogInfo($"Set registry value '{operation.Target.ValueName}' to '{setIntent.Value}' in '{operation.Target.KeyPath}'.", "Registry");
                 }
 
                 return Task.FromResult(ProviderResult.Success());
@@ -163,6 +165,7 @@ namespace WinAurex.Infrastructure.Providers
                 {
                     using var subKey = baseKey.OpenSubKey(operation.Target.KeyPath, writable: true);
                     subKey?.DeleteValue(operation.Target.ValueName, throwOnMissingValue: false);
+                    context.Logger?.LogInfo($"Revert: Deleted registry value '{operation.Target.ValueName}' from '{operation.Target.KeyPath}' (did not exist previously).", "Registry");
                     return Task.FromResult(ProviderResult.Success());
                 }
                 else
@@ -183,6 +186,7 @@ namespace WinAurex.Infrastructure.Providers
                     }
                     
                     subKey.SetValue(operation.Target.ValueName, valToRestore, (RegistryValueKind)state.ValueKind);
+                    context.Logger?.LogInfo($"Revert: Restored registry value '{operation.Target.ValueName}' to '{valToRestore}' in '{operation.Target.KeyPath}'.", "Registry");
                     return Task.FromResult(ProviderResult.Success());
                 }
             }

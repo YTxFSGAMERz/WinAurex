@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "8rxhYD9Zx+I=",
+  "dgSpecHash": "X7lIYLOimxA=",
   "success": true,
-  "projectFilePath": "c:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Documents\\GitHub\\WinAurex\\src\\WinAurex.Models\\WinAurex.Models.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Admin\\.nuget\\packages\\communitytoolkit.mvvm\\8.4.2\\communitytoolkit.mvvm.8.4.2.nupkg.sha512"
+    "C:\\Users\\Admin\\.nuget\\packages\\communitytoolkit.mvvm\\8.4.2\\communitytoolkit.mvvm.8.4.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\10.0.9\\microsoft.netcore.app.runtime.win-x64.10.0.9.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\10.0.9\\microsoft.windowsdesktop.app.runtime.win-x64.10.0.9.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\10.0.9\\microsoft.aspnetcore.app.runtime.win-x64.10.0.9.nupkg.sha512"
   ],
   "logs": []
 }

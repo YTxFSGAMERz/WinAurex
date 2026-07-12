@@ -45,7 +45,17 @@ public partial class App : Application
         
         this.UnhandledException += (s, e) => 
         {
-            System.IO.File.WriteAllText("crash.log", e.Exception.ToString());
+            try
+            {
+                var logger = Host?.Services.GetService<ILogContract>() ?? new FileLogger();
+                logger.LogError("Unhandled Application Exception", e.Exception, "Crash");
+            }
+            catch
+            {
+                // Absolute fallback
+                var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                System.IO.File.WriteAllText(System.IO.Path.Combine(desktop, "WinAurex_fatal.log"), e.Exception.ToString());
+            }
         };
 
         Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
@@ -72,7 +82,7 @@ public partial class App : Application
                 services.AddSingleton<INavigationService>(sp => sp.GetRequiredService<NavigationService>());
                 services.AddSingleton<INavigationHistory>(sp => sp.GetRequiredService<NavigationService>());
                 services.AddSingleton<IAppearanceManager, AppearanceManager>();
-                services.AddSingleton<ILogContract, SimpleLogger>();
+                services.AddSingleton<ILogContract, FileLogger>();
 
                 // State
                 services.AddSingleton<AppState>();
@@ -96,6 +106,9 @@ public partial class App : Application
 
     protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
     {
+        var logger = Host.Services.GetRequiredService<ILogContract>();
+        logger.LogInfo("Application starting up...", "General");
+
         _window = new MainWindow();
         _window.Activate();
     }
