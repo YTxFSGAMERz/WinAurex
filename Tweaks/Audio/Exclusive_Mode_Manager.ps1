@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 $SnapshotDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Restore\Audio"
 
 if (-not (Test-Path $SnapshotDir)) { New-Item -Path $SnapshotDir -ItemType Directory -Force | Out-Null }
@@ -30,7 +30,7 @@ Write-Host "3. Abort"
 Write-Host "================================================="
 
 if ($Choice -notmatch '^[1-2]$') {
-    Write-FrameworkLog -ModuleName "Audio" -Action "Aborted Exclusive Mode config"
+#     Write-FrameworkLog -ModuleName "Audio" -Action "Aborted Exclusive Mode config"
     Write-Host "`nAborted by user."
     Exit
 }
@@ -63,7 +63,7 @@ if ($Choice -eq '1') {
     Write-Host "Enabling Exclusive Mode on Input devices..." -ForegroundColor Yellow
     Toggle-ExclusiveMode -KeyPath $CapturePath -Value 1
     
-    Write-FrameworkLog -ModuleName "Audio" -Action "Enabled WASAPI Exclusive Mode"
+#     Write-FrameworkLog -ModuleName "Audio" -Action "Enabled WASAPI Exclusive Mode"
     Write-Host "`n[SUCCESS] Exclusive Mode is ENABLED." -ForegroundColor Green
 } else {
     Write-Host "Disabling Exclusive Mode on Output devices..." -ForegroundColor Yellow
@@ -71,7 +71,7 @@ if ($Choice -eq '1') {
     Write-Host "Disabling Exclusive Mode on Input devices..." -ForegroundColor Yellow
     Toggle-ExclusiveMode -KeyPath $CapturePath -Value 0
 
-    Write-FrameworkLog -ModuleName "Audio" -Action "Disabled WASAPI Exclusive Mode"
+#     Write-FrameworkLog -ModuleName "Audio" -Action "Disabled WASAPI Exclusive Mode"
     Write-Host "`n[SUCCESS] Exclusive Mode is DISABLED." -ForegroundColor Red
 }
 
