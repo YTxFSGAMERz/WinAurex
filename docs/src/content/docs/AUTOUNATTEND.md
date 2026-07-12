@@ -54,7 +54,7 @@ To perform an automated, debloated installation using `autounattend.xml`, follow
 
 ### Phase 1: Prepare the Installation Media
 1.  **Download Windows ISO**: Download the official Windows 11 (or Windows 10) ISO directly from Microsoft's website.
-2.  **Launch Rufus**: Open the **Rufus** utility (`Extra/rufus-3.22p.exe`) in this repository.
+2.  **Launch Rufus**: Open the **Rufus** utility (`Tools/Apps/Extra/rufus-3.22p.exe`) in this repository.
 3.  **Configure Rufus**:
     *   **Device**: Select your USB drive (minimum 8GB capacity).
     *   **Boot Selection**: Choose **Disk or ISO image** and click **SELECT** to load your downloaded Windows ISO.
@@ -92,4 +92,5 @@ Your USB Drive (D:\ or E:\)
 > This unattended setup applies extremely aggressive modifications. It completely disables Windows Defender, SmartScreen, and System Restore, and debloats many Microsoft systems. 
 > 
 > *Do NOT use this XML on high-security enterprise workstations, database servers, or systems containing sensitive financial datasets without implementing alternative protection strategies.*
+
 
