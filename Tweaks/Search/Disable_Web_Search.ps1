@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Search" -Action "Initiating Web Search Disablement"
+# Write-FrameworkLog -ModuleName "Search" -Action "Initiating Web Search Disablement"
 
 # 1. Disable Bing Search Integration
 $RegPathBing = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
@@ -24,7 +24,7 @@ $CurrentBing = (Get-ItemProperty -Path $RegPathBing -Name "BingSearchEnabled" -E
 if ($null -eq $CurrentBing) { $CurrentBing = "Not_Set" }
 
 Set-ItemProperty -Path $RegPathBing -Name "BingSearchEnabled" -Value 0 -Type DWord -Force
-Write-FrameworkLog -ModuleName "Search" -Action "Disabled Bing Search" -OldValue $CurrentBing -NewValue "0"
+# Write-FrameworkLog -ModuleName "Search" -Action "Disabled Bing Search" -OldValue $CurrentBing -NewValue "0"
 
 # 2. Disable Search Box Web Suggestions (Policies)
 $RegPathPolicy = "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer"
@@ -34,7 +34,7 @@ $CurrentPolicy = (Get-ItemProperty -Path $RegPathPolicy -Name "DisableSearchBoxS
 if ($null -eq $CurrentPolicy) { $CurrentPolicy = "Not_Set" }
 
 Set-ItemProperty -Path $RegPathPolicy -Name "DisableSearchBoxSuggestions" -Value 1 -Type DWord -Force
-Write-FrameworkLog -ModuleName "Search" -Action "Disabled Search Box Web Suggestions" -OldValue $CurrentPolicy -NewValue "1"
+# Write-FrameworkLog -ModuleName "Search" -Action "Disabled Search Box Web Suggestions" -OldValue $CurrentPolicy -NewValue "1"
 
 Write-Host "`n[SUCCESS] Web search and Bing integration in the Start Menu has been disabled." -ForegroundColor Green
 Write-Host "Local file and app search will now be much faster and strictly private." -ForegroundColor Yellow
