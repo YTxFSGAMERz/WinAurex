@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
 Write-Host "   APPLY PRODUCTIVITY EXPLORER PRESET" -ForegroundColor Cyan
@@ -20,15 +20,15 @@ Write-Host "================================================="
 Write-Host "This will configure Developer View, This PC launch, Compact View, Classic Context Menus,"
 Write-Host "and disable Recent/Frequent file tracking."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
 
 if ($Confirm -notmatch 'y') {
-    Write-FrameworkLog -ModuleName "Explorer" -Action "Aborted Productivity Explorer Deployment"
+#     Write-FrameworkLog -ModuleName "Explorer" -Action "Aborted Productivity Explorer Deployment"
     Write-Host "`nAborted by user."
     Exit
 }
 
-Write-FrameworkLog -ModuleName "Explorer" -Action "Starting Master Productivity Explorer Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Explorer" -Action "Starting Master Productivity Explorer Orchestrator" -Level WARNING
 
 $ScriptDir = $PSScriptRoot
 
@@ -47,7 +47,7 @@ Write-Host "`n[4/5] Enabling Compact View for higher information density..." -Fo
 Write-Host "`n[5/5] Restoring Classic Context Menus..." -ForegroundColor Cyan
 & (Join-Path -Path $ScriptDir -ChildPath "Restore_Classic_ContextMenu.ps1") -Force:$Force
 
-Write-FrameworkLog -ModuleName "Explorer" -Action "Completed Master Productivity Explorer Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Explorer" -Action "Completed Master Productivity Explorer Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Productivity Explorer deployment complete!" -ForegroundColor Green
 Write-Host "Restarting Windows Explorer to apply all visual changes immediately..." -ForegroundColor Yellow
