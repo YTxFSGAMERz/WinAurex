@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WinAurex.Modules")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d6d7bd69264a45197516d55aa807ca8e3d0fbe71")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75e9c15235edc1684e77af8790eb4662aeaa2f16")]
 [assembly: System.Reflection.AssemblyProductAttribute("WinAurex.Modules")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WinAurex.Modules")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
