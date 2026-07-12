@@ -49,15 +49,15 @@ if ($SelectiveSuspend.DisableSelectiveSuspend -eq 1) {
 
 if ($FoundIssues) {
     Write-Host "`nDo you want to disable USB Selective Suspend globally to fix input latency? (Y/N)"
-    if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
     
     if ($Confirm -match 'y') {
         Set-ItemProperty -Path $USBRegistryPath -Name "DisableSelectiveSuspend" -Value 1 -Type DWord -Force
         Write-Host "`n[SUCCESS] USB Selective Suspend has been disabled." -ForegroundColor Green
         
         $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-        Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force -ErrorAction SilentlyContinue
-        Write-FrameworkLog -ModuleName "Input" -Action "Disabled USB Selective Suspend"
+#         Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force -ErrorAction SilentlyContinue
+#         Write-FrameworkLog -ModuleName "Input" -Action "Disabled USB Selective Suspend"
     } else {
         Write-Host "`nNo changes made."
     }
