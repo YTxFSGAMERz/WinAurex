@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Explorer" -Action "Initiating This PC Launch Configuration"
+# Write-FrameworkLog -ModuleName "Explorer" -Action "Initiating This PC Launch Configuration"
 
 $RegistryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
 $Name = "LaunchTo"
@@ -27,7 +27,7 @@ if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value 1 -Type DWord -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "Explorer" -Action "Set Explorer Launch to This PC" -OldValue $CurrentValue -NewValue "1"
+# Write-FrameworkLog -ModuleName "Explorer" -Action "Set Explorer Launch to This PC" -OldValue $CurrentValue -NewValue "1"
 
 Write-Host "`n[SUCCESS] File Explorer will now open to 'This PC' by default." -ForegroundColor Green
 
