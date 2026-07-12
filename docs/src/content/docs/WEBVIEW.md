@@ -62,4 +62,5 @@ If you experience crashes during Xbox logins, or apps display blank white square
     *   Right-click the installer and select **Run as administrator**. This installs the runtime system-wide for all sharing applications.
 2.  **Verify Service Alignment**:
     *   If you have disabled Windows Update, the automatic background updates for the Edge Chromium rendering engine are suspended, which can lead to version mismatches over time.
-    *   If you run into issues, temporarily enable Windows Update (`Windows Update/Enable Windows Update.bat`) to let WebView2 synchronize its dependencies.
+    *   If you run into issues, temporarily enable Windows Update (`Tweaks/Updates/Enable Windows Update.bat`) to let WebView2 synchronize its dependencies.
+
