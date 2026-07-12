@@ -88,9 +88,10 @@ Your USB Drive (D:\ or E:\)
 
 ## ⚠️ Essential Warning
 
-> [!CAUTION]
-> This unattended setup applies extremely aggressive modifications. It completely disables Windows Defender, SmartScreen, and System Restore, and debloats many Microsoft systems. 
-> 
-> *Do NOT use this XML on high-security enterprise workstations, database servers, or systems containing sensitive financial datasets without implementing alternative protection strategies.*
+:::danger
+This unattended setup applies extremely aggressive modifications. It completely disables Windows Defender, SmartScreen, and System Restore, and debloats many Microsoft systems. 
+
+*Do NOT use this XML on high-security enterprise workstations, database servers, or systems containing sensitive financial datasets without implementing alternative protection strategies.*
+:::
 
 
