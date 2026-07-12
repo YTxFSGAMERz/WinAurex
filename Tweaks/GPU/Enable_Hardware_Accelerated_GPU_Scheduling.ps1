@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "GPU" -Action "Initiating Hardware Accelerated GPU Scheduling Enablement"
+# Write-FrameworkLog -ModuleName "GPU" -Action "Initiating Hardware Accelerated GPU Scheduling Enablement"
 
 $RegistryPath = "HKLM:\System\CurrentControlSet\Control\GraphicsDrivers"
 if (-not (Test-Path $RegistryPath)) { New-Item -Path $RegistryPath -Force | Out-Null }
@@ -28,7 +28,7 @@ if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value 2 -Type DWord -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "GPU" -Action "Enabled Hardware Accelerated GPU Scheduling" -OldValue $CurrentValue -NewValue "2"
+# Write-FrameworkLog -ModuleName "GPU" -Action "Enabled Hardware Accelerated GPU Scheduling" -OldValue $CurrentValue -NewValue "2"
 
 Write-Host "`n[SUCCESS] Hardware Accelerated GPU Scheduling (HAGS) is now enabled." -ForegroundColor Green
 Write-Host "This offloads scheduling from the CPU to the GPU, lowering latency and improving FPS." -ForegroundColor Yellow
