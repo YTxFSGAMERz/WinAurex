@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Sync" -Action "Initiating Activity History Disablement"
+# Write-FrameworkLog -ModuleName "Sync" -Action "Initiating Activity History Disablement"
 
 $RegistryPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System"
 if (-not (Test-Path $RegistryPath)) { New-Item -Path $RegistryPath -Force | Out-Null }
@@ -25,7 +25,7 @@ $CurrentFeed = (Get-ItemProperty -Path $RegistryPath -Name $NameFeed -ErrorActio
 if ($null -eq $CurrentFeed) { $CurrentFeed = "Not_Set" }
 
 Set-ItemProperty -Path $RegistryPath -Name $NameFeed -Value 0 -Type DWord -Force
-Write-FrameworkLog -ModuleName "Sync" -Action "Disabled Activity Feed" -OldValue $CurrentFeed -NewValue "0"
+# Write-FrameworkLog -ModuleName "Sync" -Action "Disabled Activity Feed" -OldValue $CurrentFeed -NewValue "0"
 
 # 2. Disable Publishing User Activities
 $NamePublish = "PublishUserActivities"
@@ -33,7 +33,7 @@ $CurrentPublish = (Get-ItemProperty -Path $RegistryPath -Name $NamePublish -Erro
 if ($null -eq $CurrentPublish) { $CurrentPublish = "Not_Set" }
 
 Set-ItemProperty -Path $RegistryPath -Name $NamePublish -Value 0 -Type DWord -Force
-Write-FrameworkLog -ModuleName "Sync" -Action "Disabled Publishing User Activities" -OldValue $CurrentPublish -NewValue "0"
+# Write-FrameworkLog -ModuleName "Sync" -Action "Disabled Publishing User Activities" -OldValue $CurrentPublish -NewValue "0"
 
 Write-Host "`n[SUCCESS] Windows Activity History and Timeline tracking have been disabled." -ForegroundColor Green
 Write-Host "Windows will no longer secretly track which files/apps you open." -ForegroundColor Yellow
