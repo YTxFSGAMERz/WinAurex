@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Visual" -Action "Initiating Menu Show Delay Reduction"
+# Write-FrameworkLog -ModuleName "Visual" -Action "Initiating Menu Show Delay Reduction"
 
 $RegistryPath = "HKCU:\Control Panel\Desktop"
 $Name = "MenuShowDelay"
@@ -27,7 +27,7 @@ if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value "10" -Type String -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "Visual" -Action "Reduced Menu Show Delay" -OldValue $CurrentValue -NewValue "10"
+# Write-FrameworkLog -ModuleName "Visual" -Action "Reduced Menu Show Delay" -OldValue $CurrentValue -NewValue "10"
 
 Write-Host "`n[SUCCESS] Windows Menu Show Delay reduced for improved responsiveness." -ForegroundColor Green
 
