@@ -273,9 +273,9 @@ Enterprise-grade observability is built into the core. Monitor system health nat
 
 <div align="center">
 
-[![Architecture](https://img.shields.io/badge/_____%5B_ARCHITECTURE_%5D______-21262d?style=for-the-badge)](https://winaurex.vercel.app/architecture_blueprint/) &nbsp; [![Compatibility](https://img.shields.io/badge/_____%5B_COMPATIBILITY_%5D_____-21262d?style=for-the-badge)](https://winaurex.vercel.app/compatibility_matrix/) &nbsp; [![Registry Reference](https://img.shields.io/badge/___%5B_REGISTRY_REFERENCE_%5D__-21262d?style=for-the-badge)](https://winaurex.vercel.app/registry_reference/)
+[![Architecture](https://img.shields.io/badge/%5B_ARCHITECTURE_%5D-21262d?style=for-the-badge)](https://winaurex.vercel.app/architecture_blueprint/) &nbsp; [![Compatibility](https://img.shields.io/badge/%5B_COMPATIBILITY_%5D-21262d?style=for-the-badge)](https://winaurex.vercel.app/compatibility_matrix/) &nbsp; [![Registry Reference](https://img.shields.io/badge/%5B_REGISTRY_REFERENCE_%5D-21262d?style=for-the-badge)](https://winaurex.vercel.app/registry_reference/)
 
-[![Rollback Engine](https://img.shields.io/badge/____%5B_ROLLBACK_ENGINE_%5D____-21262d?style=for-the-badge)](https://winaurex.vercel.app/architecture_blueprint/#9-corerestore-system-restore--rollback-core) &nbsp; [![Logging Standards](https://img.shields.io/badge/___%5B_LOGGING_STANDARDS_%5D___-21262d?style=for-the-badge)](https://winaurex.vercel.app/architecture_blueprint/#logging--restore-strategy) &nbsp; [![Myths & Anti-Patterns](https://img.shields.io/badge/_%5B_MYTHS_%26_ANTI--PATTERNS_%5D_-21262d?style=for-the-badge)](https://winaurex.vercel.app/myths_and_anti_patterns/)
+[![Rollback Engine](https://img.shields.io/badge/%5B_ROLLBACK_ENGINE_%5D-21262d?style=for-the-badge)](https://winaurex.vercel.app/architecture_blueprint/#9-corerestore-system-restore--rollback-core) &nbsp; [![Logging Standards](https://img.shields.io/badge/%5B_LOGGING_STANDARDS_%5D-21262d?style=for-the-badge)](https://winaurex.vercel.app/architecture_blueprint/#logging--restore-strategy) &nbsp; [![Myths & Anti-Patterns](https://img.shields.io/badge/%5B_MYTHS_%26_ANTI--PATTERNS_%5D-21262d?style=for-the-badge)](https://winaurex.vercel.app/myths_and_anti_patterns/)
 
 <br>
 
