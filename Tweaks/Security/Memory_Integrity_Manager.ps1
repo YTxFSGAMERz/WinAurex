@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 $SnapshotDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Restore"
 
 Write-Host "================================================="
@@ -29,12 +29,12 @@ Write-Host "3. Abort"
 Write-Host "================================================="
 
 if ($Choice -notmatch '^[1-2]$') {
-    Write-FrameworkLog -ModuleName "Security" -Action "Aborted HVCI config"
+#     Write-FrameworkLog -ModuleName "Security" -Action "Aborted HVCI config"
     Write-Host "`nAborted by user."
     Exit
 }
 
-Write-FrameworkLog -ModuleName "Security" -Action "Backing up HVCI registry keys"
+# Write-FrameworkLog -ModuleName "Security" -Action "Backing up HVCI registry keys"
 $RegPath1 = "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity"
 $BackupFile = Join-Path -Path $SnapshotDir -ChildPath "HVCI_Backup_$(Get-Date -Format 'yyyyMMdd_HHmmss').reg"
 & reg export $RegPath1 $BackupFile /y | Out-Null
@@ -45,12 +45,12 @@ if (-not (Test-Path $KeyPath)) { New-Item -Path $KeyPath -Force | Out-Null }
 if ($Choice -eq '1') {
     Write-Host "`nEnabling Memory Integrity..." -ForegroundColor Yellow
     Set-ItemProperty -Path $KeyPath -Name "Enabled" -Value 1 -Type DWord -Force
-    Write-FrameworkLog -ModuleName "Security" -Action "Enabled HVCI"
+#     Write-FrameworkLog -ModuleName "Security" -Action "Enabled HVCI"
     Write-Host "[SUCCESS] Memory Integrity is ENABLED." -ForegroundColor Green
 } else {
     Write-Host "`nDisabling Memory Integrity..." -ForegroundColor Yellow
     Set-ItemProperty -Path $KeyPath -Name "Enabled" -Value 0 -Type DWord -Force
-    Write-FrameworkLog -ModuleName "Security" -Action "Disabled HVCI" -Level WARNING
+#     Write-FrameworkLog -ModuleName "Security" -Action "Disabled HVCI" -Level WARNING
     Write-Host "[SUCCESS] Memory Integrity is DISABLED." -ForegroundColor Red
 }
 
