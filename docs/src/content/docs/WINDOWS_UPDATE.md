@@ -5,13 +5,13 @@ description: "Control Windows Update behavior on Windows 11. Pause, defer, or sa
 
 # 🔄 Windows Update Management
 
-This guide explains the tools located in the `Windows Update/` directory and details the system impact, performance trade-offs, and critical software dependencies associated with controlling Windows Update schedules.
+This guide explains the tools located in the `Tweaks/Updates/` directory and details the system impact, performance trade-offs, and critical software dependencies associated with controlling Windows Update schedules.
 
 ---
 
 ## 🛠️ Management Scripts
 
-The `Windows Update/` folder contains two instant-toggle batch scripts that configure Windows Update services:
+The `Tweaks/Updates/` folder contains two instant-toggle batch scripts that configure Windows Update services:
 
 ### 1. Disable Windows Update.bat
 *   **Action**: Suspends all background download triggers and stops update services immediately.
@@ -53,6 +53,7 @@ Disabling Windows Update has significant system-wide consequences. Read the comp
 > [!CAUTION]
 > Windows Updates deliver critical patches for zero-day exploits, hardware vulnerabilities, and security flaws. If you choose to keep Windows Update disabled:
 > 
-> 1.  **Maintain High Security Vigilance**: You must practice extremely safe browsing habits. Avoid untrusted downloads, ignore email links from unknown sources, and scan all executables using [**VirusTotal**](/antivirus/#advanced-online-scanners-no-installation) before executing them.
+> 1.  **Maintain High Security Vigilance**: You must practice extremely safe browsing habits. Avoid untrusted downloads, ignore email links from unknown sources, and scan all executables using [**VirusTotal**](/Tools/Apps/Antivirus/#advanced-online-scanners-no-installation) before executing them.
 > 2.  **Perform Manual Syncs**: Consider running `Enable Windows Update.bat` once a month to let your system install critical security cumulative updates, then run the disable script again to restore performance.
+
 
