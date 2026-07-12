@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Sync" -Action "Initiating Windows Settings Sync Disablement"
+# Write-FrameworkLog -ModuleName "Sync" -Action "Initiating Windows Settings Sync Disablement"
 
 $RegistryPath = "HKLM:\Software\Policies\Microsoft\Windows\SettingSync"
 if (-not (Test-Path $RegistryPath)) { New-Item -Path $RegistryPath -Force | Out-Null }
@@ -25,7 +25,7 @@ $CurrentSync = (Get-ItemProperty -Path $RegistryPath -Name $NameSync -ErrorActio
 if ($null -eq $CurrentSync) { $CurrentSync = "Not_Set" }
 
 Set-ItemProperty -Path $RegistryPath -Name $NameSync -Value 2 -Type DWord -Force
-Write-FrameworkLog -ModuleName "Sync" -Action "Disabled Settings Sync" -OldValue $CurrentSync -NewValue "2"
+# Write-FrameworkLog -ModuleName "Sync" -Action "Disabled Settings Sync" -OldValue $CurrentSync -NewValue "2"
 
 # 2. Disable User Override
 $NameOverride = "DisableSettingSyncUserOverride"
@@ -33,7 +33,7 @@ $CurrentOverride = (Get-ItemProperty -Path $RegistryPath -Name $NameOverride -Er
 if ($null -eq $CurrentOverride) { $CurrentOverride = "Not_Set" }
 
 Set-ItemProperty -Path $RegistryPath -Name $NameOverride -Value 1 -Type DWord -Force
-Write-FrameworkLog -ModuleName "Sync" -Action "Disabled Settings Sync User Override" -OldValue $CurrentOverride -NewValue "1"
+# Write-FrameworkLog -ModuleName "Sync" -Action "Disabled Settings Sync User Override" -OldValue $CurrentOverride -NewValue "1"
 
 Write-Host "`n[SUCCESS] Windows Settings Sync has been disabled." -ForegroundColor Green
 Write-Host "Your passwords, themes, and preferences will remain strictly local." -ForegroundColor Yellow
