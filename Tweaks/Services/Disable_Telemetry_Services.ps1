@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Services" -Action "Initiating Telemetry Services Disablement"
+# Write-FrameworkLog -ModuleName "Services" -Action "Initiating Telemetry Services Disablement"
 
 # Array of known heavy telemetry services
 $TelemetryServices = @(
@@ -39,7 +39,7 @@ foreach ($ServiceName in $TelemetryServices) {
             # Disable startup
             Set-Service -Name $ServiceName -StartupType Disabled -ErrorAction SilentlyContinue
             
-            Write-FrameworkLog -ModuleName "Services" -Action "Disabled Service: $ServiceName" -OldValue $CurrentState -NewValue "Disabled"
+#             Write-FrameworkLog -ModuleName "Services" -Action "Disabled Service: $ServiceName" -OldValue $CurrentState -NewValue "Disabled"
             $DisabledCount++
         }
     }
