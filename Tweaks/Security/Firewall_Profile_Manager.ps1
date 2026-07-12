@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
 Write-Host "   FIREWALL PROFILE MANAGER" -ForegroundColor Cyan
@@ -27,7 +27,7 @@ Write-Host "3. Abort"
 Write-Host "================================================="
 
 if ($Choice -notmatch '^[1-2]$') {
-    Write-FrameworkLog -ModuleName "Security" -Action "Aborted Firewall config"
+#     Write-FrameworkLog -ModuleName "Security" -Action "Aborted Firewall config"
     Write-Host "`nAborted by user."
     Exit
 }
@@ -35,12 +35,12 @@ if ($Choice -notmatch '^[1-2]$') {
 if ($Choice -eq '1') {
     Write-Host "`nRestoring Firewall defaults..." -ForegroundColor Yellow
     Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled True
-    Write-FrameworkLog -ModuleName "Security" -Action "Enabled Windows Firewall across all profiles"
+#     Write-FrameworkLog -ModuleName "Security" -Action "Enabled Windows Firewall across all profiles"
     Write-Host "[SUCCESS] Windows Firewall is now ENABLED for all profiles." -ForegroundColor Green
 } else {
     Write-Host "`nDisabling Windows Firewall..." -ForegroundColor Yellow
     Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
-    Write-FrameworkLog -ModuleName "Security" -Action "Disabled Windows Firewall" -Level WARNING
+#     Write-FrameworkLog -ModuleName "Security" -Action "Disabled Windows Firewall" -Level WARNING
     Write-Host "[WARNING] Windows Firewall is now DISABLED. Your system is vulnerable." -ForegroundColor Red
 }
 
