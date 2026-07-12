@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Explorer" -Action "Initiating Compact View Configuration"
+# Write-FrameworkLog -ModuleName "Explorer" -Action "Initiating Compact View Configuration"
 
 $RegistryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
 $Name = "UseCompactMode"
@@ -27,7 +27,7 @@ if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value 1 -Type DWord -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "Explorer" -Action "Enabled Compact View" -OldValue $CurrentValue -NewValue "1"
+# Write-FrameworkLog -ModuleName "Explorer" -Action "Enabled Compact View" -OldValue $CurrentValue -NewValue "1"
 
 Write-Host "`n[SUCCESS] File Explorer Compact View has been enabled." -ForegroundColor Green
 
