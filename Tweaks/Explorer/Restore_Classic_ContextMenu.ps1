@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Explorer" -Action "Initiating Classic Context Menu Configuration"
+# Write-FrameworkLog -ModuleName "Explorer" -Action "Initiating Classic Context Menu Configuration"
 
 $RegistryPath = "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32"
 
@@ -31,7 +31,7 @@ if (-not (Test-Path $RegistryPath)) {
 Set-ItemProperty -Path $RegistryPath -Name "(Default)" -Value "" -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "Explorer" -Action "Restored Classic Context Menu" -OldValue $CurrentValue -NewValue "Classic_Windows10_Menu"
+# Write-FrameworkLog -ModuleName "Explorer" -Action "Restored Classic Context Menu" -OldValue $CurrentValue -NewValue "Classic_Windows10_Menu"
 
 Write-Host "`n[SUCCESS] Classic Context Menu has been restored." -ForegroundColor Green
 
