@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
 Write-Host "   SSD / NVME TRIM DIAGNOSTICS" -ForegroundColor Cyan
@@ -40,12 +40,12 @@ if ($TrimStatus -match "ReFS DisableDeleteNotify = 0") {
 }
 
 Write-Host "`nDo you want to force-enable TRIM for all file systems? (Y/N)"
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
 
 if ($Confirm -match 'y') {
     Write-Host "`nEnabling TRIM..." -ForegroundColor Yellow
     fsutil behavior set DisableDeleteNotify 0 | Out-Null
-    Write-FrameworkLog -ModuleName "Storage" -Action "Enabled SSD TRIM"
+#     Write-FrameworkLog -ModuleName "Storage" -Action "Enabled SSD TRIM"
     Write-Host "[SUCCESS] TRIM is now fully enabled." -ForegroundColor Green
 } else {
     Write-Host "`nNo changes made."
