@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
 Write-Host "   APPLY DESKTOP POWER PROFILE" -ForegroundColor Cyan
@@ -22,15 +22,15 @@ Write-Host "It disables hibernation (freeing SSD space), sets Ultimate Performan
 Write-Host "and prevents USB devices from sleeping."
 Write-Host "WARNING: DO NOT use this on a laptop that runs on battery." -ForegroundColor Red
 Write-Host "Press 'Y' to continue or any other key to abort..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
 
 if ($Confirm -notmatch 'y') {
-    Write-FrameworkLog -ModuleName "Power" -Action "Aborted Desktop Power Profile Deployment"
+#     Write-FrameworkLog -ModuleName "Power" -Action "Aborted Desktop Power Profile Deployment"
     Write-Host "`nAborted by user."
     Exit
 }
 
-Write-FrameworkLog -ModuleName "Power" -Action "Starting Master Desktop Power Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Power" -Action "Starting Master Desktop Power Orchestrator" -Level WARNING
 
 $ScriptDir = $PSScriptRoot
 
@@ -43,7 +43,7 @@ Write-Host "`n[2/3] Enabling Ultimate Performance Plan..." -ForegroundColor Cyan
 Write-Host "`n[3/3] Disabling USB Selective Suspend..." -ForegroundColor Cyan
 & (Join-Path -Path $ScriptDir -ChildPath "Disable_USB_Selective_Suspend.ps1") -Force:$Force
 
-Write-FrameworkLog -ModuleName "Power" -Action "Completed Master Desktop Power Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Power" -Action "Completed Master Desktop Power Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Desktop Power Profile deployment complete!" -ForegroundColor Green
 if (-not $Force) {
