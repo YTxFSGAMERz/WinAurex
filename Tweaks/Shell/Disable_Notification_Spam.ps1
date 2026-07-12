@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Shell" -Action "Initiating Notification Spam Cleanup"
+# Write-FrameworkLog -ModuleName "Shell" -Action "Initiating Notification Spam Cleanup"
 
 $RegistryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"
 $Name = "SubscribedContent-338389Enabled"
@@ -27,7 +27,7 @@ if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value 0 -Type DWord -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "Shell" -Action "Disabled Windows Tips & Suggestions" -OldValue $CurrentValue -NewValue "0"
+# Write-FrameworkLog -ModuleName "Shell" -Action "Disabled Windows Tips & Suggestions" -OldValue $CurrentValue -NewValue "0"
 
 Write-Host "`n[SUCCESS] Windows tips and suggestion notification spam disabled." -ForegroundColor Green
 
