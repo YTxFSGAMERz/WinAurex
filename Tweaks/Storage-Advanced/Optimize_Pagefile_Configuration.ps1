@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 $SnapshotDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Restore"
 
 Write-Host "================================================="
@@ -29,12 +29,12 @@ Write-Host "3. Abort"
 Write-Host "================================================="
 
 if ($Choice -notmatch '^[1-2]$') {
-    Write-FrameworkLog -ModuleName "Storage" -Action "Aborted Pagefile config"
+#     Write-FrameworkLog -ModuleName "Storage" -Action "Aborted Pagefile config"
     Write-Host "`nAborted by user."
     Exit
 }
 
-Write-FrameworkLog -ModuleName "Storage" -Action "Backing up Pagefile registry settings"
+# Write-FrameworkLog -ModuleName "Storage" -Action "Backing up Pagefile registry settings"
 $RegPath1 = "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
 $BackupFile = Join-Path -Path $SnapshotDir -ChildPath "Pagefile_Backup_$(Get-Date -Format 'yyyyMMdd_HHmmss').reg"
 & reg export $RegPath1 $BackupFile /y | Out-Null
@@ -47,7 +47,7 @@ if ($Choice -eq '1') {
     $ComputerSystem.AutomaticManagedPagefile = $true
     $ComputerSystem.Put() | Out-Null
     
-    Write-FrameworkLog -ModuleName "Storage" -Action "Set Pagefile to System Managed"
+#     Write-FrameworkLog -ModuleName "Storage" -Action "Set Pagefile to System Managed"
     Write-Host "[SUCCESS] Pagefile is now System Managed." -ForegroundColor Green
 } else {
     Write-Host "`nSetting Pagefile to Fixed 16GB..." -ForegroundColor Yellow
@@ -64,7 +64,7 @@ if ($Choice -eq '1') {
         Set-WmiInstance -Class Win32_PageFileSetting -Arguments @{Name="C:\pagefile.sys"; InitialSize=16384; MaximumSize=16384} | Out-Null
     }
 
-    Write-FrameworkLog -ModuleName "Storage" -Action "Set Pagefile to Fixed 16GB"
+#     Write-FrameworkLog -ModuleName "Storage" -Action "Set Pagefile to Fixed 16GB"
     Write-Host "[SUCCESS] Pagefile is now fixed to 16GB." -ForegroundColor Green
 }
 
