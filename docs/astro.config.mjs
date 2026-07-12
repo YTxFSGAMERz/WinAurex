@@ -11,7 +11,16 @@ export default defineConfig({
   prefetch: true,
   integrations: [starlight({
 			title: 'WinAurex',
+			description: 'Free, open-source toolkit to debloat Windows 11, boost FPS for gaming, build custom ISOs, and disable telemetry, all from a native C# WPF GUI Dashboard.',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/YTxFSGAMERz/WinAurex' }],
+			head: [
+				{ tag: 'meta', attrs: { name: 'keywords', content: 'windows 11, debloat, optimizer, fps boost, gaming performance, remove telemetry, os builder, win ui 3, custom iso' } },
+				{ tag: 'meta', attrs: { name: 'author', content: 'Farhan' } },
+				{ tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
+				{ tag: 'meta', attrs: { property: 'og:site_name', content: 'WinAurex' } },
+				{ tag: 'meta', attrs: { name: 'twitter:card', content: 'summary_large_image' } },
+				{ tag: 'meta', attrs: { name: 'theme-color', content: '#16a34a' } },
+			],
 			customCss: ['./src/styles/custom.css'],
 			// Override ThemeSelect with an empty component to permanently hide the light/dark toggle
 			components: {
