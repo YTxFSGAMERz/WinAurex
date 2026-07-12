@@ -5,7 +5,7 @@ description: "Guide to privacy-focused web browsers for Windows 11. Replace Micr
 
 # 🌐 Web Browsers Guide
 
-This guide details the web browser installers included in the `Browsers/` directory and provides recommendations based on resource efficiency, user privacy, extensions compatibility, and gaming latency.
+This guide details the web browser installers included in the `Tools/Apps/Browsers/` directory and provides recommendations based on resource efficiency, user privacy, extensions compatibility, and gaming latency.
 
 ---
 
@@ -23,7 +23,7 @@ This guide details the web browser installers included in the `Browsers/` direct
 
 ## 🛠️ Integrated Installers
 
-The `Browsers/` directory contains official setup files to install standard options easily:
+The `Tools/Apps/Browsers/` directory contains official setup files to install standard options easily:
 *   `BraveBrowserSetup-BRV010.exe`: Brave browser setup (Chromium engine with built-in ad-blocking shields).
 *   `ChromeSetup.exe`: Google Chrome web browser online installer.
 *   `Firefox Installer.exe`: Mozilla Firefox online installer (Gecko engine).
@@ -77,3 +77,4 @@ Apply these configurations in your browser settings to conserve RAM and CPU cycl
 
 ### 3. Block Background Apps
 *   Go to **Settings > System** and turn off **"Continue running background apps when browser is closed"**. This prevents the browser from spawning hidden update tasks and service loops in Task Manager after you exit.
+
