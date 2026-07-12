@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Shell" -Action "Initiating Widgets Disablement"
+# Write-FrameworkLog -ModuleName "Shell" -Action "Initiating Widgets Disablement"
 
 $RegistryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
 $Name = "TaskbarDa"
@@ -27,7 +27,7 @@ if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value 0 -Type DWord -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "Shell" -Action "Disabled Windows Widgets" -OldValue $CurrentValue -NewValue "0"
+# Write-FrameworkLog -ModuleName "Shell" -Action "Disabled Windows Widgets" -OldValue $CurrentValue -NewValue "0"
 
 Write-Host "`n[SUCCESS] Windows Widgets and News Feed Disabled." -ForegroundColor Green
 Write-Host "A Windows Explorer restart may be required to see changes immediately." -ForegroundColor Yellow
