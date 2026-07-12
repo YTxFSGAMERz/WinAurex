@@ -37,8 +37,9 @@ The `Tweaks/` directory is organized into functional categories to allow targete
 *   `Disable Action Center.reg` / `Enable Action Center.reg`: Deactivates the system notifications tray.
 *   `Disable Cortana.reg` / `Enable Cortana.reg`: Fully blocks the Cortana digital assistant search indexing and background services.
 
-> [!TIP]
-> Disabling transparency and transitions is highly recommended for legacy systems with integrated graphics cards (such as Intel HD Graphics) to prevent interface stuttering.
+:::tip
+Disabling transparency and transitions is highly recommended for legacy systems with integrated graphics cards (such as Intel HD Graphics) to prevent interface stuttering.
+:::
 
 ---
 
@@ -192,8 +193,9 @@ The `Tweaks/` directory is organized into functional categories to allow targete
     ```cmd
     Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
     ```
-    > [!WARNING]
-    > Running this aggressive component store cleanup removes old update uninstall files permanently. You will not be able to uninstall current updates once completed.
+:::caution
+Running this aggressive component store cleanup removes old update uninstall files permanently. You will not be able to uninstall current updates once completed.
+:::
 
 ---
 
