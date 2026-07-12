@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Shell" -Action "Initiating Start Menu Recommended Cleanup"
+# Write-FrameworkLog -ModuleName "Shell" -Action "Initiating Start Menu Recommended Cleanup"
 
 $RegistryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
 $Name = "HideRecentJumplists"
@@ -27,7 +27,7 @@ if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value 1 -Type DWord -Force
 
 # 3. Log Outcome
-Write-FrameworkLog -ModuleName "Shell" -Action "Disabled Recent/Recommended Jumplists" -OldValue $CurrentValue -NewValue "1"
+# Write-FrameworkLog -ModuleName "Shell" -Action "Disabled Recent/Recommended Jumplists" -OldValue $CurrentValue -NewValue "1"
 
 Write-Host "`n[SUCCESS] Start Menu Recommended section and Jump Lists cleared." -ForegroundColor Green
 
