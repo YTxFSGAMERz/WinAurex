@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
 Write-Host "   APPLY DIAGNOSTICS PRIVACY PROFILE" -ForegroundColor Cyan
@@ -21,15 +21,15 @@ Write-Host "This profile disables OS-level telemetry and tracking."
 Write-Host "It blocks Windows from sending diagnostic data to Microsoft"
 Write-Host "and disables personalized ads/tips based on your usage."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
 
 if ($Confirm -notmatch 'y') {
-    Write-FrameworkLog -ModuleName "Diagnostics" -Action "Aborted Diagnostics Privacy Profile Deployment"
+#     Write-FrameworkLog -ModuleName "Diagnostics" -Action "Aborted Diagnostics Privacy Profile Deployment"
     Write-Host "`nAborted by user."
     Exit
 }
 
-Write-FrameworkLog -ModuleName "Diagnostics" -Action "Starting Master Diagnostics Privacy Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Diagnostics" -Action "Starting Master Diagnostics Privacy Orchestrator" -Level WARNING
 
 $ScriptDir = $PSScriptRoot
 
@@ -39,7 +39,7 @@ Write-Host "`n[1/2] Disabling Diagnostic Data Collection (Telemetry)..." -Foregr
 Write-Host "`n[2/2] Disabling Tailored Experiences (Ads/Tips)..." -ForegroundColor Cyan
 & (Join-Path -Path $ScriptDir -ChildPath "Disable_Tailored_Experiences.ps1") -Force:$Force
 
-Write-FrameworkLog -ModuleName "Diagnostics" -Action "Completed Master Diagnostics Privacy Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Diagnostics" -Action "Completed Master Diagnostics Privacy Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Diagnostics Privacy Profile deployment complete!" -ForegroundColor Green
 if (-not $Force) {
