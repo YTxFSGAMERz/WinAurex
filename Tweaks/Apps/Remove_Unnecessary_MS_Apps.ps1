@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Apps" -Action "Initiating Unnecessary MS Apps Removal"
+# Write-FrameworkLog -ModuleName "Apps" -Action "Initiating Unnecessary MS Apps Removal"
 
 # Array of Microsoft apps that are generally safe to remove and often considered bloatware
 $MSApps = @(
@@ -44,7 +44,7 @@ foreach ($App in $MSApps) {
     if ($Packages) {
         foreach ($Pkg in $Packages) {
             Remove-AppxPackage -Package $Pkg.PackageFullName -ErrorAction SilentlyContinue
-            Write-FrameworkLog -ModuleName "Apps" -Action "Removed MS App" -OldValue $Pkg.Name -NewValue "Removed"
+#             Write-FrameworkLog -ModuleName "Apps" -Action "Removed MS App" -OldValue $Pkg.Name -NewValue "Removed"
             $RemovedCount++
         }
     }
@@ -54,7 +54,7 @@ foreach ($App in $MSApps) {
     if ($Provisioned) {
         foreach ($Prov in $Provisioned) {
             Remove-AppxProvisionedPackage -Online -PackageName $Prov.PackageName -ErrorAction SilentlyContinue | Out-Null
-            Write-FrameworkLog -ModuleName "Apps" -Action "Deprovisioned MS App" -OldValue $Prov.DisplayName -NewValue "Removed"
+#             Write-FrameworkLog -ModuleName "Apps" -Action "Deprovisioned MS App" -OldValue $Prov.DisplayName -NewValue "Removed"
         }
     }
 }
