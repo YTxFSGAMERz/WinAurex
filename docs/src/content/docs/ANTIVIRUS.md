@@ -23,7 +23,7 @@ If you prefer resident (always-on) protection, choose a lightweight, highly-effe
 
 ## 🛠️ Integrated Clean Installers
 
-The `Antivirus/` directory contains official setup launchers for the recommended programs:
+The `Tools/Apps/Antivirus/` directory contains official setup launchers for the recommended programs:
 *   `eset_internet_security_live_installer.exe`: Live bootstrap installer for ESET Internet Security / NOD32.
 *   `MBSetup.exe`: Standalone setup for Malwarebytes Anti-Malware.
 *   `Kaspersky.exe`: Standalone setup launcher for Kaspersky Internet Security.
@@ -76,3 +76,4 @@ To maintain a secure operating system without using heavy resident antivirus sof
 ### 3. File Execution Hygiene
 *   **Check File Extensions**: Always show file extensions in File Explorer. Beware of double extensions such as `Document.pdf.exe` or `Setup.zip.bat`.
 *   **Avoid Cracks**: Keygens, cracks, and custom gaming injectors are highly dangerous and often inject silent miners, spyware, or keyloggers into system files.
+
