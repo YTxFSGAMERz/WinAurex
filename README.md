@@ -273,9 +273,9 @@ Enterprise-grade observability is built into the core. Monitor system health nat
 
 <div align="center">
 
-[<code>[&nbsp;&nbsp;Architecture&nbsp;&nbsp;&nbsp;]</code>](https://winaurex.vercel.app/architecture_blueprint/) &nbsp; [<code>[&nbsp;&nbsp;&nbsp;Compatibility&nbsp;&nbsp;&nbsp;]</code>](https://winaurex.vercel.app/compatibility_matrix/) &nbsp; [<code>[&nbsp;&nbsp;Registry Reference&nbsp;&nbsp;&nbsp;]</code>](https://winaurex.vercel.app/registry_reference/)
+[![Architecture](https://img.shields.io/badge/DOCS-ARCHITECTURE-00bcd4?style=for-the-badge&labelColor=0D1117)](https://winaurex.vercel.app/architecture_blueprint/) &nbsp; [![Compatibility](https://img.shields.io/badge/DOCS-COMPATIBILITY-00bcd4?style=for-the-badge&labelColor=0D1117)](https://winaurex.vercel.app/compatibility_matrix/) &nbsp; [![Registry Reference](https://img.shields.io/badge/DOCS-REGISTRY_REFERENCE-00bcd4?style=for-the-badge&labelColor=0D1117)](https://winaurex.vercel.app/registry_reference/)
 
-[<code>[&nbsp;Rollback Engine&nbsp;]</code>](https://winaurex.vercel.app/architecture_blueprint/#9-corerestore-system-restore--rollback-core) &nbsp; [<code>[&nbsp;Logging Standards&nbsp;]</code>](https://winaurex.vercel.app/architecture_blueprint/#logging--restore-strategy) &nbsp; [<code>[&nbsp;Myths & Anti-Patterns&nbsp;]</code>](https://winaurex.vercel.app/myths_and_anti_patterns/)
+[![Rollback Engine](https://img.shields.io/badge/DOCS-ROLLBACK_ENGINE-00bcd4?style=for-the-badge&labelColor=0D1117)](https://winaurex.vercel.app/architecture_blueprint/#9-corerestore-system-restore--rollback-core) &nbsp; [![Logging Standards](https://img.shields.io/badge/DOCS-LOGGING_STANDARDS-00bcd4?style=for-the-badge&labelColor=0D1117)](https://winaurex.vercel.app/architecture_blueprint/#logging--restore-strategy) &nbsp; [![Myths & Anti-Patterns](https://img.shields.io/badge/DOCS-MYTHS_%26_ANTI--PATTERNS-00bcd4?style=for-the-badge&labelColor=0D1117)](https://winaurex.vercel.app/myths_and_anti_patterns/)
 
 <br>
 
