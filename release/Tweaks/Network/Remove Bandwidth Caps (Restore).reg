@@ -1,0 +1,18 @@
+Windows Registry Editor Version 5.00
+
+; ==============================================================================
+; RESTORE: Remove Delivery Optimization Bandwidth Caps
+; TARGET SYSTEM: Windows 10 & Windows 11
+; DESCRIPTION: Restores Windows defaults. Removes any manual download or upload 
+;              speed limitations on Windows Update background/foreground processes.
+; ==============================================================================
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config]
+"DOMaxBackgroundDownloadBandwidth"=-
+"DOMaxForegroundDownloadBandwidth"=-
+"DOMaxUploadBandwidth"=-
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization]
+"DOMaxBackgroundDownloadBandwidth"=-
+"DOMaxForegroundDownloadBandwidth"=-
+"DOMaxUploadBandwidth"=-
