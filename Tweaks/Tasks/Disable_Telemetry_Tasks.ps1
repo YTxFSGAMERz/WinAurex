@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Tasks" -Action "Initiating Telemetry Tasks Disablement"
+# Write-FrameworkLog -ModuleName "Tasks" -Action "Initiating Telemetry Tasks Disablement"
 
 # Array of known heavy telemetry/CEIP tasks
 $TelemetryTasks = @(
@@ -35,7 +35,7 @@ foreach ($TaskPath in $TelemetryTasks) {
         
         if ($CurrentState -ne "Disabled") {
             Disable-ScheduledTask -TaskPath ($TaskPath | Split-Path -Parent) -TaskName ($TaskPath | Split-Path -Leaf) | Out-Null
-            Write-FrameworkLog -ModuleName "Tasks" -Action "Disabled Task: $TaskPath" -OldValue $CurrentState -NewValue "Disabled"
+#             Write-FrameworkLog -ModuleName "Tasks" -Action "Disabled Task: $TaskPath" -OldValue $CurrentState -NewValue "Disabled"
             $DisabledCount++
         }
     }
