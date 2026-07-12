@@ -273,9 +273,9 @@ Enterprise-grade observability is built into the core. Monitor system health nat
 
 <div align="center">
 
-<code>[ Architecture ]</code> &nbsp; <code>[ Compatibility ]</code> &nbsp; <code>[ Registry Reference ]</code>
+<code>[&nbsp;&nbsp;Architecture&nbsp;&nbsp;&nbsp;]</code> &nbsp; <code>[&nbsp;&nbsp;&nbsp;Compatibility&nbsp;&nbsp;&nbsp;]</code> &nbsp; <code>[&nbsp;&nbsp;Registry Reference&nbsp;&nbsp;&nbsp;]</code>
 
-<code>[ Rollback Engine ]</code> &nbsp; <code>[ Logging Standards ]</code> &nbsp; <code>[ Myths & Anti-Patterns ]</code>
+<code>[&nbsp;Rollback Engine&nbsp;]</code> &nbsp; <code>[&nbsp;Logging Standards&nbsp;]</code> &nbsp; <code>[&nbsp;Myths & Anti-Patterns&nbsp;]</code>
 
 <br>
 
