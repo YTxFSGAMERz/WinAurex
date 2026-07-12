@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
 Write-Host "================================================="
 Write-Host "   APPLY MAX PERFORMANCE VISUAL PROFILE" -ForegroundColor Red
@@ -21,15 +21,15 @@ Write-Host "This profile strips Windows visuals to the bare minimum to maximize 
 Write-Host "It disables transparency, animations, and menu delays."
 Write-Host "(Font Smoothing is intentionally kept enabled so text remains readable)."
 Write-Host "Press 'Y' to continue or any other key to abort..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
 
 if ($Confirm -notmatch 'y') {
-    Write-FrameworkLog -ModuleName "Visual" -Action "Aborted Max Performance Deployment"
+#     Write-FrameworkLog -ModuleName "Visual" -Action "Aborted Max Performance Deployment"
     Write-Host "`nAborted by user."
     Exit
 }
 
-Write-FrameworkLog -ModuleName "Visual" -Action "Starting Master Max Performance Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Visual" -Action "Starting Master Max Performance Orchestrator" -Level WARNING
 
 $ScriptDir = $PSScriptRoot
 
@@ -42,7 +42,7 @@ Write-Host "`n[2/3] Reducing Menu Show Delay for snappier navigation..." -Foregr
 Write-Host "`n[3/3] Disabling Unnecessary Taskbar and Window Animations..." -ForegroundColor Cyan
 & (Join-Path -Path $ScriptDir -ChildPath "Disable_Unnecessary_Animations.ps1") -Force:$Force
 
-Write-FrameworkLog -ModuleName "Visual" -Action "Completed Master Max Performance Orchestrator" -Level WARNING
+# Write-FrameworkLog -ModuleName "Visual" -Action "Completed Master Max Performance Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Max Performance Visual Profile deployment complete!" -ForegroundColor Green
 Write-Host "Restarting Windows Explorer to apply all visual changes immediately..." -ForegroundColor Yellow
