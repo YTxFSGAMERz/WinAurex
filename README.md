@@ -69,10 +69,10 @@
 
 Get up and running in under 60 seconds.
 
-```powershell
-# 1. Download the latest release from the Releases Tab.
-# 2. Extract to your preferred directory.
-# 3. Launch the new C# compiled client flow:
+```text
+1. Download the latest release from the Releases Tab.
+2. Extract to your preferred directory.
+3. Launch the new C# compiled client flow:
 .\WinAurex.App.exe --elevated
 ```
 
@@ -231,11 +231,11 @@ Absolute power requires absolute safety. This repository is built upon a **Rever
 
 <br>
 
-```powershell
+```text
 PS> .\WinAurex.App.exe --elevated
-# [ OK ] C# Execution Engine Initialized
-# [ OK ] Providers Resolved via DI
-# [ OK ] Dashboard UI Rendered
+[ OK ] C# Execution Engine Initialized
+[ OK ] Providers Resolved via DI
+[ OK ] Dashboard UI Rendered
 ```
 
 </div>
@@ -273,9 +273,9 @@ Enterprise-grade observability is built into the core. Monitor system health nat
 
 <div align="center">
 
-`[ Architecture ]` &nbsp; `[ Compatibility ]` &nbsp; `[ Registry Reference ]`
+<code>[ Architecture ]</code> &nbsp; <code>[ Compatibility ]</code> &nbsp; <code>[ Registry Reference ]</code>
 
-`[ Rollback Engine ]` &nbsp; `[ Logging Standards ]` &nbsp; `[ Myths & Anti-Patterns ]`
+<code>[ Rollback Engine ]</code> &nbsp; <code>[ Logging Standards ]</code> &nbsp; <code>[ Myths & Anti-Patterns ]</code>
 
 <br>
 
@@ -311,10 +311,10 @@ We are actively looking for senior C# and PowerShell developers to help expand o
 
 <div align="center">
 
-**`[ PHASE 1 ]`** &nbsp; Core Architecture & Safety Engine (✔ COMPLETED)<br>
-**`[ PHASE 2 ]`** &nbsp; Observability Layer & Telemetry (✔ COMPLETED)<br>
-**`[ PHASE 3 ]`** &nbsp; WPF Dashboard Integration (🚀 V2.0 RELEASED)<br>
-**`[ PHASE 4 ]`** &nbsp; Packaging & Distribution
+<b><code>[ PHASE 1 ]</code></b> &nbsp; Core Architecture & Safety Engine (✔ COMPLETED)<br>
+<b><code>[ PHASE 2 ]</code></b> &nbsp; Observability Layer & Telemetry (✔ COMPLETED)<br>
+<b><code>[ PHASE 3 ]</code></b> &nbsp; WPF Dashboard Integration (🚀 V2.0 RELEASED)<br>
+<b><code>[ PHASE 4 ]</code></b> &nbsp; Packaging & Distribution
 
 </div>
 
