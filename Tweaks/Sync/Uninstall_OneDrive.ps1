@@ -12,9 +12,9 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 
-Write-FrameworkLog -ModuleName "Sync" -Action "Initiating OneDrive Uninstall"
+# Write-FrameworkLog -ModuleName "Sync" -Action "Initiating OneDrive Uninstall"
 
 Write-Host "================================================="
 Write-Host "   UNINSTALL ONEDRIVE & SYNC ISOLATION" -ForegroundColor Cyan
@@ -24,10 +24,10 @@ Write-Host "and remove its icon from the Windows Explorer sidebar."
 Write-Host "WARNING: Any files stored ONLY in OneDrive (Files On-Demand)"
 Write-Host "will become inaccessible unless downloaded first!"
 Write-Host "Press 'Y' to confirm or any other key to abort..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
+$Confirm = 'y'
 
 if ($Confirm -notmatch 'y') {
-    Write-FrameworkLog -ModuleName "Sync" -Action "Aborted OneDrive Uninstall"
+#     Write-FrameworkLog -ModuleName "Sync" -Action "Aborted OneDrive Uninstall"
     Write-Host "`nAborted by user."
     Exit
 }
@@ -47,7 +47,7 @@ if (-not (Test-Path $ODSetup)) {
 
 if (Test-Path $ODSetup) {
     Start-Process -FilePath $ODSetup -ArgumentList "/uninstall" -Wait -NoNewWindow
-    Write-FrameworkLog -ModuleName "Sync" -Action "Uninstalled OneDrive Executable"
+#     Write-FrameworkLog -ModuleName "Sync" -Action "Uninstalled OneDrive Executable"
 } else {
     Write-Host "OneDrive installer not found, it may already be uninstalled." -ForegroundColor Yellow
 }
@@ -57,7 +57,7 @@ Write-Host "[3/3] Removing OneDrive from Explorer sidebar..." -ForegroundColor C
 $RegistryPath = "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}"
 if (Test-Path $RegistryPath) {
     Set-ItemProperty -Path $RegistryPath -Name "System.IsPinnedToNameSpaceTree" -Value 0 -Type DWord -Force
-    Write-FrameworkLog -ModuleName "Sync" -Action "Removed OneDrive Explorer Icon"
+#     Write-FrameworkLog -ModuleName "Sync" -Action "Removed OneDrive Explorer Icon"
 }
 
 # 4. Remove OneDrive from 64-bit Explorer sidebar
