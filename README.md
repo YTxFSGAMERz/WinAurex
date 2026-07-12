@@ -70,9 +70,10 @@
 Get up and running in under 60 seconds.
 
 ```powershell
-1. Download the latest release from the Releases Tab.
-2. Extract and run WinAurex.App.exe as Administrator.
-3. Select your desired profile (e.g., Gaming, Workstation) and click Execute.
+# 1. Download the latest release from the Releases Tab.
+# 2. Extract to your preferred directory.
+# 3. Launch the new C# compiled client flow:
+.\WinAurex.App.exe --elevated
 ```
 
 </div>
@@ -232,9 +233,9 @@ Absolute power requires absolute safety. This repository is built upon a **Rever
 
 ```powershell
 PS> .\WinAurex.App.exe --elevated
-[ OK ] C# Execution Engine Initialized
-[ OK ] Providers Resolved via DI
-[ OK ] Dashboard UI Rendered
+# [ OK ] C# Execution Engine Initialized
+# [ OK ] Providers Resolved via DI
+# [ OK ] Dashboard UI Rendered
 ```
 
 </div>
@@ -310,9 +311,9 @@ We are actively looking for senior C# and PowerShell developers to help expand o
 
 <div align="center">
 
-**`[ PHASE 1 ]`** &nbsp; Core Architecture & Safety Engine<br>
-**`[ PHASE 2 ]`** &nbsp; Observability Layer & Telemetry<br>
-**`[ PHASE 3 ]`** &nbsp; WPF Dashboard Integration<br>
+**`[ PHASE 1 ]`** &nbsp; Core Architecture & Safety Engine (✔ COMPLETED)<br>
+**`[ PHASE 2 ]`** &nbsp; Observability Layer & Telemetry (✔ COMPLETED)<br>
+**`[ PHASE 3 ]`** &nbsp; WPF Dashboard Integration (🚀 V2.0 RELEASED)<br>
 **`[ PHASE 4 ]`** &nbsp; Packaging & Distribution
 
 </div>
