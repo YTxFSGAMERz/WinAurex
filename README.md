@@ -273,9 +273,9 @@ Enterprise-grade observability is built into the core. Monitor system health nat
 
 <div align="center">
 
-<code>[&nbsp;&nbsp;Architecture&nbsp;&nbsp;&nbsp;]</code> &nbsp; <code>[&nbsp;&nbsp;&nbsp;Compatibility&nbsp;&nbsp;&nbsp;]</code> &nbsp; <code>[&nbsp;&nbsp;Registry Reference&nbsp;&nbsp;&nbsp;]</code>
+[<code>[&nbsp;&nbsp;Architecture&nbsp;&nbsp;&nbsp;]</code>](https://winaurex.vercel.app/architecture_blueprint/) &nbsp; [<code>[&nbsp;&nbsp;&nbsp;Compatibility&nbsp;&nbsp;&nbsp;]</code>](https://winaurex.vercel.app/compatibility_matrix/) &nbsp; [<code>[&nbsp;&nbsp;Registry Reference&nbsp;&nbsp;&nbsp;]</code>](https://winaurex.vercel.app/registry_reference/)
 
-<code>[&nbsp;Rollback Engine&nbsp;]</code> &nbsp; <code>[&nbsp;Logging Standards&nbsp;]</code> &nbsp; <code>[&nbsp;Myths & Anti-Patterns&nbsp;]</code>
+[<code>[&nbsp;Rollback Engine&nbsp;]</code>](https://winaurex.vercel.app/architecture_blueprint/#9-corerestore-system-restore--rollback-core) &nbsp; [<code>[&nbsp;Logging Standards&nbsp;]</code>](https://winaurex.vercel.app/architecture_blueprint/#logging--restore-strategy) &nbsp; [<code>[&nbsp;Myths & Anti-Patterns&nbsp;]</code>](https://winaurex.vercel.app/myths_and_anti_patterns/)
 
 <br>
 
