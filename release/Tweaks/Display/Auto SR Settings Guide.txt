@@ -1,0 +1,35 @@
+==============================================================================
+GUIDE: Automatic Super Resolution (Auto SR) in Windows 11
+TARGET SYSTEM: Windows 11 24H2 or later
+==============================================================================
+
+Automatic Super Resolution (Auto SR) is an AI-powered game upscaler integrated 
+directly into Windows 11. It leverages the Neural Processing Unit (NPU) of 
+modern Snapdragon-powered Copilot+ PCs to boost game frame rates while maintaining 
+pristine visual clarity, leaving the GPU free for other processing.
+
+--- SYSTEM REQUIREMENTS ---
+To use Auto SR, your system must meet the following:
+1. Processor: Snapdragon X Elite / Snapdragon X Plus (with integrated NPU).
+2. OS Version: Windows 11 Version 24H2 (Build 26100) or later.
+3. Display Resolution: 1080p or higher.
+4. DirectX version: Game must run on DirectX 11 or DirectX 12.
+
+--- HOW TO USE / CUSTOMIZE ---
+Windows applies Auto SR automatically to a curated set of tested games, but you 
+can manually force it on or off for ANY game:
+
+1. Open Windows Graphics Settings (use our "Open Graphics Settings.bat" helper).
+2. Look for "Default settings" and toggle "Automatic super resolution" ON to 
+   enable it globally.
+3. For individual games:
+   - Scroll down to "Custom settings for applications."
+   - Click "Browse" and choose your game's .exe file if not already listed.
+   - Click the game, then click "Options."
+   - Under "Automatic super resolution," choose "On" or "Off".
+
+--- SAFETY & COMPATIBILITY NOTES ---
+- Auto SR and Auto HDR cannot be enabled at the same time for some games.
+- To disable Auto SR, simply toggle it off globally in Graphics Settings or use 
+  the per-app settings to change it to "Off".
+==============================================================================
