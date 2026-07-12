@@ -5,7 +5,7 @@ description: "Curated list of essential Windows 11 utilities for power users. Fi
 
 # 🛠️ Extra Utilities Guide
 
-The `Extra/` directory contains a curated selection of lightweight, high-performance utilities, custom system configurators, and network tuning applications designed to optimize your workspace and reduce systemic latency.
+The `Tools/Apps/Extra/` directory contains a curated selection of lightweight, high-performance utilities, custom system configurators, and network tuning applications designed to optimize your workspace and reduce systemic latency.
 
 ---
 
@@ -106,4 +106,5 @@ The `Extra/` directory contains a curated selection of lightweight, high-perform
 
 ### Tetris GameBoy (`Tetris_GameBoy.exe`)
 *   **Purpose**: A retro Tetris simulator. Great for checking system controller latency and responsiveness.
+
 
