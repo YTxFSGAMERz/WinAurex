@@ -14,6 +14,7 @@ export default defineConfig({
 			description: 'Free, open-source toolkit to debloat Windows 11, boost FPS for gaming, build custom ISOs, and disable telemetry, all from a native C# WPF GUI Dashboard.',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/YTxFSGAMERz/WinAurex' }],
 			head: [
+				{ tag: 'link', attrs: { rel: 'icon', href: '/favicon.ico' } },
 				{ tag: 'meta', attrs: { name: 'keywords', content: 'windows 11, debloat, optimizer, fps boost, gaming performance, remove telemetry, os builder, win ui 3, custom iso' } },
 				{ tag: 'meta', attrs: { name: 'author', content: 'Farhan' } },
 				{ tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
