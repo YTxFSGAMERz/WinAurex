@@ -11,6 +11,7 @@ export default defineConfig({
   prefetch: true,
   integrations: [starlight({
 			title: 'WinAurex',
+			siteName: 'WinAurex',
 			description: 'Free, open-source toolkit to debloat Windows 11, boost FPS for gaming, build custom ISOs, and disable telemetry, all from a native C# WPF GUI Dashboard.',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/YTxFSGAMERz/WinAurex' }],
 			head: [
