@@ -1,83 +1,129 @@
 @import "tailwindcss";
 
-:root {
-  --sl-color-accent-low: #001a00;
-  --sl-color-accent: #00ff00;
-  --sl-color-accent-high: #99ff99;
-  --sl-color-text-accent: #00ff00;
-  --sl-color-bg: #050505;
-  --sl-color-bg-nav: #0a0a0a;
-  --sl-color-bg-sidebar: #050505;
-  --sl-color-gray-1: #e0e0e0;
-  --sl-color-gray-2: #c0c0c0;
-  --sl-color-gray-3: #a0a0a0;
-  --sl-color-gray-4: #808080;
-  --sl-color-gray-5: #606060;
-  --sl-color-gray-6: #404040;
+/* Force Dark Mode Hacker Aesthetic across ALL theme selectors */
+:root,
+:root[data-theme],
+:root[data-theme='light'],
+:root[data-theme='dark'],
+[data-theme='light'],
+[data-theme='dark'],
+html {
+  color-scheme: dark !important;
+  --sl-color-accent-low: #002900 !important;
+  --sl-color-accent: #00ff00 !important;
+  --sl-color-accent-high: #80ff80 !important;
+  --sl-color-text-accent: #00ff00 !important;
+  --sl-color-bg: #050505 !important;
+  --sl-color-bg-nav: #0a0a0a !important;
+  --sl-color-bg-sidebar: #080808 !important;
+  --sl-color-gray-1: #f0f0f0 !important;
+  --sl-color-gray-2: #d0d0d0 !important;
+  --sl-color-gray-3: #a0a0a0 !important;
+  --sl-color-gray-4: #707070 !important;
+  --sl-color-gray-5: #353535 !important;
+  --sl-color-gray-6: #1a1a1a !important;
+  --sl-color-black: #050505 !important;
+  --sl-color-white: #ffffff !important;
+  --sl-color-hairline: rgba(0, 255, 0, 0.2) !important;
+  --sl-color-text: #e0e0e0 !important;
+  --sl-color-text-invert: #050505 !important;
 }
 
-/* Enforce dark mode hacker aesthetic */
 body {
   font-family: 'Consolas', 'Courier New', monospace;
-  background-color: var(--sl-color-bg);
+  background-color: #050505 !important;
+  color: #e0e0e0 !important;
   background-image: 
     linear-gradient(rgba(0, 255, 0, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 255, 0, 0.08) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
-/* Make content containers transparent so the grid shows through */
-.main-pane,
-.content-panel,
-.sidebar-pane,
-nav.sidebar {
-  background-color: transparent !important;
+/* Desktop container transparency for matrix grid effect */
+@media (min-width: 50.01rem) {
+  .main-pane,
+  .content-panel,
+  .sidebar-pane,
+  nav.sidebar {
+    background-color: transparent !important;
+  }
 }
 
-/* Glowing text for links and headers */
-a {
-  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+/* Mobile drawer / overlay opacity to prevent text overlapping! */
+@media (max-width: 50rem) {
+  header.header {
+    background-color: #080808 !important;
+    border-bottom: 1px solid rgba(0, 255, 0, 0.3) !important;
+  }
+
+  .sidebar-pane,
+  nav.sidebar,
+  starlight-toc,
+  .mobile-preferences,
+  .sidebar-content,
+  mobile-starlight-toc {
+    background-color: #0a0a0a !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.95) !important;
+  }
+
+  .sidebar-pane {
+    border-right: 1px solid rgba(0, 255, 0, 0.3) !important;
+  }
+
+  nav.sidebar a {
+    color: #e0e0e0 !important;
+  }
+
+  nav.sidebar a[aria-current="page"] {
+    color: #00ff00 !important;
+    background-color: rgba(0, 255, 0, 0.15) !important;
+    border-left: 3px solid #00ff00 !important;
+  }
+
+  /* Disable scanlines on mobile for maximum crispness & readability */
+  body::after,
+  body::before {
+    display: none !important;
+  }
 }
 
-.sl-markdown-content h1, 
-.sl-markdown-content h2, 
-.sl-markdown-content h3 {
-  color: var(--sl-color-accent);
-  text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
+/* Desktop CRT Scanlines & moving sweep */
+@media (min-width: 50.01rem) {
+  body::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+    z-index: 9999;
+    background-size: 100% 4px;
+    pointer-events: none;
+    transform: translate3d(0, 0, 0);
+  }
 
-/* Subtle CRT Scanline effect over the entire page */
-body::after {
-  content: " ";
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
-  z-index: 9999;
-  background-size: 100% 4px;
-  pointer-events: none;
-  transform: translate3d(0, 0, 0); /* Force GPU compositing layer */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 10px;
+    background: linear-gradient(to bottom, transparent, rgba(0, 255, 0, 0.35), transparent);
+    z-index: 10000;
+    pointer-events: none;
+    animation: scanMove 8s linear infinite;
+    will-change: transform;
+  }
 }
 
 /* ============================================================
    WINAUREX ANIMATIONS & INTERACTIVE EFFECTS
    ============================================================ */
 
-/* 1. Permanent Dark Mode Force */
-html {
-  color-scheme: dark !important;
-}
-
 starlight-theme-select {
   display: none !important;
 }
 
-/* 2. Keyframes for Animations */
 @keyframes neonPulse {
   0%, 100% { text-shadow: 0 0 8px rgba(0, 255, 0, 0.6), 0 0 20px rgba(0, 255, 0, 0.3); }
   50%       { text-shadow: 0 0 3px rgba(0, 255, 0, 0.3), 0 0 8px rgba(0, 255, 0, 0.1); }
@@ -104,17 +150,33 @@ starlight-theme-select {
 }
 
 @keyframes floatBot {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-12px) rotate(1.5deg);
-  }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1.5deg); }
 }
 
-/* 3. Glowing H1 Breathing pulse & Floating Hero Bot */
+/* Headings & Links */
+a {
+  color: #00ff00 !important;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.4);
+}
+
+.sl-markdown-content h1, 
+.sl-markdown-content h2, 
+.sl-markdown-content h3,
+.sl-markdown-content h4,
+.content-panel h1,
+.hero h1,
+.hero .title,
+#_top {
+  color: #00ff00 !important;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.4) !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 .sl-markdown-content h1,
-.hero h1 {
+.hero h1,
+.hero .title {
   animation: neonPulse 4s ease-in-out infinite !important;
 }
 
@@ -123,23 +185,87 @@ starlight-theme-select {
   will-change: transform;
 }
 
-
-/* 4. Moving CRT Scanline Sweep */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 10px;
-  background: linear-gradient(to bottom, transparent, rgba(0, 255, 0, 0.35), transparent);
-  z-index: 10000;
-  pointer-events: none;
-  animation: scanMove 8s linear infinite;
-  will-change: transform;
+.hero .tagline {
+  color: #d0d0d0 !important;
+  font-size: 1.05rem !important;
 }
 
-/* 5. Sidebar Slide-in & Hover Slide Right */
+.sl-markdown-content p,
+.sl-markdown-content li,
+.sl-markdown-content td,
+.sl-markdown-content th {
+  color: #e0e0e0 !important;
+}
+
+/* Cards & Components High Contrast Styling */
+.card {
+  background-color: #080d08 !important;
+  border: 1px solid rgba(0, 255, 0, 0.3) !important;
+  border-radius: 8px !important;
+  padding: 1.25rem !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.card .title,
+.card h2,
+.card h3 {
+  color: #00ff00 !important;
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.5) !important;
+}
+
+.card p,
+.card .body,
+.card {
+  color: #e0e0e0 !important;
+}
+
+.card strong {
+  color: #ffffff !important;
+}
+
+.card:hover {
+  border-color: #00ff00 !important;
+  box-shadow: 0 0 25px rgba(0, 255, 0, 0.4), inset 0 0 10px rgba(0, 255, 0, 0.15) !important;
+}
+
+/* Pagination Links (Prev / Next) */
+.pagination-links a {
+  background-color: #080d08 !important;
+  border: 1px solid rgba(0, 255, 0, 0.3) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+.pagination-links a:hover {
+  border-color: #00ff00 !important;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.4) !important;
+}
+
+.pagination-links .link-title {
+  color: #00ff00 !important;
+  text-shadow: 0 0 6px rgba(0, 255, 0, 0.5) !important;
+}
+
+.pagination-links .link-label {
+  color: #a0a0a0 !important;
+}
+
+/* Mobile Table of Contents Dropdown */
+mobile-starlight-toc details,
+starlight-toc summary,
+starlight-toc details {
+  background-color: #0a100a !important;
+  border: 1px solid rgba(0, 255, 0, 0.3) !important;
+  border-radius: 6px !important;
+  color: #00ff00 !important;
+}
+
+mobile-starlight-toc summary {
+  color: #00ff00 !important;
+}
+
+/* Sidebar Links */
 nav.sidebar a {
   animation: fadeInLeft 0.4s ease forwards;
   transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease, background-color 0.2s ease;
@@ -149,31 +275,16 @@ nav.sidebar a:hover {
   transform: translateX(6px);
 }
 
-/* 6. Custom Glowing Green Terminal Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+/* Terminal Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #050505; }
+::-webkit-scrollbar-thumb { background: rgba(0, 255, 0, 0.3); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #00ff00; box-shadow: 0 0 10px #00ff00; }
 
-::-webkit-scrollbar-track {
-  background: #050505;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 255, 0, 0.3);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #00ff00;
-  box-shadow: 0 0 10px #00ff00;
-}
-
-/* 7. Fade-up Entrance on page load */
+/* Entrance Animations */
 .content-panel,
 .main-pane,
-.hero,
-.card {
+.hero {
   animation: fadeInUp 0.5s ease forwards;
 }
 
@@ -181,46 +292,34 @@ nav.sidebar a:hover {
 .card:nth-child(3) { animation-delay: 0.2s; }
 .card:nth-child(4) { animation-delay: 0.3s; }
 
-/* Desktop stagger animation override to maintain translateY(3rem) offset */
-@media (min-width: 50rem) {
+@media (min-width: 50.01rem) {
   .card-grid.stagger > *:nth-child(2n) {
     animation: fadeInUpStaggered 0.5s ease forwards;
   }
 }
 
-/* 8. Glowing Hover for Blocks & Terminal Snippets */
-.card,
-aside,
-.aside,
-blockquote,
-pre,
-.expressive-code .frame {
+/* Code Blocks & Terminal Snippets */
+aside, .aside, blockquote, pre, .expressive-code .frame {
   transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-/* Base border for plain pre tags */
 pre:not(.expressive-code pre) {
-  border: 1px solid rgba(0, 255, 0, 0.15) !important;
+  border: 1px solid rgba(0, 255, 0, 0.2) !important;
+  background-color: #080d08 !important;
 }
 
-/* Frame container borders transition */
 .expressive-code .frame pre,
 .expressive-code .frame .header {
   transition: border-color 0.3s ease !important;
 }
 
-.card:hover,
-aside:hover,
-.aside:hover,
-blockquote:hover,
-pre:not(.expressive-code pre):hover {
+aside:hover, .aside:hover, blockquote:hover, pre:not(.expressive-code pre):hover {
   border-color: #00ff00 !important;
-  box-shadow: 0 0 20px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.15) !important;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.4), inset 0 0 10px rgba(0, 255, 0, 0.15) !important;
 }
 
-/* Whole terminal/code frame glow */
 .expressive-code .frame:hover {
-  box-shadow: 0 0 20px rgba(0, 255, 0, 0.5) !important;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.4) !important;
   border-color: #00ff00 !important;
 }
 
@@ -233,13 +332,11 @@ pre:not(.expressive-code pre):hover {
   box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.15) !important;
 }
 
-/* 9. macOS-style colored terminal buttons */
 .expressive-code .frame.is-terminal .header::before {
   background: linear-gradient(to right, #ff5f56 33%, #ffbd2e 33%, #ffbd2e 66%, #27c93f 66%) !important;
   opacity: 1 !important;
 }
 
-/* 10. Inline Code Blocks Readability and Cyberpunk Style */
 :not(pre) > code {
   background-color: rgba(0, 255, 0, 0.1) !important;
   color: #00ff00 !important;
@@ -255,21 +352,14 @@ pre:not(.expressive-code pre):hover {
   background-color: rgba(0, 255, 0, 0.18) !important;
 }
 
-/* 11. Green Text Selection Highlight */
 ::selection {
   background-color: rgba(0, 255, 0, 0.25) !important;
   color: #00ff00 !important;
   text-shadow: 0 0 5px rgba(0, 255, 0, 0.8) !important;
 }
-::-moz-selection {
-  background-color: rgba(0, 255, 0, 0.25) !important;
-  color: #00ff00 !important;
-  text-shadow: 0 0 5px rgba(0, 255, 0, 0.8) !important;
-}
 
-/* 12. Terminal Style Look for OS Builder Button (minimal variant) */
 .hero .actions a.minimal {
-  background: rgba(0, 255, 0, 0.03);
+  background: rgba(0, 255, 0, 0.05);
   color: #00ff00 !important;
   border: 1px dashed rgba(0, 255, 0, 0.5) !important;
   box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.05);
@@ -285,10 +375,9 @@ pre:not(.expressive-code pre):hover {
 }
 
 .hero .actions a.minimal:hover {
-  background: rgba(0, 255, 0, 0.1);
+  background: rgba(0, 255, 0, 0.15);
   border: 1px solid #00ff00 !important;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.2), inset 0 0 10px rgba(0, 255, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3), inset 0 0 10px rgba(0, 255, 0, 0.15);
   text-shadow: 0 0 8px rgba(0, 255, 0, 0.8) !important;
   transform: translateY(-1px);
 }
-
