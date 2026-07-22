@@ -53,7 +53,7 @@ html {
   --sl-color-white: #ffffff !important;
   --sl-color-hairline: rgba(0, 255, 0, 0.2) !important;
   --sl-color-text: #e0e0e0 !important;
-  --sl-color-text-invert: #050505 !important;
+  --sl-color-text-invert: #00ff00 !important;
 }
 
 body {
@@ -64,6 +64,26 @@ body {
     linear-gradient(rgba(0, 255, 0, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 255, 0, 0.08) 1px, transparent 1px);
   background-size: 32px 32px;
+}
+
+/* Global Active Sidebar Link Fix (Desktop + Mobile) */
+[aria-current='page'],
+[aria-current='page']:hover,
+[aria-current='page']:focus,
+nav.sidebar a[aria-current="page"],
+nav.sidebar a[aria-current="page"]:hover,
+nav.sidebar a[aria-current="page"]:focus,
+.sidebar-pane a[aria-current="page"] {
+  background-color: rgba(0, 255, 0, 0.15) !important;
+  color: #00ff00 !important;
+  border-left: 3px solid #00ff00 !important;
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.6) !important;
+  box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.1) !important;
+  border-radius: 4px !important;
+}
+
+[aria-current='page'] span {
+  color: #00ff00 !important;
 }
 
 /* Desktop container transparency for matrix grid effect */
@@ -101,13 +121,6 @@ body {
 
   nav.sidebar a {
     color: #e0e0e0 !important;
-  }
-
-  nav.sidebar a[aria-current="page"] {
-    color: #00ff00 !important;
-    background-color: rgba(0, 255, 0, 0.12) !important;
-    border-left: 3px solid #00ff00 !important;
-    text-shadow: 0 0 8px rgba(0, 255, 0, 0.5) !important;
   }
 
   /* Sticky Mobile TOC Bar Opacity Fix */
