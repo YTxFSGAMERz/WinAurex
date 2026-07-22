@@ -9,13 +9,40 @@
 [data-theme='dark'],
 html {
   color-scheme: dark !important;
+
+  /* Accent & Theme Colors */
   --sl-color-accent-low: #002900 !important;
   --sl-color-accent: #00ff00 !important;
   --sl-color-accent-high: #80ff80 !important;
   --sl-color-text-accent: #00ff00 !important;
+
+  /* Asides / Callouts Dark Mode Color Variables */
+  --sl-color-orange-low: #241400 !important;
+  --sl-color-orange: #f59e0b !important;
+  --sl-color-orange-high: #fde68a !important;
+
+  --sl-color-purple-low: #1c0826 !important;
+  --sl-color-purple: #a855f7 !important;
+  --sl-color-purple-high: #e9d5ff !important;
+
+  --sl-color-blue-low: #081426 !important;
+  --sl-color-blue: #3b82f6 !important;
+  --sl-color-blue-high: #bfdbfe !important;
+
+  --sl-color-red-low: #26080c !important;
+  --sl-color-red: #ef4444 !important;
+  --sl-color-red-high: #fecaca !important;
+
+  --sl-color-green-low: #052405 !important;
+  --sl-color-green: #22c55e !important;
+  --sl-color-green-high: #bbf7d0 !important;
+
+  /* Surfaces & Text */
   --sl-color-bg: #050505 !important;
   --sl-color-bg-nav: #0a0a0a !important;
   --sl-color-bg-sidebar: #080808 !important;
+  --sl-color-bg-inline-code: rgba(0, 255, 0, 0.12) !important;
+
   --sl-color-gray-1: #f0f0f0 !important;
   --sl-color-gray-2: #d0d0d0 !important;
   --sl-color-gray-3: #a0a0a0 !important;
@@ -49,23 +76,23 @@ body {
   }
 }
 
-/* Mobile drawer / overlay opacity to prevent text overlapping! */
+/* Mobile drawer, header & sticky TOC opacity fix */
 @media (max-width: 50rem) {
   header.header {
     background-color: #080808 !important;
     border-bottom: 1px solid rgba(0, 255, 0, 0.3) !important;
+    z-index: 100 !important;
   }
 
   .sidebar-pane,
   nav.sidebar,
-  starlight-toc,
   .mobile-preferences,
-  .sidebar-content,
-  mobile-starlight-toc {
+  .sidebar-content {
     background-color: #0a0a0a !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.95) !important;
+    z-index: 90 !important;
   }
 
   .sidebar-pane {
@@ -78,8 +105,21 @@ body {
 
   nav.sidebar a[aria-current="page"] {
     color: #00ff00 !important;
-    background-color: rgba(0, 255, 0, 0.15) !important;
+    background-color: rgba(0, 255, 0, 0.12) !important;
     border-left: 3px solid #00ff00 !important;
+    text-shadow: 0 0 8px rgba(0, 255, 0, 0.5) !important;
+  }
+
+  /* Sticky Mobile TOC Bar Opacity Fix */
+  mobile-starlight-toc,
+  starlight-toc,
+  .starlight-toc {
+    background-color: #080808 !important;
+    border-bottom: 1px solid rgba(0, 255, 0, 0.25) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8) !important;
+    position: sticky !important;
+    top: var(--sl-nav-height, 3.5rem) !important;
+    z-index: 40 !important;
   }
 
   /* Disable scanlines on mobile for maximum crispness & readability */
@@ -89,7 +129,7 @@ body {
   }
 }
 
-/* Desktop CRT Scanlines & moving sweep */
+/* Desktop CRT Scanlines & moving sweep - low z-index so they don't cover menus */
 @media (min-width: 50.01rem) {
   body::after {
     content: " ";
@@ -97,7 +137,7 @@ body {
     position: fixed;
     top: 0; left: 0; bottom: 0; right: 0;
     background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
-    z-index: 9999;
+    z-index: 1;
     background-size: 100% 4px;
     pointer-events: none;
     transform: translate3d(0, 0, 0);
@@ -109,7 +149,7 @@ body {
     top: 0; left: 0; right: 0;
     height: 10px;
     background: linear-gradient(to bottom, transparent, rgba(0, 255, 0, 0.35), transparent);
-    z-index: 10000;
+    z-index: 2;
     pointer-events: none;
     animation: scanMove 8s linear infinite;
     will-change: transform;
@@ -195,6 +235,70 @@ a {
 .sl-markdown-content td,
 .sl-markdown-content th {
   color: #e0e0e0 !important;
+}
+
+/* Callout / Aside Boxes Styling (Note, Tip, Caution, Danger) */
+.starlight-aside,
+aside,
+.aside {
+  border-radius: 6px !important;
+  padding: 1rem 1.25rem !important;
+  margin: 1.5rem 0 !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+}
+
+.starlight-aside,
+.starlight-aside p,
+.starlight-aside li,
+aside p,
+aside li,
+.aside p,
+.aside li {
+  color: #e0e0e0 !important;
+}
+
+.starlight-aside--note,
+.aside-note {
+  border-left: 4px solid #3b82f6 !important;
+  background-color: #081426 !important;
+}
+
+.starlight-aside--note .starlight-aside__title,
+.starlight-aside--note .starlight-aside__icon {
+  color: #60a5fa !important;
+}
+
+.starlight-aside--tip,
+.aside-tip {
+  border-left: 4px solid #a855f7 !important;
+  background-color: #1c0826 !important;
+}
+
+.starlight-aside--tip .starlight-aside__title,
+.starlight-aside--tip .starlight-aside__icon {
+  color: #c084fc !important;
+}
+
+.starlight-aside--caution,
+.aside-caution {
+  border-left: 4px solid #f59e0b !important;
+  background-color: #241400 !important;
+}
+
+.starlight-aside--caution .starlight-aside__title,
+.starlight-aside--caution .starlight-aside__icon {
+  color: #fbbf24 !important;
+}
+
+.starlight-aside--danger,
+.aside-danger {
+  border-left: 4px solid #ef4444 !important;
+  background-color: #26080c !important;
+}
+
+.starlight-aside--danger .starlight-aside__title,
+.starlight-aside--danger .starlight-aside__icon {
+  color: #f87171 !important;
 }
 
 /* Cards & Components High Contrast Styling */
@@ -298,14 +402,30 @@ nav.sidebar a:hover {
   }
 }
 
-/* Code Blocks & Terminal Snippets */
-aside, .aside, blockquote, pre, .expressive-code .frame {
-  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+/* Expressive Code & Code Snippets Dark Theme Force */
+.expressive-code,
+.expressive-code .frame,
+.expressive-code pre,
+.expressive-code code {
+  background-color: #060a06 !important;
+  border-color: rgba(0, 255, 0, 0.25) !important;
+  color: #e0e0e0 !important;
+}
+
+.expressive-code .frame .header {
+  background-color: #0e170e !important;
+  border-color: rgba(0, 255, 0, 0.25) !important;
+  color: #00ff00 !important;
+}
+
+.expressive-code pre {
+  background-color: #060a06 !important;
 }
 
 pre:not(.expressive-code pre) {
   border: 1px solid rgba(0, 255, 0, 0.2) !important;
-  background-color: #080d08 !important;
+  background-color: #060a06 !important;
+  color: #00ff00 !important;
 }
 
 .expressive-code .frame pre,
