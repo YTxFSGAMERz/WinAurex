@@ -34,10 +34,6 @@ catch {
     Write-Host "`n[ERROR] Failed to create restore point. Ensure System Protection is enabled in Windows." -ForegroundColor Red
 }
 
-if (-not $Force) {
-    if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
 }
-
