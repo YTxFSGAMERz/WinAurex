@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param (
-    [switch]$Force
+    [switch]$Force,
+    [ValidateSet("1", "2", "3")][string]$Choice
 )
 
 # Windows Configuration & Optimization Framework
@@ -28,46 +29,44 @@ Write-Host "2. Fixed Size (16GB) (For Heavy Gaming/Simulators)"
 Write-Host "3. Abort"
 Write-Host "================================================="
 
+if (-not $Choice) {
+    if ($Force -or [Console]::IsInputRedirected) {
+        $Choice = "1"
+    } else {
+        $Choice = Read-Host "Select an option [1-3]"
+    }
+}
+
 if ($Choice -notmatch '^[1-2]$') {
 #     Write-FrameworkLog -ModuleName "Storage" -Action "Aborted Pagefile config"
     Write-Host "`nAborted by user."
+    if (-not $Force -and -not [Console]::IsInputRedirected) { Read-Host "Press Enter to exit..." }
     Exit
 }
 
 # Write-FrameworkLog -ModuleName "Storage" -Action "Backing up Pagefile registry settings"
 $RegPath1 = "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
 $BackupFile = Join-Path -Path $SnapshotDir -ChildPath "Pagefile_Backup_$(Get-Date -Format 'yyyyMMdd_HHmmss').reg"
-& reg export $RegPath1 $BackupFile /y | Out-Null
+& reg export $RegPath1 $BackupFile /y 2>$null | Out-Null
 
 $SysKey = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
 
 if ($Choice -eq '1') {
     Write-Host "`nSetting Pagefile to System Managed..." -ForegroundColor Yellow
-    $ComputerSystem = Get-WmiObject -Class Win32_ComputerSystem -EnableAllPrivileges
-    $ComputerSystem.AutomaticManagedPagefile = $true
-    $ComputerSystem.Put() | Out-Null
-    
+    Set-CimInstance -Query "Select * from Win32_ComputerSystem" -Property @{AutomaticManagedPagefile = $true} -ErrorAction SilentlyContinue
+    Remove-ItemProperty -Path $SysKey -Name "PagingFiles" -ErrorAction SilentlyContinue
 #     Write-FrameworkLog -ModuleName "Storage" -Action "Set Pagefile to System Managed"
     Write-Host "[SUCCESS] Pagefile is now System Managed." -ForegroundColor Green
 } else {
     Write-Host "`nSetting Pagefile to Fixed 16GB..." -ForegroundColor Yellow
-    $ComputerSystem = Get-WmiObject -Class Win32_ComputerSystem -EnableAllPrivileges
-    $ComputerSystem.AutomaticManagedPagefile = $false
-    $ComputerSystem.Put() | Out-Null
-    
-    $PageFile = Get-WmiObject -Class Win32_PageFileSetting
-    if ($PageFile) {
-        $PageFile.InitialSize = 16384
-        $PageFile.MaximumSize = 16384
-        $PageFile.Put() | Out-Null
-    } else {
-        Set-WmiInstance -Class Win32_PageFileSetting -Arguments @{Name="C:\pagefile.sys"; InitialSize=16384; MaximumSize=16384} | Out-Null
-    }
-
+    Set-CimInstance -Query "Select * from Win32_ComputerSystem" -Property @{AutomaticManagedPagefile = $false} -ErrorAction SilentlyContinue
+    Set-ItemProperty -Path $SysKey -Name "PagingFiles" -Value "C:\pagefile.sys 16384 16384" -Type MultiString -Force
 #     Write-FrameworkLog -ModuleName "Storage" -Action "Set Pagefile to Fixed 16GB"
     Write-Host "[SUCCESS] Pagefile is now fixed to 16GB." -ForegroundColor Green
 }
 
 Write-Host "A SYSTEM REBOOT is required for virtual memory changes to take effect." -ForegroundColor Yellow
 
-
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
