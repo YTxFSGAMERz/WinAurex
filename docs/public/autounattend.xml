@@ -469,6 +469,7 @@ $regTweaks = @(
 	{ fsutil.exe behavior set disableLastAccess 1; };
 	{ reg.exe add &quot;HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power&quot; /v HiberbootEnabled /t REG_DWORD /d 0 /f; };
 	{ reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\Dsh&quot; /v AllowNewsAndInterests /t REG_DWORD /d 0 /f; };
+	{ reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "NoConnectedUser" /t REG_DWORD /d 1 /f; };
 	{ reg.exe add &quot;HKLM\Software\Policies\Microsoft\Windows\CloudContent&quot; /v &quot;DisableWindowsConsumerFeatures&quot; /t REG_DWORD /d 1 /f; };
 	{ reg.exe add &quot;HKLM\SYSTEM\CurrentControlSet\Control\BitLocker&quot; /v &quot;PreventDeviceEncryption&quot; /t REG_DWORD /d 1 /f; };
 	{ reg.exe add &quot;HKLM\Software\Policies\Microsoft\Edge&quot; /v HideFirstRunExperience /t REG_DWORD /d 1 /f; };
@@ -552,7 +553,7 @@ $regTweaks = @(
     { reg.exe add &quot;HKLM\SYSTEM\CurrentControlSet\Services\WdNisDrv&quot; /v Start /t REG_DWORD /d 4 /f | Out-Null; };
     { reg.exe add &quot;HKLM\SYSTEM\CurrentControlSet\Services\WdFilter&quot; /v Start /t REG_DWORD /d 4 /f | Out-Null; };
     { reg.exe add &quot;HKLM\SYSTEM\CurrentControlSet\Services\Sense&quot; /v Start /t REG_DWORD /d 4 /f | Out-Null; };
-    { reg.exe add &quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer&quot; /v SettingsPageVisibility /t REG_SZ /d &quot;hide:virus;windowsupdate&quot; /f | Out-Null; };
+    { reg.exe add &quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer&quot; /v SettingsPageVisibility /t REG_SZ /d &quot;hide:virus;windowsupdate;windowsdefender;home&quot; /f | Out-Null; };
 
     # Edge / OneDrive Path Removes
     { Remove-Item -Path &quot;C:\Program Files (x86)\Microsoft\Edge&quot; -Recurse -Force -ErrorAction SilentlyContinue; };
@@ -7053,6 +7054,7 @@ Remove-Item -Path &quot;$env:SystemRoot\SysWOW64\OneDriveSetup.exe&quot; -Force 
 Remove-Item -Path &quot;$env:SystemRoot\System32\OneDriveSetup.exe&quot; -Force -ErrorAction SilentlyContinue
 
 # 3. Disable Automatic App Downloads (Candy Crush, etc)
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v NoConnectedUser /t REG_DWORD /d 1 /f
 reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent&quot; /v DisableWindowsConsumerFeatures /t REG_DWORD /d 1 /f
 reg.exe add &quot;HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager&quot; /v SilentInstalledAppsEnabled /t REG_DWORD /d 0 /f
 
@@ -7957,5 +7959,7 @@ $null = Read-Host &quot;Press Enter to exit...&quot;
 
   </Extensions>
 </unattend>
+
+
 
 
