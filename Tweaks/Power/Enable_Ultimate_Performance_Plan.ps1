@@ -33,6 +33,6 @@ if ($Success -and $DuplicateOutput -match "([a-fA-F0-9\-]{36})") {
 #     Write-FrameworkLog -ModuleName "Power" -Action "Failed to unlock Ultimate Performance Plan" -Level ERROR
     Write-Host "`n[ERROR] Failed to duplicate the Ultimate Performance scheme." -ForegroundColor Red
 }
-
-
-
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
