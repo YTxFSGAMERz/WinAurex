@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param (
-    [switch]$Force
+    [switch]$Force,
+    [ValidateSet("1", "2", "3")][string]$Choice
 )
 
 # ==============================================================================
@@ -40,7 +41,11 @@ function Ensure-Paths {
 }
 
 function Clear-Console {
-    Clear-Host
+    try {
+        if (-not [Console]::IsOutputRedirected -and -not [Console]::IsInputRedirected) {
+            Clear-Host
+        }
+    } catch {}
     Write-Host "======================================================================" -ForegroundColor Cyan
     Write-Host "                    WINDOWS CLEAN BOOT & TROUBLESHOOT MANAGER         " -ForegroundColor Cyan
     Write-Host "======================================================================" -ForegroundColor Cyan
@@ -60,6 +65,8 @@ if (-not $isAdmin) {
     exit
 }
 
+$runningAutomated = $Force -or ($Choice -ne "")
+
 while ($true) {
     Clear-Console
     $hasBackup = Test-Path $ProfileFile
@@ -78,8 +85,9 @@ while ($true) {
     Write-Host "  3. Exit" -ForegroundColor Red
     Write-Host ""
 
+    $activeChoice = if ($Choice) { $Choice } elseif ($Force -or [Console]::IsInputRedirected) { "3" } else { Read-Host "Select an option [1-3]" }
 
-    switch ($choice) {
+    switch ($activeChoice) {
         "1" {
             if ($hasBackup) {
                 Write-Host ""
@@ -138,9 +146,8 @@ while ($true) {
             }
 
             Write-Host "    Found $($startupApps.Count) active startup items." -ForegroundColor Gray
-            Write-Host ""
-
-            if ($confirm -ne "y") { continue }
+            $confirm = if ($Force -or [Console]::IsInputRedirected) { "y" } else { Read-Host "Proceed with disabling third-party services and startup apps? [y/n]" }
+            if ($confirm -notmatch '^[yY]') { continue }
 
             # Prepare Backup Payload
             $backupData = @{
@@ -215,6 +222,9 @@ while ($true) {
             Write-Host " [!] IMPORTANT: Please RESTART your computer now to isolate issues." -ForegroundColor Yellow
             Write-Host " ======================================================================" -ForegroundColor Green
             Write-Host ""
+            if (-not $runningAutomated -and -not [Console]::IsInputRedirected) {
+                Read-Host "Press Enter to continue..."
+            }
         }
 
         "2" {
@@ -295,11 +305,24 @@ while ($true) {
             Write-Host " [+] Please RESTART your computer to complete the normal boot restoration." -ForegroundColor Yellow
             Write-Host " ======================================================================" -ForegroundColor Green
             Write-Host ""
+            if (-not $runningAutomated -and -not [Console]::IsInputRedirected) {
+                Read-Host "Press Enter to continue..."
+            }
         }
 
         "3" {
             Write-Host "Exiting..." -ForegroundColor Cyan
             break
         }
+
+        default {
+            Write-Host "Invalid option. Please choose 1-3." -ForegroundColor Red
+            if ($runningAutomated) { break }
+            Start-Sleep -Seconds 1
+        }
+    }
+
+    if ($runningAutomated) {
+        break
     }
 }
