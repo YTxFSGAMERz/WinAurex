@@ -4,7 +4,7 @@ param (
 )
 
 # Windows Configuration & Optimization Framework
-# Repair Network (Tools/Repair/Repair_Network.ps1)
+# Network Repair (Tools/Repair/Repair_Network.ps1)
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Warning "This script requires Administrator privileges. Please run PowerShell as Admin."
@@ -20,10 +20,15 @@ Write-Host "================================================="
 Write-Host "This will flush DNS, reset Winsock, release/renew IP,"
 Write-Host "and reset the TCP/IP stack to fix 'No Internet' issues."
 Write-Host "WARNING: You will briefly lose connection."
-Write-Host "Press 'Y' to begin or any other key to abort..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
-if ($Confirm -notmatch 'y') {
+if ($Force -or [Console]::IsInputRedirected) {
+    $Confirm = 'y'
+} else {
+    Write-Host "Press 'Y' to begin or any other key to abort..."
+    $Confirm = Read-Host
+}
+
+if ($Confirm -notmatch '^[yY]') {
     Write-FrameworkLog -ModuleName "Repair" -Action "Aborted Network Repair"
     Write-Host "`nAborted by user."
     Exit
@@ -49,10 +54,7 @@ Write-FrameworkLog -ModuleName "Repair" -Action "Completed Network Repair"
 Write-Host "`n================================================="
 Write-Host "[SUCCESS] Network stack has been repaired." -ForegroundColor Green
 Write-Host "Please REBOOT YOUR COMPUTER to complete the Winsock reset."
-if (-not $Force) {
-    if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
-}
 
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
