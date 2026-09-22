@@ -1,6 +1,8 @@
 [CmdletBinding()]
 param (
-    [switch]$Force
+    [switch]$Force,
+    [ValidateSet("1", "2", "3")][string]$Op,
+    [string]$Select
 )
 
 # ==============================================================================
@@ -40,7 +42,11 @@ function Ensure-Paths {
 Ensure-Paths
 
 function Clear-Console {
-    Clear-Host
+    try {
+        if (-not [Console]::IsOutputRedirected -and -not [Console]::IsInputRedirected) {
+            Clear-Host
+        }
+    } catch {}
     Write-Host "======================================================================" -ForegroundColor Cyan
     Write-Host "                       WINDOWS STARTUP APPS MANAGER                   " -ForegroundColor Cyan
     Write-Host "======================================================================" -ForegroundColor Cyan
@@ -145,6 +151,8 @@ function Get-DisabledItems {
     return $items
 }
 
+$runningAutomated = $Force -or ($Op -ne "")
+
 while ($true) {
     Clear-Console
     Write-Host "Choose an action:" -ForegroundColor White
@@ -153,8 +161,9 @@ while ($true) {
     Write-Host "  3. Exit" -ForegroundColor Red
     Write-Host ""
     
+    $activeOp = if ($Op) { $Op } elseif ($Force -or [Console]::IsInputRedirected) { "3" } else { Read-Host "Select an option [1-3]" }
 
-    if ($op -eq "1") {
+    if ($activeOp -eq "1") {
         while ($true) {
             Clear-Console
             $actives = Get-StartupItems
@@ -164,6 +173,7 @@ while ($true) {
             if ($actives.Count -eq 0) {
                 Write-Host "No active startup applications found!" -ForegroundColor Yellow
                 Write-Host ""
+                if (-not $runningAutomated -and -not [Console]::IsInputRedirected) { Read-Host "Press Enter to return..." }
                 break
             }
 
@@ -174,9 +184,10 @@ while ($true) {
                 Write-Host ""
             }
 
-            if ($select -eq "q") { break }
+            $activeSelect = if ($Select) { $Select } elseif ([Console]::IsInputRedirected) { "q" } else { Read-Host "Enter app ID to disable (or 'q' to return)" }
+            if ($activeSelect -eq "q" -or [string]::IsNullOrWhiteSpace($activeSelect)) { break }
 
-            $match = $actives | Where-Object { $_.Id -eq $select }
+            $match = $actives | Where-Object { "$($_.Id)" -eq $activeSelect }
             if ($match) {
                 try {
                     if ($match.Type -like "Registry*") {
@@ -190,19 +201,22 @@ while ($true) {
                     }
                     Write-Host ""
                     Write-Host "[+] Disabled $($match.Name) successfully!" -ForegroundColor Green
-                    Start-Sleep -Seconds 1
+                    if (-not $runningAutomated) { Start-Sleep -Seconds 1 }
                 } catch {
                     Write-Host ""
                     Write-Host "[!] Error: Failed to disable $($match.Name). Make sure you run this script as Administrator if modifying System startup items." -ForegroundColor Red
                     Write-Host $_.Exception.Message -ForegroundColor Gray
+                    if (-not $runningAutomated) { Start-Sleep -Seconds 2 }
                 }
             } else {
                 Write-Host "Invalid selection." -ForegroundColor Red
-                Start-Sleep -Seconds 1
+                if (-not $runningAutomated) { Start-Sleep -Seconds 1 }
             }
+
+            if ($runningAutomated) { break }
         }
     }
-    elseif ($op -eq "2") {
+    elseif ($activeOp -eq "2") {
         while ($true) {
             Clear-Console
             $disableds = Get-DisabledItems
@@ -212,6 +226,7 @@ while ($true) {
             if ($disableds.Count -eq 0) {
                 Write-Host "No disabled startup applications found!" -ForegroundColor Yellow
                 Write-Host ""
+                if (-not $runningAutomated -and -not [Console]::IsInputRedirected) { Read-Host "Press Enter to return..." }
                 break
             }
 
@@ -222,9 +237,10 @@ while ($true) {
                 Write-Host ""
             }
 
-            if ($select -eq "q") { break }
+            $activeSelect = if ($Select) { $Select } elseif ([Console]::IsInputRedirected) { "q" } else { Read-Host "Enter app ID to enable (or 'q' to return)" }
+            if ($activeSelect -eq "q" -or [string]::IsNullOrWhiteSpace($activeSelect)) { break }
 
-            $match = $disableds | Where-Object { $_.Id -eq $select }
+            $match = $disableds | Where-Object { "$($_.Id)" -eq $activeSelect }
             if ($match) {
                 try {
                     if ($match.Type -like "Registry*") {
@@ -238,20 +254,32 @@ while ($true) {
                     }
                     Write-Host ""
                     Write-Host "[+] Re-enabled $($match.Name) successfully!" -ForegroundColor Green
-                    Start-Sleep -Seconds 1
+                    if (-not $runningAutomated) { Start-Sleep -Seconds 1 }
                 } catch {
                     Write-Host ""
                     Write-Host "[!] Error: Failed to re-enable $($match.Name). Make sure you run this script as Administrator if modifying System startup items." -ForegroundColor Red
                     Write-Host $_.Exception.Message -ForegroundColor Gray
+                    if (-not $runningAutomated) { Start-Sleep -Seconds 2 }
                 }
             } else {
                 Write-Host "Invalid selection." -ForegroundColor Red
-                Start-Sleep -Seconds 1
+                if (-not $runningAutomated) { Start-Sleep -Seconds 1 }
             }
+
+            if ($runningAutomated) { break }
         }
     }
-    elseif ($op -eq "3") {
+    elseif ($activeOp -eq "3") {
         Write-Host "Exiting..." -ForegroundColor Cyan
+        break
+    }
+    else {
+        Write-Host "Invalid choice, please select 1-3." -ForegroundColor Red
+        if ($runningAutomated) { break }
+        Start-Sleep -Seconds 1
+    }
+
+    if ($runningAutomated) {
         break
     }
 }
