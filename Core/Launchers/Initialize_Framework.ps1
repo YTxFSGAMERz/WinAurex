@@ -6,9 +6,9 @@ param (
 # Windows Configuration & Optimization Framework
 # First-Run Setup & Initialization
 
-$RootPath = Join-Path $PSScriptRoot ".."
-$ConfigPath = Join-Path $RootPath "Core\Config\FrameworkConfig.json"
-$DashboardScript = Join-Path $RootPath "Launch_Dashboard.ps1"
+$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
+$ConfigPath = Join-Path $RepoRoot "Core\Config\FrameworkConfig.json"
+$DashboardScript = Join-Path $RepoRoot "Launch_Dashboard.ps1"
 
 Write-Host "Initializing Framework Environment..." -ForegroundColor Cyan
 
@@ -34,7 +34,7 @@ if ($Config.IsInitialized -eq $false) {
     Write-Host "This appears to be your first time running the framework."
     
     # 2a. Ask to create a Desktop Shortcut
-    $CreateShortcut = Read-Host "`nWould you like to create a Desktop Shortcut for easy access? (Y/N)"
+    $CreateShortcut = if (-not $Force) { Read-Host "`nWould you like to create a Desktop Shortcut for easy access? (Y/N)" } else { "N" }
     if ($CreateShortcut -match 'y') {
         $ShortcutScript = Join-Path $PSScriptRoot "Create_Shortcut.ps1"
         if (Test-Path $ShortcutScript) {
@@ -44,7 +44,7 @@ if ($Config.IsInitialized -eq $false) {
     }
 
     # 2b. Ask to create an initial System Restore Point
-    $CreateRestore = Read-Host "`nWould you like to create a Windows System Restore Point now? [Recommended] (Y/N)"
+    $CreateRestore = if (-not $Force) { Read-Host "`nWould you like to create a Windows System Restore Point now? [Recommended] (Y/N)" } else { "N" }
     if ($CreateRestore -match 'y') {
         Write-Host "Creating Restore Point (This may take a minute)..." -ForegroundColor Yellow
         try {
@@ -72,5 +72,5 @@ if (Test-Path $DashboardScript) {
     Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$DashboardScript`""
 } else {
     Write-Error "Could not find Launch_Dashboard.ps1 at $DashboardScript"
-    Read-Host "Press any key to exit..."
+    if (-not $Force) { Read-Host "Press any key to exit..." }
 }
