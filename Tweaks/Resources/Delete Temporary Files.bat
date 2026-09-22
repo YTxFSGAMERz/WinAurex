@@ -40,7 +40,10 @@ del /S /F /Q "%SystemDrive%\Users\%USERNAME%\AppData\Local\Microsoft\Windows\Web
 del /S /F /Q "%SystemDrive%\Users\%USERNAME%\AppData\Local\Microsoft\Windows\SettingSync\*.log"
 del /S /F /Q "%SystemDrive%\Users\%USERNAME%\AppData\Local\Microsoft\Windows\Explorer\ThumbCacheToDelete\*.tmp"
 del /S /F /Q "%SystemDrive%\Users\%USERNAME%\AppData\Local\Microsoft\Terminal Server Client\Cache\*.bin"
-net stop wuauserv
-net stop UsoSvc
-del /S /F /Q "%WINDIR%\SoftwareDistribution"
-timeout /t 5 /nobreak
+net stop wuauserv >nul 2>&1
+net stop UsoSvc >nul 2>&1
+del /S /F /Q "%WINDIR%\SoftwareDistribution\Download\*.*" >nul 2>&1
+for /d %%p in ("%WINDIR%\SoftwareDistribution\Download\*") do rmdir /s /q "%%p" >nul 2>&1
+net start wuauserv >nul 2>&1
+net start UsoSvc >nul 2>&1
+ping 127.0.0.1 -n 3 >nul 2>&1
