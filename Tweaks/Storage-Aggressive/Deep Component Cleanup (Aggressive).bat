@@ -40,13 +40,22 @@ echo.
 echo ======================================================================
 echo.
 
-set /p confirm=To confirm and proceed, please type "AGREE" (case-sensitive): 
+set "confirm="
+if /i "%~1"=="/y" set "confirm=AGREE"
+if /i "%~1"=="-y" set "confirm=AGREE"
+if /i "%~1"=="/force" set "confirm=AGREE"
+if /i "%~1"=="--force" set "confirm=AGREE"
+if /i "%~1"=="AGREE" set "confirm=AGREE"
+
+if not defined confirm (
+    set /p confirm=To confirm and proceed, please type "AGREE" (case-sensitive): 
+)
 
 if not "!confirm!"=="AGREE" (
     echo.
     echo [x] Confirmation failed. Exiting without making changes...
     echo.
-    timeout /t 5
+    ping 127.0.0.1 -n 3 >nul 2>&1
     exit /b
 )
 
