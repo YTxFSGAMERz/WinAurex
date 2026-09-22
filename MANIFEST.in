@@ -1,0 +1,11 @@
+include README.md
+include LICENSE
+include winaurex.cmd
+include PC_Cleaner.bat
+include Start.bat
+include Launch_Dashboard.ps1
+recursive-include Core *
+recursive-include Tweaks *
+recursive-include Profiles *
+recursive-include Tools *
+recursive-include GUI *
