@@ -24,7 +24,7 @@ Write-Host "This will strip telemetry, disable mouse acceleration,"
 Write-Host "enforce WASAPI exclusive mode, and optimize Explorer."
 Write-Host "=================================================`n"
 
-$Confirm = Read-Host "Are you sure you want to apply this profile? A transactional snapshot will be created. (Y/N)"
+$Confirm = if ($Force -or [Console]::IsInputRedirected) { "Y" } else { Read-Host "Are you sure you want to apply this profile? A transactional snapshot will be created. (Y/N)" }
 if ($Confirm -notmatch '^[yY]') { Exit }
 
 # 1. Initialize Transaction
@@ -87,4 +87,6 @@ Write-Host "`n[SUCCESS] Max Performance Profile deployed successfully!" -Foregro
 Write-Host "Please restart your computer to apply all state changes." -ForegroundColor Yellow
 
 
-$null = Read-Host "Press Enter to exit..."
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "Press Enter to exit..."
+}
