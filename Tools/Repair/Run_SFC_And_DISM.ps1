@@ -21,10 +21,15 @@ Write-Host "This script runs DISM (Deployment Image Servicing and Management)"
 Write-Host "and SFC (System File Checker) to detect and repair corrupted"
 Write-Host "core Windows files."
 Write-Host "Note: This process may take 10-30 minutes."
-Write-Host "Press 'Y' to begin or any other key to abort..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
-if ($Confirm -notmatch 'y') {
+if ($Force -or [Console]::IsInputRedirected) {
+    $Confirm = 'y'
+} else {
+    Write-Host "Press 'Y' to begin or any other key to abort..."
+    $Confirm = Read-Host
+}
+
+if ($Confirm -notmatch '^[yY]') {
     Write-FrameworkLog -ModuleName "Repair" -Action "Aborted SFC/DISM Repair"
     Write-Host "`nAborted by user."
     Exit
@@ -47,10 +52,7 @@ Write-Host "`n================================================="
 Write-Host "[SUCCESS] Repair operations have finished." -ForegroundColor Green
 Write-Host "Please review the output above for any unresolved corruptions."
 Write-Host "A SYSTEM REBOOT is highly recommended if errors were fixed."
-if (-not $Force) {
-    if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
-}
 
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
