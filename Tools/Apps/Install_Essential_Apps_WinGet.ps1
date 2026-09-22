@@ -17,10 +17,15 @@ Write-Host "================================================="
 Write-Host "This script will use Microsoft's native package manager (WinGet)"
 Write-Host "to silently install essential utilities for a fresh Windows setup."
 Write-Host "Apps to install: 7-Zip, VLC, Notepad++, Brave Browser, Discord."
-Write-Host "Press 'Y' to continue or any other key to abort..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
-if ($Confirm -notmatch 'y') {
+if ($Force -or [Console]::IsInputRedirected) {
+    $Confirm = 'y'
+} else {
+    Write-Host "Press 'Y' to continue or any other key to abort..."
+    $Confirm = Read-Host
+}
+
+if ($Confirm -notmatch '^[yY]') {
     Write-Host "`nAborted by user."
     Exit
 }
@@ -29,7 +34,7 @@ if ($Confirm -notmatch 'y') {
 if (-not (Get-Command "winget" -ErrorAction SilentlyContinue)) {
     Write-Host "`n[ERROR] WinGet is not installed or not in PATH." -ForegroundColor Red
     Write-Host "Ensure you have the 'App Installer' package from the Microsoft Store."
-    Start-Sleep -Seconds 3
+    if (-not $Force -and -not [Console]::IsInputRedirected) { Read-Host "Press Enter to exit..." }
     Exit
 }
 
@@ -55,8 +60,7 @@ foreach ($Id in $Apps.Keys) {
 
 Write-Host "================================================="
 Write-Host "[SUCCESS] All essential applications have been processed!" -ForegroundColor Green
-if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
 
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
