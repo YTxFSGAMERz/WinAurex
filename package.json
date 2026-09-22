@@ -1,25 +1,52 @@
 {
   "name": "winaurex",
-  "version": "1.0.0",
-  "description": "<div align=\"center\">",
-  "main": "index.js",
+  "version": "1.2.0",
+  "description": "Advanced Windows Optimization, Debloating, and Performance Suite CLI",
+  "main": "bin/winaurex.js",
+  "bin": {
+    "winaurex": "./bin/winaurex.js"
+  },
+  "files": [
+    "bin",
+    "Core",
+    "Tweaks",
+    "Profiles",
+    "Tools",
+    "GUI",
+    "winaurex.cmd",
+    "PC_Cleaner.bat",
+    "Start.bat",
+    "Launch_Dashboard.ps1"
+  ],
+  "os": [
+    "win32"
+  ],
   "directories": {
     "doc": "docs"
   },
   "scripts": {
+    "start": "node ./bin/winaurex.js",
     "docs:dev": "npm run dev --prefix docs",
     "docs:build": "npm install --prefix docs && npm run build --prefix docs",
     "docs:preview": "npm run preview --prefix docs",
     "deploy": "npm run docs:build && wrangler deploy",
     "preview": "npm run docs:build && wrangler dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./bin/winaurex.js --version"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/YTxFSGAMERz/WinAurex.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "windows",
+    "optimizer",
+    "tweaks",
+    "debloat",
+    "performance",
+    "cli",
+    "winaurex"
+  ],
+  "author": "YTxFSGAMERz",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/YTxFSGAMERz/WinAurex/issues"
