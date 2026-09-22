@@ -7,10 +7,26 @@
 # SAFETY LEVEL: Safe & Fully Reversible
 # ==============================================================================
 
+param(
+    [switch]$Force,
+    [ValidateSet("1", "2", "3", "4")][string]$Choice,
+    [string]$ExePath,
+    [ValidateSet("1", "2", "3")][string]$PrefChoice,
+    [string]$DelChoice
+)
+
 $Host.UI.RawUI.WindowTitle = "DirectX Graphics Preference Manager"
 
+function Clear-Screen {
+    try {
+        if (-not [Console]::IsOutputRedirected -and -not [Console]::IsInputRedirected) {
+            Clear-Host
+        }
+    } catch {}
+}
+
 # Clear Screen & Print Beautiful Title
-Clear-Host
+Clear-Screen
 Write-Host "======================================================================" -ForegroundColor Cyan
 Write-Host "                DIRECTX PER-GAME GPU PREFERENCE MANAGER               " -ForegroundColor Cyan
 Write-Host "======================================================================" -ForegroundColor Cyan
@@ -41,7 +57,7 @@ function Show-Menu {
 }
 
 function List-Profiles {
-    Clear-Host
+    Clear-Screen
     Write-Host "=== Current Custom GPU Settings ===" -ForegroundColor Cyan
     Write-Host ""
     
@@ -79,30 +95,43 @@ function List-Profiles {
     return $profiles
 }
 
+$runningAutomated = $Force -or ($Choice -ne "")
+
 while ($true) {
     Show-Menu
     
-    switch ($choice) {
+    $activeChoice = if ($Choice) { $Choice } elseif ($Force -or [Console]::IsInputRedirected) { "1" } else { Read-Host "Select an option [1-4]" }
+
+    switch ($activeChoice) {
         "1" {
             List-Profiles | Out-Null
-            Clear-Host
+            if (-not $runningAutomated -and -not [Console]::IsInputRedirected) {
+                Read-Host "Press Enter to return to menu..."
+            }
         }
         
         "2" {
-            Clear-Host
+            Clear-Screen
             Write-Host "=== Add/Modify Graphics Profile ===" -ForegroundColor Cyan
             Write-Host ""
-            Write-Host "Enter the absolute path to the game executable (.exe):" -ForegroundColor Gray
             
-            # Remove quotes if user dragged and dropped the file
-            $exePath = $exePath.Trim('"').Trim("'")
+            $rawExe = if ($ExePath) { $ExePath } elseif ([Console]::IsInputRedirected) { "" } else { Read-Host "Enter the absolute path to the game executable (.exe)" }
+            
+            if ([string]::IsNullOrWhiteSpace($rawExe)) {
+                Write-Host "No path entered. Returning to menu..." -ForegroundColor Yellow
+                if (-not $runningAutomated) { Start-Sleep -Seconds 1 }
+                continue
+            }
 
-            if (-not (Test-Path $exePath)) {
+            # Remove quotes if user dragged and dropped the file
+            $cleanExePath = $rawExe.Trim('"').Trim("'")
+
+            if (-not (Test-Path $cleanExePath)) {
                 Write-Host ""
-                Write-Host "[!] Warning: The path specified was not found locally." -ForegroundColor Yellow
+                Write-Host "[!] Warning: The path specified was not found locally: $cleanExePath" -ForegroundColor Yellow
                 Write-Host "    Make sure the path is correct or double check if the game is installed." -ForegroundColor Yellow
+                $confirm = if ($Force -or [Console]::IsInputRedirected) { "y" } else { Read-Host "Do you want to add it anyway? [y/n]" }
                 if ($confirm -ne "y") {
-                    Clear-Host
                     continue
                 }
             }
@@ -113,45 +142,46 @@ while ($true) {
             Write-Host "  2. Power Saving GPU (Integrated graphics chip)" -ForegroundColor Yellow
             Write-Host "  3. System Default" -ForegroundColor Gray
 
+            $activePrefChoice = if ($PrefChoice) { $PrefChoice } elseif ($Force -or [Console]::IsInputRedirected) { "1" } else { Read-Host "Enter GPU Preference [1-3]" }
+
             $prefVal = ""
-            switch ($prefChoice) {
+            switch ($activePrefChoice) {
                 "1" { $prefVal = "GpuPreference=2;" }
                 "2" { $prefVal = "GpuPreference=1;" }
                 "3" { $prefVal = "GpuPreference=0;" }
                 default {
                     Write-Host "Invalid preference selection." -ForegroundColor Red
-                    Clear-Host
+                    if (-not $runningAutomated) { Start-Sleep -Seconds 1 }
                     continue
                 }
             }
 
             # Add to registry
             try {
-                Set-ItemProperty -Path $RegPath -Name $exePath -Value $prefVal -Force | Out-Null
+                Set-ItemProperty -Path $RegPath -Name $cleanExePath -Value $prefVal -Force | Out-Null
                 Write-Host ""
-                Write-Host "[+] Successfully saved preference for $exePath!" -ForegroundColor Green
+                Write-Host "[+] Successfully saved preference for $cleanExePath!" -ForegroundColor Green
                 Write-Host "    Setting applied: $prefVal" -ForegroundColor Gray
             } catch {
                 Write-Host "[!] Error: Failed to write registry value." -ForegroundColor Red
                 Write-Host $_.Exception.Message -ForegroundColor Gray
             }
-            Write-Host ""
-            Clear-Host
+            if (-not $runningAutomated) { Start-Sleep -Seconds 2 }
         }
         
         "3" {
             $profiles = List-Profiles
             if (-not $profiles) {
-                Clear-Host
+                if (-not $runningAutomated) { Start-Sleep -Seconds 1 }
                 continue
             }
             
-            if ($delChoice -eq "q") {
-                Clear-Host
+            $activeDelChoice = if ($DelChoice) { $DelChoice } elseif ([Console]::IsInputRedirected) { "q" } else { Read-Host "Enter profile number to remove (or 'q' to cancel)" }
+            if ($activeDelChoice -eq "q" -or [string]::IsNullOrWhiteSpace($activeDelChoice)) {
                 continue
             }
 
-            $selected = $profiles | Where-Object { $_.Index -eq $delChoice }
+            $selected = $profiles | Where-Object { "$($_.Index)" -eq $activeDelChoice }
             if ($selected) {
                 try {
                     Remove-ItemProperty -Path $RegPath -Name $selected.App -Force | Out-Null
@@ -163,19 +193,22 @@ while ($true) {
             } else {
                 Write-Host "Invalid selection." -ForegroundColor Red
             }
-            Write-Host ""
-            Clear-Host
+            if (-not $runningAutomated) { Start-Sleep -Seconds 2 }
         }
         
         "4" {
             Write-Host "Exiting..." -ForegroundColor Cyan
-            exit
+            break
         }
         
         default {
             Write-Host "Invalid choice, please select 1-4." -ForegroundColor Red
+            if ($runningAutomated) { break }
             Start-Sleep -Seconds 1
-            Clear-Host
         }
+    }
+
+    if ($runningAutomated) {
+        break
     }
 }
