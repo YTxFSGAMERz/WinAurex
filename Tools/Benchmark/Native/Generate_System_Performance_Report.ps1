@@ -41,12 +41,16 @@ $ActiveServices = (Get-Service | Where-Object Status -eq 'Running').Count
 $TotalProcesses = (Get-Process).Count
 
 # 4. Boot Time
-$Events = Get-WinEvent -LogName "Microsoft-Windows-Diagnostics-Performance/Operational" -FilterXPath "*[System[EventID=100]]" -MaxEvents 1 -ErrorAction SilentlyContinue
 $BootTime = "N/A"
-if ($Events) {
-    $EventXml = [xml]$Events[0].ToXml()
-    $BootTimeMS = $EventXml.Event.EventData.Data | Where-Object { $_.Name -eq "BootTime" } | Select-Object -ExpandProperty '#text'
-    if ($BootTimeMS) { $BootTime = "$([math]::Round([int]$BootTimeMS / 1000, 2)) seconds" }
+try {
+    $Events = Get-WinEvent -LogName "Microsoft-Windows-Diagnostics-Performance/Operational" -FilterXPath "*[System[EventID=100]]" -MaxEvents 1 -ErrorAction Stop
+    if ($Events) {
+        $EventXml = [xml]$Events[0].ToXml()
+        $BootTimeMS = $EventXml.Event.EventData.Data | Where-Object { $_.Name -eq "BootTime" } | Select-Object -ExpandProperty '#text'
+        if ($BootTimeMS) { $BootTime = "$([math]::Round([int]$BootTimeMS / 1000, 2)) seconds" }
+    }
+} catch {
+    $BootTime = "N/A"
 }
 
 Write-Host "Generating HTML Report..." -ForegroundColor Cyan
@@ -100,6 +104,7 @@ $Html | Out-File -FilePath $ReportFile -Encoding UTF8
 Write-Host "`n[SUCCESS] Report generated: $ReportFile" -ForegroundColor Green
 Write-Host "Open this file in your browser to view."
 
-Write-Host "`nPress any key to exit..."
-if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
 
