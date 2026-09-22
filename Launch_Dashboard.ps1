@@ -30,6 +30,12 @@ Import-Module (Join-Path -Path $EngineDir -ChildPath "ValidationEngine.psm1") -F
 Import-Module (Join-Path -Path $EngineDir -ChildPath "RestoreEngine.psm1") -Force
 $BackupsDir = Join-Path -Path $RootPath -ChildPath "Core\Restore\Backups"
 
+# Import PC Cleaner Engine
+$CleanerModule = Join-Path -Path $RootPath -ChildPath "Tools\Cleaner\WinAurex-Cleaner.psm1"
+if (Test-Path $CleanerModule) {
+    Import-Module $CleanerModule -Force
+}
+
 # Load XAML
 [xml]$Global:xmlWPF = Get-Content -Path $XamlPath
 $StringReader = New-Object System.IO.StringReader $Global:xmlWPF.OuterXml
@@ -61,6 +67,33 @@ $TxtDpcLatency = Find-Control "TxtDpcLatency"
 $TxtMemAvailable = Find-Control "TxtMemAvailable"
 $TxtUptime = Find-Control "TxtUptime"
 $TxtProcessCount = Find-Control "TxtProcessCount"
+
+# PC Cleaner UI Hooks
+$BtnAnalyzeStorage = Find-Control "BtnAnalyzeStorage"
+$BtnCleanStorage = Find-Control "BtnCleanStorage"
+$TxtDriveCapacity = Find-Control "TxtDriveCapacity"
+$TxtDriveUsed = Find-Control "TxtDriveUsed"
+$TxtDriveFree = Find-Control "TxtDriveFree"
+$TxtReclaimableTotal = Find-Control "TxtReclaimableTotal"
+
+$ChkSystemTemp = Find-Control "ChkSystemTemp"
+$TxtSizeSystemTemp = Find-Control "TxtSizeSystemTemp"
+$ChkCrashDumps = Find-Control "ChkCrashDumps"
+$TxtSizeCrashDumps = Find-Control "TxtSizeCrashDumps"
+$ChkAIIndex = Find-Control "ChkAIIndex"
+$TxtSizeAIIndex = Find-Control "TxtSizeAIIndex"
+$ChkAppUpdaters = Find-Control "ChkAppUpdaters"
+$TxtSizeAppUpdaters = Find-Control "TxtSizeAppUpdaters"
+$ChkSquirrel = Find-Control "ChkSquirrel"
+$TxtSizeSquirrel = Find-Control "TxtSizeSquirrel"
+$ChkBrowserCaches = Find-Control "ChkBrowserCaches"
+$TxtSizeBrowserCaches = Find-Control "TxtSizeBrowserCaches"
+$ChkDevCaches = Find-Control "ChkDevCaches"
+$TxtSizeDevCaches = Find-Control "TxtSizeDevCaches"
+$ChkLooseInstallers = Find-Control "ChkLooseInstallers"
+$TxtSizeLooseInstallers = Find-Control "TxtSizeLooseInstallers"
+$ChkComponentStore = Find-Control "ChkComponentStore"
+$TxtSizeComponentStore = Find-Control "TxtSizeComponentStore"
 
 # --- STATUS UPDATER ---
 function Set-Status {
@@ -157,6 +190,98 @@ $Timer.Add_Tick({
 })
 $Timer.Start()
 
+# --- PC CLEANER TAB LOGIC ---
+function Update-DriveMetrics {
+    try {
+        $cDrive = Get-PSDrive C -ErrorAction SilentlyContinue
+        if ($null -ne $cDrive) {
+            $total = [math]::Round(($cDrive.Used + $cDrive.Free) / 1GB, 1)
+            $used  = [math]::Round($cDrive.Used / 1GB, 1)
+            $free  = [math]::Round($cDrive.Free / 1GB, 1)
+            if ($null -ne $TxtDriveCapacity) { $TxtDriveCapacity.Text = "$total GB" }
+            if ($null -ne $TxtDriveUsed) { $TxtDriveUsed.Text = "$used GB" }
+            if ($null -ne $TxtDriveFree) { $TxtDriveFree.Text = "$free GB" }
+        }
+    } catch { }
+}
+
+$Global:LastCleanerAnalysis = $null
+
+if ($null -ne $BtnAnalyzeStorage) {
+    $BtnAnalyzeStorage.Add_Click({
+        Set-Status -Message "Scanning storage tiers for junk..." -Color "#ffb300"
+        
+        # Run analysis
+        $analysis = Get-WinAurexJunkAnalysis
+        $Global:LastCleanerAnalysis = $analysis
+        
+        $totalBytes = 0L
+        foreach ($item in $analysis) {
+            if ($item.Id -ne "ComponentStore") { $totalBytes += $item.SizeBytes }
+            
+            switch ($item.Id) {
+                "SystemTemp"        { if ($null -ne $TxtSizeSystemTemp) { $TxtSizeSystemTemp.Text = $item.SizeText } }
+                "CrashDumps"        { if ($null -ne $TxtSizeCrashDumps) { $TxtSizeCrashDumps.Text = $item.SizeText } }
+                "AIIndexCaches"     { if ($null -ne $TxtSizeAIIndex) { $TxtSizeAIIndex.Text = $item.SizeText } }
+                "AppUpdaters"       { if ($null -ne $TxtSizeAppUpdaters) { $TxtSizeAppUpdaters.Text = $item.SizeText } }
+                "SquirrelVersions"  { if ($null -ne $TxtSizeSquirrel) { $TxtSizeSquirrel.Text = $item.SizeText } }
+                "BrowserCaches"     { if ($null -ne $TxtSizeBrowserCaches) { $TxtSizeBrowserCaches.Text = $item.SizeText } }
+                "DevCaches"         { if ($null -ne $TxtSizeDevCaches) { $TxtSizeDevCaches.Text = $item.SizeText } }
+                "LooseInstallers"   { if ($null -ne $TxtSizeLooseInstallers) { $TxtSizeLooseInstallers.Text = $item.SizeText } }
+                "ComponentStore"    { if ($null -ne $TxtSizeComponentStore) { $TxtSizeComponentStore.Text = $item.SizeText } }
+            }
+        }
+        
+        if ($null -ne $TxtReclaimableTotal) { $TxtReclaimableTotal.Text = Format-Bytes $totalBytes }
+        if ($null -ne $BtnCleanStorage) { $BtnCleanStorage.IsEnabled = $true }
+        Set-Status -Message "Storage analysis complete! Review tiers and click PURGE SELECTED JUNK." -Color "#00ff41"
+    })
+}
+
+if ($null -ne $BtnCleanStorage) {
+    $BtnCleanStorage.Add_Click({
+        $selected = @()
+        if ($ChkSystemTemp.IsChecked) { $selected += "SystemTemp" }
+        if ($ChkCrashDumps.IsChecked) { $selected += "CrashDumps" }
+        if ($ChkAIIndex.IsChecked) { $selected += "AIIndexCaches" }
+        if ($ChkAppUpdaters.IsChecked) { $selected += "AppUpdaters" }
+        if ($ChkSquirrel.IsChecked) { $selected += "SquirrelVersions" }
+        if ($ChkBrowserCaches.IsChecked) { $selected += "BrowserCaches" }
+        if ($ChkDevCaches.IsChecked) { $selected += "DevCaches" }
+        if ($ChkLooseInstallers.IsChecked) { $selected += "LooseInstallers" }
+        if ($ChkComponentStore.IsChecked) { $selected += "ComponentStore" }
+        
+        if ($selected.Count -eq 0) {
+            [System.Windows.MessageBox]::Show("Please select at least one storage tier to clean.", "No Tiers Selected", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
+            return
+        }
+        
+        $confirm = [System.Windows.MessageBox]::Show(
+            "Are you sure you want to forcefully purge $($selected.Count) selected storage tiers?`n`nProtected user folders (Downloads, Photos, Virtual Machines, and Git Repos) will NOT be touched.",
+            "Confirm PC Storage Cleanup",
+            [System.Windows.MessageBoxButton]::YesNo,
+            [System.Windows.MessageBoxImage]::Warning
+        )
+        
+        if ($confirm -eq 'Yes') {
+            Set-Status -Message "Purging selected junk..." -Color "#ff5722"
+            $result = Invoke-WinAurexCleanup -Categories $selected
+            Update-DriveMetrics
+            
+            [System.Windows.MessageBox]::Show(
+                "Cleanup completed successfully!`n`nStorage Freed: $($result.FreedText)`nNew Free Space: $($result.EndFreeText)",
+                "WinAurex PC Cleaner",
+                [System.Windows.MessageBoxButton]::OK,
+                [System.Windows.MessageBoxImage]::Information
+            )
+            
+            Set-Status -Message "Cleanup Complete! Freed $($result.FreedText)" -Color "#00adb5"
+            if ($null -ne $TxtReclaimableTotal) { $TxtReclaimableTotal.Text = "Cleaned" }
+            $BtnCleanStorage.IsEnabled = $false
+        }
+    })
+}
+
 # --- ROLLBACK TAB LOGIC ---
 function Load-Transactions {
     $ListTransactions.Items.Clear()
@@ -220,4 +345,5 @@ $BtnRollbackSelected.Add_Click({
 
 # Initialize Window
 Load-Transactions
+Update-DriveMetrics
 $Window.ShowDialog() | Out-Null
