@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>winaurex</id>
+    <version>1.2.0</version>
+    <packageSourceUrl>https://github.com/YTxFSGAMERz/WinAurex</packageSourceUrl>
+    <owners>YTxFSGAMERz</owners>
+    <title>WinAurex CLI</title>
+    <authors>YTxFSGAMERz</authors>
+    <projectUrl>https://github.com/YTxFSGAMERz/WinAurex</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/YTxFSGAMERz/WinAurex/main/site/logo.png</iconUrl>
+    <copyright>2026 WinAurex Contributors</copyright>
+    <licenseUrl>https://github.com/YTxFSGAMERz/WinAurex/blob/main/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/YTxFSGAMERz/WinAurex</projectSourceUrl>
+    <docsUrl>https://github.com/YTxFSGAMERz/WinAurex#readme</docsUrl>
+    <bugTrackerUrl>https://github.com/YTxFSGAMERz/WinAurex/issues</bugTrackerUrl>
+    <tags>winaurex windows optimizer debloat tweaks performance cli system</tags>
+    <summary>Advanced Windows Optimization, Debloating, and Performance Suite CLI</summary>
+    <description>
+WinAurex is an advanced Windows optimization, debloating, and performance suite with a unified CLI.
+
+### Features
+- **status**: Live hardware and diagnostic report
+- **optimize**: Apply safe or full batch and registry optimizations
+- **clean**: Purge temp files, system caches, and update residue
+- **profile**: Switch between Max Performance, Balanced, and Enterprise tuning profiles
+- **repair**: Automated SFC, DISM, network, audio, and Windows update repairs
+- **bench**: Run built-in system benchmark and generate HTML health diagnostics
+    </description>
+    <releaseNotes>https://github.com/YTxFSGAMERz/WinAurex/releases</releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
