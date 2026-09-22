@@ -151,6 +151,15 @@
             </Style.Triggers>
         </Style>
 
+        <!-- CheckBox Style -->
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,6,0,6"/>
+        </Style>
+
         <!-- TabItem Style -->
         <Style TargetType="TabItem">
             <Setter Property="Template">
@@ -432,6 +441,155 @@
                                     <Button Name="BtnGenerateReport" Grid.Column="0" Style="{StaticResource AccentButton}" Content="Generate Performance HTML Report" Height="40"/>
                                     <Button Name="BtnDetectThirdParty" Grid.Column="2" Content="Detect Third-Party Benchmarks" Height="40"/>
                                 </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- TABS: PC Cleaner -->
+            <TabItem Header="PC CLEANER">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                    <StackPanel Margin="0,10,0,10">
+                        <TextBlock Style="{StaticResource BodyText}" Text="Scan your system drive for useless temporary files, crash dumps, stale AI indexes, and obsolete app versions, then safely purge them with 1-click." Margin="0,0,0,20"/>
+                        
+                        <!-- Storage Status Card -->
+                        <Border Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Style="{StaticResource BodyText}" Text="TOTAL CAPACITY" FontSize="11"/>
+                                        <TextBlock Name="TxtDriveCapacity" Text="-- GB" FontSize="18" Foreground="#ffffff" FontWeight="Bold"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Style="{StaticResource BodyText}" Text="USED SPACE" FontSize="11"/>
+                                        <TextBlock Name="TxtDriveUsed" Text="-- GB" FontSize="18" Foreground="#ff5722" FontWeight="Bold"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Style="{StaticResource BodyText}" Text="FREE SPACE" FontSize="11"/>
+                                        <TextBlock Name="TxtDriveFree" Text="-- GB" FontSize="18" Foreground="#00adb5" FontWeight="Bold"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3">
+                                        <TextBlock Style="{StaticResource BodyText}" Text="RECLAIMABLE JUNK" FontSize="11"/>
+                                        <TextBlock Name="TxtReclaimableTotal" Text="Not Scanned" FontSize="18" Foreground="#00ff41" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid Grid.Row="1" Margin="0,20,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Name="BtnAnalyzeStorage" Grid.Column="0" Style="{StaticResource AccentButton}" Content="ANALYZE STORAGE JUNK" Margin="0,0,10,0" Height="42"/>
+                                    <Button Name="BtnCleanStorage" Grid.Column="1" Style="{StaticResource DangerButton}" Content="PURGE SELECTED JUNK" Margin="10,0,0,0" Height="42" IsEnabled="False"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <!-- Categories Card -->
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource Header2}" Text="Select Storage Tiers to Clean" Margin="0,0,0,15"/>
+                                
+                                <Grid Margin="0,4,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Name="ChkSystemTemp" Grid.Column="0" Content="System &amp; User Temp Files ($env:TEMP, Windows\Temp, CBS logs)" IsChecked="True"/>
+                                    <TextBlock Name="TxtSizeSystemTemp" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                </Grid>
+
+                                <Grid Margin="0,4,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Name="ChkCrashDumps" Grid.Column="0" Content="Crash Dumps (.dmp) &amp; Error Reporting Archives" IsChecked="True"/>
+                                    <TextBlock Name="TxtSizeCrashDumps" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                </Grid>
+
+                                <Grid Margin="0,4,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Name="ChkAIIndex" Grid.Column="0" Content="Stale Copilot / AI Search Index Dumps (.retired, spill-*.tmp)" IsChecked="True"/>
+                                    <TextBlock Name="TxtSizeAIIndex" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                </Grid>
+
+                                <Grid Margin="0,4,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Name="ChkAppUpdaters" Grid.Column="0" Content="Orphan Application Updater Installers (Kimi, Ollama)" IsChecked="True"/>
+                                    <TextBlock Name="TxtSizeAppUpdaters" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                </Grid>
+
+                                <Grid Margin="0,4,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Name="ChkSquirrel" Grid.Column="0" Content="Obsolete Electron/Squirrel Versions (GitHub Desktop, Discord, Claude)" IsChecked="True"/>
+                                    <TextBlock Name="TxtSizeSquirrel" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                </Grid>
+
+                                <Grid Margin="0,4,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Name="ChkBrowserCaches" Grid.Column="0" Content="Web Browser Media &amp; Code Caches (Preserves passwords &amp; logins)" IsChecked="True"/>
+                                    <TextBlock Name="TxtSizeBrowserCaches" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                </Grid>
+
+                                <Grid Margin="0,4,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Name="ChkDevCaches" Grid.Column="0" Content="Developer Caches (npm, pnpm, pip, Playwright, root node_modules)" IsChecked="True"/>
+                                    <TextBlock Name="TxtSizeDevCaches" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                </Grid>
+
+                                <Grid Margin="0,4,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Name="ChkLooseInstallers" Grid.Column="0" Content="Root C:\ VC Redist Debris &amp; Broken Download Parts" IsChecked="True"/>
+                                    <TextBlock Name="TxtSizeLooseInstallers" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                </Grid>
+
+                                <Grid Margin="0,4,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Name="ChkComponentStore" Grid.Column="0" Content="Windows Component Store Deep Clean (Official DISM - takes 3 mins)" IsChecked="False"/>
+                                    <TextBlock Name="TxtSizeComponentStore" Grid.Column="1" Text="~3.8 GB" Foreground="#e0e0e0" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                </Grid>
+
+                                <!-- Protected Shield -->
+                                <Border Background="#142429" BorderBrush="#00adb5" BorderThickness="1" CornerRadius="6" Padding="12" Margin="0,15,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🛡️ " FontSize="16" VerticalAlignment="Center"/>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="SAFETY GUARANTEE: Downloads, Photos/Pictures, Virtual Machines, and Git Repositories are strictly protected." Foreground="#00adb5" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                    </StackPanel>
+                                </Border>
                             </StackPanel>
                         </Border>
                     </StackPanel>
