@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "winaurex"
+version = "1.2.0"
+description = "Advanced Windows Optimization, Debloating, and Performance Suite CLI"
+readme = "README.md"
+authors = [{ name = "YTxFSGAMERz" }]
+license = { text = "MIT" }
+classifiers = [
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Environment :: Console",
+    "Topic :: System :: Systems Administration",
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/YTxFSGAMERz/WinAurex"
+Repository = "https://github.com/YTxFSGAMERz/WinAurex"
+Issues = "https://github.com/YTxFSGAMERz/WinAurex/issues"
+
+[project.scripts]
+winaurex = "winaurex.cli:main"
