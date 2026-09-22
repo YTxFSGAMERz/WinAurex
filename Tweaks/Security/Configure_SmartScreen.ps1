@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param (
-    [switch]$Force
+    [switch]$Force,
+    [ValidateSet("1", "2", "3")][string]$Choice
 )
 
 # Windows Configuration & Optimization Framework
@@ -25,18 +26,29 @@ Write-Host "2. Disable SmartScreen (For Developers/Power Users)"
 Write-Host "3. Abort"
 Write-Host "================================================="
 
+if (-not $Choice) {
+    if ($Force -or [Console]::IsInputRedirected) {
+        $Choice = "1"
+    } else {
+        $Choice = Read-Host "Select an option [1-3]"
+    }
+}
+
 if ($Choice -notmatch '^[1-2]$') {
 #     Write-FrameworkLog -ModuleName "Security" -Action "Aborted SmartScreen config"
     Write-Host "`nAborted by user."
+    if (-not $Force -and -not [Console]::IsInputRedirected) { Read-Host "Press Enter to exit..." }
     Exit
 }
 
 # Write-FrameworkLog -ModuleName "Security" -Action "Backing up SmartScreen registry keys"
 $RegPath1 = "HKLM\SOFTWARE\Policies\Microsoft\Windows\System"
 $RegPath2 = "HKCU\Software\Microsoft\Windows\CurrentVersion\AppHost"
-$BackupFile = Join-Path -Path $SnapshotDir -ChildPath "SmartScreen_Backup_$(Get-Date -Format 'yyyyMMdd_HHmmss').reg"
-& reg export $RegPath1 $BackupFile /y | Out-Null
-& reg export $RegPath2 $BackupFile /y | Out-Null
+$Timestamp = Get-Date -Format 'yyyyMMdd_HHmmss'
+$BackupFile1 = Join-Path -Path $SnapshotDir -ChildPath "SmartScreen_Sys_Backup_$Timestamp.reg"
+$BackupFile2 = Join-Path -Path $SnapshotDir -ChildPath "SmartScreen_App_Backup_$Timestamp.reg"
+& reg export $RegPath1 $BackupFile1 /y 2>$null | Out-Null
+& reg export $RegPath2 $BackupFile2 /y 2>$null | Out-Null
 
 $SysKey = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System"
 $AppKey = "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppHost"
@@ -58,5 +70,7 @@ if ($Choice -eq '1') {
     Write-Host "[SUCCESS] SmartScreen is DISABLED." -ForegroundColor Red
 }
 
-
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
 
