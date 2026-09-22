@@ -1,6 +1,8 @@
 [CmdletBinding()]
 param (
-    [switch]$Force
+    [switch]$Force,
+    [ValidateSet("1", "2", "3")]
+    [string]$Choice
 )
 
 # Windows Configuration & Optimization Framework
@@ -28,6 +30,14 @@ Write-Host "1. Disable All Audio Enhancements (Recommended for Latency/Purity)"
 Write-Host "2. Enable Audio Enhancements (Default)"
 Write-Host "3. Abort"
 Write-Host "================================================="
+
+if (-not $Choice) {
+    if ($Force -or [Console]::IsInputRedirected) {
+        $Choice = "1"
+    } else {
+        $Choice = Read-Host "`nSelect an option [1-3]"
+    }
+}
 
 if ($Choice -notmatch '^[1-2]$') {
 #     Write-FrameworkLog -ModuleName "Audio" -Action "Aborted Audio Enhancements config"
