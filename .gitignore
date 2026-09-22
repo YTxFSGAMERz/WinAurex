@@ -9,10 +9,29 @@ node_modules/
 .vercel
 
 # Build artifacts
-bin/
-obj/
+src/**/bin/
+src/**/obj/
+**/bin/Debug/
+**/bin/Release/
+**/obj/Debug/
+**/obj/Release/
 .vs/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
+
+# Python build artifacts
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.pyc
+
+# Chocolatey build artifacts
+*.nupkg
+chocolatey/tools/app/
+
+# Explicitly track root JS CLI bin directory
+!/bin/
+!/bin/*
