@@ -9,10 +9,12 @@ param (
 Write-Host "Gathering System Information... Please wait.`n" -ForegroundColor Cyan
 
 $OS = Get-CimInstance Win32_OperatingSystem
-$CPU = Get-CimInstance Win32_Processor
+$CPU = Get-CimInstance Win32_Processor | Select-Object -First 1
 $RAM = Get-CimInstance Win32_ComputerSystem
-$GPU = Get-CimInstance Win32_VideoController
-$PowerPlan = Get-CimInstance -Namespace root\cimv2\power -Class Win32_PowerPlan | Where-Object {$_.IsActive -eq $true}
+$GPUs = Get-CimInstance Win32_VideoController
+$PowerPlan = Get-CimInstance -Namespace root\cimv2\power -Class Win32_PowerPlan -ErrorAction SilentlyContinue | Where-Object {$_.IsActive -eq $true} | Select-Object -First 1
+
+$gpuInfo = ($GPUs | ForEach-Object { "$($_.Name) (Driver: $($_.DriverVersion))" }) -join "`nGPU:          "
 
 $Report = @"
 =================================================
@@ -36,8 +38,7 @@ Logical:      $($CPU.NumberOfLogicalProcessors)
 Total RAM:    $([math]::Round($RAM.TotalPhysicalMemory / 1GB, 2)) GB
 
 [GRAPHICS]
-GPU Name:     $($GPU.Name)
-Driver Ver:   $($GPU.DriverVersion)
+GPU:          $gpuInfo
 
 [POWER]
 Active Plan:  $($PowerPlan.ElementName)
@@ -50,10 +51,7 @@ $Report | Out-File -FilePath $OutPath -Encoding UTF8
 
 Write-Host $Report
 Write-Host "`n[SUCCESS] Report generated and saved to: $OutPath" -ForegroundColor Green
-if (-not $Force) {
-    if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
-}
 
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
