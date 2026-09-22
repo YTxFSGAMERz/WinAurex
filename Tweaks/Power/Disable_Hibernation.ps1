@@ -27,6 +27,6 @@ if ($Success) {
 #     Write-FrameworkLog -ModuleName "Power" -Action "Failed to Disable Windows Hibernation" -Level ERROR
     Write-Host "`n[ERROR] Failed to disable hibernation. Ensure you have administrator rights." -ForegroundColor Red
 }
-
-
-
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
