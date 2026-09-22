@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param (
-    [switch]$Force
+    [switch]$Force,
+    [ValidateSet("1", "2", "3")][string]$Choice
 )
 
 # Windows Configuration & Optimization Framework
@@ -28,16 +29,25 @@ Write-Host "2. Disable Memory Integrity (Max Performance/Legacy Drivers)"
 Write-Host "3. Abort"
 Write-Host "================================================="
 
+if (-not $Choice) {
+    if ($Force -or [Console]::IsInputRedirected) {
+        $Choice = "1"
+    } else {
+        $Choice = Read-Host "Select an option [1-3]"
+    }
+}
+
 if ($Choice -notmatch '^[1-2]$') {
 #     Write-FrameworkLog -ModuleName "Security" -Action "Aborted HVCI config"
     Write-Host "`nAborted by user."
+    if (-not $Force -and -not [Console]::IsInputRedirected) { Read-Host "Press Enter to exit..." }
     Exit
 }
 
 # Write-FrameworkLog -ModuleName "Security" -Action "Backing up HVCI registry keys"
 $RegPath1 = "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity"
 $BackupFile = Join-Path -Path $SnapshotDir -ChildPath "HVCI_Backup_$(Get-Date -Format 'yyyyMMdd_HHmmss').reg"
-& reg export $RegPath1 $BackupFile /y | Out-Null
+& reg export $RegPath1 $BackupFile /y 2>$null | Out-Null
 
 $KeyPath = "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity"
 if (-not (Test-Path $KeyPath)) { New-Item -Path $KeyPath -Force | Out-Null }
@@ -56,4 +66,6 @@ if ($Choice -eq '1') {
 
 Write-Host "A SYSTEM REBOOT is required for HVCI changes to take effect." -ForegroundColor Yellow
 
-
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
