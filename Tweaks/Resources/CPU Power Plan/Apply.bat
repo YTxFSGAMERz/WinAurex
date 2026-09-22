@@ -28,8 +28,8 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 
 powercfg -h off
-if exist "%~dp0\QuickCPU.pow" (
-    powercfg -import "%~dp0\QuickCPU.pow" a11a11c9-6d83-493e-a38d-d5fa3c620915
+if exist "%~dp0QuickCPU.pow" (
+    powercfg -import "%~dp0QuickCPU.pow" a11a11c9-6d83-493e-a38d-d5fa3c620915
     powercfg /setactive a11a11c9-6d83-493e-a38d-d5fa3c620915
     echo Power plan imported and activated.
 ) else (
@@ -37,4 +37,4 @@ if exist "%~dp0\QuickCPU.pow" (
     echo Skipping power plan import.
 )
 
-timeout /t 3 /nobreak
+ping 127.0.0.1 -n 4 >nul 2>&1
