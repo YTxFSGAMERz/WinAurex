@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param (
-    [switch]$Force
+    [switch]$Force,
+    [ValidateSet("1", "2", "3")][string]$Choice
 )
 
 # Windows Configuration & Optimization Framework
@@ -26,9 +27,18 @@ Write-Host "2. Disable Firewall entirely (DANGEROUS)"
 Write-Host "3. Abort"
 Write-Host "================================================="
 
+if (-not $Choice) {
+    if ($Force -or [Console]::IsInputRedirected) {
+        $Choice = "1"
+    } else {
+        $Choice = Read-Host "Select an option [1-3]"
+    }
+}
+
 if ($Choice -notmatch '^[1-2]$') {
 #     Write-FrameworkLog -ModuleName "Security" -Action "Aborted Firewall config"
     Write-Host "`nAborted by user."
+    if (-not $Force -and -not [Console]::IsInputRedirected) { Read-Host "Press Enter to exit..." }
     Exit
 }
 
@@ -44,5 +54,6 @@ if ($Choice -eq '1') {
     Write-Host "[WARNING] Windows Firewall is now DISABLED. Your system is vulnerable." -ForegroundColor Red
 }
 
-
-
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
