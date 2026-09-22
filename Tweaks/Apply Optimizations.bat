@@ -964,11 +964,11 @@ goto :done
 cls
 
 echo Reducing svchost processes...
-for /f "tokens=2 delims==" %%i in ('wmic os get TotalVisibleMemorySize /format:value') do set MEM=%%i
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Get-CimInstance Win32_OperatingSystem).TotalVisibleMemorySize"') do set MEM=%%i
 set /a RAM=%MEM% + 1024000
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "%RAM%" /f 2>nul
 
-timeout /t 3 /nobreak
+ping 127.0.0.1 -n 3 >nul 2>&1
 goto :done
 
 :disablegamedvr
@@ -1203,6 +1203,6 @@ echo Your operating system was optimized correctly!
 echo Please restart your PC to notice the change.
 echo.
 echo --------------------------------------------------
-timeout /t 3 /nobreak
+ping 127.0.0.1 -n 3 >nul 2>&1
 goto :start
 
