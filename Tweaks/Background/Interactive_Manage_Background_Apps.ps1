@@ -7,6 +7,12 @@
 # SAFETY LEVEL: Safe & Fully Reversible
 # ==============================================================================
 
+param(
+    [switch]$Force,
+    [ValidateSet("1", "2", "3", "4")][string]$Choice,
+    [string]$Select
+)
+
 $Host.UI.RawUI.WindowTitle = "Windows Background Apps Manager"
 
 $GlobalReg = "HKCU:\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications"
@@ -22,7 +28,11 @@ if (-not (Test-Path $ConsentReg)) {
 }
 
 function Clear-Console {
-    Clear-Host
+    try {
+        if (-not [Console]::IsOutputRedirected -and -not [Console]::IsInputRedirected) {
+            Clear-Host
+        }
+    } catch {}
     Write-Host "======================================================================" -ForegroundColor Cyan
     Write-Host "                      WINDOWS BACKGROUND APPS MANAGER                 " -ForegroundColor Cyan
     Write-Host "======================================================================" -ForegroundColor Cyan
@@ -38,6 +48,8 @@ function Check-GlobalStatus {
     }
 }
 
+$runningAutomated = $Force -or ($Choice -ne "")
+
 while ($true) {
     Clear-Console
     $globalStatus = Check-GlobalStatus
@@ -50,8 +62,9 @@ while ($true) {
     Write-Host "  4. Exit" -ForegroundColor Red
     Write-Host ""
     
+    $activeChoice = if ($Choice) { $Choice } elseif ($Force) { "1" } elseif ([Console]::IsInputRedirected) { "1" } else { Read-Host "Select an option [1-4]" }
 
-    switch ($choice) {
+    switch ($activeChoice) {
         "1" {
             try {
                 Set-ItemProperty -Path $GlobalReg -Name "GlobalUserDisabled" -Value 1 -Type DWord -Force | Out-Null
@@ -122,9 +135,10 @@ while ($true) {
                 }
 
                 Write-Host ""
-                if ($select -eq "q") { break }
+                $activeSelect = if ($Select) { $Select } elseif ([Console]::IsInputRedirected) { "q" } else { Read-Host "Enter app number to toggle (or 'q' to return)" }
+                if ($activeSelect -eq "q" -or [string]::IsNullOrWhiteSpace($activeSelect)) { break }
 
-                $match = $appList | Where-Object { $_.Index -eq $select }
+                $match = $appList | Where-Object { "$($_.Index)" -eq $activeSelect }
                 if ($match) {
                     $appRegPath = "$ConsentReg\$($match.Family)"
                     if (-not (Test-Path $appRegPath)) {
@@ -140,15 +154,17 @@ while ($true) {
                         Set-ItemProperty -Path $appRegPath -Name "Value" -Value $newVal -Type String -Force | Out-Null
                         Write-Host ""
                         Write-Host "[+] Successfully set $($match.Name) background permission to: $newVal" -ForegroundColor Green
-                        Start-Sleep -Seconds 1
+                        if (-not $runningAutomated) { Start-Sleep -Seconds 1 }
                     } catch {
                         Write-Host "[!] Error: Failed to modify app settings in registry." -ForegroundColor Red
-                        Start-Sleep -Seconds 2
+                        if (-not $runningAutomated) { Start-Sleep -Seconds 2 }
                     }
                 } else {
                     Write-Host "Invalid selection." -ForegroundColor Red
-                    Start-Sleep -Seconds 1
+                    if (-not $runningAutomated) { Start-Sleep -Seconds 1 }
                 }
+
+                if ($runningAutomated) { break }
             }
         }
         
@@ -156,5 +172,15 @@ while ($true) {
             Write-Host "Exiting..." -ForegroundColor Cyan
             break
         }
+
+        default {
+            Write-Host "Invalid option." -ForegroundColor Red
+            if ($runningAutomated) { break }
+            Start-Sleep -Seconds 1
+        }
+    }
+
+    if ($runningAutomated) {
+        break
     }
 }
