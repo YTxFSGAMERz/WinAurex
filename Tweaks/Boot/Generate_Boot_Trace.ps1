@@ -1,6 +1,11 @@
 # Windows Configuration & Optimization Framework
 # Generate Boot Trace (Tweaks/Boot/Generate_Boot_Trace.ps1)
 
+param(
+    [switch]$Force,
+    [ValidateSet("1", "2", "3")][string]$Choice
+)
+
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Warning "This script requires Administrator privileges. Please run PowerShell as Admin."
     Exit
@@ -19,8 +24,17 @@ Write-Host "2. Cancel a pending Boot Trace"
 Write-Host "3. Abort"
 Write-Host "================================================="
 
+if (-not $Choice) {
+    if ($Force -or [Console]::IsInputRedirected) {
+        $Choice = "1"
+    } else {
+        $Choice = Read-Host "Select an option [1-3]"
+    }
+}
+
 if ($Choice -notmatch '^[1-2]$') {
     Write-Host "`nAborted by user."
+    if (-not $Force -and -not [Console]::IsInputRedirected) { Read-Host "Press Enter to exit..." }
     Exit
 }
 
@@ -47,5 +61,6 @@ if ($Choice -eq '1') {
     Write-Host "`n[SUCCESS] Any pending boot trace has been cancelled." -ForegroundColor Green
 }
 
-
-
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
