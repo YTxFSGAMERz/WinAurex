@@ -13,10 +13,15 @@ Write-Host "   FRAMEWORK LOG CLEANUP UTILITY" -ForegroundColor Cyan
 Write-Host "================================================="
 Write-Host "This will permanently delete all framework operation logs in:"
 Write-Host "$LogsDir" -ForegroundColor DarkGray
-Write-Host "Press 'Y' to confirm deletion or any other key to cancel..."
-if (-not $Force) { $Confirm = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").Character } else { $Confirm = 'y' }
 
-if ($Confirm -notmatch 'y') {
+if ($Force -or [Console]::IsInputRedirected) {
+    $Confirm = 'y'
+} else {
+    Write-Host "Press 'Y' to confirm deletion or any other key to cancel..."
+    $Confirm = Read-Host
+}
+
+if ($Confirm -notmatch '^[yY]') {
     Write-Host "`nOperation cancelled."
     Exit
 }
@@ -35,10 +40,6 @@ if (Test-Path $LogsDir) {
     Write-Host "`n[INFO] Logs directory does not exist yet." -ForegroundColor Yellow
 }
 
-if (-not $Force) {
-    if (-not $Force) {
-    Write-Host "Press any key to exit..."
-    if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
-}
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
 }
-
