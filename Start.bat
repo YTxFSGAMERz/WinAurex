@@ -23,8 +23,8 @@ if %errorLevel% == 0 (
 cd /d "%~dp0"
 
 :: Launch the initialization script in PowerShell (Bypasses execution policy for this run only)
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "Launchers\Initialize_Framework.ps1"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "Core\Launchers\Initialize_Framework.ps1"
 
 :: Wait slightly to ensure background WPF process attaches and UI loads before console closes
-timeout /t 2 /nobreak >nul
+ping 127.0.0.1 -n 3 >nul 2>&1
 exit /b
