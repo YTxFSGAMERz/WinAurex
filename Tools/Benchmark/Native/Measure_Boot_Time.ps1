@@ -22,6 +22,7 @@ $Events = Get-WinEvent -LogName "Microsoft-Windows-Diagnostics-Performance/Opera
 
 if (-not $Events) {
     Write-Host "[ERROR] Could not find boot performance logs. The Diagnostics Tracking service may be disabled." -ForegroundColor Red
+    if (-not $Force -and -not [Console]::IsInputRedirected) { Read-Host "Press Enter to exit..." }
     Exit
 }
 
@@ -46,6 +47,7 @@ foreach ($Event in $Events) {
 
 Write-Host "`n[INFO] 'Main Path' is the time taken to reach the desktop and be usable."
 Write-Host "[INFO] 'Total Boot Time' includes all background startup apps loading."
-Write-Host "`nPress any key to exit..."
-if (-not $Force) { $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") }
 
+if (-not $Force -and -not [Console]::IsInputRedirected) {
+    Read-Host "Press Enter to exit..."
+}
