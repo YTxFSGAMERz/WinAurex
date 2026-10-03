@@ -1,8 +1,10 @@
 blank_issues_enabled: false
+
 contact_links:
   - name: "💬 WinAurex Community Discussions"
     url: "https://github.com/YTxFSGAMERz/WinAurex/discussions"
     about: "Ask questions, share optimization configurations, and show off your customized Windows dashboards."
+
   - name: "📖 WinAurex Documentation"
     url: "https://winaurex.vercel.app/"
     about: "Read our comprehensive guides, safety manual, and rollback philosophy before reporting bugs."
