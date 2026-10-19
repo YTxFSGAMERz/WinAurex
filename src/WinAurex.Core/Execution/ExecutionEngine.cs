@@ -11,14 +11,19 @@ namespace WinAurex.Core.Execution
     public class ExecutionEngine : IExecutionEngine
     {
         private readonly ICapabilityRegistry _registry;
+        private readonly IJournalManager _journalManager;
 
-        public ExecutionEngine(ICapabilityRegistry registry)
+        public ExecutionEngine(ICapabilityRegistry registry, IJournalManager journalManager)
         {
-            _registry = registry;
+            _registry = registry ?? throw new ArgumentNullException(nameof(registry));
+            _journalManager = journalManager ?? throw new ArgumentNullException(nameof(journalManager));
         }
 
         public async Task<ExecutionJournal> ExecutePlanAsync(ExecutionPlan plan, PlanContext context)
         {
+            if (plan == null) throw new ArgumentNullException(nameof(plan));
+            if (context == null) throw new ArgumentNullException(nameof(context));
+
             var journal = new ExecutionJournal
             {
                 ExecutionId = context.ExecutionId,
@@ -82,6 +87,17 @@ namespace WinAurex.Core.Execution
             }
 
             journal.Events.Add(new ExecutionCompletedEntry { IsSuccess = isSuccess });
+
+            try
+            {
+                await _journalManager.SaveJournalAsync(journal);
+            }
+            catch (Exception ex)
+            {
+                // Persistence must never turn a completed run into a failed one.
+                context.Logger?.LogError($"Failed to persist execution journal '{journal.ExecutionId}'.", ex, "Journal");
+            }
+
             return journal;
         }
 
