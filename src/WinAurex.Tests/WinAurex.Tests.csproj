@@ -19,6 +19,7 @@
     <ProjectReference Include="..\WinAurex.Contracts\WinAurex.Contracts.csproj" />
     <ProjectReference Include="..\WinAurex.Core\WinAurex.Core.csproj" />
     <ProjectReference Include="..\WinAurex.Infrastructure\WinAurex.Infrastructure.csproj" />
+    <ProjectReference Include="..\WinAurex.Services\WinAurex.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
