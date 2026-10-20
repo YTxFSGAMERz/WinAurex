@@ -36,8 +36,39 @@ If your script introduces a major feature that should be accessible via the GUI:
 By participating in this project, you agree to abide by the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Local Development
-To run the documentation site locally:
+
+The WinAurex documentation website is built with Astro and Starlight.
+
+### Prerequisites
+
+- Node.js and npm
+
+### Run the documentation locally
+
+From the repository root, run:
+
 ```bash
-pip install -r requirements.txt
-mkdocs serve
+cd docs
+npm ci
+npm run dev
 ```
+
+Open the local URL displayed in the terminal (usually `http://localhost:4321`).
+
+### Build the documentation
+
+From the `docs/` directory, run:
+
+```bash
+npm run build
+```
+
+### Preview the production build
+
+After building the documentation, run:
+
+```bash
+npm run preview
+```
+
+These commands use the scripts defined in `docs/package.json`.
