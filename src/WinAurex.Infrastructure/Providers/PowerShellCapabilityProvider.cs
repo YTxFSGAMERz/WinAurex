@@ -50,15 +50,30 @@ namespace WinAurex.Infrastructure.Providers
                     CreateNoWindow = true
                 };
 
-                var args = string.Join(" ", operation.Target.Arguments ?? Array.Empty<string>());
-                
-                string executionPolicyArgs = "";
+                psi.ArgumentList.Add("-NoProfile");
+                psi.ArgumentList.Add("-NonInteractive");
+
                 if (operation.Intent != null && operation.Intent.BypassExecutionPolicy)
                 {
-                    executionPolicyArgs = "-ExecutionPolicy Bypass ";
+                    psi.ArgumentList.Add("-ExecutionPolicy");
+                    psi.ArgumentList.Add("Bypass");
                 }
 
-                psi.Arguments = $"-NoProfile -NonInteractive {executionPolicyArgs}-Command \"& '{operation.Target.FilePath}' {args} *>&1\"";
+                // -File avoids embedding the path in a quoted -Command string. ArgumentList
+                // keeps each value intact and lets Windows handle quoting and escaping.
+                psi.ArgumentList.Add("-File");
+                psi.ArgumentList.Add(operation.Target.FilePath);
+
+                foreach (var argument in operation.Target.Arguments ?? Array.Empty<string>())
+                {
+                    psi.ArgumentList.Add(argument);
+                }
+
+                var scriptDirectory = Path.GetDirectoryName(Path.GetFullPath(operation.Target.FilePath));
+                if (!string.IsNullOrWhiteSpace(scriptDirectory))
+                {
+                    psi.WorkingDirectory = scriptDirectory;
+                }
 
                 using var process = new Process { StartInfo = psi };
                 var outputBuilder = new System.Text.StringBuilder();
