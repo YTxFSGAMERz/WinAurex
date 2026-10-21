@@ -19,8 +19,23 @@ namespace WinAurex.Core.Profiles
 
     public class TweakLoader : ITweakLoader
     {
+        private static readonly HashSet<string> SupportedExtensions = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ".ps1", ".bat", ".cmd", ".reg", ".exe"
+        };
+
         public IEnumerable<SystemAction> LoadTweaks(string directoryPath)
         {
+            if (directoryPath is null)
+            {
+                throw new ArgumentNullException(nameof(directoryPath));
+            }
+
+            if (string.IsNullOrWhiteSpace(directoryPath))
+            {
+                throw new ArgumentException("A profile directory is required.", nameof(directoryPath));
+            }
+
             var actions = new List<SystemAction>();
             
             if (!Directory.Exists(directoryPath))
@@ -69,7 +84,8 @@ namespace WinAurex.Core.Profiles
             }
 
             var allFiles = Directory.GetFiles(directoryPath, "*.*", SearchOption.AllDirectories)
-                .Where(f => !Path.GetFileName(f).Equals("descriptions.json", StringComparison.OrdinalIgnoreCase) && 
+                .Where(f => SupportedExtensions.Contains(Path.GetExtension(f)) &&
+                            !Path.GetFileName(f).Equals("descriptions.json", StringComparison.OrdinalIgnoreCase) && 
                             !Path.GetFileName(f).Equals("detections.json", StringComparison.OrdinalIgnoreCase));
 
             // Group files by category and subject
@@ -202,23 +218,32 @@ namespace WinAurex.Core.Profiles
 
                     if (applyFile != null)
                     {
-                        method.ExecutionPlan = new ExecutionPlan
+                        var applyOperation = CreateOperation(applyFile.Path, applyFile.Extension);
+                        if (applyOperation != null)
                         {
-                            Id = Guid.NewGuid(),
-                            Operations = ImmutableList.Create(CreateOperation(applyFile.Path, applyFile.Extension))
-                        };
+                            method.ExecutionPlan = new ExecutionPlan
+                            {
+                                Id = Guid.NewGuid(),
+                                Operations = ImmutableList.Create(applyOperation)
+                            };
+                        }
                     }
 
                     if (revertFile != null)
                     {
-                        method.RollbackPlan = new ExecutionPlan
+                        var revertOperation = CreateOperation(revertFile.Path, revertFile.Extension);
+                        if (revertOperation != null)
                         {
-                            Id = Guid.NewGuid(),
-                            Operations = ImmutableList.Create(CreateOperation(revertFile.Path, revertFile.Extension))
-                        };
+                            method.RollbackPlan = new ExecutionPlan
+                            {
+                                Id = Guid.NewGuid(),
+                                Operations = ImmutableList.Create(revertOperation)
+                            };
+                        }
                     }
 
-                    if (applyFile != null || revertFile != null)
+                    if (method.ExecutionPlan.Operations.Count > 0 ||
+                        (method.RollbackPlan != null && method.RollbackPlan.Operations.Count > 0))
                     {
                         action.AvailableMethods.Add(method);
                     }
@@ -234,7 +259,7 @@ namespace WinAurex.Core.Profiles
             return actions.OrderBy(a => a.DisplayName).ToList();
         }
 
-        private ExecutionOperation CreateOperation(string filePath, string extension)
+        private ExecutionOperation? CreateOperation(string filePath, string extension)
         {
             switch (extension)
             {
