@@ -1,6 +1,7 @@
 import { chromium } from 'playwright-extra';
 import stealthPlugin from 'puppeteer-extra-plugin-stealth';
 import { createCursor } from 'ghost-cursor';
+import { parseProxyList, resolveExitCode } from './proxy-helpers.js';
 
 chromium.use(stealthPlugin());
 
@@ -27,7 +28,7 @@ async function fetchProxies() {
         const response = await fetch(url);
         const data = await response.text();
         
-        const proxies = data.split('\r\n').filter(p => p.trim() !== '');
+        const proxies = parseProxyList(data);
         console.log(`[+] Found ${proxies.length} proxies.`);
         return proxies;
     } catch (e) {
@@ -204,5 +205,5 @@ async function runSession(proxyStr) {
     }
     
     console.log(`\n[+] Finished with ${successfulSessions}/${TARGET_SUCCESSFUL_SESSIONS} successful sessions.`);
-    process.exit(0);
+    process.exit(resolveExitCode(successfulSessions, TARGET_SUCCESSFUL_SESSIONS));
 })();
