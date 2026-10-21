@@ -128,15 +128,27 @@ $BtnApplyEnterprise.Add_Click({
 
 # --- OBSERVABILITY TAB LOGIC ---
 $BtnAnalyzeFrameTiming.Add_Click({
-    Set-Status -Message "Analyzing Frame Timing (15s)..." -Color "#ffb300"
     $Script = Join-Path $RootPath "Tools\Benchmark\Native\Analyze_Frame_Timing.ps1"
-    Start-Process powershell -ArgumentList "-NoExit -NoProfile -ExecutionPolicy Bypass -File `"$Script`""
+    if (-not (Test-Path -LiteralPath $Script)) {
+        Set-Status -Message "Frame timing script not found." -Color "#ff5722"
+        return
+    }
+
+    Set-Status -Message "Analyzing Frame Timing (15s)..." -Color "#ffb300"
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`"" -Wait
     Set-Status -Message "Analysis Complete" -Color "#00adb5"
 })
 
 $BtnMeasureBootTime.Add_Click({
     $Script = Join-Path $RootPath "Tools\Benchmark\Native\Measure_Boot_Time.ps1"
-    Start-Process powershell -ArgumentList "-NoExit -NoProfile -ExecutionPolicy Bypass -File `"$Script`""
+    if (-not (Test-Path -LiteralPath $Script)) {
+        Set-Status -Message "Boot time script not found." -Color "#ff5722"
+        return
+    }
+
+    Set-Status -Message "Measuring Boot Time..." -Color "#ffb300"
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`"" -Wait
+    Set-Status -Message "Boot Time Measurement Complete" -Color "#00adb5"
 })
 
 $BtnGenerateReport.Add_Click({
