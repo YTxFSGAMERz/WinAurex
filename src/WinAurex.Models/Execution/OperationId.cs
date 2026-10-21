@@ -1,8 +1,10 @@
 using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace WinAurex.Models.Execution
 {
-    [System.Text.Json.Serialization.JsonConverter(typeof(OperationIdJsonConverter))]
+    [JsonConverter(typeof(OperationIdJsonConverter))]
     public readonly record struct OperationId
     {
         public string Value { get; }
@@ -26,14 +28,25 @@ namespace WinAurex.Models.Execution
         public static explicit operator OperationId(string value) => new(value);
     }
 
-    public class OperationIdJsonConverter : System.Text.Json.Serialization.JsonConverter<OperationId>
+    public class OperationIdJsonConverter : JsonConverter<OperationId>
     {
-        public override OperationId Read(ref System.Text.Json.Utf8JsonReader reader, Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
+        public override OperationId Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return new OperationId(reader.GetString() ?? string.Empty);
+            if (reader.TokenType != JsonTokenType.String)
+            {
+                throw new JsonException($"OperationId must be a JSON string, but found {reader.TokenType}.");
+            }
+
+            var value = reader.GetString();
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new JsonException("OperationId cannot be empty.");
+            }
+
+            return new OperationId(value);
         }
 
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, OperationId value, System.Text.Json.JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, OperationId value, JsonSerializerOptions options)
         {
             writer.WriteStringValue(value.Value);
         }
