@@ -35,3 +35,7 @@ chocolatey/tools/app/
 # Explicitly track root JS CLI bin directory
 !/bin/
 !/bin/*
+
+# Astro documentation build artifacts
+docs/.astro/
+docs/dist/
