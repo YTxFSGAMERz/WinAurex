@@ -361,66 +361,58 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
 
   return (
     <div className="cyber-studio-root">
-      {/* Cockpit Status & Telemetry Header */}
+      {/* 1. Cockpit Status & Unified Telemetry Cluster (Area 1) */}
       <div className="cyber-studio-header">
         <div className="cyber-console-brand">
+          <h2 className="cyber-console-title">
+            ⚡ WinAurex Web Studio
+          </h2>
           <div className="cyber-console-status-row">
             <span className="cyber-badge-live">
               ENGINE LIVE
             </span>
             <span className="cyber-badge-chip">
-              AMD64 // WIN 11 &amp; 10
+              WIN 11 24H2 / 23H2 · AMD64
             </span>
-            <span className="cyber-admin-chip">
-              ROOT ADMIN:
-              <input
-                type="text"
-                value={adminUsername}
-                onChange={(e) => setAdminUsername(e.target.value)}
-                className="cyber-admin-input"
-                placeholder="Admin"
-                title="Configures offline local Administrator account username"
-              />
+            <span className="cyber-console-desc">
+              Zero-Bloat OS Recipe &amp; Debloat Suite
             </span>
           </div>
-          <p className="cyber-console-desc">
-            Tactical Unattended OS Recipe Compiler &amp; Live PowerShell Debloat Engine.
-          </p>
         </div>
 
-        {/* Tactical HUD Telemetry Gauges */}
-        <div className="cyber-hud-gauges">
-          <div className="cyber-hud-card">
+        {/* Unified Cockpit Telemetry Cluster */}
+        <div className="cyber-hud-cluster">
+          <div className="cyber-hud-cell">
             <div className="cyber-hud-val" style={{ color: '#00ff00', textShadow: '0 0 8px rgba(0,255,0,0.6)' }}>
-              {metrics.activeCount} <span style={{ fontSize: '0.75rem', color: '#666' }}>/ {TWEAKS.length}</span>
+              {metrics.activeCount} <span style={{ fontSize: '0.72rem', color: '#666' }}>/ {TWEAKS.length}</span>
             </div>
             <div className="cyber-hud-label">Tweaks Active</div>
           </div>
-          <div className="cyber-hud-card">
+          <div className="cyber-hud-cell">
             <div className="cyber-hud-val" style={{ color: '#10b981', textShadow: '0 0 8px rgba(16,185,129,0.5)' }}>
               ~{metrics.ramFreedGb} GB
             </div>
             <div className="cyber-hud-label">RAM Reclaimed</div>
           </div>
-          <div className="cyber-hud-card">
+          <div className="cyber-hud-cell">
             <div className="cyber-hud-val" style={{ color: '#f59e0b', textShadow: '0 0 8px rgba(245,158,11,0.5)' }}>
               -{metrics.processesTrimmed}
             </div>
-            <div className="cyber-hud-label">Processes Trimmed</div>
+            <div className="cyber-hud-label">Processes</div>
           </div>
         </div>
       </div>
 
-      {/* Preset Profiles */}
+      {/* 2. Compact Profile Presets Grid (Area 2) */}
       <div className="cyber-section-label">
         <span>// SELECT OPTIMIZATION PROFILE</span>
       </div>
       <div className="cyber-preset-grid">
         {[
-          { id: 'gaming', title: '01 // ULTRA GAMING', desc: 'MMCSS 100% GPU priority, 0.5ms Timer, GameBar kill, 1:1 Raw Input' },
-          { id: 'privacy', title: '02 // PRIVACY PURGE', desc: 'Zero Telemetry, Copilot, Recall AI, Advertising ID, Activity history kill' },
-          { id: 'minimal', title: '03 // CLEAN MINIMAL', desc: 'Purge 30+ UWP bloatware, Classic context menu, Edge prelaunch kill' },
-          { id: 'custom', title: '04 // CUSTOM MATRIX', desc: 'Full tactical manual override. Select bespoke system parameters' },
+          { id: 'gaming', title: '🎮 ULTRA GAMING', desc: 'MMCSS 100% · 0.5ms HPET · Raw Input' },
+          { id: 'privacy', title: '🛡️ PRIVACY PURGE', desc: 'Zero Telemetry · Copilot Kill' },
+          { id: 'minimal', title: '⚡ CLEAN MINIMAL', desc: 'Purge Bloat · Classic Menu' },
+          { id: 'custom', title: '🛠️ CUSTOM TUNING', desc: 'Manual Bespoke Selection' },
         ].map(p => (
           <button
             key={p.id}
@@ -438,71 +430,79 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
         ))}
       </div>
 
-      {/* Category Filter & Batch Controls (Pill Design) */}
-      <div className="cyber-filter-bar">
-        <div className="cyber-filter-pills">
-          <button
-            onClick={() => setActiveCategory('all')}
-            className={`cyber-filter-pill ${activeCategory === 'all' ? 'active' : ''}`}
-          >
-            ALL [{TWEAKS.length}]
-          </button>
-          <button
-            onClick={() => setActiveCategory('privacy')}
-            className={`cyber-filter-pill ${activeCategory === 'privacy' ? 'active' : ''}`}
-          >
-            PRIVACY [{TWEAKS.filter(t => t.category === 'privacy').length}]
-          </button>
-          <button
-            onClick={() => setActiveCategory('gaming')}
-            className={`cyber-filter-pill ${activeCategory === 'gaming' ? 'active' : ''}`}
-          >
-            GAMING [{TWEAKS.filter(t => t.category === 'gaming').length}]
-          </button>
-          <button
-            onClick={() => setActiveCategory('debloat')}
-            className={`cyber-filter-pill ${activeCategory === 'debloat' ? 'active' : ''}`}
-          >
-            DEBLOAT [{TWEAKS.filter(t => t.category === 'debloat').length}]
-          </button>
-          <button
-            onClick={() => setActiveCategory('ui')}
-            className={`cyber-filter-pill ${activeCategory === 'ui' ? 'active' : ''}`}
-          >
-            UI [{TWEAKS.filter(t => t.category === 'ui').length}]
-          </button>
-          <button
-            onClick={() => setActiveCategory('bypass')}
-            className={`cyber-filter-pill ${activeCategory === 'bypass' ? 'active' : ''}`}
-          >
-            BYPASS [{TWEAKS.filter(t => t.category === 'bypass').length}]
-          </button>
-        </div>
-
-        <div className="cyber-batch-actions">
-          <button onClick={handleSelectAll} className="cyber-btn-pill-ghost">
-            + SELECT ALL
-          </button>
-          <button onClick={handleClearAll} className="cyber-btn-pill-ghost">
-            - CLEAR ALL
-          </button>
-        </div>
-      </div>
-
-      {/* Main Grid: Tweaks on Left, Terminal on Right */}
+      {/* 3. Main Workspace: Left Tweak Registry + Right Terminal Window (Area 3) */}
       <div className="cyber-studio-grid">
         
         {/* Left Column: Tweak List */}
         <div className="cyber-tweak-pane">
-          <div className="cyber-tweak-pane-header">
-            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#00ff00', letterSpacing: '0.04em' }}>
-              &gt; TWEAK_MODULES [{filteredTweaks.length}]
-            </span>
-            <span style={{ fontSize: '0.72rem', color: '#888' }}>
-              {metrics.activeCount} ACTIVE
-            </span>
+          {/* Top Bar of Tweak Pane: Title + Batch Actions + Local Admin */}
+          <div className="cyber-tweak-pane-top">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#00ff00', letterSpacing: '0.04em' }}>
+                &gt; TWEAK_REGISTRY ({metrics.activeCount}/{TWEAKS.length})
+              </span>
+              <button onClick={handleSelectAll} className="cyber-btn-mini-ghost" title="Select all tweaks">
+                + ALL
+              </button>
+              <button onClick={handleClearAll} className="cyber-btn-mini-ghost" title="Deselect all tweaks">
+                - NONE
+              </button>
+            </div>
+
+            <div className="cyber-admin-chip">
+              LOCAL ADMIN:
+              <input
+                type="text"
+                value={adminUsername}
+                onChange={(e) => setAdminUsername(e.target.value)}
+                className="cyber-admin-input"
+                placeholder="Admin"
+                title="Configures offline local Administrator account username"
+              />
+            </div>
           </div>
 
+          {/* Single-Row Horizontal Category Filter Tab Strip */}
+          <div className="cyber-tweak-tabs-bar">
+            <button
+              onClick={() => setActiveCategory('all')}
+              className={`cyber-tweak-pill ${activeCategory === 'all' ? 'active' : ''}`}
+            >
+              ALL {TWEAKS.length}
+            </button>
+            <button
+              onClick={() => setActiveCategory('privacy')}
+              className={`cyber-tweak-pill ${activeCategory === 'privacy' ? 'active' : ''}`}
+            >
+              PRIVACY {TWEAKS.filter(t => t.category === 'privacy').length}
+            </button>
+            <button
+              onClick={() => setActiveCategory('gaming')}
+              className={`cyber-tweak-pill ${activeCategory === 'gaming' ? 'active' : ''}`}
+            >
+              GAMING {TWEAKS.filter(t => t.category === 'gaming').length}
+            </button>
+            <button
+              onClick={() => setActiveCategory('debloat')}
+              className={`cyber-tweak-pill ${activeCategory === 'debloat' ? 'active' : ''}`}
+            >
+              DEBLOAT {TWEAKS.filter(t => t.category === 'debloat').length}
+            </button>
+            <button
+              onClick={() => setActiveCategory('ui')}
+              className={`cyber-tweak-pill ${activeCategory === 'ui' ? 'active' : ''}`}
+            >
+              UI {TWEAKS.filter(t => t.category === 'ui').length}
+            </button>
+            <button
+              onClick={() => setActiveCategory('bypass')}
+              className={`cyber-tweak-pill ${activeCategory === 'bypass' ? 'active' : ''}`}
+            >
+              BYPASS {TWEAKS.filter(t => t.category === 'bypass').length}
+            </button>
+          </div>
+
+          {/* Scrollable Tweaks List */}
           <div className="cyber-tweak-scroll">
             {filteredTweaks.map(tweak => {
               const checked = !!selectedTweaks[tweak.id];
@@ -540,7 +540,7 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
                 <span className="cyber-dot-yellow">●</span>
                 <span className="cyber-dot-green">●</span>
               </div>
-              <span style={{ fontSize: '0.74rem', fontWeight: 700, color: '#88ff88', letterSpacing: '0.05em' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#88ff88', letterSpacing: '0.05em' }}>
                 TERMINAL // RECIPE_OUTPUT
               </span>
             </div>
