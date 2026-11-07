@@ -53,7 +53,7 @@ html {
   --sl-color-white: #ffffff !important;
   --sl-color-hairline: rgba(0, 255, 0, 0.2) !important;
   --sl-color-text: #e0e0e0 !important;
-  --sl-color-text-invert: #00ff00 !important;
+  --sl-color-text-invert: #050505 !important;
 }
 
 body {
@@ -208,7 +208,7 @@ starlight-theme-select {
 }
 
 /* Headings & Links */
-a {
+a:not(.primary, [class*="primary"], .sl-link-button) {
   color: #00ff00 !important;
   text-shadow: 0 0 5px rgba(0, 255, 0, 0.4);
 }
@@ -491,26 +491,122 @@ aside:hover, .aside:hover, blockquote:hover, pre:not(.expressive-code pre):hover
   text-shadow: 0 0 5px rgba(0, 255, 0, 0.8) !important;
 }
 
-.hero .actions a.minimal {
-  background: rgba(0, 255, 0, 0.05);
-  color: #00ff00 !important;
-  border: 1px dashed rgba(0, 255, 0, 0.5) !important;
-  box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.05);
-  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5) !important;
-  border-radius: 999rem;
+/* Hero & Link Buttons — Primary Variant (High Contrast Dark Text on Neon Green) */
+.hero .actions a.primary,
+.sl-link-button.primary,
+a.sl-link-button.primary {
+  background: #00ff00 !important;
+  color: #050505 !important;
+  font-weight: 700 !important;
+  border: 1px solid #00ff00 !important;
+  text-shadow: none !important;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.4), inset 0 0 6px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 999rem !important;
   padding: 0.75rem 1.5rem !important;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  transition: all 0.2s ease;
+  font-size: 1rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer;
 }
 
-.hero .actions a.minimal:hover {
-  background: rgba(0, 255, 0, 0.15);
-  border: 1px solid #00ff00 !important;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3), inset 0 0 10px rgba(0, 255, 0, 0.15);
+.hero .actions a.primary svg,
+.sl-link-button.primary svg,
+a.sl-link-button.primary svg {
+  color: #050505 !important;
+  fill: #050505 !important;
+}
+
+.hero .actions a.primary:hover,
+.sl-link-button.primary:hover,
+a.sl-link-button.primary:hover {
+  background: #39ff14 !important;
+  color: #000000 !important;
+  border-color: #39ff14 !important;
+  box-shadow: 0 0 25px rgba(0, 255, 0, 0.8), 0 0 10px rgba(0, 255, 0, 0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+.hero .actions a.primary:hover svg,
+.sl-link-button.primary:hover svg,
+a.sl-link-button.primary:hover svg {
+  color: #000000 !important;
+  fill: #000000 !important;
+}
+
+/* Hero & Link Buttons — Secondary Variant */
+.hero .actions a.secondary,
+.sl-link-button.secondary,
+a.sl-link-button.secondary {
+  background: rgba(0, 255, 0, 0.08) !important;
+  color: #00ff00 !important;
+  border: 1px solid rgba(0, 255, 0, 0.5) !important;
+  box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.05) !important;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5) !important;
+  border-radius: 999rem !important;
+  padding: 0.75rem 1.5rem !important;
+  font-size: 1rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.hero .actions a.secondary:hover,
+.sl-link-button.secondary:hover,
+a.sl-link-button.secondary:hover {
+  background: rgba(0, 255, 0, 0.2) !important;
+  border-color: #00ff00 !important;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.4), inset 0 0 10px rgba(0, 255, 0, 0.15) !important;
   text-shadow: 0 0 8px rgba(0, 255, 0, 0.8) !important;
-  transform: translateY(-1px);
+  transform: translateY(-1px) !important;
+}
+
+.hero .actions a.secondary svg,
+.sl-link-button.secondary svg,
+a.sl-link-button.secondary svg {
+  color: #00ff00 !important;
+  fill: #00ff00 !important;
+}
+
+/* Hero & Link Buttons — Minimal Variant */
+.hero .actions a.minimal,
+.sl-link-button.minimal,
+a.sl-link-button.minimal {
+  background: rgba(0, 255, 0, 0.05) !important;
+  color: #00ff00 !important;
+  border: 1px dashed rgba(0, 255, 0, 0.5) !important;
+  box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.05) !important;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5) !important;
+  border-radius: 999rem !important;
+  padding: 0.75rem 1.5rem !important;
+  font-size: 1rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.hero .actions a.minimal svg,
+.sl-link-button.minimal svg,
+a.sl-link-button.minimal svg {
+  color: #00ff00 !important;
+  fill: #00ff00 !important;
+}
+
+.hero .actions a.minimal:hover,
+.sl-link-button.minimal:hover,
+a.sl-link-button.minimal:hover {
+  background: rgba(0, 255, 0, 0.15) !important;
+  border: 1px solid #00ff00 !important;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3), inset 0 0 10px rgba(0, 255, 0, 0.15) !important;
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.8) !important;
+  transform: translateY(-1px) !important;
 }

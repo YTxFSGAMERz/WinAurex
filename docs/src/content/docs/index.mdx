@@ -9,6 +9,10 @@ hero:
     alt: "WinAurex — Free Windows 11 Optimizer and Debloat Framework mascot"
     file: ../../assets/houston.webp
   actions:
+    - text: Launch Web Studio (Live Build)
+      link: /studio/
+      icon: rocket
+      variant: primary
     - text: Start Optimizing
       link: /tweaks/
       icon: right-arrow
@@ -26,6 +30,9 @@ hero:
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
 <CardGrid stagger>
+	<Card title="Interactive Web Studio" icon="rocket">
+		Build custom unattended Windows 11 recipes, bypass TPM & Secure Boot, and export PowerShell scripts directly in your browser with the <a href="/studio/">WinAurex Web Studio</a>.
+	</Card>
 	<Card title="OS Image Building" icon="laptop">
 		Compile lightweight, telemetry-free Windows 11 ISOs natively bypassing TPM and Secure Boot using the **WinAurex OS Builder**.
 	</Card>

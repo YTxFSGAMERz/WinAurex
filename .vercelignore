@@ -1,3 +1,30 @@
-# Ignore GitHub Actions and Bot Scripts
-.github/scripts/
-.github/workflows/
+# Ignore non-web directories and large binary files
+WinAurex-OS-Builder/
+*.iso
+*.wim
+*.esd
+*.bin
+*.exe
+*.dll
+*.pdb
+.git/
+.vs/
+.cache/
+Build/
+bin/
+dist/
+Core/
+Tweaks/
+Tools/
+chocolatey/
+GUI/
+installer/
+Logs/
+Profiles/
+ReleaseNotes/
+site/
+winaurex/
+winaurex_py/
+winaurex.egg-info/
+.github/
+src/

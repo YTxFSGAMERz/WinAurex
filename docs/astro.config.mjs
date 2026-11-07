@@ -7,7 +7,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://winaurex.vercel.app',
+  site: 'https://winaurex.tech',
   prefetch: true,
   integrations: [starlight({
 			title: 'WinAurex',
@@ -29,6 +29,12 @@ export default defineConfig({
 				Head: './src/components/HeadSEO.astro',
 			},
 			sidebar: [
+          {
+              label: '🚀 Interactive Studio',
+              items: [
+                  { label: 'Web Studio (Live Build)', slug: 'studio' },
+              ],
+          },
           {
               label: 'OS Image Building',
               items: [
