@@ -4,8 +4,8 @@ from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py
 from setuptools.command.sdist import sdist
 
-DIRECTORIES_TO_INCLUDE = ["Core", "Tweaks", "Profiles", "Tools", "GUI"]
-FILES_TO_INCLUDE = ["winaurex.cmd", "PC_Cleaner.bat", "Start.bat", "Launch_Dashboard.ps1"]
+DIRECTORIES_TO_INCLUDE = ["Core", "Tweaks", "Profiles", "Tools", "GUI", "winaurex_py"]
+FILES_TO_INCLUDE = ["winaurex.cmd", "WinAurex_Python.bat", "PC_Cleaner.bat", "Start.bat", "Launch_Dashboard.ps1"]
 
 
 def sync_bundled_assets(target_dir):

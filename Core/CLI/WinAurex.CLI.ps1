@@ -133,6 +133,54 @@ function Invoke-WinAurexScript {
     }
 }
 
+function Show-InteractiveMenu {
+    while ($true) {
+        try {
+            if (-not [Console]::IsOutputRedirected -and -not [Console]::IsInputRedirected) {
+                Clear-Host
+            }
+        } catch {}
+
+        Write-Host "==========================================================================" -ForegroundColor Cyan
+        Write-Host "                     WINAUREX INTERACTIVE CLI CONSOLE                     " -ForegroundColor Cyan
+        Write-Host "==========================================================================" -ForegroundColor Cyan
+        Write-Host "  1. System Diagnostic Status Report" -ForegroundColor White
+        Write-Host "  2. Apply Recommended System Optimizations" -ForegroundColor Green
+        Write-Host "  3. Quick Storage & Temp Files Cleanup" -ForegroundColor Yellow
+        Write-Host "  4. Deep Component Storage Cleanup (Aggressive)" -ForegroundColor Yellow
+        Write-Host "  5. Apply Max Performance Profile (Esports / Audio / Gaming)" -ForegroundColor Cyan
+        Write-Host "  6. Apply Balanced Creator Profile (Power Users / Devs)" -ForegroundColor Cyan
+        Write-Host "  7. System File Checker & DISM Repair" -ForegroundColor White
+        Write-Host "  8. Network Stack Repair (DNS / Winsock / IP)" -ForegroundColor White
+        Write-Host "  9. Audio Services Restart & Latency Fix" -ForegroundColor White
+        Write-Host " 10. Generate System Performance HTML Report" -ForegroundColor Magenta
+        Write-Host " 11. Launch Graphical Dashboard (WPF)" -ForegroundColor Magenta
+        Write-Host " 12. Rollback Registry to Last Snapshot" -ForegroundColor Red
+        Write-Host "  0. Exit" -ForegroundColor DarkGray
+        Write-Host "==========================================================================" -ForegroundColor Cyan
+        Write-Host ""
+
+        $choice = Read-Host "Select an option [0-12]"
+
+        switch ($choice) {
+            "1"  { & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "Tools\System-Info\Generate_System_Report.ps1"); Read-Host "`nPress Enter to continue..." }
+            "2"  { Invoke-WinAurexScript -RelativePath "Tweaks\Apply Optimizations.bat" -ScriptArgs @(":recommended"); Read-Host "`nPress Enter to continue..." }
+            "3"  { Invoke-WinAurexScript -RelativePath "Tweaks\Resources\Delete Temporary Files.bat"; Read-Host "`nPress Enter to continue..." }
+            "4"  { Invoke-WinAurexScript -RelativePath "Tweaks\Storage-Aggressive\Deep Component Cleanup (Aggressive).bat" -ScriptArgs @("/force"); Read-Host "`nPress Enter to continue..." }
+            "5"  { Invoke-WinAurexScript -RelativePath "Profiles\Max_Performance_Profile.ps1"; Read-Host "`nPress Enter to continue..." }
+            "6"  { Invoke-WinAurexScript -RelativePath "Profiles\Balanced_Creator_Profile.ps1"; Read-Host "`nPress Enter to continue..." }
+            "7"  { Invoke-WinAurexScript -RelativePath "Tools\Repair\Run_SFC_And_DISM.ps1"; Read-Host "`nPress Enter to continue..." }
+            "8"  { Invoke-WinAurexScript -RelativePath "Tools\Repair\Repair_Network.ps1"; Read-Host "`nPress Enter to continue..." }
+            "9"  { Invoke-WinAurexScript -RelativePath "Tools\Repair\Repair_Audio.ps1"; Read-Host "`nPress Enter to continue..." }
+            "10" { Invoke-WinAurexScript -RelativePath "Tools\Benchmark\Native\Generate_System_Performance_Report.ps1"; Read-Host "`nPress Enter to continue..." }
+            "11" { Invoke-WinAurexScript -RelativePath "Launch_Dashboard.ps1" }
+            "12" { Invoke-WinAurexScript -RelativePath "Core\Restore\Rollback_Last_Changes.ps1"; Read-Host "`nPress Enter to continue..." }
+            "0"  { Write-Host "Exiting WinAurex CLI." -ForegroundColor Cyan; break }
+            default { Write-Host "Invalid option." -ForegroundColor Red; Start-Sleep -Seconds 1 }
+        }
+    }
+}
+
 # Route Commands
 switch ($Command.ToLowerInvariant()) {
     "status" {
@@ -264,50 +312,3 @@ switch ($Command.ToLowerInvariant()) {
     }
 }
 
-function Show-InteractiveMenu {
-    while ($true) {
-        try {
-            if (-not [Console]::IsOutputRedirected -and -not [Console]::IsInputRedirected) {
-                Clear-Host
-            }
-        } catch {}
-
-        Write-Host "==========================================================================" -ForegroundColor Cyan
-        Write-Host "                     WINAUREX INTERACTIVE CLI CONSOLE                     " -ForegroundColor Cyan
-        Write-Host "==========================================================================" -ForegroundColor Cyan
-        Write-Host "  1. System Diagnostic Status Report" -ForegroundColor White
-        Write-Host "  2. Apply Recommended System Optimizations" -ForegroundColor Green
-        Write-Host "  3. Quick Storage & Temp Files Cleanup" -ForegroundColor Yellow
-        Write-Host "  4. Deep Component Storage Cleanup (Aggressive)" -ForegroundColor Yellow
-        Write-Host "  5. Apply Max Performance Profile (Esports / Audio / Gaming)" -ForegroundColor Cyan
-        Write-Host "  6. Apply Balanced Creator Profile (Power Users / Devs)" -ForegroundColor Cyan
-        Write-Host "  7. System File Checker & DISM Repair" -ForegroundColor White
-        Write-Host "  8. Network Stack Repair (DNS / Winsock / IP)" -ForegroundColor White
-        Write-Host "  9. Audio Services Restart & Latency Fix" -ForegroundColor White
-        Write-Host " 10. Generate System Performance HTML Report" -ForegroundColor Magenta
-        Write-Host " 11. Launch Graphical Dashboard (WPF)" -ForegroundColor Magenta
-        Write-Host " 12. Rollback Registry to Last Snapshot" -ForegroundColor Red
-        Write-Host "  0. Exit" -ForegroundColor DarkGray
-        Write-Host "==========================================================================" -ForegroundColor Cyan
-        Write-Host ""
-
-        $choice = Read-Host "Select an option [0-12]"
-
-        switch ($choice) {
-            "1"  { & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "Tools\System-Info\Generate_System_Report.ps1"); Read-Host "`nPress Enter to continue..." }
-            "2"  { Invoke-WinAurexScript -RelativePath "Tweaks\Apply Optimizations.bat" -ScriptArgs @(":recommended"); Read-Host "`nPress Enter to continue..." }
-            "3"  { Invoke-WinAurexScript -RelativePath "Tweaks\Resources\Delete Temporary Files.bat"; Read-Host "`nPress Enter to continue..." }
-            "4"  { Invoke-WinAurexScript -RelativePath "Tweaks\Storage-Aggressive\Deep Component Cleanup (Aggressive).bat" -ScriptArgs @("/force"); Read-Host "`nPress Enter to continue..." }
-            "5"  { Invoke-WinAurexScript -RelativePath "Profiles\Max_Performance_Profile.ps1"; Read-Host "`nPress Enter to continue..." }
-            "6"  { Invoke-WinAurexScript -RelativePath "Profiles\Balanced_Creator_Profile.ps1"; Read-Host "`nPress Enter to continue..." }
-            "7"  { Invoke-WinAurexScript -RelativePath "Tools\Repair\Run_SFC_And_DISM.ps1"; Read-Host "`nPress Enter to continue..." }
-            "8"  { Invoke-WinAurexScript -RelativePath "Tools\Repair\Repair_Network.ps1"; Read-Host "`nPress Enter to continue..." }
-            "9"  { Invoke-WinAurexScript -RelativePath "Tools\Repair\Repair_Audio.ps1"; Read-Host "`nPress Enter to continue..." }
-            "10" { Invoke-WinAurexScript -RelativePath "Tools\Benchmark\Native\Generate_System_Performance_Report.ps1"; Read-Host "`nPress Enter to continue..." }
-            "11" { Invoke-WinAurexScript -RelativePath "Launch_Dashboard.ps1" }
-            "12" { Invoke-WinAurexScript -RelativePath "Core\Restore\Rollback_Last_Changes.ps1"; Read-Host "`nPress Enter to continue..." }
-            "0"  { Write-Host "Exiting WinAurex CLI." -ForegroundColor Cyan; break }
-            default { Write-Host "Invalid option." -ForegroundColor Red; Start-Sleep -Seconds 1 }
-        }
-    }
-}

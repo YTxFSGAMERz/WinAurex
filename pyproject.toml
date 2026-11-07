@@ -25,3 +25,4 @@ Issues = "https://github.com/YTxFSGAMERz/WinAurex/issues"
 
 [project.scripts]
 winaurex = "winaurex.cli:main"
+winaurex-py = "winaurex_py.main:main"

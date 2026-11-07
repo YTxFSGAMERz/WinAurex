@@ -1,6 +1,7 @@
 # Local user telemetry and backups
 Logs/
 node_modules/  
+winaurex_py/backups/*.json
 
 # Wrangler files
 .wrangler/
@@ -35,3 +36,5 @@ chocolatey/tools/app/
 # Explicitly track root JS CLI bin directory
 !/bin/
 !/bin/*
+
+.vercel
