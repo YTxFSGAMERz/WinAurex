@@ -1643,13 +1643,37 @@ a.sl-link-button.minimal:hover {
   border-radius: 8px;
   background: rgba(5, 8, 6, 0.8);
   box-shadow: 0 0 20px rgba(0, 255, 0, 0.06);
+  -webkit-overflow-scrolling: touch;
 }
 
 .benchmark-table {
-  width: 100%;
+  display: table !important;
+  width: 100% !important;
+  min-width: 680px;
   border-collapse: collapse;
   font-size: 0.84rem;
   text-align: left;
+  table-layout: fixed;
+}
+
+.benchmark-table th:nth-child(1),
+.benchmark-table td:nth-child(1) {
+  width: 34%;
+}
+
+.benchmark-table th:nth-child(2),
+.benchmark-table td:nth-child(2) {
+  width: 22%;
+}
+
+.benchmark-table th:nth-child(3),
+.benchmark-table td:nth-child(3) {
+  width: 22%;
+}
+
+.benchmark-table th:nth-child(4),
+.benchmark-table td:nth-child(4) {
+  width: 22%;
 }
 
 .benchmark-table th {
