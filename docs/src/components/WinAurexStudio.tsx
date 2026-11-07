@@ -361,35 +361,34 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
 
   return (
     <div className="cyber-studio-root">
-      {/* Header Banner */}
+      {/* Cockpit Status & Telemetry Header */}
       <div className="cyber-studio-header">
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-            <h2 className="cyber-studio-title">
-              ⚡ WinAurex Web Studio
-            </h2>
+        <div className="cyber-console-brand">
+          <div className="cyber-console-status-row">
             <span className="cyber-badge-live">
-              LIVE ENGINE
+              ENGINE LIVE
             </span>
-            <span style={{
-              background: 'rgba(0, 255, 0, 0.08)',
-              border: '1px solid rgba(0, 255, 0, 0.25)',
-              color: '#80ff80',
-              fontSize: '0.68rem',
-              fontWeight: 700,
-              padding: '0.2rem 0.5rem',
-              borderRadius: '4px',
-              letterSpacing: '0.06em'
-            }}>
-              v1.0.4 // AMD64
+            <span className="cyber-badge-chip">
+              AMD64 // WIN 11 &amp; 10
+            </span>
+            <span className="cyber-admin-chip">
+              ROOT ADMIN:
+              <input
+                type="text"
+                value={adminUsername}
+                onChange={(e) => setAdminUsername(e.target.value)}
+                className="cyber-admin-input"
+                placeholder="Admin"
+                title="Configures offline local Administrator account username"
+              />
             </span>
           </div>
-          <p style={{ margin: '6px 0 0 0', color: '#9e9e9e', fontSize: '0.8rem', lineHeight: 1.4 }}>
-            Zero-Bloat Windows 11 &amp; 10 Unattended Image Recipe &amp; Live PowerShell Debloat Engine.
+          <p className="cyber-console-desc">
+            Tactical Unattended OS Recipe Compiler &amp; Live PowerShell Debloat Engine.
           </p>
         </div>
 
-        {/* Tactical HUD Live Gauges */}
+        {/* Tactical HUD Telemetry Gauges */}
         <div className="cyber-hud-gauges">
           <div className="cyber-hud-card">
             <div className="cyber-hud-val" style={{ color: '#00ff00', textShadow: '0 0 8px rgba(0,255,0,0.6)' }}>
@@ -412,29 +411,34 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
         </div>
       </div>
 
-      {/* Preset Selection Buttons */}
+      {/* Preset Profiles */}
       <div className="cyber-section-label">
         <span>// SELECT OPTIMIZATION PROFILE</span>
       </div>
       <div className="cyber-preset-grid">
         {[
-          { id: 'gaming', title: '🎮 01 // ULTRA GAMING', desc: 'MMCSS 100% GPU priority, 0.5ms Timer, GameBar kill, 1:1 Raw Input' },
-          { id: 'privacy', title: '🛡️ 02 // PRIVACY PURGE', desc: 'Zero Telemetry, Copilot, Recall AI, Advertising ID, Activity history kill' },
-          { id: 'minimal', title: '⚡ 03 // CLEAN MINIMAL', desc: 'Purge 30+ UWP bloatware, Classic context menu, Edge prelaunch kill' },
-          { id: 'custom', title: '🛠️ 04 // CUSTOM MATRIX', desc: 'Full tactical manual override. Select bespoke system parameters' },
+          { id: 'gaming', title: '01 // ULTRA GAMING', desc: 'MMCSS 100% GPU priority, 0.5ms Timer, GameBar kill, 1:1 Raw Input' },
+          { id: 'privacy', title: '02 // PRIVACY PURGE', desc: 'Zero Telemetry, Copilot, Recall AI, Advertising ID, Activity history kill' },
+          { id: 'minimal', title: '03 // CLEAN MINIMAL', desc: 'Purge 30+ UWP bloatware, Classic context menu, Edge prelaunch kill' },
+          { id: 'custom', title: '04 // CUSTOM MATRIX', desc: 'Full tactical manual override. Select bespoke system parameters' },
         ].map(p => (
           <button
             key={p.id}
             onClick={() => handleSelectPreset(p.id as any)}
             className={`cyber-preset-card ${selectedPreset === p.id ? 'active' : ''}`}
           >
-            <div className="cyber-preset-title">{p.title}</div>
+            <div className="cyber-preset-head">
+              <span className="cyber-preset-title">{p.title}</span>
+              {selectedPreset === p.id && (
+                <span className="cyber-preset-badge">ACTIVE</span>
+              )}
+            </div>
             <div className="cyber-preset-desc">{p.desc}</div>
           </button>
         ))}
       </div>
 
-      {/* Category Filter & Batch Controls */}
+      {/* Category Filter & Batch Controls (Pill Design) */}
       <div className="cyber-filter-bar">
         <div className="cyber-filter-pills">
           <button
@@ -476,11 +480,11 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
         </div>
 
         <div className="cyber-batch-actions">
-          <button onClick={handleSelectAll} className="cyber-btn-ghost">
-            [ + SELECT ALL ]
+          <button onClick={handleSelectAll} className="cyber-btn-pill-ghost">
+            + SELECT ALL
           </button>
-          <button onClick={handleClearAll} className="cyber-btn-ghost">
-            [ - CLEAR ALL ]
+          <button onClick={handleClearAll} className="cyber-btn-pill-ghost">
+            - CLEAR ALL
           </button>
         </div>
       </div>
@@ -491,19 +495,12 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
         {/* Left Column: Tweak List */}
         <div className="cyber-tweak-pane">
           <div className="cyber-tweak-pane-header">
-            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#00ff00', letterSpacing: '0.05em' }}>
-              &gt; TWEAK_REGISTRY [{filteredTweaks.length}]
+            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#00ff00', letterSpacing: '0.04em' }}>
+              &gt; TWEAK_MODULES [{filteredTweaks.length}]
             </span>
-            <div className="cyber-admin-input-wrap">
-              <span>ADMIN_USER:</span>
-              <input
-                type="text"
-                value={adminUsername}
-                onChange={(e) => setAdminUsername(e.target.value)}
-                className="cyber-admin-input"
-                placeholder="Admin"
-              />
-            </div>
+            <span style={{ fontSize: '0.72rem', color: '#888' }}>
+              {metrics.activeCount} ACTIVE
+            </span>
           </div>
 
           <div className="cyber-tweak-scroll">
@@ -521,7 +518,7 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
                   <div className="cyber-tweak-info">
                     <div className="cyber-tweak-head">
                       <span className="cyber-tweak-name">{tweak.name}</span>
-                      <span className="cyber-tag">{tweak.category}</span>
+                      <span className={`cyber-tag ${tweak.category}`}>{tweak.category}</span>
                     </div>
                     <div className="cyber-tweak-desc">
                       {tweak.description}
@@ -537,23 +534,23 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
         <div className="cyber-terminal-window">
           {/* Top Window Title Bar */}
           <div className="cyber-terminal-topbar">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
               <div className="cyber-terminal-dots">
                 <span className="cyber-dot-red">●</span>
                 <span className="cyber-dot-yellow">●</span>
                 <span className="cyber-dot-green">●</span>
               </div>
-              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#88ff88', letterSpacing: '0.06em' }}>
+              <span style={{ fontSize: '0.74rem', fontWeight: 700, color: '#88ff88', letterSpacing: '0.05em' }}>
                 TERMINAL // RECIPE_OUTPUT
               </span>
             </div>
 
             <div className="cyber-terminal-actions">
               <button onClick={handleCopy} className={`cyber-btn-copy ${copied ? 'copied' : ''}`}>
-                {copied ? '✓ COPIED' : '📋 COPY'}
+                {copied ? '✓ COPIED' : '⎘ COPY'}
               </button>
               <button onClick={handleDownload} className="cyber-btn-download">
-                ⬇ EXPORT
+                ↓ EXPORT
               </button>
             </div>
           </div>
