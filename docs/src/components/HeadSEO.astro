@@ -1,5 +1,5 @@
 ---
-// HeadSEO.astro — Starlight Head override that adds JSON-LD + OG tags
+// HeadSEO.astro — Starlight Head override that adds JSON-LD + OG tags + Security & Performance links
 // MUST import and render the default Head component to preserve all built-in tags
 import type { Props } from '@astrojs/starlight/props';
 import Default from '@astrojs/starlight/components/Head.astro';
@@ -11,7 +11,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "WinAurex",
-  "alternateName": ["WinAurex Windows Optimizer", "WinAurex OS Builder"],
+  "alternateName": ["WinAurex Windows Optimizer", "WinAurex OS Builder", "WinAurex Web Studio"],
   "url": "https://winaurex.tech",
   "description": "Free open-source Windows 11 optimization framework featuring a native C# WPF GUI Dashboard. Debloat, boost gaming FPS, build custom ISOs, and disable telemetry effortlessly.",
   "potentialAction": {
@@ -24,6 +24,19 @@ const jsonLd = {
     "name": "Farhan",
     "url": "https://github.com/YTxFSGAMERz"
   }
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "WinAurex Engineering",
+  "url": "https://winaurex.tech",
+  "logo": "https://winaurex.tech/favicon.png",
+  "sameAs": [
+    "https://github.com/YTxFSGAMERz/WinAurex",
+    "https://github.com/YTxFSGAMERz",
+    "https://t.me/YTxFSGAMERz"
+  ]
 };
 
 const softwareJsonLd = {
@@ -39,8 +52,8 @@ const softwareJsonLd = {
   },
   "description": "Free open-source Windows 11 optimization toolkit featuring a compiled C# .NET WPF dashboard to debloat, boost gaming performance, build custom ISOs, and disable telemetry natively.",
   "url": "https://winaurex.tech",
-  "downloadUrl": "https://github.com/YTxFSGAMERz/WinAurex",
-  "softwareVersion": "1.0",
+  "downloadUrl": "https://github.com/YTxFSGAMERz/WinAurex/releases/latest",
+  "softwareVersion": "1.2.0",
   "author": {
     "@type": "Person",
     "name": "Farhan"
@@ -49,22 +62,30 @@ const softwareJsonLd = {
 
 import heroImage from '../assets/houston.webp';
 const isHomepage = Astro.props.slug === '' || Astro.props.slug === undefined;
+const canonicalUrl = new URL(Astro.url.pathname, 'https://winaurex.tech').href;
 ---
 
 <!-- Render ALL default Starlight head tags first -->
 <Default {...Astro.props}><slot /></Default>
 
-<!-- Append custom SEO tags -->
+<!-- Dynamic Canonical URL & App Metadata -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Append custom SEO JSON-LD tags -->
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+<script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
 <script type="application/ld+json" set:html={JSON.stringify(softwareJsonLd)} />
+
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <meta property="og:image" content="https://winaurex.tech/og-image.png" />
+<meta property="og:image:alt" content="WinAurex — Windows 11 Optimizer and Debloater Architecture" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:type" content="image/png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://winaurex.tech/og-image.png" />
+<meta name="twitter:image:alt" content="WinAurex — Windows 11 Optimizer and Debloater Architecture" />
 <meta name="google-site-verification" content="E7D16t2Y65R_0-WG7qXbGPU2dksmCFIorHa5b5RkKbQ" />
 {isHomepage && <link rel="preload" href={heroImage.src} as="image" type="image/webp" fetchpriority="high" />}
 

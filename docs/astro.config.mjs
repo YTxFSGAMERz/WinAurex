@@ -15,7 +15,7 @@ export default defineConfig({
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/YTxFSGAMERz/WinAurex' }],
 			head: [
 				{ tag: 'link', attrs: { rel: 'icon', href: '/favicon.ico' } },
-				{ tag: 'meta', attrs: { name: 'keywords', content: 'windows 11, debloat, optimizer, fps boost, gaming performance, remove telemetry, os builder, win ui 3, custom iso' } },
+				{ tag: 'meta', attrs: { name: 'keywords', content: 'windows 11 debloater 2026, windows 11 optimizer, fps boost, gaming performance, remove telemetry, os builder, win ui 3, custom iso, autounattend generator' } },
 				{ tag: 'meta', attrs: { name: 'author', content: 'Farhan' } },
 				{ tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
 				{ tag: 'meta', attrs: { property: 'og:site_name', content: 'WinAurex' } },
@@ -23,10 +23,11 @@ export default defineConfig({
 				{ tag: 'meta', attrs: { name: 'theme-color', content: '#16a34a' } },
 			],
 			customCss: ['./src/styles/custom.css'],
-			// Override ThemeSelect with an empty component to permanently hide the light/dark toggle
+			// Override components with custom implementations
 			components: {
 				ThemeSelect: './src/components/ThemeSelect.astro',
 				Head: './src/components/HeadSEO.astro',
+				Footer: './src/components/Footer.astro',
 			},
 			sidebar: [
           {
@@ -76,6 +77,14 @@ export default defineConfig({
                   { label: 'Input Latency Myths', slug: 'input_latency_myths' },
                   { label: 'Myths & Anti-Patterns', slug: 'myths_and_anti_patterns' },
                   { label: 'Registry Reference', slug: 'registry_reference' },
+              ],
+          },
+          {
+              label: '🛡️ Legal & Support',
+              items: [
+                  { label: 'Privacy Policy', slug: 'privacy' },
+                  { label: 'Terms of Service', slug: 'terms' },
+                  { label: 'Contact & Community', slug: 'contact' },
               ],
           },
 			],

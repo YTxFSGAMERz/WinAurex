@@ -360,7 +360,7 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
   };
 
   return (
-    <div className="cyber-studio-root">
+    <div className="cyber-studio-root not-content">
       {/* 1. Cockpit Status & Unified Telemetry Cluster (Area 1) */}
       <div className="cyber-studio-header">
         <div className="cyber-console-brand">

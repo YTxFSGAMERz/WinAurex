@@ -1,0 +1,69 @@
+---
+title: "Terms of Service"
+description: "Terms of service, open-source licensing, and usage disclaimers for the WinAurex framework and website."
+---
+
+# ⚖️ Terms of Service & Disclaimer
+
+**Last Updated:** November 7, 2026
+
+Welcome to **WinAurex** ([winaurex.tech](https://winaurex.tech)). By accessing this website, downloading our tools, executing our PowerShell/batch scripts, or utilizing our Web Studio, you agree to comply with and be bound by the following terms.
+
+---
+
+## 1. Open Source License (ISC / MIT)
+
+WinAurex is an open-source software project licensed under the **ISC License**:
+
+```text
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+```
+
+---
+
+## 2. Disclaimer of System Modifications
+
+WinAurex interacts deeply with the Windows operating system kernel, service manager, registry hives, and DISM image servicing components.
+
+> [!CAUTION]
+> **Important Safety Notice**:
+> Applying aggressive system tweaks, disabling background Windows services, or debloating system packages carries inherent risk. While WinAurex includes transactional rollback capabilities and automated System Restore checkpoint creation, **you are ultimately responsible for backing up your data before executing system-level modifications**.
+
+### User Responsibilities
+1. **Always Create a System Restore Point**: Prior to executing the live debloat scripts or applying new registry tweaks.
+2. **Review Tweak Presets**: Understand which features are disabled in specific profiles (e.g., Extreme Gaming disables Xbox services and Bluetooth discovery).
+3. **Hardware Compatibility**: Ensure your device drivers and BIOS meet minimum stability criteria before applying latency-sensitive kernel scheduling tweaks.
+
+---
+
+## 3. Web Studio & Unattended Image Generator
+
+The [WinAurex Live Web Studio](/studio/) generates Windows unattended answer files (`autounattend.xml`) and PowerShell configuration scripts based on user selections:
+
+- The answer files bypass hardware restrictions (such as TPM 2.0, Secure Boot, and minimum RAM checks) for installation flexibility.
+- You are responsible for ensuring compliance with your respective Microsoft Windows licensing terms and agreements.
+- WinAurex does not provide, distribute, or bundle copyrighted Windows installation media or unauthorized product keys.
+
+---
+
+## 4. Limitation of Liability
+
+Under no circumstances shall the maintainers, contributors, or developers of WinAurex be held liable for any direct, indirect, incidental, special, or consequential damages resulting from the use or inability to use this software, including but not limited to loss of data, system corruption, hardware malfunction, or downtime.
+
+---
+
+## 5. Modifications to Terms
+
+We reserve the right to modify these terms at any time. Continued use of the website or tools constitutes your agreement to the updated terms.
+
+For legal or licensing queries, contact us at `farhanahmad3162@gmail.com`.
