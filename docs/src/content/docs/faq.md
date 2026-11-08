@@ -54,8 +54,6 @@ head:
       }
 ---
 
-# ❓ Frequently Asked Questions
-
 This section covers the most common questions regarding **Windows 11 Optimization**, **Debloating**, and maximizing your PC's speed and gaming performance. These answers apply to both the live optimization scripts and the OS Builder.
 
 ---

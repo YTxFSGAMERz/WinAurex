@@ -3,8 +3,6 @@ title: "Best Privacy Browsers for Windows 11 — Edge Alternatives"
 description: "Guide to privacy-focused web browsers for Windows 11. Replace Microsoft Edge with lightweight, telemetry-free alternatives."
 ---
 
-# 🌐 Web Browsers Guide
-
 This guide details the web browser installers included in the `Tools/Apps/Browsers/` directory and provides recommendations based on resource efficiency, user privacy, extensions compatibility, and gaming latency.
 
 ---

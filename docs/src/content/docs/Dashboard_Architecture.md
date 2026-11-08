@@ -3,8 +3,6 @@ title: "WPF Dashboard Architecture — PowerShell GUI Framework"
 description: "Technical guide to the WinAurex WPF XAML dashboard. PowerShell-driven GUI architecture, tab system, and extensibility patterns."
 ---
 
-# WPF Dashboard Architecture Guide
-
 As of version 5.0.0, **WinAurex** utilizes a native WPF (Windows Presentation Foundation) dashboard powered by a compiled C# .NET architecture, removing the limitations of raw PowerShell GUI parsing while maintaining a highly modular structure.
 
 This document serves as a developer blueprint for the dashboard internals.

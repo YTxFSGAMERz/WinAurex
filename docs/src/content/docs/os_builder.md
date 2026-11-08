@@ -3,8 +3,6 @@ title: "Build a Custom Windows 11 ISO — Zero-Bloat OS Builder Framework"
 description: "Step-by-step guide to building lightweight, telemetry-free Windows 11 ISOs with TPM and Secure Boot bypass using WinAurex OS Builder."
 ---
 
-# 🏗️ OS Builder Framework
-
 The WinAurex OS Builder is a powerful, native script-based framework designed to process an official Windows 11 ISO and compile a lightweight, telemetry-free, custom operating system image. It achieves this by directly injecting offline registry hives and surgically removing Provisioned AppxPackages.
 
 ## ⚙️ Overview & Architecture

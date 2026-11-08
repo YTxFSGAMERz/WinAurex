@@ -3,8 +3,6 @@ title: "Manage Windows Update on Windows 11 — Pause, Disable & Control"
 description: "Control Windows Update behavior on Windows 11. Pause, defer, or safely disable automatic updates without breaking your system."
 ---
 
-# 🔄 Windows Update Management
-
 This guide explains the tools located in the `Tweaks/Updates/` directory and details the system impact, performance trade-offs, and critical software dependencies associated with controlling Windows Update schedules.
 
 ---

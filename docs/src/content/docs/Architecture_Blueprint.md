@@ -3,8 +3,6 @@ title: "WinAurex System Architecture — Technical Blueprint"
 description: "Technical architecture of the WinAurex optimization framework. Module structure, script pipeline, and system design overview."
 ---
 
-# WinAurex: Next-Generation Architecture Blueprint
-
 ## Executive Summary
 The **WinAurex** repository is evolving from a standard collection of registry tweaks and batch files into a mature, modular, and professional-grade **Windows Configuration & Optimization Framework**. Powered by a native WPF (Windows Presentation Foundation) Dashboard and a robust PowerShell core, this transition shifts the focus from blind "tweak dumping" to engineered state management, offering transparency, precise observability, and guaranteed reversibility. This blueprint outlines the strategic expansion of the repository, establishing strict engineering principles, a robust safety backbone, and a modular architecture designed to support casual users, power users, gamers, and system administrators alike.
 

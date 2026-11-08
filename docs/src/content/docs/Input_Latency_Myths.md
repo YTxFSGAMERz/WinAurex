@@ -3,8 +3,6 @@ title: "Input Latency Myths Debunked — Facts About Mouse & Keyboard Lag"
 description: "Debunking common myths about input latency, mouse polling rates, and keyboard lag on Windows 11. Evidence-based optimization facts."
 ---
 
-# Input Latency Myths & Facts
-
 The internet is filled with "zero latency" tweaks that are at best placebos, and at worst, detrimental to system stability. The WinAurex Framework focuses on **hardware-level truths** rather than registry snake oil.
 
 Here is a breakdown of the most common myths surrounding input latency.

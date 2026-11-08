@@ -3,8 +3,6 @@ title: "Hardware Monitoring & Diagnostics for Windows 11"
 description: "Monitor CPU temps, GPU usage, disk health, and system diagnostics on Windows 11 with recommended lightweight tools."
 ---
 
-# 🌡️ Hardware Monitoring & Diagnostics Guide
-
 The `Tools/Apps/Hardware/` directory contains portable, industry-standard diagnostic tools designed to monitor hardware specifications, track temperatures, and verify that system optimizations are active and stable.
 
 ---

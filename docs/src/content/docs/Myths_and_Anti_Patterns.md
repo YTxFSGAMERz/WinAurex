@@ -3,8 +3,6 @@ title: "Windows Optimization Myths — Dangerous Tweaks to Avoid"
 description: "Exposing dangerous Windows optimization myths and anti-patterns. Learn which popular tweaks actually harm your system performance."
 ---
 
-# Windows Optimization Myths & Anti-Patterns
-
 Welcome to the **Myths & Anti-Patterns** guide for the WinAurex framework. 
 
 The internet is full of "FPS Boost" scripts, mysterious `.reg` files, and YouTubers claiming that disabling critical system components will somehow double your gaming performance. 

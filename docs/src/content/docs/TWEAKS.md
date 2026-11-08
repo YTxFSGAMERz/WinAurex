@@ -3,8 +3,6 @@ title: "Windows 11 Tweaks & Optimization Guide — Registry, Services, Gaming"
 description: "Complete guide to Windows 11 registry tweaks, service optimizations, gaming performance boosts, privacy fixes, and SSD tuning."
 ---
 
-# 🛠️ Windows Tweaks & Optimizations Guide
-
 This document provides a highly detailed, comprehensive guide to all system modifications, registry tweaks, and shell scripts located in the `Tweaks/` directory. These configurations are designed to optimize Windows 10 & 11 for maximum responsiveness, privacy, and gaming efficiency. **All PowerShell scripts in this suite support zero-prompt, unattended execution simply by appending the `-Force` argument.**
 
 ---
@@ -18,7 +16,7 @@ The `Tweaks/` directory is organized into functional categories to allow targete
 5. [**Gaming**](#5-gaming-tweaks): Windows Game Mode configurations.
 6. [**Network**](#6-network-tweaks): Delivery Optimization bandwidth capping and P2P updates.
 7. [**Privacy**](#7-privacy-tweaks): Core application permissions lockdowns.
-8. [**Recursos & Resources**](#8-recursos-resources-standard-tweaks): Hardware priority tweaks, mitigations, custom power plans, SSD tunings, RAM cleaners, and services.
+8. [**Core System Resources & Tweaks**](#8-core-system-resources--tweaks): Hardware priority tweaks, mitigations, custom power plans, SSD tunings, RAM cleaners, and services.
 9. [**Startup**](#9-startup-tweaks): Trimming auto-start software.
 10. [**Storage**](#10-storage-tweaks): Safe temporary folder cleaners and Storage Sense toggles.
 11. [**Storage-Aggressive**](#11-storage-aggressive-tweaks): System component store and WinSXS cleanups via DISM.
@@ -110,7 +108,7 @@ Disabling transparency and transitions is highly recommended for legacy systems 
 
 ---
 
-## 8. Recursos & Resources (Standard Tweaks)
+## 8. Core System Resources & Tweaks
 *   **Path**: `Tweaks/Recursos/` & `Tweaks/Resources/`
 *   **Purpose**: The traditional performance tweaks folder.
 

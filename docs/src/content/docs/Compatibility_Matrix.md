@@ -3,8 +3,6 @@ title: "Windows OS Compatibility Matrix — Supported Versions & Editions"
 description: "Compatibility matrix for WinAurex across Windows 10 and 11 editions. Check which features work on Home, Pro, Enterprise, and LTSC."
 ---
 
-# Compatibility Matrix
-
 The WinAurex framework is designed to be OS-aware. However, as Microsoft introduces and deprecates features across different builds of Windows 10 and Windows 11, certain tweaks may behave differently or become obsolete.
 
 This matrix tracks the tested compatibility of major module packs across the most common Windows versions as of **Q2 2026**.

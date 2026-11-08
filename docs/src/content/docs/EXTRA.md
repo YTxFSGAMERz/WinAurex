@@ -3,8 +3,6 @@ title: "Essential Windows 11 Utilities — Must-Have Tools"
 description: "Curated list of essential Windows 11 utilities for power users. File managers, archivers, media players, and system tools."
 ---
 
-# 🛠️ Extra Utilities Guide
-
 The `Tools/Apps/Extra/` directory contains a curated selection of lightweight, high-performance utilities, custom system configurators, and network tuning applications designed to optimize your workspace and reduce systemic latency.
 
 ---
