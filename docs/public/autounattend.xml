@@ -2983,7 +2983,7 @@ $null = Read-Host &quot;Press Enter to exit...&quot;
     <File path="C:\Windows\Setup\Scripts\Tweaks\Display\Auto SR Settings Guide.txt">
 ==============================================================================
 GUIDE: Automatic Super Resolution (Auto SR) in Windows 11
-TARGET SYSTEM: Windows 11 24H2 or later
+TARGET SYSTEM: Windows 11 24H2, 25H2, 26H2 or later
 ==============================================================================
 
 Automatic Super Resolution (Auto SR) is an AI-powered game upscaler integrated 
@@ -2994,7 +2994,7 @@ pristine visual clarity, leaving the GPU free for other processing.
 --- SYSTEM REQUIREMENTS ---
 To use Auto SR, your system must meet the following:
 1. Processor: Snapdragon X Elite / Snapdragon X Plus (with integrated NPU).
-2. OS Version: Windows 11 Version 24H2 (Build 26100) or later.
+2. OS Version: Windows 11 Version 24H2 (Build 26100), 25H2, 26H2 or later.
 3. Display Resolution: 1080p or higher.
 4. DirectX version: Game must run on DirectX 11 or DirectX 12.
 
@@ -7097,7 +7097,7 @@ reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Pr
 reg.exe add &quot;HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot&quot; /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f
 reg.exe add &quot;HKLM\Software\Policies\Microsoft\Windows\WindowsCopilot&quot; /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f
 
-# Disable Recall (Windows 11 24H2+)
+# Disable Recall (Windows 11 24H2 / 25H2 / 26H2+)
 reg.exe add &quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsAI&quot; /v DisableRecall /t REG_DWORD /d 1 /f
 reg.exe add &quot;HKCU\SOFTWARE\Policies\Microsoft\Windows\WindowsAI&quot; /v DisableRecall /t REG_DWORD /d 1 /f
 

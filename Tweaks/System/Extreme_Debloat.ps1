@@ -69,7 +69,7 @@ reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protect
 reg.exe add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f
 reg.exe add "HKLM\Software\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f
 
-# Disable Recall (Windows 11 24H2+)
+# Disable Recall (Windows 11 26H2+)
 reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsAI" /v DisableRecall /t REG_DWORD /d 1 /f
 reg.exe add "HKCU\SOFTWARE\Policies\Microsoft\Windows\WindowsAI" /v DisableRecall /t REG_DWORD /d 1 /f
 

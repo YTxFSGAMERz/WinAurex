@@ -11,11 +11,11 @@ export default defineConfig({
   prefetch: true,
   integrations: [starlight({
 			title: 'WinAurex',
-			description: 'Free, open-source toolkit to debloat Windows 11, boost FPS for gaming, build custom ISOs, and disable telemetry, all from a native C# WPF GUI Dashboard.',
+			description: 'Free, open-source toolkit to debloat Windows 11 and 10, neutralize Recall, prevent silent BitLocker, boost FPS, build custom ISOs, and disable telemetry.',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/YTxFSGAMERz/WinAurex' }],
 			head: [
 				{ tag: 'link', attrs: { rel: 'icon', href: '/favicon.ico' } },
-				{ tag: 'meta', attrs: { name: 'keywords', content: 'windows 11 debloater 2026, windows 11 optimizer, fps boost, gaming performance, remove telemetry, os builder, win ui 3, custom iso, autounattend generator' } },
+				{ tag: 'meta', attrs: { name: 'keywords', content: 'windows 11 debloater, windows 11 26h2, windows 11 25h2, windows 11 24h2, windows 11 optimizer, disable recall, prevent bitlocker, fps boost, gaming performance, remove telemetry, os builder, win ui 3, custom iso, autounattend generator' } },
 				{ tag: 'meta', attrs: { name: 'author', content: 'Farhan' } },
 				{ tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
 				{ tag: 'meta', attrs: { property: 'og:site_name', content: 'WinAurex' } },
@@ -28,6 +28,7 @@ export default defineConfig({
 				ThemeSelect: './src/components/ThemeSelect.astro',
 				Head: './src/components/HeadSEO.astro',
 				Footer: './src/components/Footer.astro',
+				Header: './src/components/Header.astro',
 			},
 			sidebar: [
           {
@@ -40,7 +41,7 @@ export default defineConfig({
               label: 'OS Image Building',
               items: [
                   { label: 'OS Builder Framework', slug: 'os_builder' },
-                  { label: 'Unattended Install', slug: 'autounattend' },
+                  { label: 'Unattended Windows Install', slug: 'autounattend' },
               ],
           },
           {
@@ -67,7 +68,7 @@ export default defineConfig({
               items: [
                   { label: 'System Blueprint', slug: 'architecture_blueprint' },
                   { label: 'GUI Architecture', slug: 'dashboard_architecture' },
-                  { label: 'OS Compatibility', slug: 'compatibility_matrix' },
+                  { label: 'OS Compatibility Matrix', slug: 'compatibility_matrix' },
               ],
           },
           {

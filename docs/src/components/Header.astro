@@ -1,0 +1,218 @@
+---
+import config from 'virtual:starlight/user-config';
+
+import LanguageSelect from 'virtual:starlight/components/LanguageSelect';
+import Search from 'virtual:starlight/components/Search';
+import SiteTitle from 'virtual:starlight/components/SiteTitle';
+import SocialIcons from 'virtual:starlight/components/SocialIcons';
+import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
+
+const shouldRenderSearch =
+	config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
+
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { label: 'Studio', href: '/studio/' },
+  { label: 'Tweaks', href: '/tweaks/' },
+  { label: 'OS Builder', href: '/os_builder/' },
+  { label: 'Unattended', href: '/autounattend/' },
+  { label: 'Compatibility', href: '/compatibility_matrix/' },
+  { label: 'FAQ', href: '/faq/' },
+  { label: 'Community', href: '/contact/' },
+];
+---
+
+<div class="winaurex-header-inner">
+	<div class="header-left sl-flex">
+		<div class="title-wrapper sl-flex">
+			<SiteTitle />
+		</div>
+		<div class="sl-flex print:hidden search-wrapper">
+			{shouldRenderSearch && <Search />}
+		</div>
+	</div>
+
+	<div class="header-right sl-flex">
+		<!-- Minimalist Top Navigation Menu on Top Right -->
+		<nav class="winaurex-nav sl-hidden lg:sl-flex" aria-label="Main Navigation">
+			{navItems.map((item) => {
+				const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+				return (
+					<a href={item.href} class={`nav-link ${isActive ? 'active' : ''}`}>
+						{item.label}
+					</a>
+				);
+			})}
+		</nav>
+
+		<div class="sl-hidden md:sl-flex print:hidden right-group">
+			<div class="sl-flex social-icons">
+				<SocialIcons />
+			</div>
+			<ThemeSelect />
+			<LanguageSelect />
+		</div>
+	</div>
+</div>
+
+<style>
+	.winaurex-header-inner {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		gap: 1.5rem;
+	}
+
+	.header-left {
+		display: flex;
+		align-items: center;
+		gap: 1.75rem;
+		flex: 1;
+		max-width: 480px;
+		min-width: 0;
+	}
+
+	.title-wrapper {
+		overflow: clip;
+		padding: 0.25rem;
+		margin: -0.25rem;
+		min-width: 0;
+		flex-shrink: 0;
+	}
+
+	/* Generous responsive search bar eliminating awkward empty space */
+	.search-wrapper {
+		flex: 1;
+		min-width: 240px;
+		max-width: 360px;
+	}
+
+	:global(.search-wrapper button[data-open-modal]) {
+		width: 100% !important;
+		max-width: 100% !important;
+		background: rgba(0, 16, 0, 0.6) !important;
+		border: 1px solid rgba(0, 255, 0, 0.28) !important;
+		border-radius: 6px !important;
+		color: #a3a3a3 !important;
+		height: 2.25rem !important;
+		padding-inline: 0.85rem !important;
+		display: flex !important;
+		align-items: center !important;
+		gap: 0.6rem !important;
+		transition: all 0.2s ease !important;
+		box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4) !important;
+		font-family: inherit !important;
+	}
+
+	:global(.search-wrapper button[data-open-modal]:hover) {
+		border-color: #00ff00 !important;
+		color: #ffffff !important;
+		background: rgba(0, 26, 0, 0.85) !important;
+		box-shadow: 0 0 12px rgba(0, 255, 0, 0.25) !important;
+	}
+
+	:global(.search-wrapper button[data-open-modal] kbd) {
+		margin-inline-start: auto !important;
+		border-color: rgba(0, 255, 0, 0.25) !important;
+		background: rgba(0, 255, 0, 0.08) !important;
+		color: #80ff80 !important;
+	}
+
+	.header-right {
+		display: flex;
+		align-items: center;
+		gap: 1.75rem;
+		margin-left: auto;
+		min-width: 0;
+		flex-shrink: 0;
+	}
+
+	/* Minimalist Right-Side Navigation: No borders, pure typography */
+	.winaurex-nav {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		margin: 0;
+		padding: 0;
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+	}
+
+	.nav-link,
+	.nav-link:hover,
+	.nav-link:focus,
+	.nav-link.active {
+		text-decoration: none !important;
+	}
+
+	.nav-link {
+		position: relative;
+		display: inline-block;
+		padding: 0.35rem 0;
+		font-family: inherit;
+		font-size: 0.88rem;
+		font-weight: 500;
+		color: #a3a3a3;
+		text-decoration: none !important;
+		background: transparent !important;
+		border: none !important;
+		outline: none;
+		white-space: nowrap;
+		letter-spacing: 0.02em;
+		transition: color 0.2s ease, text-shadow 0.2s ease;
+	}
+
+	.nav-link:hover {
+		color: #ffffff;
+		text-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+		text-decoration: none !important;
+	}
+
+	/* Single Animated Neon Underline on hover */
+	.nav-link::after {
+		content: '';
+		position: absolute;
+		bottom: 0px;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		background: #00ff00;
+		box-shadow: 0 0 8px #00ff00;
+		transform: scaleX(0);
+		transform-origin: bottom right;
+		transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+	}
+
+	.nav-link:hover::after {
+		transform: scaleX(1);
+		transform-origin: bottom left;
+	}
+
+	.nav-link.active {
+		color: #00ff00;
+		font-weight: 600;
+		text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+		text-decoration: none !important;
+	}
+
+	.nav-link.active::after {
+		transform: scaleX(1);
+	}
+
+	.right-group,
+	.social-icons {
+		gap: 1rem;
+		align-items: center;
+		flex-shrink: 0;
+	}
+
+	.social-icons::after {
+		content: '';
+		height: 1.5rem;
+		border-inline-end: 1px solid rgba(0, 255, 0, 0.2);
+	}
+</style>

@@ -10,34 +10,36 @@
 <br><br>
 
 <!-- ANIMATED TYPEWRITER BOOT SEQUENCE -->
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&duration=1800&pause=500&color=00BCD4&background=0D1117&center=true&vCenter=true&multiline=true&width=620&height=130&lines=%5B+0.001s+%5D+OK+%3A+Rollback+Engine+Initialized;%5B+0.042s+%5D+OK+%3A+Observability+Layer+Online;%5B+0.119s+%5D+OK+%3A+Logging+Framework+Active;%5B+0.180s+%5D+OK+%3A+Master+Profiles+Loaded;%3E+SYSTEM+STATUS+%3A+ONLINE+%E2%96%88)](https://github.com/YTxFSGAMERz/WinAurex)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&duration=1800&pause=500&color=00BCD4&background=0D1117&center=true&vCenter=true&multiline=true&width=620&height=130&lines=%5B+0.001s+%5D+OK+%3A+Transactional+Rollback+Engine+Loaded;%5B+0.038s+%5D+OK+%3A+Windows+11+(24H2%2F23H2)+%26+10+Profiles+Active;%5B+0.095s+%5D+OK+%3A+Native+.NET+10+%26+WPF+Dashboard+Online;%5B+0.142s+%5D+OK+%3A+Zero-Telemetry+Offline+Pipeline+Verified;%3E+SYSTEM+STATUS+%3A+READY+%E2%96%88)](https://github.com/YTxFSGAMERz/WinAurex)
 
 <br>
 
-<kbd>&nbsp;Windows Engineering Framework&nbsp;</kbd> &nbsp;•&nbsp; <kbd>&nbsp;Rollback-Safe&nbsp;</kbd> &nbsp;•&nbsp; <kbd>&nbsp;PowerShell + WPF&nbsp;</kbd> &nbsp;•&nbsp; <kbd>&nbsp;Open Source&nbsp;</kbd>
+<kbd>&nbsp;Windows Engineering Framework&nbsp;</kbd> &nbsp;•&nbsp; <kbd>&nbsp;Rollback-Safe&nbsp;</kbd> &nbsp;•&nbsp; <kbd>&nbsp;PowerShell + C# WPF&nbsp;</kbd> &nbsp;•&nbsp; <kbd>&nbsp;Open Source&nbsp;</kbd>
 
 <br>
 
-<a href="https://winaurex.vercel.app/"><img src="https://img.shields.io/badge/📖_DOCUMENTATION-winaurex.vercel.app-00FF41?style=for-the-badge&labelColor=0D1117"></a>
+<a href="https://winaurex.tech/"><img src="https://img.shields.io/badge/📖_DOCUMENTATION-winaurex.tech-00FF41?style=for-the-badge&labelColor=0D1117"></a>
+&nbsp;
+<a href="https://winaurex.tech/studio/"><img src="https://img.shields.io/badge/🚀_WEB_STUDIO-winaurex.tech%2Fstudio-00bcd4?style=for-the-badge&labelColor=0D1117"></a>
 
 <br><br>
 
 <!-- BADGE GRID — TWO-TONE DARK+NEON -->
 <p align="center">
-  <a href="#"><img src="https://img.shields.io/badge/BUILD-PASSING-00FF41?style=for-the-badge&logo=githubactions&logoColor=00FF41&labelColor=0D1117"></a>
-  <a href="#"><img src="https://img.shields.io/badge/TESTS-450%2F450_PASSED-00FF41?style=for-the-badge&logo=testcafe&logoColor=00FF41&labelColor=0D1117"></a>
-  <a href="#"><img src="https://img.shields.io/badge/ENGINE-MODULAR_ARCHITECTURE-00bcd4?style=for-the-badge&logo=windows&logoColor=00bcd4&labelColor=0D1117"></a>
-  <a href="#"><img src="https://img.shields.io/badge/SAFETY-ROLLBACK_READY-00FF41?style=for-the-badge&logo=checkmarx&logoColor=00FF41&labelColor=0D1117"></a>
+  <a href="https://github.com/YTxFSGAMERz/WinAurex/actions/workflows/publish.yml"><img src="https://img.shields.io/badge/BUILD-PASSING-00FF41?style=for-the-badge&logo=githubactions&logoColor=00FF41&labelColor=0D1117"></a>
+  <a href="#core-architecture"><img src="https://img.shields.io/badge/TESTS-xUNIT_SUITE_PASSING-00FF41?style=for-the-badge&logo=dotnet&logoColor=00FF41&labelColor=0D1117"></a>
+  <a href="#safety--rollback-engine"><img src="https://img.shields.io/badge/SAFETY-ROLLBACK_READY-00FF41?style=for-the-badge&logo=checkmarx&logoColor=00FF41&labelColor=0D1117"></a>
+  <a href="#core-architecture"><img src="https://img.shields.io/badge/ENGINE-MODULAR_STATE_CORE-00bcd4?style=for-the-badge&logo=windows&logoColor=00bcd4&labelColor=0D1117"></a>
   <br>
-  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WINDOWS_11_VERIFIED-00bcd4?style=for-the-badge&logo=windows11&logoColor=00bcd4&labelColor=0D1117"></a>
-  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WINDOWS_10_SUPPORTED-00bcd4?style=for-the-badge&logo=windows&logoColor=00bcd4&labelColor=0D1117"></a>
-  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-WPF_DASHBOARD-9B59B6?style=for-the-badge&logo=dotnet&logoColor=9B59B6&labelColor=0D1117"></a>
+  <a href="https://winaurex.tech/compatibility_matrix/"><img src="https://img.shields.io/badge/PLATFORM-WINDOWS_11_(24H2%20%2F%2023H2)-00bcd4?style=for-the-badge&logo=windows11&logoColor=00bcd4&labelColor=0D1117"></a>
+  <a href="https://winaurex.tech/compatibility_matrix/"><img src="https://img.shields.io/badge/PLATFORM-WINDOWS_10_SUPPORTED-00bcd4?style=for-the-badge&logo=windows&logoColor=00bcd4&labelColor=0D1117"></a>
+  <a href="https://winaurex.tech/dashboard_architecture/"><img src="https://img.shields.io/badge/PLATFORM-C%23_WPF_DASHBOARD-9B59B6?style=for-the-badge&logo=dotnet&logoColor=9B59B6&labelColor=0D1117"></a>
   <br>
-  <a href="#"><img src="https://img.shields.io/badge/OBSERVABILITY-LOGGING_ACTIVE-F39C12?style=for-the-badge&logo=grafana&logoColor=F39C12&labelColor=0D1117"></a>
-  <a href="#"><img src="https://img.shields.io/badge/OBSERVABILITY-NATIVE_APIs-F39C12?style=for-the-badge&logo=prometheus&logoColor=F39C12&labelColor=0D1117"></a>
+  <a href="#observability--telemetry"><img src="https://img.shields.io/badge/DIAGNOSTICS-NATIVE_.NET_COUNTERS-F39C12?style=for-the-badge&logo=windows&logoColor=F39C12&labelColor=0D1117"></a>
+  <a href="#safety--rollback-engine"><img src="https://img.shields.io/badge/STATE-EVENT_SOURCED_JOURNAL-F39C12?style=for-the-badge&logo=json&logoColor=F39C12&labelColor=0D1117"></a>
   <br>
-  <a href="#"><img src="https://img.shields.io/badge/PLATFORM-OPEN_SOURCE-E74C3C?style=for-the-badge&logo=github&logoColor=E74C3C&labelColor=0D1117"></a>
-  <a href="#"><img src="https://img.shields.io/badge/LANGUAGE-C%23_%7C_XAML_%7C_PS7%2B-00bcd4?style=for-the-badge&logo=csharp&logoColor=00bcd4&labelColor=0D1117"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/LICENSE-ISC_OPEN_SOURCE-E74C3C?style=for-the-badge&logo=opensourceinitiative&logoColor=E74C3C&labelColor=0D1117"></a>
+  <a href="#core-architecture"><img src="https://img.shields.io/badge/STACK-C%23_%7C_XAML_%7C_PS7%2B-00bcd4?style=for-the-badge&logo=csharp&logoColor=00bcd4&labelColor=0D1117"></a>
 </p>
 
 </div>
@@ -49,14 +51,14 @@
 
 <div align="center">
 
-> Over **500+ Commits** later, WinAurex has evolved from a collection of raw PowerShell scripts into a **Robust C# WPF Engineering Platform**.
+> WinAurex unites a lightweight PowerShell engine with a compiled **C# WPF Desktop Platform** backed by strict architecture boundaries.
 
-| 🚀 MAJOR UPGRADES | 🛡️ ENTERPRISE-GRADE SAFETY |
+| 🚀 MAJOR CAPABILITIES | 🛡️ SAFETY & RELIABILITY |
 | :--- | :--- |
-| **MVVM Architecture:** Clean separation of UI and business logic. | **C# Execution Engine:** Transactional state management in native .NET. |
-| **WPF Dashboard UI:** A beautiful, responsive, cyber-aesthetic client. | **Validation & Dry-Runs:** Conflict detection before execution starts. |
-| **Automated Testing:** Extensive xUnit test coverage ensuring reliability. | **Immutable Journaling:** Event-sourced audit trails for every operation. |
-| **New Optimization Profiles:** Advanced PowerShell capability providers. | **Dependency Injection:** Loosely coupled components via `Contracts`. |
+| **MVVM Architecture:** Clean separation of UI and business logic. | **Transactional Execution Engine:** Immutable pre-execution snapshots. |
+| **WPF Dashboard UI:** Responsive, high-contrast cyber-aesthetic client. | **Validation & Dry-Runs:** Dependency conflict detection before execution. |
+| **xUnit Test Suites:** Automated verification covering capability providers. | **Immutable Journaling:** Event-sourced JSON audit trails for every operation. |
+| **Optimization Profiles:** Gaming, Workstation, Minimal, and Enterprise. | **Contracts Abstraction:** Clean dependency injection and loose coupling. |
 
 </div>
 
@@ -73,9 +75,11 @@ Get up and running in under 60 seconds.
 
 ```text
 1. Download the latest release from the Releases Tab.
-2. Extract to your preferred directory.
-3. Launch the new C# compiled client flow:
-.\WinAurex.App.exe --elevated
+2. Extract the archive to your preferred directory.
+3. Launch the compiled desktop application or run the quick launcher:
+   .\WinAurex.App.exe --elevated
+   # Or for the PowerShell GUI dashboard:
+   .\Start.bat
 ```
 
 <!-- ═══ ANIMATED DIVIDER ═══ -->
@@ -85,14 +89,14 @@ Get up and running in under 60 seconds.
 
 <div align="center">
 
-Modifying your operating system requires absolute trust. We take security seriously.
+Modifying operating system parameters requires complete transparency and zero guesswork.
 
 | 🔒 SECURITY PRINCIPLE | 🔍 HOW WE ENFORCE IT |
 | :--- | :--- |
-| **Offline-First** | WinAurex requires **zero** internet connection. No phone-home telemetry. |
-| **Reversible State** | Every destructive action is captured in a `.json` manifest for a 1-click rollback. |
-| **100% Open Source** | The entire C# and PowerShell codebase is available for community auditing. |
-| **No Blackbox Executables** | We compile natively with transparent MVVM patterns and extensive xUnit test coverage. |
+| **Offline-First** | WinAurex requires **zero** internet connection to optimize. No telemetry beacons. |
+| **Reversible State** | Every altered key or service is logged into a `.json` manifest for 1-click rollback. |
+| **100% Open Source** | The entire C#, XAML, and PowerShell codebase is public for auditing. |
+| **No Blackbox Binaries** | Transparent MVVM patterns, open scripts, and automated xUnit test coverage. |
 
 </div>
 
@@ -110,12 +114,12 @@ Modifying your operating system requires absolute trust. We take security seriou
 
 <br>
 
-WinAurex is a modular state management and observability-first framework. Modern operating systems are saturated with background telemetry, unnecessary scheduled tasks, and sub-optimal resource allocation. This repository exists to place the control back into the hands of the hardware owner.
+WinAurex is a modular state management and observability-first framework. Modern operating systems ship saturated with background telemetry, redundant scheduled tasks, and sub-optimal scheduling defaults. WinAurex puts fine-grained control back into the hands of the hardware owner.
 
 <div align="center">
 
 ```text
-[ USER ] ──▶ [ PROFILES ] ──▶ [ MODULES ] ──▶ [ LOGS & SNAPSHOTS ] ──▶ [ OS CORE ]
+[ USER ] ──▶ [ PROFILES ] ──▶ [ EXECUTION ENGINE ] ──▶ [ JOURNAL & SNAPSHOTS ] ──▶ [ OS CORE ]
 ```
 
 </div>
@@ -125,13 +129,13 @@ WinAurex is a modular state management and observability-first framework. Modern
 
 <h2 align="center">⬛ CORE ARCHITECTURE</h2>
 
-<details>
-<summary><b>📡 [ CLICK TO ACCESS INFRASTRUCTURE BLUEPRINT ]</b></summary>
+<details open>
+<summary><b>📡 [ SYSTEM INFRASTRUCTURE BLUEPRINT ]</b></summary>
 <br>
 
 ```text
 📦 WinAurex.slnx (Strict Layered .NET Architecture)
- ┣ 📂 WinAurex.App/            # WPF UI Layer & ViewModels
+ ┣ 📂 WinAurex.App/            # WPF / WinUI 3 UI Layer & ViewModels
  ┣ 📂 WinAurex.Services/       # Business Logic & Orchestration
  ┣ 📂 WinAurex.Infrastructure/ # Capability Providers (Registry, Services, PowerShell)
  ┣ 📂 WinAurex.Core/           # Validation, Dry-Run, & Safety Engines
@@ -139,7 +143,7 @@ WinAurex is a modular state management and observability-first framework. Modern
  ┗ 📂 WinAurex.Tests/          # xUnit Test Suites
 ```
 
-*Architectural Boundary Enforcement: The ExecutionEngine orchestrates a strict pipeline: Validation → Dry Run → Authorization → Execution → Journaling. No bypassed layers.*
+*Architectural Boundary Enforcement: The ExecutionEngine coordinates a strict execution pipeline: Validation → Dry Run → Authorization → Execution → Journaling. No bypassed layers.*
 
 </details>
 
@@ -157,17 +161,17 @@ WinAurex is a modular state management and observability-first framework. Modern
 
 | 🎮 GAMING DOMAIN | 🛡️ PRIVACY DOMAIN |
 | :--- | :--- |
-| **Focus:** Resource allocation, input latency | **Focus:** Telemetry blocks, tracking prevention |
-| **Includes:** Game Mode enforcement | **Includes:** Cortana & Mic hardening |
-| **Safety:** Native API tracking | **Safety:** Reversible without breaking updates |
+| **Focus:** MMCSS scheduling, GPU priority, input responsiveness | **Focus:** Diagnostic telemetry blocks, tracking prevention |
+| **Includes:** Game Mode enforcement, GameDVR stripping | **Includes:** Windows Recall neutralization, Cortana hardening |
+| **Safety:** Native API tracking with zero blackbox injection | **Safety:** Policy-level disables reversible without breaking updates |
 
 <br>
 
-| 🌐 NETWORK DOMAIN | 📦 STORAGE DOMAIN |
+| 🌐 NETWORK DOMAIN | 📦 STORAGE & DISK DOMAIN |
 | :--- | :--- |
-| **Focus:** Bandwidth unthrottling, ping | **Focus:** Disk I/O, pagefile config |
-| **Includes:** TCP params, Delivery Opt. caps | **Includes:** Cache purges, indexer bloat |
-| **Safety:** Snapshot manifest reversible | **Safety:** NO destructive formatting |
+| **Focus:** Bandwidth allocation, packet throttling removal | **Focus:** Disk I/O efficiency, BitLocker prevention, pagefile |
+| **Includes:** TCP window parameters, Delivery Optimization caps | **Includes:** Component cleanup, temp purges, TRIM validation |
+| **Safety:** Snapshot manifest reversible | **Safety:** Zero destructive formatting |
 
 </div>
 
@@ -185,7 +189,7 @@ WinAurex is a modular state management and observability-first framework. Modern
 
 <br>
 
-Absolute power requires absolute safety. This repository is built upon a **Reversible Tweaks Architecture**. Every change acts as an isolated transaction, enabling complete system state exports and rollback manifests.
+Absolute control requires absolute safety. WinAurex is engineered with a **Transactional State Architecture**. Every modification functions as an isolated operation mapped to an immutable "undo" instruction *before* execution starts.
 
 * 🛑 **NO** destructive service deletion.
 * 🛑 **NO** irreversible registry wiping.
@@ -203,18 +207,18 @@ Absolute power requires absolute safety. This repository is built upon a **Rever
   </tr>
   <tr>
     <td>
-      • Fake RAM boosters<br>
-      • Placebo registry hacks<br>
-      • Spaghetti code and untestable scripts<br>
+      • Fake RAM cleaners that purge working sets<br>
+      • Placebo registry overrides<br>
+      • Spaghetti scripts without error handling<br>
       • Opaque background telemetry<br>
-      • Blind service nuking
+      • Blind service deletion
     </td>
     <td>
       • <b>Native .NET & C# Performance</b><br>
-      • UI responsiveness (Async/MVVM)<br>
-      • Automated xUnit reliability<br>
-      • Observability & Event Journaling<br>
-      • Rollback safety & Manifest validation
+      • Non-blocking asynchronous UI (MVVM)<br>
+      • Automated xUnit test reliability<br>
+      • Local Observability & Event Journaling<br>
+      • Rollback safety & manifest validation
     </td>
   </tr>
 </table>
@@ -236,54 +240,52 @@ Absolute power requires absolute safety. This repository is built upon a **Rever
 ```text
 PS> .\WinAurex.App.exe --elevated
 [ OK ] C# Execution Engine Initialized
-[ OK ] Providers Resolved via DI
-[ OK ] Dashboard UI Rendered
+[ OK ] Capability Providers Resolved via DI
+[ OK ] WPF Dashboard UI Rendered
 ```
 
 <!-- ═══ ANIMATED DIVIDER ═══ -->
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
-<h2 align="center">⬛ THE ENGINEERING GAUNTLET</h2>
+<h2 align="center">⬛ THE ARCHITECTURAL ENGINE</h2>
 
 <div align="center">
 
-> **"The hardest challenge we faced wasn't disabling telemetry—it was building an execution pipeline that couldn't fail catastrophically."**
+> **"A script that modifies the operating system without transactional state tracking is an operational liability."**
 
-Transitioning from flat PowerShell scripts to a transactional **C# Execution Engine** was our most complex engineering feat. We had to design an **atomic, polymorphic execution pipeline** that could seamlessly bridge native Windows APIs, Registry operations, and raw PowerShell execution via Capability Providers, all while maintaining strict memory safety and UI responsiveness. 
+WinAurex solves the broken-script dilemma by decoupling optimizations into atomic **Capability Providers** coordinated by a unified **Execution Pipeline**. Rather than executing blind deletions, every registry value, service start-type, and AppX package state is captured into an event-sourced JSON journal before changes occur.
 
-Implementing the **Rollback Manifest System** inside C# meant mapping every destructive OS operation to an immutable "undo" state *before* execution, persisting it to a JSON journal, and ensuring that if a thread crashed mid-execution, the system was never left in an unrecoverable state. It was a masterclass in concurrent state management.
+If an operation encounters a dependency conflict or if the user requests a reversion, the **RestoreEngine** parses the snapshot journal to systematically revert every touched registry hive and system service back to its original baseline.
 
 </div>
 
 <!-- ═══ ANIMATED DIVIDER ═══ -->
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
-<h2 align="center">⬛ OBSERVABILITY & TELEMETRY</h2>
+<h2 align="center">⬛ OBSERVABILITY & SYSTEM DIAGNOSTICS</h2>
 
-Enterprise-grade observability is built into the core. Monitor system health natively without third-party bloat.
+Built-in diagnostics measure real system performance natively without third-party tracking overhead.
 
 <div align="center">
-  <kbd>DPC Latency</kbd> &nbsp;|&nbsp; <kbd>Boot Duration</kbd> &nbsp;|&nbsp; <kbd>CPU Queue Length</kbd> &nbsp;|&nbsp; <kbd>Memory Commit</kbd> &nbsp;|&nbsp; <kbd>GPU Scheduling</kbd> &nbsp;|&nbsp; <kbd>Background Tasks</kbd>
+  <kbd>DPC Latency Proxy</kbd> &nbsp;|&nbsp; <kbd>Boot Duration</kbd> &nbsp;|&nbsp; <kbd>CPU Queue Length</kbd> &nbsp;|&nbsp; <kbd>Memory Commit</kbd> &nbsp;|&nbsp; <kbd>GPU Scheduling</kbd> &nbsp;|&nbsp; <kbd>Background Tasks</kbd>
 </div>
 
 <!-- ═══ ANIMATED DIVIDER ═══ -->
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
-<h2 align="center">⬛ DOCUMENTATION MATRIX</h2>
+<h2 align="center">⬛ DOCUMENTATION & GUIDES</h2>
 
 <div align="center">
 
-[![Architecture](https://img.shields.io/badge/%5B_ARCHITECTURE_%5D-21262d?style=for-the-badge)](https://winaurex.vercel.app/architecture_blueprint/) &nbsp; [![Compatibility](https://img.shields.io/badge/%5B_COMPATIBILITY_%5D-21262d?style=for-the-badge)](https://winaurex.vercel.app/compatibility_matrix/) &nbsp; [![Registry Reference](https://img.shields.io/badge/%5B_REGISTRY_REFERENCE_%5D-21262d?style=for-the-badge)](https://winaurex.vercel.app/registry_reference/)
+[![Architecture](https://img.shields.io/badge/%5B_ARCHITECTURE_%5D-21262d?style=for-the-badge)](https://winaurex.tech/architecture_blueprint/) &nbsp; [![Compatibility](https://img.shields.io/badge/%5B_COMPATIBILITY_%5D-21262d?style=for-the-badge)](https://winaurex.tech/compatibility_matrix/) &nbsp; [![Registry Reference](https://img.shields.io/badge/%5B_REGISTRY_REFERENCE_%5D-21262d?style=for-the-badge)](https://winaurex.tech/registry_reference/)
 
-[![Rollback Engine](https://img.shields.io/badge/%5B_ROLLBACK_ENGINE_%5D-21262d?style=for-the-badge)](https://winaurex.vercel.app/architecture_blueprint/#9-corerestore-system-restore--rollback-core) &nbsp; [![Logging Standards](https://img.shields.io/badge/%5B_LOGGING_STANDARDS_%5D-21262d?style=for-the-badge)](https://winaurex.vercel.app/architecture_blueprint/#logging--restore-strategy) &nbsp; [![Myths & Anti-Patterns](https://img.shields.io/badge/%5B_MYTHS_%26_ANTI--PATTERNS_%5D-21262d?style=for-the-badge)](https://winaurex.vercel.app/myths_and_anti_patterns/)
-
-<br>
-
-<a href="https://winaurex.vercel.app/"><img src="https://img.shields.io/badge/📖_DOCUMENTATION-winaurex.vercel.app-00FF41?style=for-the-badge&labelColor=0D1117"></a>
+[![Rollback Engine](https://img.shields.io/badge/%5B_ROLLBACK_ENGINE_%5D-21262d?style=for-the-badge)](https://winaurex.tech/architecture_blueprint/#9-corerestore-system-restore--rollback-core) &nbsp; [![Logging Standards](https://img.shields.io/badge/%5B_LOGGING_STANDARDS_%5D-21262d?style=for-the-badge)](https://winaurex.tech/architecture_blueprint/#logging--restore-strategy) &nbsp; [![Myths & Anti-Patterns](https://img.shields.io/badge/%5B_MYTHS_%26_ANTI--PATTERNS_%5D-21262d?style=for-the-badge)](https://winaurex.tech/myths_and_anti_patterns/)
 
 <br>
 
-🔗 **[ACCESS THE LIVE DOCUMENTATION](https://winaurex.vercel.app/)**
+<a href="https://winaurex.tech/"><img src="https://img.shields.io/badge/📖_DOCUMENTATION-winaurex.tech-00FF41?style=for-the-badge&labelColor=0D1117"></a>
+&nbsp;
+<a href="https://winaurex.tech/studio/"><img src="https://img.shields.io/badge/🚀_INTERACTIVE_STUDIO-winaurex.tech%2Fstudio-00bcd4?style=for-the-badge&labelColor=0D1117"></a>
 
 </div>
 
@@ -294,13 +296,11 @@ Enterprise-grade observability is built into the core. Monitor system health nat
 
 <div align="center">
 
-WinAurex is built on a strict, highly professional architecture using **MVVM**, **Dependency Injection**, **Event Busing**, and shared **Contracts**.
+WinAurex is built on strict software engineering patterns using **MVVM**, **Dependency Injection**, **Event Busing**, and shared **Contracts**.
 
-We are actively looking for senior C# and PowerShell developers to help expand our Optimization Modules!
-
-* 🏗️ Check out the [ARCHITECTURE.md](ARCHITECTURE.md) to understand our bounded contexts.
-* 📝 Read [CONTRIBUTING.md](CONTRIBUTING.md) to see our PR guidelines.
-* 🧪 Help us write more **xUnit tests** or add new `CapabilityProvider` implementations.
+* 🏗️ Check out [ARCHITECTURE.md](ARCHITECTURE.md) to understand bounded contexts.
+* 📝 Read [CONTRIBUTING.md](CONTRIBUTING.md) for PR guidelines and local development instructions.
+* 🧪 Help expand xUnit test suites and add new `CapabilityProvider` implementations.
 
 </div>
 
@@ -312,9 +312,9 @@ We are actively looking for senior C# and PowerShell developers to help expand o
 <div align="center">
 
 <b><code>[ PHASE 1 ]</code></b> &nbsp; Core Architecture & Safety Engine (✔ COMPLETED)<br>
-<b><code>[ PHASE 2 ]</code></b> &nbsp; Observability Layer & Telemetry (✔ COMPLETED)<br>
-<b><code>[ PHASE 3 ]</code></b> &nbsp; WPF Dashboard Integration (🚀 V2.0 RELEASED)<br>
-<b><code>[ PHASE 4 ]</code></b> &nbsp; Packaging & Distribution
+<b><code>[ PHASE 2 ]</code></b> &nbsp; Observability Layer & System Diagnostics (✔ COMPLETED)<br>
+<b><code>[ PHASE 3 ]</code></b> &nbsp; C# WPF Client & Web Studio (🚀 V2.0 RELEASED)<br>
+<b><code>[ PHASE 4 ]</code></b> &nbsp; WinGet Packaging & Distribution Automation
 
 </div>
 
@@ -329,11 +329,11 @@ We are actively looking for senior C# and PowerShell developers to help expand o
 
 <br><br>
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&pause=1000&color=00BCD4&center=true&vCenter=true&width=500&lines=Farhan+%2F%2F+System+Architect;Cybersecurity+%26+AI+Enthusiast;Full-Stack+Developer;Building+scalable%2C+intelligent+systems+%F0%9F%9A%80)](https://github.com/YTxFSGAMERz)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&pause=1000&color=00BCD4&center=true&vCenter=true&width=550&lines=Farhan+%2F%2F+Systems+Architect+%26+Lead+Builder;Windows+Internals+%26+Performance+Engineering;High-Performance+Open+Source+Tooling+%F0%9F%9A%80)](https://github.com/YTxFSGAMERz)
 
 <br>
 
-> *Eradicate software bloat. Maximize raw hardware performance. Restore absolute user control.*
+> *Eradicate software bloat. Maximize hardware responsiveness. Maintain complete user sovereignty.*
 
 <br>
 

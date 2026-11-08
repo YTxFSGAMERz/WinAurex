@@ -2098,7 +2098,7 @@ a.sl-link-button.minimal:hover {
 }
 
 /* --- Enhanced Content Link Hover State --- */
-a:not(.primary, [class*="primary"], .sl-link-button):hover {
+a:not(.primary, [class*="primary"], .sl-link-button, .nav-link):hover {
   color: #39ff14 !important;
   text-shadow: 0 0 10px rgba(0, 255, 0, 0.8) !important;
   text-decoration: underline !important;

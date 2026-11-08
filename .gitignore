@@ -1,31 +1,48 @@
 # Local user telemetry and backups
 Logs/
+*.log
 node_modules/  
 winaurex_py/backups/*.json
+Core/Restore/Backups/*.reg
 
-# Wrangler files
+# Cloud & Wrangler files
 .wrangler/
 .dev.vars
- 
-.vercel
+.vercel/
 
-# Build artifacts
+# Visual Studio & Copilot Database Indices
+.vs/
+src/.vs/
+**/.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.db
+*.sqlite
+*.vsidx
+
+# Build artifacts (.NET / C#)
+bin/
+obj/
+**/bin/
+**/obj/
 src/**/bin/
 src/**/obj/
 **/bin/Debug/
 **/bin/Release/
 **/obj/Debug/
 **/obj/Release/
-.vs/
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
+
+# Explicitly track root JS CLI bin directory
+!/bin/
+!/bin/*
 
 # Python build artifacts
 build/
 dist/
 *.egg-info/
+winaurex.egg-info/
 __pycache__/
 *.pyc
 
@@ -33,8 +50,12 @@ __pycache__/
 *.nupkg
 chocolatey/tools/app/
 
-# Explicitly track root JS CLI bin directory
-!/bin/
-!/bin/*
+# Large OS Disk Images & WIMs
+*.iso
+*.wim
+*.esd
+*.vhd
+*.vhdx
 
-.vercel
+# Astro / Starlight / Cache
+.cache/

@@ -1,31 +1,32 @@
 ---
 title: "Build a Custom Windows 11 ISO — Zero-Bloat OS Builder Framework"
-description: "Step-by-step guide to building lightweight, telemetry-free Windows 11 ISOs with TPM and Secure Boot bypass using WinAurex OS Builder."
+description: "Step-by-step guide to building lightweight, telemetry-free Windows 11 ISOs with Recall removal, BitLocker prevention, and TPM bypass using WinAurex OS Builder."
 ---
 
-The WinAurex OS Builder is a powerful, native script-based framework designed to process an official Windows 11 ISO and compile a lightweight, telemetry-free, custom operating system image. It achieves this by directly injecting offline registry hives and surgically removing Provisioned AppxPackages.
+The WinAurex OS Builder is a native script-based framework designed to process an official **Windows 11 ISO** and compile a lightweight, telemetry-free, custom operating system image. It achieves this by directly injecting offline registry hives and surgically removing Provisioned AppxPackages.
 
 ## ⚙️ Overview & Architecture
-At the core of the builder is `WinAurexMaker.ps1`. This script mounts the `install.wim` from a standard Windows ISO and performs offline servicing using Microsoft's native **DISM** (Deployment Image Servicing and Management) tools.
-By editing the registry hives offline, the builder ensures that telemetry, sponsored apps, and restrictive hardware checks are completely neutralized *before* the operating system is even installed.
+At the core of the builder is `WinAurexMaker.ps1`. This script mounts the `install.wim` from a standard Windows 11 ISO and performs offline servicing using Microsoft's native **DISM** (Deployment Image Servicing and Management) tools.
+By editing the registry hives offline, the builder ensures that telemetry, sponsored apps, background AI runtimes, and restrictive hardware checks are completely neutralized *before* the operating system is even installed.
 
-## 🛡️ Hardware Bypasses
+## 🛡️ Hardware Bypasses & BitLocker Prevention
 The builder natively patches the WinPE (Windows Preinstallation Environment) setup files:
 *   **TPM 2.0 & Secure Boot:** `LabConfig` registry keys are injected into `boot.wim` to bypass TPM and Secure Boot requirements natively during the setup phase.
-*   **CPU & RAM Restrictions:** Removes the hard lock for older hardware (bypassing the 4GB RAM minimum and unsupported CPU blocks).
-*   **Microsoft Account (MSA):** Edits the OOBE (Out-of-Box Experience) flow to allow and enforce Local Account creation without requiring internet connectivity.
+*   **CPU & Instruction Set Checks:** Removes the hard lock for unsupported CPUs, bypassing SSE4.2 and CPU family restrictions.
+*   **Prevent Silent BitLocker Encryption:** Injects `PreventDeviceEncryption = 1` into the system hive to stop setup from silently enabling BitLocker on internal SSDs, preserving maximum read/write performance.
+*   **Microsoft Account (MSA):** Edits the OOBE flow to allow and enforce Local Account creation without requiring internet connectivity.
 
 ## 🗑️ Aggressive Debloating
 The script surgically removes bloatware from the mounted image:
+*   **Neutralizes Windows Recall & Copilot:** Purges Copilot runtime packages, Recall AI photographic snapshots, and AI daemons before installation.
 *   **Removes Microsoft Edge & Edge WebView:** Completely purges Edge components before installation.
-*   **Strips Copilot and AI:** Removes Copilot integrations and AI recall features.
-*   **Eliminates Integrations:** Purges OneDrive, Microsoft Teams, and Xbox integrations natively.
-*   **Purges 30+ Provisioned AppxPackages:** Removes Weather, News, Solitaire, GetHelp, Feedback Hub, and other unnecessary modern apps using DISM `/Remove-ProvisionedAppxPackage`.
+*   **Eliminates Integrations:** Purges OneDrive, Microsoft Teams, and Xbox background services natively.
+*   **Purges 38+ Provisioned AppxPackages:** Removes Weather, News, Solitaire, GetHelp, Feedback Hub, DevHome, and other unnecessary modern apps using DISM `/Remove-ProvisionedAppxPackage`.
 
 ## 🔒 Privacy & Telemetry
 Offline registry injection guarantees privacy from the first boot:
-*   **Disable Telemetry:** Injects `AllowTelemetry = 0` directly into the system hive.
-*   **Turns off Sponsored Apps:** Disables Content Delivery Manager and third-party app installations.
+*   **Disable Telemetry:** Injects `AllowTelemetry = 0` and `DisableAIDataAnalysis = 1` directly into the system hive.
+*   **Turns off Sponsored Apps:** Disables Content Delivery Manager and third-party app installations in the Start menu.
 *   **Disables Advertising IDs:** Blocks Cloud Content optimization and targeted advertising IDs at the OS level.
 
 ## 🛠️ Step-by-Step Usage Guide
@@ -40,9 +41,9 @@ Offline registry injection guarantees privacy from the first boot:
 3.  The script will automatically:
     *   Extract the ISO contents.
     *   Mount `boot.wim` and `install.wim`.
-    *   Apply the debloat lists and registry bypasses.
+    *   Apply the debloat lists, BitLocker prevention, and registry bypasses.
     *   Unmount and commit the changes.
-4.  Finally, the script calls `oscdimg.exe` to package the modified files into a new, bootable ISO file (e.g., `WinAurex_NoWinSxS.iso`).
+4.  Finally, the script calls `oscdimg.exe` to package the modified files into a new, bootable ISO file (e.g., `WinAurex_Clean.iso`).
 5.  Use a tool like Rufus to flash this custom ISO to a USB drive and install Windows as usual.
 
 :::danger

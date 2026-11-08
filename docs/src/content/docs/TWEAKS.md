@@ -1,9 +1,9 @@
 ---
 title: "Windows 11 Tweaks & Optimization Guide — Registry, Services, Gaming"
-description: "Complete guide to Windows 11 registry tweaks, service optimizations, gaming performance boosts, privacy fixes, and SSD tuning."
+description: "Complete guide to Windows 11 registry tweaks, Recall neutralization, silent BitLocker prevention, gaming performance boosts, and SSD tuning."
 ---
 
-This document provides a highly detailed, comprehensive guide to all system modifications, registry tweaks, and shell scripts located in the `Tweaks/` directory. These configurations are designed to optimize Windows 10 & 11 for maximum responsiveness, privacy, and gaming efficiency. **All PowerShell scripts in this suite support zero-prompt, unattended execution simply by appending the `-Force` argument.**
+This document provides a highly detailed, comprehensive guide to all system modifications, registry tweaks, and shell scripts located in the `Tweaks/` directory. These configurations are designed to optimize **Windows 11** (including 24H2, 23H2, and upcoming builds) and Windows 10 for maximum responsiveness, privacy, and gaming efficiency. **All PowerShell scripts in this suite support zero-prompt, unattended execution simply by appending the `-Force` argument.**
 
 ---
 
@@ -13,10 +13,10 @@ The `Tweaks/` directory is organized into functional categories to allow targete
 2. [**Background**](#2-background-tweaks): Power and execution control for background tasks.
 3. [**Browser**](#3-browser-tweaks): Optimizing Microsoft Edge and disabling browser preloads.
 4. [**Display**](#4-display-tweaks): Custom GPU assignments, Auto SR, HDR, and Windowed Optimizations.
-5. [**Gaming**](#5-gaming-tweaks): Windows Game Mode configurations.
+5. [**Gaming**](#5-gaming-tweaks): Windows Game Mode and DirectSR configurations.
 6. [**Network**](#6-network-tweaks): Delivery Optimization bandwidth capping and P2P updates.
-7. [**Privacy**](#7-privacy-tweaks): Core application permissions lockdowns.
-8. [**Core System Resources & Tweaks**](#8-core-system-resources--tweaks): Hardware priority tweaks, mitigations, custom power plans, SSD tunings, RAM cleaners, and services.
+7. [**Privacy & Recall**](#7-privacy-tweaks): Core application permissions lockdowns and Recall neutralization.
+8. [**Core System Resources & SSD**](#8-core-system-resources--tweaks): Hardware priority, BitLocker prevention, power plans, and services.
 9. [**Startup**](#9-startup-tweaks): Trimming auto-start software.
 10. [**Storage**](#10-storage-tweaks): Safe temporary folder cleaners and Storage Sense toggles.
 11. [**Storage-Aggressive**](#11-storage-aggressive-tweaks): System component store and WinSXS cleanups via DISM.
@@ -34,9 +34,10 @@ The `Tweaks/` directory is organized into functional categories to allow targete
 *   `Disable Transparency.reg` / `Enable Transparency.reg`: Turns off transparency effects on the taskbar, start menu, and action center. Disabling transparency significantly reduces GPU load in windowed modes.
 *   `Disable Action Center.reg` / `Enable Action Center.reg`: Deactivates the system notifications tray.
 *   `Disable Cortana.reg` / `Enable Cortana.reg`: Fully blocks the Cortana digital assistant search indexing and background services.
+*   `Hide 26H2 Recommended AI Section.reg`: Eliminates AI cloud summaries and suggested file widgets from File Explorer and the Start menu across Windows 11 (24H2, 25H2, 26H2).
 
 :::tip
-Disabling transparency and transitions is highly recommended for legacy systems with integrated graphics cards (such as Intel HD Graphics) to prevent interface stuttering.
+Disabling transparency and transitions is highly recommended for systems with integrated graphics cards to prevent interface stuttering.
 :::
 
 ---
@@ -70,8 +71,8 @@ Disabling transparency and transitions is highly recommended for legacy systems 
 ### Components
 *   `Enable Windowed Game Optimizations.reg` / `Disable Windowed Game Optimizations (Restore).reg`: Enables flip model presentation for windowed DirectX 10/11 games, improving latency and unlocking features like Auto HDR.
 *   `Manage GPU Preference.ps1`: Automates setting specific gaming binaries to "High Performance" GPU preference via Windows Graphics settings.
-*   `Open Graphics Settings.bat`: Quick launcher to open the Windows 10/11 graphics properties control directly.
-*   `Auto SR Settings Guide.txt` (Automatic Super Resolution): Setup manual detailing hardware requirements (Copilot+ PCs, Snapdragon processors) and system settings for AI-powered game upscaling.
+*   `Open Graphics Settings.bat`: Quick launcher to open the Windows graphics properties control directly.
+*   `Auto SR Settings Guide.txt` (Automatic Super Resolution): Setup manual detailing hardware requirements (Copilot+ PCs, Snapdragon / modern GPUs) and system settings for AI-powered game upscaling.
 *   `HDR Settings & Keyboard Shortcut.txt`: Notes on enabling Windows HDR and using `Win + Alt + B` to instantly toggle HDR on/off to avoid washed-out colors on standard desktops.
 
 ---
@@ -95,11 +96,27 @@ Disabling transparency and transitions is highly recommended for legacy systems 
 
 ---
 
-## 7. Privacy Tweaks
+## 7. Privacy & Windows 11 Recall Tweaks (24H2 · 25H2 · 26H2)
 *   **Path**: `Tweaks/Privacy/`
-*   **Purpose**: System-wide blockades to prevent background telemetry transmission and device snooping.
+*   **Purpose**: System-wide blockades to prevent background telemetry transmission, device snooping, and AI snapshotting.
 
-### Available Registry Tweaks
+### 7.1 Windows 11 Recall & AI Neutralization (24H2 · 25H2 · 26H2)
+Modern Windows 11 builds (24H2, 25H2, and 26H2) introduce continuous photographic snapshotting (**Windows Recall**), local SQLite semantic indexing, and Copilot Runtime daemons (`recall.exe`, `ai.exe`).
+
+#### Registry Overrides:
+*   **Disable Recall Analysis**:
+    `HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsAI` &rarr; `DisableAIDataAnalysis = 1` (DWORD)
+*   **Turn Off Copilot Completely**:
+    `HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot` &rarr; `TurnOffWindowsCopilot = 1` (DWORD)
+    `HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot` &rarr; `TurnOffWindowsCopilot = 1` (DWORD)
+
+#### DISM Feature Removal:
+Run in elevated PowerShell to fully unregister the Recall package from the OS:
+```powershell
+Disable-WindowsOptionalFeature -Online -FeatureName "Recall" -NoRestart
+```
+
+### Standard Privacy Registry Tweaks
 *   `Disable App Metadata Access.reg` / `Enable App Metadata Access.reg`: Stops Windows from scanning app configurations.
 *   `Disable Camera.reg` / `Enable Camera.reg`: Blocks camera sensor access for standard desktop/UWP apps globally.
 *   `Disable Location.reg` / `Enable Location.reg`: Deactivates Windows Location tracking services.
@@ -110,24 +127,30 @@ Disabling transparency and transitions is highly recommended for legacy systems 
 
 ## 8. Core System Resources & Tweaks
 *   **Path**: `Tweaks/Recursos/` & `Tweaks/Resources/`
-*   **Purpose**: The traditional performance tweaks folder.
+*   **Purpose**: Hardware priority, SSD optimization, BitLocker prevention, power plans, and service debloating.
 
 ### Key Components
 
-#### CPU Priorities
+#### Silent BitLocker Device Encryption Prevention (24H2 · 25H2 · 26H2)
+Windows 11 clean installations starting with 24H2 through 26H2 turn on BitLocker encryption by default across both Home and Pro editions, causing up to **45% degradation in NVMe SSD read/write throughput**.
+*   **Path**: `HKLM\SYSTEM\CurrentControlSet\Control\BitLocker`
+*   **Value**: `PreventDeviceEncryption = 1` (DWORD)
+*   **Effect**: Prevents Windows from silently encrypting your drives during setup or cumulative updates, maintaining maximum SSD read/write speeds and preventing local account lockouts.
+
+#### CPU Priorities (MMCSS)
 *   `Games Priority.reg`: Modifies the Multimedia Class Scheduler (MMCSS) to allocate up to 80% CPU resources directly to active games and applications.
 *   `Windows Priority.reg` / `Revert Changes.reg`: Restores balanced desktop thread priority parameters.
-*   **Registry Paths Modifed**:
+*   **Registry Paths Modified**:
     `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games`
 
 #### CPU Mitigations
 *   `InSpectre.exe`: A lightweight diagnostic utility that allows the safe enabling/disabling of Meltdown and Spectre hardware mitigations.
-    *   *Mitigations OFF*: Restores lost CPU performance (highly noticeable on 8th Gen Intel processors and older), but exposes the system to theoretical security exploits.
-    *   *Mitigations ON*: Maximum security configuration, but reduces disk read/write throughput and raw execution speeds.
+    *   *Mitigations OFF*: Restores lost CPU performance (highly noticeable on older architectures).
+    *   *Mitigations ON*: Maximum security configuration.
 
 #### CPU Power Plans
 *   `QuickCPU.pow`: A custom-engineered system power configuration optimized to minimize CPU core parking, maintain high frequency scales longer, and disable standard power savings when processing active loads.
-*   `Aplicar.bat` / `Apply.bat`: Shell scripts to import and active the custom power plan via command line.
+*   `Aplicar.bat` / `Apply.bat`: Shell scripts to import and activate the custom power plan via command line:
     ```cmd
     powercfg -import "%~dp0QuickCPU.pow"
     ```
@@ -139,18 +162,15 @@ Disabling transparency and transitions is highly recommended for legacy systems 
     *   Optimizes standard disk write caching values.
 
 #### Memory Reduction
-*   `Mem Reduct RAM` (Portable): A light memory management utility.
-    *   Cleans system caches, working sets, and pagefiles on command.
-    *   Configures cleanups when memory saturation crosses specific benchmarks (e.g., 85%).
-    *   Essential for legacy hardware configurations equipped with less than 8GB of RAM.
+*   `Mem Reduct RAM` (Portable): A light memory management utility that cleans system caches, working sets, and pagefiles on command.
 
 #### RAM Compression
 *   `Disable Compression.cmd` / `Revert Changes.bat`: Toggles Windows virtual memory compression.
     *   *Compression Disabled*: Eliminates CPU processing latency associated with compressing inactive RAM pages. Best for systems with 16GB+ RAM.
-    *   *Compression Enabled*: Compress pages to conserve capacity. Recommended for systems with 4GB/8GB RAM to prevent immediate swapfile thrashing on slow HDDs.
+    *   *Compression Enabled*: Compress pages to conserve capacity. Recommended for systems with 4GB/8GB RAM.
 
 #### System Services
-*   `Optimize Services.reg`: Disables or sets to Manual a wide array of legacy, enterprise, and telemetry-related background services (e.g., Bluetooth, print spooling if unused, faxing, remote registries).
+*   `Optimize Services.reg`: Disables or sets to Manual a wide array of legacy, enterprise, and telemetry-related background services.
 
 #### Telemetry & Data Collection
 *   `Disable Telemetry.reg`: Blocks telemetry routines, CEIP diagnostic collection, and Windows feedback prompts.
@@ -173,11 +193,8 @@ Disabling transparency and transitions is highly recommended for legacy systems 
 *   **Purpose**: Automates standard garbage collection and frees up wasted gigabytes.
 
 ### Tools
-*   `Enable Storage Sense.reg` / `Disable Storage Sense (Restore).reg`: Toggles Windows Storage Sense utility, which automatically deletes temporary files, clears the Recycle Bin, and cleans downloaded items at set intervals.
-*   `Safe Temporary Cleanup.bat`: A non-destructive shell script that purges the following cache directories safely:
-    *   `%temp%` (User Temporary directory)
-    *   `C:\Windows\Temp` (System Temporary directory)
-    *   `C:\Windows\Prefetch` (Prefetch system files)
+*   `Enable Storage Sense.reg` / `Disable Storage Sense (Restore).reg`: Toggles Windows Storage Sense utility.
+*   `Safe Temporary Cleanup.bat`: Non-destructive script purging `%temp%`, `C:\Windows\Temp`, and `C:\Windows\Prefetch`.
 
 ---
 
@@ -186,7 +203,7 @@ Disabling transparency and transitions is highly recommended for legacy systems 
 *   **Purpose**: Sweeps system files and component stores for deeper debloating.
 
 ### Active Utility
-*   `Deep Component Cleanup (Aggressive).bat`: A script that must be run as Administrator. It uses the Deployment Image Servicing and Management (DISM) tool to purge superseded system files, unused component packages, and legacy update backups from the `WinSXS` folder.
+*   `Deep Component Cleanup (Aggressive).bat`: Uses DISM to purge superseded system files, unused component packages, and legacy update backups from the `WinSXS` folder.
 *   **Commands executed**:
     ```cmd
     Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
@@ -202,51 +219,40 @@ Running this aggressive component store cleanup removes old update uninstall fil
 *   **Purpose**: Restores system variables back to isolated baseline states.
 
 ### Tools
-*   `Clean Boot Manager.ps1`: A PowerShell diagnostic utility that disables all non-Microsoft startup applications and services, creating an isolated boot profile. Extremely useful for identifying game-crashing software components or overlay conflicts.
+*   `Clean Boot Manager.ps1`: A PowerShell diagnostic utility that disables all non-Microsoft startup applications and services, creating an isolated boot profile.
 
 ---
 
 ## 13. WPF Dashboard Walkthrough
-*   **Path**: `Start.bat` -> `Launch_Dashboard.ps1`
-*   **Purpose**: The central menu interface.
+*   **Path**: `Start.bat` &rarr; `Launch_Dashboard.ps1`
+*   **Purpose**: The central desktop GUI control suite.
 
-The framework now features a stunning native PowerShell + WPF XAML graphical dashboard. Double-click `Start.bat` to launch it. The dashboard consists of multiple tabs:
-
-1.  **Optimization Profiles**:
-    *   **Max Performance Mode**: Targets the absolute lowest DPC latency and highest thread priorities for elite gamers.
-    *   **Balanced Creator Mode**: Optimizes Windows Explorer and removes bloatware without disabling Windows Updates or breaking creative apps.
-    *   **Enterprise Compliance Mode**: Reverts the OS into a highly secure, privacy-hardened state for corporate usage.
-2.  **Observability Telemetry**: A real-time dashboard leveraging high-speed `.NET Diagnostics` to monitor DPC latency proxy speeds, Available RAM, Uptime, and Active Process Counts.
-3.  **Rollback Engine**: Safely displays your JSON snapshot history, allowing you to instantly revert any registry/service modifications with a single click.
-    *   Reducing visual effects quality parameters.
-    *   Applying MMCSS gaming priority.
-    *   Setting active game processes (like CS:GO, CS2, Fortnite, Minecraft, GTA V) to high performance CPU scheduling execution properties.
-3.  **Create Restore Point**: Highly recommended first step. It runs PowerShell to enable system restores and establish a safe baseline bookmark named "Optimizer Script".
-4.  **Delete Temporary Files**: Automatically cleans the user temp, system temp, and prefetch storage directories.
-5.  **Disable Windows Defender**: Menu options to switch active Windows Defender, Security Health, and real-time monitoring services off.
-6.  **Disable Windows Update**: Menu to pause and stop update schedulers and update self-healing dll dependencies.
-7.  **About the Optimizer**: Credit listing and licensing summaries.
+Double-click `Start.bat` to launch the native WPF dashboard:
+1.  **Optimization Profiles**: Max Performance Mode (Gaming), Balanced Creator Mode, Enterprise Compliance Mode.
+2.  **Observability Telemetry**: Real-time DPC latency proxy, available RAM, uptime, and active process count tracking.
+3.  **Rollback Engine**: Safely displays your JSON snapshot history, allowing you to instantly revert any modification with a single click.
+4.  **Create Restore Point**: Establishes a safe baseline bookmark named "Optimizer Script".
+5.  **Delete Temporary Files**: Automatically cleans user temp, system temp, and prefetch storage.
+6.  **Disable Windows Defender**: Menu options to switch active Windows Defender and real-time monitoring off.
+7.  **Disable Windows Update**: Menu to pause and stop update schedulers and self-healing dll dependencies.
 
 ---
 
-## 💡 Summary Recommendations by Use Case
+## 💡 Summary Recommendations by Workload
 
 ### 🎮 Gaming Optimization
--   Create a restore point (Menu Option 3).
--   Run Option 1 (Apply Recommended Optimizations) to reduce MMCSS process delays and optimize service responsiveness.
--   Import `Tweaks/Recursos/CPU Power Plan/QuickCPU.pow` and active the profile.
--   Apply `Tweaks/Display/Enable Windowed Game Optimizations.reg`.
--   Verify sensor temperatures using diagnostics inside [**Hardware Monitoring**](/Tools/Apps/Hardware/).
+- Create a restore point (Menu Option 3).
+- Neutralize Windows Recall and apply MMCSS process delays (`Games Priority.reg`).
+- Prevent silent BitLocker encryption on 24H2, 25H2, and 26H2 to unlock full NVMe SSD read/write bandwidth.
+- Import `QuickCPU.pow` power plan and activate it.
+- Apply `Tweaks/Display/Enable Windowed Game Optimizations.reg`.
 
-### 💻 Legacy / Low-End Hardware (<8GB RAM)
--   Apply `Tweaks/Appearance/Disable Transparency.reg` to lighten graphics processor loads.
--   Keep Virtual RAM Compression **Enabled** (`Tweaks/Recursos/RAM Compression/Revert Changes.bat`) to prevent early HDD paging.
--   Run `Tweaks/Recursos/Mem Reduct RAM/memreduct.exe` to manage memory usage.
--   Apply services debloating via `Tweaks/Recursos/Services/Optimize Services.reg`.
+### 💻 Developers & Creators
+- Disable Windows Recall continuous snapshotting (`DisableAIDataAnalysis = 1`).
+- Prevent BitLocker encryption for maximum Docker / WSL2 filesystem throughput.
+- Run `Tweaks/Background/Manage Background Apps.ps1` to stop closed apps from hogging background CPU.
 
 ### 🔒 Maximum System Privacy
--   Apply `Tweaks/Recursos/Telemetry/Disable Telemetry.reg` and `Tweaks/Privacy/Disable App Metadata Access.reg`.
--   Run `Tweaks/Background/Manage Background Apps.ps1` to stop closed applications from executing in the background.
--   Lock application permissions using the scripts in `Tweaks/Privacy/`.
--   Consult the [**Web Browsers Guide**](/Tools/Apps/Browsers/) to choose privacy-respecting navigation software.
-
+- Apply `DisableAIDataAnalysis = 1` and `TurnOffWindowsCopilot = 1`.
+- Apply `Tweaks/Recursos/Telemetry/Disable Telemetry.reg` and `Tweaks/Privacy/Disable App Metadata Access.reg`.
+- Disable camera, microphone, and location background permissions.

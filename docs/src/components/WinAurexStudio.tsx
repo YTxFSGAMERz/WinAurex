@@ -26,14 +26,14 @@ const TWEAKS: TweakOption[] = [
   },
   {
     id: 'disable-copilot',
-    name: 'Purge Windows Copilot & Recall AI',
-    description: 'Completely blocks Microsoft Copilot, recall snapshots, and taskbar AI integrations.',
+    name: 'Neutralize Windows Recall & Copilot AI',
+    description: 'Completely blocks Microsoft Copilot, Recall photographic snapshots, AI vector indexing, and taskbar daemons.',
     category: 'privacy',
-    regPath: `reg add "HKCU\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot" /v "TurnOffWindowsCopilot" /t REG_DWORD /d 1 /f`,
-    psCode: `Set-ItemProperty -Path "HKCU:\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot" -Name "TurnOffWindowsCopilot" -Value 1 -Force`,
+    regPath: `reg add "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI" /v "DisableAIDataAnalysis" /t REG_DWORD /d 1 /f & reg add "HKCU\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot" /v "TurnOffWindowsCopilot" /t REG_DWORD /d 1 /f`,
+    psCode: `Set-ItemProperty -Path "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI" -Name "DisableAIDataAnalysis" -Value 1 -Force; Set-ItemProperty -Path "HKCU:\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot" -Name "TurnOffWindowsCopilot" -Value 1 -Force; Disable-WindowsOptionalFeature -Online -FeatureName "Recall" -NoRestart -ErrorAction SilentlyContinue`,
     xmlSnippet: `<RunSynchronousCommand wcm:action="add">
     <Order>2</Order>
-    <Path>reg.exe add "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot" /v "TurnOffWindowsCopilot" /t REG_DWORD /d 1 /f</Path>
+    <Path>reg.exe add "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI" /v "DisableAIDataAnalysis" /t REG_DWORD /d 1 /f</Path>
 </RunSynchronousCommand>`,
   },
   {
@@ -136,6 +136,14 @@ const TWEAKS: TweakOption[] = [
     regPath: `reg add "HKCU\\Software\\Policies\\Microsoft\\Windows\\Explorer" /v "DisableSearchBoxSuggestions" /t REG_DWORD /d 1 /f`,
     psCode: `Set-ItemProperty -Path "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer" -Name "DisableSearchBoxSuggestions" -Value 1 -Force`,
   },
+  {
+    id: 'hide-explorer-ai',
+    name: 'Hide Explorer AI Summaries & Recommended Badges',
+    description: 'Removes AI cloud summaries, suggested web items, and sponsored account notifications from Start & Explorer.',
+    category: 'ui',
+    regPath: `reg add "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer" /v "HideRecommendedSection" /t REG_DWORD /d 1 /f`,
+    psCode: `Set-ItemProperty -Path "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer" -Name "HideRecommendedSection" -Value 1 -Force`,
+  },
 
   // Hardware & Unattended Bypasses
   {
@@ -162,6 +170,14 @@ const TWEAKS: TweakOption[] = [
     regPath: `reg add "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\OOBE" /v "BypassNRO" /t REG_DWORD /d 1 /f`,
     psCode: `reg.exe add "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\OOBE" /v "BypassNRO" /t REG_DWORD /d 1 /f`,
   },
+  {
+    id: 'prevent-bitlocker',
+    name: 'Prevent Silent BitLocker Drive Encryption',
+    description: 'Stops 26H2 clean installs from automatically encrypting SSDs, restoring up to 45% faster NVMe I/O throughput.',
+    category: 'bypass',
+    regPath: `reg add "HKLM\\SYSTEM\\CurrentControlSet\\Control\\BitLocker" /v "PreventDeviceEncryption" /t REG_DWORD /d 1 /f`,
+    psCode: `Set-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\BitLocker" -Name "PreventDeviceEncryption" -Value 1 -Force`,
+  },
 ];
 
 export const WinAurexStudio: React.FC = () => {
@@ -179,6 +195,8 @@ export const WinAurexStudio: React.FC = () => {
     'classic-context-menu': true,
     'bypass-tpm-secureboot': true,
     'local-account-offline': true,
+    'prevent-bitlocker': true,
+    'hide-explorer-ai': true,
   });
 
   const [activeTab, setActiveTab] = useState<'xml' | 'ps1' | 'reg'>('xml');
@@ -372,7 +390,7 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
               ENGINE LIVE
             </span>
             <span className="cyber-badge-chip">
-              WIN 11 24H2 / 23H2 · AMD64
+              WIN 11 / 10 · AMD64
             </span>
             <span className="cyber-console-desc">
               Zero-Bloat OS Recipe &amp; Debloat Suite

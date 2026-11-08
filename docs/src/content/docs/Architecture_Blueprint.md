@@ -1,121 +1,93 @@
 ---
-title: "WinAurex System Architecture — Technical Blueprint"
-description: "Technical architecture of the WinAurex optimization framework. Module structure, script pipeline, and system design overview."
+title: "WinAurex System Blueprint — Framework Architecture & Safety Standard"
+description: "High-level technical blueprint of the WinAurex framework, modular folder structure, safety systems, and coding standards."
 ---
+
+# Architecture Blueprint: WinAurex System Framework
 
 ## Executive Summary
-The **WinAurex** repository is evolving from a standard collection of registry tweaks and batch files into a mature, modular, and professional-grade **Windows Configuration & Optimization Framework**. Powered by a native WPF (Windows Presentation Foundation) Dashboard and a robust PowerShell core, this transition shifts the focus from blind "tweak dumping" to engineered state management, offering transparency, precise observability, and guaranteed reversibility. This blueprint outlines the strategic expansion of the repository, establishing strict engineering principles, a robust safety backbone, and a modular architecture designed to support casual users, power users, gamers, and system administrators alike.
+**WinAurex** is a modular, transparent, and user-centric Windows optimization and debloating suite. This blueprint defines the repository structure, script standards, logging, rollback safety, and user-experience principles required to build a safe, scalable, and trusted framework.
 
 ---
 
-## Architectural Analysis & Core Philosophy
-
-The framework operates on a dual-path execution strategy orchestrated by a central GUI:
-1. **WPF Dashboard (`src/`)**: The central nervous system. Built as a fully compiled, strictly layered C# .NET application (`WinAurex.App`). It provides a native, modern, and zero-friction UI for users to interact with the underlying modules. It is launched via the `Start.bat` root wrapper.
-2. **PowerShell Modules (`.ps1`)**: The primary engine for automation. Used whenever state capture, validation, structured logging, OS build detection, or orchestration is required.
-3. **Registry Files (`.reg`)**: Retained for direct, simple, and reversible static toggles for users who prefer raw configuration files without GUI overhead.
-
-### Core Principles
-- **Transparency Over Mystery:** No hidden operations or obfuscated commands.
-- **Reversibility Over Destructive Hacks:** Every meaningful change must have a verifiable restore path.
-- **Modularity Over Monoliths:** Distinct system areas are compartmentalized into independent modules.
-- **Documentation Over Assumptions:** Clear explanations of what changes, why, and the associated risks.
-- **Engineering Discipline Over Tweak Spam:** Abandonment of hyper-aggressive "FPS Boost" marketing in favor of professional terms like "responsiveness," "latency reduction," and "thermal efficiency."
+## Core Tenets
+1. **Transparency Over Magic:** No black-box executables for core tasks. Everything is readable, documented, and auditable PowerShell, batch, or registry scripts.
+2. **Safety First, Always:** Every change must have a corresponding, verified revert mechanism. No aggressive or destructive defaults.
+3. **Modular by Design:** Users should be able to run individual, isolated tweaks or curated profiles without system-wide side effects.
+4. **Data-Driven & Realistic:** Grounded in real Windows internals, not placebo myths (e.g., no aggressive memory purging that slows down caching, no disabling core security components blindly).
 
 ---
 
-## Folder Structure & Module Expansion Design
+## Repository Directory Architecture
 
-The repository will be structured into distinct, logical domains.
-
-### 1. `Tweaks/Explorer/` (Explorer Productivity Pack)
-**Focus:** File management, shell browsing behavior, and productivity.
-- **Modules:** Show file extensions/hidden files, compact view toggle, default launch to "This PC", disable frequent folders, restore classic layout.
-- **Safety:** Extremely safe. Uses `.ps1` for profile application and `.reg` for simple toggles.
-
-### 2. `Tweaks/Search/` (Search & Indexing Pack)
-**Focus:** Windows Search configuration, indexing management, and local search speed.
-- **Modules:** Index rebuilding workflows, web search suppression, privacy-oriented search settings, search service diagnostics.
-- **Safety:** High caution. CPU spike warnings for rebuild operations. Clear separation of Win10/Win11 logic.
-
-### 3. `Tweaks/Visual/` (Visual Effects & UI Responsiveness)
-**Focus:** Managing UI animations, transparency, and rendering overhead.
-- **Modules:** Animation reduction, shadow/fade transitions, font smoothing toggles.
-- **Profiles:** Balanced Aesthetic, Maximum Performance, Default Restore.
-- **Safety:** Moderate. Changes affect accessibility; balanced profiles must be prioritized over raw performance stripping.
-
-### 4. `Tweaks/Power/` (Power & Thermal Efficiency Pack)
-**Focus:** Battery life, plugged-in performance, and cooling policies.
-- **Modules:** Fast startup toggles, hibernation behavior, USB selective suspend, AC/DC-aware behavior.
-- **Profiles:** Laptop Efficiency, Desktop Performance, Default Power.
-- **Safety:** High impact. `powercfg` orchestration must include hardware detection (Laptop vs. Desktop).
-
-### 5. `Tweaks/Shell/` (Shell / Widgets / Copilot Cleanup)
-**Focus:** Simplification of the Windows UI and taskbar.
-- **Modules:** Disable Copilot, remove Widgets, hide Recommended section, disable notification spam.
-- **Profiles:** Minimal Shell, Productivity Shell, Gaming Shell.
-- **Safety:** Graceful bypasses for features unavailable on older builds.
-
-### 6. `Tweaks/Sync/` (OneDrive & Sync Pack)
-**Focus:** Cloud sync privacy and background network traffic reduction.
-- **Modules:** OneDrive startup behavior, Files On-Demand awareness, tray icon control.
-- **Safety:** High caution. Syncing affects data availability. Unlink guidance and file-status checks are mandatory.
-
-### 7. `Tweaks/Clipboard/` (Clipboard & Activity History)
-**Focus:** Privacy and cross-device sync controls.
-- **Modules:** Clipboard history toggles, activity history tracking, cache clearing.
-- **Profiles:** Privacy Mode, Productivity Mode.
-
-### 8. `Tweaks/Camera/` (Camera & Studio Effects)
-**Focus:** Camera privacy and NPU/Copilot+ hardware processing.
-- **Modules:** Background processing toggles, studio effects management.
-- **Profiles:** Streaming Mode, Battery Saver, Video Conference Mode.
-
-### 9. `Core/Restore/` (System Restore / Rollback Core)
-**Focus:** The safety backbone of the entire framework.
-- **Modules:** `Create_System_Restore_Point.ps1`, `Snapshot_Registry_Keys.ps1`, `Rollback_Last_Changes.ps1`.
-- **Safety:** Mandatory dependency for all advanced packs. Implements diff-friendly registry exports.
-
-### 10. `Tweaks/Services/` (Advanced Service Management)
-**Focus:** Profile-based service manipulation.
-- **Modules:** Safe Delayed Start conversions, Gaming Profile, Laptop Profile.
-- **Anti-Pattern:** NO blind hard-disabling of critical services. Emphasize safe profile switching.
-
-### 11. `Tweaks/Tasks/` (Task Scheduler Management)
-**Focus:** Scheduled task inventory and selective disabling.
-- **Modules:** Safe XML export before changes, edge update task handling.
-- **Safety:** XML backups of task definitions are a mandatory pre-requisite to any modification.
-
-### 12. `Tweaks/GPU/` (GPU & Display Optimization)
-**Focus:** Low-latency display guidance and driver diagnostics.
-- **Modules:** MPO toggles, shader cache cleanup, graphics reset workflows.
-- **Safety:** Vendor-aware recommendations (NVIDIA/AMD/Intel). Heavy educational warnings required.
-
-### 13. `Tweaks/Network-Diagnostics/` (Network Analytics)
-**Focus:** A diagnostic toolkit for network health.
-- **Modules:** Latency testing, DNS flush, network stack reset.
-- **Anti-Pattern:** Avoid placebo "TCP Optimizer" registry dumps.
-
-### 14. `Tweaks/Updates/` (Update Control Center)
-**Focus:** User-controlled update behavior.
-- **Modules:** Update pause controls, automatic restart management.
-- **Safety:** High caution. Updates impact security. Use policy-based settings carefully.
-
-### 15. `Tools/System-Info/` (System Information Dashboard)
-**Focus:** Professional system auditing.
-- **Modules:** HTML system reports, SSD health, startup impact profiling.
-
-### 16. `Tools/Apps/` (Package Manager / App Installer)
-**Focus:** Modular environment setup via WinGet/Scoop.
-- **Modules:** Developer preset, Gaming preset, Content Creator preset.
-
-### 17. `Profiles/` (State Orchestration)
-**Focus:** Combining modules into coherent system states.
-- **Profiles:** Gaming, Developer, Minimal, Privacy, Enterprise-friendly.
+```text
+WinAurex/
+├── bin/                          # Production CLI entrypoints
+├── Core/                         # Core execution engine, rollback, logging, and elevation
+│   ├── Elevate/                  # Admin privilege validation & UAC helpers
+│   ├── Logging/                  # Centralized logging engine
+│   ├── Restore/                  # System state capture & rollback engine
+│   └── Telemetry/                # Diagnostic data helpers (local only)
+├── Tweaks/                       # Atomic tweaks organized by functional area
+│   ├── Appearance/               # UI, themes, transparency, visual effects
+│   ├── Background/               # Background apps, background task execution
+│   ├── Browser/                  # Edge optimization, tab sleeping
+│   ├── Display/                  # GPU preferences, Windowed Optimizations, Auto SR
+│   ├── Gaming/                   # Game Mode, MMCSS scheduling, DirectSR
+│   ├── Network/                  # Delivery optimization, bandwidth limits
+│   ├── Privacy/                  # Telemetry, camera, mic, location, 26H2 Recall neutralization
+│   ├── Recursos/                 # CPU priority, power plans, SSD TRIM, service debloat
+│   ├── Startup/                  # Autorun auditing and startup program controls
+│   ├── Storage/                  # Temp cleanups, Storage Sense
+│   ├── Storage-Aggressive/       # Component Store (WinSxS) cleanups
+│   └── Troubleshooting/          # Clean Boot manager
+├── Profiles/                     # Pre-packaged orchestration workflows
+│   ├── Gaming.ps1                # Low latency, maximum gaming priority
+│   ├── Minimal.ps1               # Safe, essential debloat for general desktop
+│   └── Workstation.ps1           # High productivity, development, WSL2 focus
+├── Tools/                        # External, audited diagnostic tools
+│   ├── Hardware/                 # InSpectre, Core Temp, HWMonitor
+│   └── Browsers/                 # Curated open-source browsers
+├── docs/                         # Astro / Starlight documentation portal
+├── Start.bat                     # Root launcher
+└── Launch_Dashboard.ps1          # Native WPF XAML Desktop Graphical Dashboard
+```
 
 ---
 
-## Strategy & Standards
+## Architectural Systems & Patterns
+
+### 1. Atomic Tweaks
+- Every tweak in `Tweaks/` operates on a single system facet.
+- Must include both an **Apply** and a **Revert** script (or paired registry files).
+- Must verify current registry states before applying to prevent redundant writes.
+
+### 2. Event-Sourced Rollback Engine (`Core/Restore/`)
+- Before any profile or batch tweak executes, the engine captures a **Pre-Execution Snapshot** in JSON format:
+  ```json
+  {
+    "timestamp": "2026-11-08T12:00:00Z",
+    "module": "Tweaks/Privacy",
+    "changes": [
+      {
+        "type": "Registry",
+        "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+        "value": "DisableAIDataAnalysis",
+        "old_data": 0,
+        "new_data": 1
+      }
+    ]
+  }
+  ```
+- A restore action replays the recorded `old_data` values to return the system to its exact previous state.
+
+### 3. Native DISM Servicing
+- For UWP bloatware and Windows Recall removal, WinAurex uses standard Microsoft DISM commands (`/Remove-ProvisionedAppxPackage` and `Disable-WindowsOptionalFeature`).
+- Ensures component store integrity across 26H2 checkpoint cumulative updates.
+
+---
+
+## Operational Standards
 
 ### Script Standards & Naming Strategy
 - **Naming Convention:** `Action_Target.ps1` (e.g., `Disable_Copilot_Taskbar.ps1`, `Export_Current_Settings.ps1`).
@@ -128,41 +100,14 @@ The repository will be structured into distinct, logical domains.
 - **Restore:** Pre-execution snapshots are mandatory for advanced packs. Users must be able to restore via `.reg` backups or system restore points easily.
 
 ### Compatibility Strategy
-- Scripts must distinguish between Windows 10, Windows 11, and specific feature updates (e.g., 24H2, Copilot+).
+- Scripts must distinguish between Windows 10, Windows 11, and specific feature updates (e.g., 26H2, Copilot+ Recall).
 - Use `Try/Catch` and feature-gating to fail gracefully if an OS does not support a specific registry key or API.
 
 ### Documentation Strategy (`docs/`)
 - **Structure:** Architecture, Safety, Profiles, Diagnostics, FAQ.
 - **Myths & Anti-Patterns:** A dedicated section debunking fake RAM boosters, blind service disabling, placebo latency folklore, and dangerous Defender hacks to build user trust.
 
-### README Redesign Direction
-- **Vibe:** Futuristic, premium, modular, and engineering-focused.
-- **Elements:** Cyber-tech hero banner, system-status dashboard layout, capability badges, and clear navigation to modules. Avoid generic GitHub badge clutter.
-
 ---
 
-## Recommended Implementation Priority
-To balance safety, demand, and visibility, the modules will be developed in the following sequence:
-1. Shell (Completed)
-2. Explorer
-3. Visual
-4. Search
-5. Power
-6. Clipboard
-7. Sync
-8. Camera
-9. GPU
-10. Tasks
-11. Services
-12. Updates
-13. Diagnostics
-14. Apps
-15. Profiles
-16. Docs & Myths (Ongoing)
-17. Reporting and Logs Refinement
-
----
-
-## Final Recommendations
-This blueprint transitions **WinAurex** from a basic script repository into an **OS State Orchestration System**. By strictly adhering to the backup-first mentality, centralized logging, and modular profile design, this framework will stand as a flagship standard for safe, transparent, and professional Windows configuration.
-
+## Conclusion
+The WinAurex architecture establishes a new benchmark for open-source Windows optimization: safe, fully auditable, OS-aware for Windows 11 26H2, and backed by transactional rollback protection.
