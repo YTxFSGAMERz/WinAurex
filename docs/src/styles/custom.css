@@ -2114,12 +2114,12 @@ a:not(.primary, [class*="primary"], .sl-link-button, .nav-link):hover {
     --sl-content-width: 78rem !important;
   }
 
-  /* Eliminate artificial 276px empty void between sidebar and content */
-  :global([data-has-sidebar]) .main-pane {
+  /* Scoped ONLY to documentation pages with an active left sidebar */
+  html[data-has-sidebar] .main-pane {
     --sl-content-margin-inline: 0 auto !important;
   }
 
-  :global([data-has-sidebar][data-has-toc]) .main-pane {
+  html[data-has-sidebar][data-has-toc] .main-pane {
     --sl-content-margin-inline: 0 auto !important;
     width: calc(100% - var(--sl-sidebar-width, 18.75rem)) !important;
   }
@@ -2131,13 +2131,33 @@ a:not(.primary, [class*="primary"], .sl-link-button, .nav-link):hover {
     max-width: 18.75rem !important;
   }
 
-  .sl-container {
+  html[data-has-sidebar] .content-panel .sl-container,
+  html[data-has-sidebar] .main-pane .sl-container {
     max-width: var(--sl-content-width) !important;
     margin-inline: 0 auto !important;
   }
 
   .content-panel {
     padding-inline: 2.5rem !important;
+  }
+
+  /* Standalone pages without sidebar (Hero splash & Studio): Centered Horizontally */
+  html[data-has-hero] .sl-container,
+  html:not([data-has-sidebar]) .sl-container,
+  html:not([data-has-sidebar]) .main-pane,
+  html[data-has-hero] .main-pane {
+    margin-inline: auto !important;
+  }
+
+  html[data-has-hero] .sl-container,
+  html:not([data-has-sidebar]) .sl-container {
+    max-width: var(--sl-content-width, 78rem) !important;
+    margin-inline: auto !important;
+  }
+
+  html[data-has-hero] .hero {
+    margin-inline: auto !important;
+    width: 100% !important;
   }
 
   /* Matrix table full-width expansion */

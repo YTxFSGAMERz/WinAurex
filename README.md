@@ -341,8 +341,8 @@ WinAurex is built on strict software engineering patterns using **MVVM**, **Depe
   <img src="https://img.shields.io/badge/GitHub-YTxFSGAMERz-white?style=for-the-badge&logo=github&logoColor=white&labelColor=181717&color=181717">
 </a>
 &nbsp;&nbsp;
-<a href="https://t.me/YTxFSGAMERz">
-  <img src="https://img.shields.io/badge/Telegram-YTxFSGAMERz-white?style=for-the-badge&logo=telegram&logoColor=white&labelColor=229ED9&color=229ED9">
+<a href="https://t.me/FFShaikh69">
+  <img src="https://img.shields.io/badge/Telegram-@FFShaikh69-white?style=for-the-badge&logo=telegram&logoColor=white&labelColor=229ED9&color=229ED9">
 </a>
 &nbsp;&nbsp;
 <a href="https://wa.me/917778906798">
