@@ -2104,3 +2104,63 @@ a:not(.primary, [class*="primary"], .sl-link-button, .nav-link):hover {
   text-decoration: underline !important;
   text-underline-offset: 3px !important;
 }
+
+
+/* ============================================================
+   DESKTOP VIEWPORT LAYOUT & EMPTY SPACE ELIMINATION
+   ============================================================ */
+@media (min-width: 72rem) {
+  :root {
+    --sl-content-width: 78rem !important;
+  }
+
+  /* Eliminate artificial 276px empty void between sidebar and content */
+  :global([data-has-sidebar]) .main-pane {
+    --sl-content-margin-inline: 0 auto !important;
+  }
+
+  :global([data-has-sidebar][data-has-toc]) .main-pane {
+    --sl-content-margin-inline: 0 auto !important;
+    width: calc(100% - var(--sl-sidebar-width, 18.75rem)) !important;
+  }
+
+  /* Lock right TOC column to focused 18rem width */
+  .right-sidebar-container {
+    width: var(--sl-sidebar-width, 18.75rem) !important;
+    min-width: 16rem !important;
+    max-width: 18.75rem !important;
+  }
+
+  .sl-container {
+    max-width: var(--sl-content-width) !important;
+    margin-inline: 0 auto !important;
+  }
+
+  .content-panel {
+    padding-inline: 2.5rem !important;
+  }
+
+  /* Matrix table full-width expansion */
+  .matrix-table-container,
+  .matrix-table {
+    width: 100% !important;
+  }
+
+  /* Web Studio Cockpit expansion */
+  .cyber-studio-root {
+    max-width: 82rem !important;
+    margin: 1.5rem auto !important;
+  }
+}
+
+.matrix-table-container {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  width: 100%;
+}
+
+.matrix-table th,
+.matrix-table td {
+  padding: 0.85rem 1rem !important;
+  vertical-align: middle !important;
+}
