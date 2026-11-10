@@ -28,6 +28,7 @@ if (-not $isAdmin) {
 
 # 2. Performance & Security Protocol Configuration
 $ProgressPreference = 'SilentlyContinue'
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force -ErrorAction SilentlyContinue
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
 
 Clear-Host
@@ -125,7 +126,7 @@ if (-not (Test-Path $ConversionScript)) {
 }
 
 if (Test-Path $ConversionScript) {
-    & $ConversionScript -Force:$Force
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$ConversionScript" -Force:$Force
 } else {
     Write-Error "Could not find conversion script in $WorkingDir."
     Exit 1
