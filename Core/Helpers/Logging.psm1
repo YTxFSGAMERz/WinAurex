@@ -8,6 +8,55 @@ if (-not (Test-Path -Path $Global:LogDirectory)) {
     New-Item -ItemType Directory -Force -Path $Global:LogDirectory | Out-Null
 }
 
+function Start-WinAurexTranscript {
+    <#
+    .SYNOPSIS
+    Starts an automated execution transcript in the WinAurex Logs directory.
+    #>
+    [CmdletBinding()]
+    param (
+        [string]$Prefix = "Execution",
+        [string]$CustomLogDir = $null
+    )
+
+    $TargetLogDir = if (-not [string]::IsNullOrWhiteSpace($CustomLogDir)) { $CustomLogDir } else { $Global:LogDirectory }
+    if (-not (Test-Path $TargetLogDir)) {
+        New-Item -Path $TargetLogDir -ItemType Directory -Force | Out-Null
+    }
+
+    $Timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+    $TranscriptPath = Join-Path $TargetLogDir "${Prefix}_${Timestamp}.log"
+
+    try {
+        Start-Transcript -Path $TranscriptPath -Append -Force | Out-Null
+        $Global:CurrentWinAurexTranscript = $TranscriptPath
+        return $TranscriptPath
+    } catch {
+        Write-Warning "Could not initialize transcript: $_"
+        return $null
+    }
+}
+
+function Stop-WinAurexTranscript {
+    <#
+    .SYNOPSIS
+    Gracefully stops the active WinAurex execution transcript.
+    #>
+    [CmdletBinding()]
+    param ()
+
+    try {
+        Stop-Transcript -ErrorAction SilentlyContinue | Out-Null
+    } catch {}
+
+    if ($Global:CurrentWinAurexTranscript) {
+        $path = $Global:CurrentWinAurexTranscript
+        $Global:CurrentWinAurexTranscript = $null
+        return $path
+    }
+    return $null
+}
+
 function Write-FrameworkLog {
     <#
     .SYNOPSIS
@@ -53,4 +102,4 @@ function Write-FrameworkLog {
     Add-Content -Path $LogFile -Value $LogEntry
 }
 
-Export-ModuleMember -Function Write-FrameworkLog
+Export-ModuleMember -Function Write-FrameworkLog, Start-WinAurexTranscript, Stop-WinAurexTranscript

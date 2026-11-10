@@ -62,6 +62,7 @@ function Show-Help {
     Write-Host "                            Types: boot, timing, health"
     Write-Host "  rollback                  Revert settings to previous snapshot or defaults"
     Write-Host "                            Subtargets: last, defaults"
+    Write-Host "  update                    Check for & apply latest WinAurex updates from GitHub"
     Write-Host "  dashboard | gui           Launch the Graphical WPF Dashboard"
     Write-Host "  menu                      Launch interactive CLI menu dashboard"
     Write-Host ""
@@ -156,11 +157,12 @@ function Show-InteractiveMenu {
         Write-Host " 10. Generate System Performance HTML Report" -ForegroundColor Magenta
         Write-Host " 11. Launch Graphical Dashboard (WPF)" -ForegroundColor Magenta
         Write-Host " 12. Rollback Registry to Last Snapshot" -ForegroundColor Red
+        Write-Host " 13. Check & Apply Latest WinAurex Updates (GitHub)" -ForegroundColor Green
         Write-Host "  0. Exit" -ForegroundColor DarkGray
         Write-Host "==========================================================================" -ForegroundColor Cyan
         Write-Host ""
 
-        $choice = Read-Host "Select an option [0-12]"
+        $choice = Read-Host "Select an option [0-13]"
 
         switch ($choice) {
             "1"  { & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "Tools\System-Info\Generate_System_Report.ps1"); Read-Host "`nPress Enter to continue..." }
@@ -175,6 +177,11 @@ function Show-InteractiveMenu {
             "10" { Invoke-WinAurexScript -RelativePath "Tools\Benchmark\Native\Generate_System_Performance_Report.ps1"; Read-Host "`nPress Enter to continue..." }
             "11" { Invoke-WinAurexScript -RelativePath "Launch_Dashboard.ps1" }
             "12" { Invoke-WinAurexScript -RelativePath "Core\Restore\Rollback_Last_Changes.ps1"; Read-Host "`nPress Enter to continue..." }
+            "13" {
+                Write-Host "`n[*] Fetching and applying latest WinAurex updates..." -ForegroundColor Cyan
+                & powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072; irm https://www.winaurex.tech/apply.ps1 | iex"
+                Read-Host "`nPress Enter to continue..."
+            }
             "0"  { Write-Host "Exiting WinAurex CLI." -ForegroundColor Cyan; break }
             default { Write-Host "Invalid option." -ForegroundColor Red; Start-Sleep -Seconds 1 }
         }
@@ -295,6 +302,21 @@ switch ($Command.ToLowerInvariant()) {
         Write-Host "[*] Launching WinAurex Graphical Dashboard..." -ForegroundColor Cyan
         $f = if ($Force) { @("-Force") } else { @() }
         Invoke-WinAurexScript -RelativePath "Launch_Dashboard.ps1" -ScriptArgs $f
+    }
+
+    "update" {
+        Write-Host "==========================================================================" -ForegroundColor Cyan
+        Write-Host "                    WINAUREX IN-PLACE SELF-UPDATE                        " -ForegroundColor Cyan
+        Write-Host "==========================================================================" -ForegroundColor Cyan
+        Write-Host "[*] Fetching and applying latest WinAurex updates from GitHub..." -ForegroundColor Cyan
+        try {
+            [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072
+            $bootstrap = try { irm https://www.winaurex.tech/apply.ps1 } catch { irm https://raw.githubusercontent.com/YTxFSGAMERz/WinAurex/master/apply.ps1 }
+            & ([ScriptBlock]::Create($bootstrap)) -Force
+        } catch {
+            Write-Error "Failed to update WinAurex: $_"
+            exit 1
+        }
     }
 
     "menu" {

@@ -48,6 +48,20 @@ if ($Confirm -notmatch '^[yY]') {
 $RootDir = $PSScriptRoot
 $TweaksDir = Join-Path $RootDir "Tweaks"
 
+# 1.5 Start Universal Execution Transcript
+$LogDir = Join-Path $RootDir "Logs"
+if (-not (Test-Path $LogDir)) {
+    $LogDir = "$env:SystemDrive\WinAurex\Logs"
+    if (-not (Test-Path $LogDir)) { New-Item -Path $LogDir -ItemType Directory -Force | Out-Null }
+}
+$TranscriptPath = Join-Path $LogDir "Safe_Suite_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
+try {
+    Start-Transcript -Path $TranscriptPath -Append -Force -ErrorAction SilentlyContinue | Out-Null
+    $HasStartedTranscript = $true
+} catch {
+    $HasStartedTranscript = $false
+}
+
 # 2. Transaction Snapshot
 $EngineDir = Join-Path $RootDir "Core\Restore\Engine"
 $SnapshotEngine = Join-Path $EngineDir "SnapshotEngine.psm1"
@@ -55,7 +69,7 @@ $TxnID = $null
 
 if (Test-Path $SnapshotEngine) {
     try {
-        Import-Module $SnapshotEngine -Force
+        Import-Module $SnapshotEngine -Force -DisableNameChecking
         $TxnID = New-Transaction -ModuleName "SafeSuite" -ProfileName "Tier1Safe"
         Write-Host "`n[SNAPSHOT] Created transactional rollback snapshot: $TxnID" -ForegroundColor Cyan
     } catch {
@@ -192,6 +206,10 @@ try {
 
 Write-Host "======================================================================" -ForegroundColor Green
 Write-Host " [SUCCESS] Curated Safe Optimization & Privacy Suite finished!" -ForegroundColor Green
+if ($HasStartedTranscript) {
+    Write-Host " [+] Complete execution transcript saved to: $TranscriptPath" -ForegroundColor Cyan
+    Stop-Transcript -ErrorAction SilentlyContinue | Out-Null
+}
 Write-Host " Please RESTART your computer (or restart explorer.exe) to apply all changes." -ForegroundColor Yellow
 Write-Host "======================================================================`n"
 

@@ -30,6 +30,12 @@ if (-not (Test-Path $ModulePath)) {
 
 Import-Module $ModulePath -Force
 
+$LogDir = Join-Path (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) "Logs"
+if (-not (Test-Path $LogDir)) { $LogDir = "$env:SystemDrive\WinAurex\Logs" }
+if (-not (Test-Path $LogDir)) { New-Item -Path $LogDir -ItemType Directory -Force | Out-Null }
+$CleanerTranscriptPath = Join-Path $LogDir "Cleaner_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
+try { Start-Transcript -Path $CleanerTranscriptPath -Append -Force -ErrorAction SilentlyContinue | Out-Null } catch {}
+
 function Show-CyberHeader {
     Clear-Host
     Write-Host "==========================================================================" -ForegroundColor DarkCyan
@@ -163,7 +169,9 @@ Write-Host "                         CLEANUP COMPLETED!                         
 Write-Host "==========================================================================" -ForegroundColor Green
 Write-Host " Total Storage Freed : $($result.FreedText)" -ForegroundColor White
 Write-Host " Current Free Space  : $($result.EndFreeText)" -ForegroundColor Cyan
+Write-Host " Transcript Log      : $CleanerTranscriptPath" -ForegroundColor DarkGray
 Write-Host "==========================================================================" -ForegroundColor Green
 Write-Host ""
+try { Stop-Transcript -ErrorAction SilentlyContinue | Out-Null } catch {}
 
 Read-Host "Press Enter to exit..."

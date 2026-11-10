@@ -53,6 +53,16 @@ Write-Host "====================================================================
 
 # 3. Target Installation Directory (Persistent Local Storage)
 $TargetDir = "$env:SystemDrive\WinAurex"
+$LogDir = Join-Path $TargetDir "Logs"
+if (-not (Test-Path $LogDir)) { New-Item -Path $LogDir -ItemType Directory -Force | Out-Null }
+$TranscriptPath = Join-Path $LogDir "Conversion_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
+try {
+    Start-Transcript -Path $TranscriptPath -Append -Force -ErrorAction SilentlyContinue | Out-Null
+    $HasStartedTranscript = $true
+} catch {
+    $HasStartedTranscript = $false
+}
+
 $ZipUrl = "https://github.com/YTxFSGAMERz/WinAurex/archive/refs/heads/master.zip"
 $ZipFile = "$env:TEMP\winaurex_master.zip"
 
@@ -87,6 +97,20 @@ if (-not $LocalRepoRoot) {
         Remove-Item $ZipFile -Force -ErrorAction SilentlyContinue
         Remove-Item "$env:TEMP\winaurex_extract" -Recurse -Force -ErrorAction SilentlyContinue
         
+        # Deploy Global Windows System Shim so 'winaurex' is immediately accessible everywhere
+        $SystemShimContent = @"
+@echo off
+if exist "$TargetDir\winaurex.cmd" (
+    call "$TargetDir\winaurex.cmd" %*
+) else (
+    echo [!] WinAurex installation not found in $TargetDir.
+)
+"@
+        try {
+            Set-Content -Path (Join-Path $env:SystemRoot "winaurex.cmd") -Value $SystemShimContent -Force -ErrorAction SilentlyContinue
+            Set-Content -Path (Join-Path $env:SystemRoot "System32\winaurex.cmd") -Value $SystemShimContent -Force -ErrorAction SilentlyContinue
+        } catch {}
+
         $WorkingDir = $TargetDir
         Write-Host "[+] Download and extraction complete!" -ForegroundColor Green
     } catch {
@@ -149,6 +173,10 @@ Write-Host " * Full optimizations applied without data loss." -ForegroundColor G
 Write-Host " * Installed locally to: $WorkingDir" -ForegroundColor Yellow
 Write-Host " * Type 'winaurex' in any terminal to launch the CLI." -ForegroundColor Yellow
 Write-Host " * WinAurex Dashboard and PC Cleaner shortcuts are on your Desktop." -ForegroundColor Yellow
+if ($HasStartedTranscript) {
+    Write-Host " * Complete execution transcript saved to: $TranscriptPath" -ForegroundColor Cyan
+    Stop-Transcript -ErrorAction SilentlyContinue | Out-Null
+}
 Write-Host "======================================================================`n"
 
 if (-not $Force -and [Environment]::UserInteractive) {

@@ -48,26 +48,61 @@ if (Test-Path $SafeSuite) {
     Write-Warning "Apply_Curated_Safe_Suite.ps1 not found in $RepoRoot. Skipping automated tweak execution."
 }
 
-# 4. Register 'winaurex' in System PATH
-Write-Host "`n[*] Registering WinAurex CLI in System Environment PATH..." -ForegroundColor Cyan
-$BinDir = Join-Path $RepoRoot "bin"
-if (-not (Test-Path $BinDir)) {
-    # If installed in ProgramData
-    $BinDir = $RepoRoot
+# 4. Register 'winaurex' in System PATH & Deploy Global Shim
+Write-Host "`n[*] Registering WinAurex CLI in System Environment..." -ForegroundColor Cyan
+
+# 4a. Deploy Global Windows System Shim (Instant access from ANY terminal)
+$SystemShimContent = @"
+@echo off
+if exist "$RepoRoot\winaurex.cmd" (
+    call "$RepoRoot\winaurex.cmd" %*
+) else if exist "C:\WinAurex\winaurex.cmd" (
+    call "C:\WinAurex\winaurex.cmd" %*
+) else (
+    echo [!] WinAurex installation not found.
+)
+"@
+
+$ShimTargets = @(
+    (Join-Path $env:SystemRoot "winaurex.cmd"),
+    (Join-Path $env:SystemRoot "System32\winaurex.cmd")
+)
+
+foreach ($target in $ShimTargets) {
+    try {
+        Set-Content -Path $target -Value $SystemShimContent -Force -ErrorAction SilentlyContinue
+        Write-Host " [+] Installed global CLI shim: $target" -ForegroundColor Green
+    } catch {}
 }
 
+# 4b. Update Machine and User PATH
 try {
-    $CurrentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
-    if ($CurrentPath -notlike "*$RepoRoot*" -and $CurrentPath -notlike "*$BinDir*") {
-        $NewPath = "$CurrentPath;$RepoRoot"
-        [Environment]::SetEnvironmentVariable("Path", $NewPath, [EnvironmentVariableTarget]::Machine)
-        Write-Host " [+] Added $RepoRoot to System PATH. 'winaurex' CLI is now globally accessible!" -ForegroundColor Green
-    } else {
-        Write-Host " [+] WinAurex is already registered in System PATH." -ForegroundColor Green
+    $MachinePath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
+    if ($MachinePath -notlike "*$RepoRoot*") {
+        [Environment]::SetEnvironmentVariable("Path", "$MachinePath;$RepoRoot", [EnvironmentVariableTarget]::Machine)
+        Write-Host " [+] Added $RepoRoot to Machine PATH." -ForegroundColor Green
     }
+    $UserPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User)
+    if ($UserPath -notlike "*$RepoRoot*") {
+        [Environment]::SetEnvironmentVariable("Path", "$UserPath;$RepoRoot", [EnvironmentVariableTarget]::User)
+        Write-Host " [+] Added $RepoRoot to User PATH." -ForegroundColor Green
+    }
+    $env:Path = "$env:Path;$RepoRoot"
 } catch {
     Write-Warning "Could not update machine PATH environment variable: $_"
 }
+
+# 4c. Broadcast WM_SETTINGCHANGE to notify running shells & Explorer
+try {
+    Add-Type -Namespace Win32 -Name NativeMethods -MemberDefinition @"
+[System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+public static extern System.IntPtr SendMessageTimeout(
+    System.IntPtr hWnd, uint Msg, System.UIntPtr wParam, string lParam,
+    uint fuFlags, uint uTimeout, out System.UIntPtr lpdwResult);
+"@ -ErrorAction SilentlyContinue | Out-Null
+    $result = [System.UIntPtr]::Zero
+    [Win32.NativeMethods]::SendMessageTimeout([System.IntPtr]0xffff, 0x001A, [System.UIntPtr]::Zero, "Environment", 2, 5000, [ref]$result) | Out-Null
+} catch {}
 
 # 5. Create Desktop & Start Menu Shortcuts
 Write-Host "`n[*] Creating Desktop & Start Menu Shortcuts..." -ForegroundColor Cyan

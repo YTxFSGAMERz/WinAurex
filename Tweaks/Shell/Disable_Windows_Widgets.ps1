@@ -11,25 +11,22 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     Exit
 }
 
-$HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
+# 1. System-Wide Group Policy Disablement (Works universally on Windows 11 22H2 / 23H2 / 24H2 / 25H2)
+$DshPolicy = "HKLM:\SOFTWARE\Policies\Microsoft\Dsh"
+if (-not (Test-Path $DshPolicy)) { New-Item -Path $DshPolicy -Force | Out-Null }
+Set-ItemProperty -Path $DshPolicy -Name "AllowNewsAndInterests" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
 
-# Write-FrameworkLog -ModuleName "Shell" -Action "Initiating Widgets Disablement"
+$FeedsPolicy = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds"
+if (-not (Test-Path $FeedsPolicy)) { New-Item -Path $FeedsPolicy -Force | Out-Null }
+Set-ItemProperty -Path $FeedsPolicy -Name "EnableFeeds" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
 
-$RegistryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-$Name = "TaskbarDa"
-
-# 1. Snapshot current state for reversibility
-$CurrentValue = (Get-ItemProperty -Path $RegistryPath -Name $Name -ErrorAction SilentlyContinue).$Name
-if ($null -eq $CurrentValue) { $CurrentValue = "Not_Set" }
-
-# 2. Apply Configuration (0 = Disabled, 1 = Enabled)
-Set-ItemProperty -Path $RegistryPath -Name $Name -Value 0 -Type DWord -Force
-
-# 3. Log Outcome
-# Write-FrameworkLog -ModuleName "Shell" -Action "Disabled Windows Widgets" -OldValue $CurrentValue -NewValue "0"
+# 2. User Explorer Preferences (TaskbarDa - Graceful fallback)
+$UserAdvanced = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+try {
+    if (Test-Path $UserAdvanced) {
+        Set-ItemProperty -Path $UserAdvanced -Name "TaskbarDa" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
+    }
+} catch {}
 
 Write-Host "`n[SUCCESS] Windows Widgets and News Feed Disabled." -ForegroundColor Green
 Write-Host "A Windows Explorer restart may be required to see changes immediately." -ForegroundColor Yellow
-
-
