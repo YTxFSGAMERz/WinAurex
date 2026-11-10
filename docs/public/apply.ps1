@@ -25,7 +25,8 @@ if (-not $isAdmin) {
     }
 }
 
-# 2. TLS Security Protocol Configuration
+# 2. Performance & Security Protocol Configuration
+$ProgressPreference = 'SilentlyContinue'
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
 
 Clear-Host
@@ -55,7 +56,7 @@ $ZipFile = "$env:TEMP\winaurex_master.zip"
 
 # If running locally from an existing repository clone, use local directory
 $LocalRepoRoot = $null
-if (Test-Path (Join-Path $PSScriptRoot "Apply_Curated_Safe_Suite.ps1")) {
+if (-not [string]::IsNullOrWhiteSpace($PSScriptRoot) -and (Test-Path (Join-Path $PSScriptRoot "Apply_Curated_Safe_Suite.ps1"))) {
     $LocalRepoRoot = $PSScriptRoot
 } elseif (Test-Path ".\Apply_Curated_Safe_Suite.ps1") {
     $LocalRepoRoot = (Get-Item ".").FullName
@@ -96,10 +97,14 @@ if (-not $SkipRestorePoint) {
     Write-Host "`n[2/4] Creating Windows System Restore Point ('Pre-WinAurex Conversion')..." -ForegroundColor Cyan
     try {
         Enable-ComputerRestore -Drive $env:SystemDrive -ErrorAction SilentlyContinue
+        # Allow creating restore points on-demand without 24h frequency limit
+        $srKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore"
+        if (-not (Test-Path $srKey)) { New-Item -Path $srKey -Force | Out-Null }
+        Set-ItemProperty -Path $srKey -Name "SystemRestorePointCreationFrequency" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
         Checkpoint-Computer -Description "Pre-WinAurex Conversion" -RestorePointType "MODIFY_SETTINGS" -ErrorAction Stop
         Write-Host "[+] System Restore point created successfully!" -ForegroundColor Green
     } catch {
-        Write-Warning "System Restore checkpoint could not be created (System Protection may be disabled). Proceeding with transactional rollback engine."
+        Write-Warning "System Restore checkpoint could not be created ($($_.Exception.Message)). Proceeding with transactional rollback engine."
     }
 } else {
     Write-Host "`n[2/4] Skipping System Restore checkpoint as requested." -ForegroundColor DarkGray
