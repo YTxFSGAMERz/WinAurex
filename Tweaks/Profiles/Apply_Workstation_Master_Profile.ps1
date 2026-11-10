@@ -58,9 +58,9 @@ Write-Host "`n[4/4] Disabling Web Search in Start Menu..." -ForegroundColor Cyan
 
 Write-Host "`n[SUCCESS] Workstation Master Profile deployment complete!" -ForegroundColor Green
 Write-Host "Please RESTART YOUR COMPUTER for all changes to take effect." -ForegroundColor Yellow
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

@@ -42,9 +42,9 @@ Write-Host "`n[2/2] Removing Unnecessary Microsoft Apps..." -ForegroundColor Cya
 # Write-FrameworkLog -ModuleName "Apps" -Action "Completed Master Debloat Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Debloat Profile deployment complete!" -ForegroundColor Green
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

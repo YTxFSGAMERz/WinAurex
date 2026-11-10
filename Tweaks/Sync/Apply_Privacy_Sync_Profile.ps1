@@ -42,9 +42,9 @@ Write-Host "`n[2/2] Disabling Windows Settings Cloud Syncing..." -ForegroundColo
 # Write-FrameworkLog -ModuleName "Sync" -Action "Completed Master Privacy Sync Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Privacy Sync Profile deployment complete!" -ForegroundColor Green
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

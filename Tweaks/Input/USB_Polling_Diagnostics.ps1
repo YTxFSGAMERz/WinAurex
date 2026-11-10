@@ -65,9 +65,9 @@ $Confirm = 'y'
 
 Write-Host "`nNOTE: High-polling rate mice (4000Hz - 8000Hz) require raw CPU performance."
 Write-Host "If you experience stutter at 8000Hz, drop your mouse software to 2000Hz."
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

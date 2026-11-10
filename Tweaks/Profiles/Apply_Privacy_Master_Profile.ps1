@@ -67,9 +67,9 @@ Write-Host "`n[6/6] Removing Sponsored Bloatware..." -ForegroundColor Cyan
 
 Write-Host "`n[SUCCESS] Maximum Privacy Master Profile deployment complete!" -ForegroundColor Green
 Write-Host "Please RESTART YOUR COMPUTER for all changes to take effect." -ForegroundColor Yellow
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

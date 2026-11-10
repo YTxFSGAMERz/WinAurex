@@ -39,9 +39,9 @@ Write-Host "`n[1/1] Disabling Telemetry Background Services..." -ForegroundColor
 # Write-FrameworkLog -ModuleName "Services" -Action "Completed Master Clean Services Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Clean Services Profile deployment complete!" -ForegroundColor Green
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

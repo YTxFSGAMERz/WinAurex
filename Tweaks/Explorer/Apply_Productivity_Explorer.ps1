@@ -53,9 +53,9 @@ Write-Host "`n[SUCCESS] Productivity Explorer deployment complete!" -ForegroundC
 Write-Host "Restarting Windows Explorer to apply all visual changes immediately..." -ForegroundColor Yellow
 Stop-Process -Name "explorer" -Force
 
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

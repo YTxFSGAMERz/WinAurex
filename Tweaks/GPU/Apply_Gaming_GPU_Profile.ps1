@@ -43,9 +43,9 @@ Write-Host "`n[2/2] Enabling Windows Game Mode..." -ForegroundColor Cyan
 
 Write-Host "`n[SUCCESS] Gaming GPU Profile deployment complete!" -ForegroundColor Green
 Write-Host "A system reboot is highly recommended to apply GPU scheduling changes." -ForegroundColor Red
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

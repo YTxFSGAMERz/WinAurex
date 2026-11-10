@@ -2,14 +2,12 @@
 setlocal enabledelayedexpansion
 
 :: BatchGotAdmin
-REM  --> Check for permissions
-    IF "%PROCESSOR_ARCHITECTURE%" EQU "amd64" (
->nul 2>&1 "%SYSTEMROOT%\SysWOW64\cacls.exe" "%SYSTEMROOT%\SysWOW64\config\system"
+IF "%PROCESSOR_ARCHITECTURE%" EQU "amd64" (
+    >nul 2>&1 "%SYSTEMROOT%\SysWOW64\cacls.exe" "%SYSTEMROOT%\SysWOW64\config\system"
 ) ELSE (
->nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+    >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 )
 
-REM --> If error flag set, we do not have admin.
 if '%errorlevel%' NEQ '0' (
     goto UACPrompt
 ) else ( goto gotAdmin )
@@ -18,41 +16,38 @@ if '%errorlevel%' NEQ '0' (
     echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
     set params= %*
     echo UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params:"="""%", "", "runas", 1 >> "%temp%\getadmin.vbs"
-
     cscript //nologo "%temp%\getadmin.vbs"
     del "%temp%\getadmin.vbs"
     exit /B
 
 :gotAdmin
     pushd "%CD%"
-    CD /D "%~dp0" 
+    CD /D "%~dp0"
 
-:: Disable update related services
-for %%i in (wuauserv, UsoSvc, uhssvc, WaaSMedicSvc) do (
-	net stop %%i
-	sc config %%i start= disabled
-	sc failure %%i reset= 0 actions= ""
-)
+echo ======================================================================
+echo              Disabling Windows Automatic Updates (Policy Method)
+echo ======================================================================
+echo Disabling automatic downloads and updates via Group Policy...
+echo System binaries will NOT be modified or renamed.
 
-:: Brute force rename services
-for %%i in (WaaSMedicSvc, wuaueng) do (
-	takeown /f C:\Windows\System32\%%i.dll && icacls C:\Windows\System32\%%i.dll /grant *S-1-1-0:F
-	rename C:\Windows\System32\%%i.dll %%i_BAK.dll
-	icacls C:\Windows\System32\%%i_BAK.dll /setowner "NT SERVICE\TrustedInstaller" && icacls C:\Windows\System32\%%i_BAK.dll /remove *S-1-1-0
-)
+:: Configure Group Policies to disable automatic updating
+reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" /v NoAutoUpdate /t REG_DWORD /d 1 /f >nul 2>&1
+reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" /v AUOptions /t REG_DWORD /d 2 /f >nul 2>&1
 
-:: Update registry
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v Start /t REG_DWORD /d 4 /f
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v FailureActions /t REG_BINARY /d 000000000000000000000000030000001400000000000000c0d4010000000000e09304000000000000000000 /f
-reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" /v NoAutoUpdate /t REG_DWORD /d 1 /f
+:: Pause update orchestrator and medic tasks
+schtasks /change /tn "\Microsoft\Windows\InstallService\ScanForUpdates" /disable >nul 2>&1
+schtasks /change /tn "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan" /disable >nul 2>&1
+schtasks /change /tn "\Microsoft\Windows\UpdateOrchestrator\Report policies" /disable >nul 2>&1
+schtasks /change /tn "\Microsoft\Windows\WaaSMedic\PerformRemediation" /disable >nul 2>&1
 
-:: Delete downloaded update files
-erase /f /s /q c:\windows\softwaredistribution\*.* && rmdir /s /q c:\windows\softwaredistribution
+:: Set services to manual demand
+net stop wuauserv >nul 2>&1
+sc config wuauserv start= demand >nul 2>&1
+net stop WaaSMedicSvc >nul 2>&1
+sc config WaaSMedicSvc start= demand >nul 2>&1
 
-:: Disable all update related scheduled tasks
-schtasks /change /tn "\Microsoft\Windows\InstallService\*" /disable
-schtasks /change /tn "\Microsoft\Windows\UpdateOrchestrator\*" /disable
-schtasks /change /tn "\Microsoft\Windows\UpdateAssistant\*" /disable
-schtasks /change /tn "\Microsoft\Windows\WaaSMedic\*" /disable
-schtasks /change /tn "\Microsoft\Windows\WindowsUpdate\*" /disable
-schtasks /change /tn "\Microsoft\WindowsUpdate\*" /disable
+echo.
+echo [SUCCESS] Windows Automatic Updates disabled via policy.
+echo Windows will notify before downloading, preventing unexpected reboots.
+timeout /t 3 /nobreak >nul
+exit /b

@@ -47,9 +47,9 @@ dism.exe /online /export-driver /destination:"$ExportDir" | Out-Null
 Write-Host "`n================================================="
 Write-Host "[SUCCESS] Drivers have been exported safely." -ForegroundColor Green
 Write-Host "Backup Location: $ExportDir"
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

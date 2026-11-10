@@ -47,9 +47,9 @@ Write-Host "`n[SUCCESS] Privacy Search Profile deployment complete!" -Foreground
 Write-Host "Restarting Windows Explorer to apply search UI changes immediately..." -ForegroundColor Yellow
 Stop-Process -Name "explorer" -Force
 
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

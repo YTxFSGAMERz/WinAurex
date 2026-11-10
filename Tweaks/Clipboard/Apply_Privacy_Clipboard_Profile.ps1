@@ -42,9 +42,9 @@ Write-Host "`n[2/2] Disabling Cloud Clipboard Syncing..." -ForegroundColor Cyan
 # Write-FrameworkLog -ModuleName "Clipboard" -Action "Completed Master Privacy Clipboard Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Privacy Clipboard Profile deployment complete!" -ForegroundColor Green
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

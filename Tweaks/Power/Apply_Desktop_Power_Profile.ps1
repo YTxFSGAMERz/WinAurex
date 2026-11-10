@@ -46,9 +46,9 @@ Write-Host "`n[3/3] Disabling USB Selective Suspend..." -ForegroundColor Cyan
 # Write-FrameworkLog -ModuleName "Power" -Action "Completed Master Desktop Power Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Desktop Power Profile deployment complete!" -ForegroundColor Green
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

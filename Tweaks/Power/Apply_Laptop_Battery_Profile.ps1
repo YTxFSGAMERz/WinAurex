@@ -49,9 +49,9 @@ powercfg /S SCHEME_CURRENT
 # Write-FrameworkLog -ModuleName "Power" -Action "Completed Master Laptop Battery Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Laptop Battery Profile deployment complete!" -ForegroundColor Green
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

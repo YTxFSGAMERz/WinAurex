@@ -42,9 +42,9 @@ Write-Host "`n[2/2] Disabling Tailored Experiences (Ads/Tips)..." -ForegroundCol
 # Write-FrameworkLog -ModuleName "Diagnostics" -Action "Completed Master Diagnostics Privacy Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Diagnostics Privacy Profile deployment complete!" -ForegroundColor Green
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 

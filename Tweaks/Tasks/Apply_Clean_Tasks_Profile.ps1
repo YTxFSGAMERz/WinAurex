@@ -39,9 +39,9 @@ Write-Host "`n[1/1] Disabling Telemetry Scheduled Tasks..." -ForegroundColor Cya
 # Write-FrameworkLog -ModuleName "Tasks" -Action "Completed Master Clean Tasks Orchestrator" -Level WARNING
 
 Write-Host "`n[SUCCESS] Clean Tasks Profile deployment complete!" -ForegroundColor Green
-if (-not $Force) {
-    if (-not $Force) {
+if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    $null = Read-Host "
+Press Enter to return..."
 }
 
-}
 
