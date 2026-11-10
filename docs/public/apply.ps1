@@ -1,32 +1,137 @@
-# ==============================================================================
-# WinAurex Quick Optimization Runner
-# https://winaurex.tech
-# ==============================================================================
+<#
+.SYNOPSIS
+    WinAurex Universal In-Place PC Conversion Bootstrapper
+.DESCRIPTION
+    Converts any existing Windows 10/11 PC into WinAurex Edition in-place without reinstallation.
+    Run via: irm https://winaurex.tech/apply.ps1 | iex
+#>
+[CmdletBinding()]
+param (
+    [switch]$Force,
+    [switch]$SkipRestorePoint
+)
 
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
-Write-Host @"
-====================================================================
-  __        ___             _                            
-  \ \      / (_)_ __   / \  _   _ _ __ _____  __         
-   \ \ /\ / /| | '_ \ / _ \| | | | '__/ _ \ \/ /         
-    \ V  V / | | | | / ___ \ |_| | | |  __/>  <          
-     \_/\_/  |_|_| |/_/   \_\__,_|_|  \___/_/\_\         
-                                                         
-  Windows Engineering & Optimization Framework
-  Rollback-Safe * Open Source * C# WPF + PowerShell
-  Web Studio: https://winaurex.tech
-====================================================================
-"@ -ForegroundColor Cyan
-
-Write-Host "`n[+] Checking administrative privileges..." -ForegroundColor Yellow
-if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Warning "WinAurex requires elevated administrator rights. Please re-run in an elevated PowerShell prompt."
-    return
+# 1. Require Administrator Privileges (Auto-Elevate)
+$isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+if (-not $isAdmin) {
+    Write-Host "[!] Administrative privileges required. Requesting elevation..." -ForegroundColor Yellow
+    $argsList = "-NoProfile -ExecutionPolicy Bypass -Command `"& { [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072; irm https://winaurex.tech/apply.ps1 | iex }`""
+    try {
+        Start-Process powershell.exe -Verb RunAs -ArgumentList $argsList
+        Exit
+    } catch {
+        Write-Error "Failed to elevate. Please right-click PowerShell and select 'Run as Administrator', then run this command again."
+        Exit 1
+    }
 }
 
-Write-Host "[+] Creating System Restore Point for safety..." -ForegroundColor Green
-Checkpoint-Computer -Description "WinAurex-Online-Restore" -RestorePointType "MODIFY_SETTINGS" -ErrorAction SilentlyContinue
+# 2. TLS Security Protocol Configuration
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
 
-Write-Host "[+] Launching WinAurex Quick Setup..." -ForegroundColor Cyan
-Write-Host "For full GUI controls, download WinAurex.App.exe at https://winaurex.tech" -ForegroundColor White
+Clear-Host
+Write-Host "======================================================================" -ForegroundColor Cyan
+Write-Host "        __          ___             /\                                " -ForegroundColor Cyan
+Write-Host "        \ \        / (_)           /  \                               " -ForegroundColor Cyan
+Write-Host "         \ \  /\  / / _ _ __      / /\ \  _   _ _ __ _____  __        " -ForegroundColor Cyan
+Write-Host "          \ \/  \/ / | | '_ \    / ____ \| | | | '__/ _ \ \/ /        " -ForegroundColor Cyan
+Write-Host "           \  /\  /  | | | | |  / /    \ \ |_| | | |  __/>  <         " -ForegroundColor Cyan
+Write-Host "            \/  \/   |_|_| |_| /_/      \_\__,_|_|  \___/_/\_\        " -ForegroundColor Cyan
+Write-Host "                                                                      " -ForegroundColor Cyan
+Write-Host "                 IN-PLACE WINDOWS TRANSFORMATION SUITE                " -ForegroundColor White
+Write-Host "                       https://winaurex.tech                          " -ForegroundColor Yellow
+Write-Host "======================================================================" -ForegroundColor Cyan
+Write-Host " Converts your existing PC into WinAurex with full optimizations:" -ForegroundColor White
+Write-Host "  * 100% In-Place: ZERO file loss, no clean install required" -ForegroundColor Green
+Write-Host "  * Strips telemetry & bloatware while protecting Microsoft Store" -ForegroundColor Green
+Write-Host "  * 10ms instant context menus, 1:1 raw mouse input, HAGS enabled" -ForegroundColor Green
+Write-Host "  * Unlocks Ultimate Performance Plan & disables update seeding" -ForegroundColor Green
+Write-Host "  * Injects WinAurex Performance Edition identity and GUI dashboard" -ForegroundColor Green
+Write-Host "======================================================================`n"
+
+# 3. Target Installation Directory
+$TargetDir = "$env:ProgramData\WinAurex"
+$ZipUrl = "https://github.com/YTxFSGAMERz/WinAurex/archive/refs/heads/master.zip"
+$ZipFile = "$env:TEMP\winaurex_master.zip"
+
+# If running locally from an existing repository clone, use local directory
+$LocalRepoRoot = $null
+if (Test-Path (Join-Path $PSScriptRoot "Apply_Curated_Safe_Suite.ps1")) {
+    $LocalRepoRoot = $PSScriptRoot
+} elseif (Test-Path ".\Apply_Curated_Safe_Suite.ps1") {
+    $LocalRepoRoot = (Get-Item ".").FullName
+}
+
+if (-not $LocalRepoRoot) {
+    Write-Host "[1/4] Downloading latest WinAurex suite from GitHub..." -ForegroundColor Cyan
+    try {
+        if (-not (Test-Path $TargetDir)) { New-Item -Path $TargetDir -ItemType Directory -Force | Out-Null }
+        
+        Write-Host "Fetching repository archive..." -ForegroundColor DarkGray
+        Invoke-WebRequest -Uri $ZipUrl -OutFile $ZipFile -UseBasicParsing
+        
+        Write-Host "Extracting to $TargetDir..." -ForegroundColor DarkGray
+        Expand-Archive -Path $ZipFile -DestinationPath "$env:TEMP\winaurex_extract" -Force
+        
+        # Copy contents of extracted master folder to TargetDir
+        $ExtractedFolder = Get-ChildItem "$env:TEMP\winaurex_extract" -Directory | Select-Object -First 1
+        Copy-Item -Path "$($ExtractedFolder.FullName)\*" -Destination $TargetDir -Recurse -Force
+        
+        # Clean temporary download files
+        Remove-Item $ZipFile -Force -ErrorAction SilentlyContinue
+        Remove-Item "$env:TEMP\winaurex_extract" -Recurse -Force -ErrorAction SilentlyContinue
+        
+        $WorkingDir = $TargetDir
+        Write-Host "[+] Download and extraction complete!" -ForegroundColor Green
+    } catch {
+        Write-Error "Failed to download WinAurex from GitHub: $_"
+        Exit 1
+    }
+} else {
+    Write-Host "[1/4] Running from local repository at: $LocalRepoRoot" -ForegroundColor Green
+    $WorkingDir = $LocalRepoRoot
+}
+
+# 4. Create System Restore Point (Disaster Recovery Safeguard)
+if (-not $SkipRestorePoint) {
+    Write-Host "`n[2/4] Creating Windows System Restore Point ('Pre-WinAurex Conversion')..." -ForegroundColor Cyan
+    try {
+        Enable-ComputerRestore -Drive $env:SystemDrive -ErrorAction SilentlyContinue
+        Checkpoint-Computer -Description "Pre-WinAurex Conversion" -RestorePointType "MODIFY_SETTINGS" -ErrorAction Stop
+        Write-Host "[+] System Restore point created successfully!" -ForegroundColor Green
+    } catch {
+        Write-Warning "System Restore checkpoint could not be created (System Protection may be disabled). Proceeding with transactional rollback engine."
+    }
+} else {
+    Write-Host "`n[2/4] Skipping System Restore checkpoint as requested." -ForegroundColor DarkGray
+}
+
+# 5. Execute In-Place Conversion Engine
+Write-Host "`n[3/4] Executing In-Place Conversion Engine..." -ForegroundColor Cyan
+$ConversionScript = Join-Path $WorkingDir "Core\Conversion\Convert-ToWinAurex.ps1"
+
+if (-not (Test-Path $ConversionScript)) {
+    # Fallback to direct safe suite if conversion script not in downloaded archive
+    $ConversionScript = Join-Path $WorkingDir "Apply_Curated_Safe_Suite.ps1"
+}
+
+if (Test-Path $ConversionScript) {
+    & $ConversionScript -Force:$Force
+} else {
+    Write-Error "Could not find conversion script in $WorkingDir."
+    Exit 1
+}
+
+# 6. Launch WinAurex Dashboard
+Write-Host "`n[4/4] Launching WinAurex GUI Dashboard..." -ForegroundColor Cyan
+$DashboardScript = Join-Path $WorkingDir "Launch_Dashboard.ps1"
+if (Test-Path $DashboardScript) {
+    Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$DashboardScript`""
+}
+
+Write-Host "`n======================================================================" -ForegroundColor Green
+Write-Host " [SUCCESS] Congratulations! Your PC is now converted to WinAurex!    " -ForegroundColor White
+Write-Host "======================================================================" -ForegroundColor Green
+Write-Host " * Full optimizations applied without data loss." -ForegroundColor Green
+Write-Host " * Type 'winaurex' in any terminal to launch the CLI." -ForegroundColor Yellow
+Write-Host " * WinAurex Dashboard and PC Cleaner shortcuts are on your Desktop." -ForegroundColor Yellow
+Write-Host "======================================================================`n"

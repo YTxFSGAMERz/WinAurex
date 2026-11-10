@@ -1,0 +1,24 @@
+PackageIdentifier: YTxFSGAMERz.WinAurex
+PackageVersion: 5.0.0
+PackageLocale: en-US
+Publisher: WinAurex Team
+PublisherUrl: https://winaurex.tech
+PublisherSupportUrl: https://github.com/YTxFSGAMERz/WinAurex/issues
+Author: YTxFSGAMERz
+PackageName: WinAurex
+PackageUrl: https://winaurex.tech
+License: ISC
+LicenseUrl: https://github.com/YTxFSGAMERz/WinAurex/blob/master/LICENSE
+ShortDescription: Advanced in-place Windows optimization, debloating, and performance suite.
+Description: WinAurex converts existing Windows 10 and 11 installations into a high-performance, low-latency, privacy-hardened environment without reinstalling the operating system.
+Tags:
+  - debloat
+  - gaming
+  - latency
+  - optimizer
+  - performance
+  - privacy
+  - tweaks
+  - windows
+ManifestType: defaultLocale
+ManifestVersion: 1.6.0

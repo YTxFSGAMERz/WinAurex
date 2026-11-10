@@ -26,6 +26,10 @@
     { "source": "/WINDOWS_UPDATE", "destination": "/windows_update/", "permanent": true },
     { "source": "/WINDOWS_UPDATE/", "destination": "/windows_update/", "permanent": true }
   ],
+  "rewrites": [
+    { "source": "/apply", "destination": "/apply.ps1" },
+    { "source": "/install", "destination": "/apply.ps1" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -38,6 +42,14 @@
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), browsing-topics=()" },
         { "key": "Content-Security-Policy", "value": "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: https:; font-src 'self' data: https:;" },
         { "key": "X-Robots-Tag", "value": "all" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.ps1",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cache-Control", "value": "public, max-age=300" }
       ]
     },
     {
