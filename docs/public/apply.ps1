@@ -8,7 +8,8 @@
 [CmdletBinding()]
 param (
     [switch]$Force,
-    [switch]$SkipRestorePoint
+    [switch]$SkipRestorePoint,
+    [switch]$LaunchDashboard
 )
 
 # 1. Require Administrator Privileges (Auto-Elevate)
@@ -130,11 +131,14 @@ if (Test-Path $ConversionScript) {
     Exit 1
 }
 
-# 6. Launch WinAurex Dashboard
-Write-Host "`n[4/4] Launching WinAurex GUI Dashboard..." -ForegroundColor Cyan
-$DashboardScript = Join-Path $WorkingDir "Launch_Dashboard.ps1"
-if (Test-Path $DashboardScript) {
-    Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$DashboardScript`""
+# 6. Finalize System Integration
+Write-Host "`n[4/4] Finalizing shortcuts and system integration..." -ForegroundColor Cyan
+if ($LaunchDashboard) {
+    Write-Host "Launching WinAurex GUI Dashboard..." -ForegroundColor Cyan
+    $DashboardScript = Join-Path $WorkingDir "Launch_Dashboard.ps1"
+    if (Test-Path $DashboardScript) {
+        Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$DashboardScript`""
+    }
 }
 
 Write-Host "`n======================================================================" -ForegroundColor Green
@@ -145,11 +149,6 @@ Write-Host " * Installed locally to: $WorkingDir" -ForegroundColor Yellow
 Write-Host " * Type 'winaurex' in any terminal to launch the CLI." -ForegroundColor Yellow
 Write-Host " * WinAurex Dashboard and PC Cleaner shortcuts are on your Desktop." -ForegroundColor Yellow
 Write-Host "======================================================================`n"
-
-# Open the installed local folder in File Explorer so user sees files directly
-try {
-    Start-Process explorer.exe -ArgumentList $WorkingDir
-} catch {}
 
 if (-not $Force -and [Environment]::UserInteractive) {
     Write-Host "Press Enter to finish..." -ForegroundColor DarkGray
