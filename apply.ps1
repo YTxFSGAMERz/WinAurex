@@ -15,7 +15,7 @@ param (
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 if (-not $isAdmin) {
     Write-Host "[!] Administrative privileges required. Requesting elevation..." -ForegroundColor Yellow
-    $argsList = "-NoProfile -ExecutionPolicy Bypass -Command `"& { [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072; `$s = try { irm https://www.winaurex.tech/apply.ps1 } catch { try { irm https://winaurex.tech/apply.ps1 } catch { irm https://raw.githubusercontent.com/YTxFSGAMERz/WinAurex/master/apply.ps1 } }; iex `$s }`""
+    $argsList = "-NoExit -NoProfile -ExecutionPolicy Bypass -Command `"& { [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072; `$s = try { irm https://www.winaurex.tech/apply.ps1 } catch { try { irm https://winaurex.tech/apply.ps1 } catch { irm https://raw.githubusercontent.com/YTxFSGAMERz/WinAurex/master/apply.ps1 } }; iex `$s }`""
     try {
         Start-Process powershell.exe -Verb RunAs -ArgumentList $argsList
         Exit
@@ -49,17 +49,15 @@ Write-Host "  * Unlocks Ultimate Performance Plan & disables update seeding" -Fo
 Write-Host "  * Injects WinAurex Performance Edition identity and GUI dashboard" -ForegroundColor Green
 Write-Host "======================================================================`n"
 
-# 3. Target Installation Directory
-$TargetDir = "$env:ProgramData\WinAurex"
+# 3. Target Installation Directory (Persistent Local Storage)
+$TargetDir = "$env:SystemDrive\WinAurex"
 $ZipUrl = "https://github.com/YTxFSGAMERz/WinAurex/archive/refs/heads/master.zip"
 $ZipFile = "$env:TEMP\winaurex_master.zip"
 
-# If running locally from an existing repository clone, use local directory
+# If running locally from an existing repository clone on disk, use that directory
 $LocalRepoRoot = $null
 if (-not [string]::IsNullOrWhiteSpace($PSScriptRoot) -and (Test-Path (Join-Path $PSScriptRoot "Apply_Curated_Safe_Suite.ps1"))) {
     $LocalRepoRoot = $PSScriptRoot
-} elseif (Test-Path ".\Apply_Curated_Safe_Suite.ps1") {
-    $LocalRepoRoot = (Get-Item ".").FullName
 }
 
 if (-not $LocalRepoRoot) {
@@ -143,6 +141,17 @@ Write-Host "`n==================================================================
 Write-Host " [SUCCESS] Congratulations! Your PC is now converted to WinAurex!    " -ForegroundColor White
 Write-Host "======================================================================" -ForegroundColor Green
 Write-Host " * Full optimizations applied without data loss." -ForegroundColor Green
+Write-Host " * Installed locally to: $WorkingDir" -ForegroundColor Yellow
 Write-Host " * Type 'winaurex' in any terminal to launch the CLI." -ForegroundColor Yellow
 Write-Host " * WinAurex Dashboard and PC Cleaner shortcuts are on your Desktop." -ForegroundColor Yellow
 Write-Host "======================================================================`n"
+
+# Open the installed local folder in File Explorer so user sees files directly
+try {
+    Start-Process explorer.exe -ArgumentList $WorkingDir
+} catch {}
+
+if (-not $Force -and [Environment]::UserInteractive) {
+    Write-Host "Press Enter to finish..." -ForegroundColor DarkGray
+    [void][System.Console]::ReadLine()
+}
