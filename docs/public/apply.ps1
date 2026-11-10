@@ -15,7 +15,7 @@ param (
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 if (-not $isAdmin) {
     Write-Host "[!] Administrative privileges required. Requesting elevation..." -ForegroundColor Yellow
-    $argsList = "-NoProfile -ExecutionPolicy Bypass -Command `"& { [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072; irm https://winaurex.tech/apply.ps1 | iex }`""
+    $argsList = "-NoProfile -ExecutionPolicy Bypass -Command `"& { [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072; `$s = try { irm https://www.winaurex.tech/apply.ps1 } catch { try { irm https://winaurex.tech/apply.ps1 } catch { irm https://raw.githubusercontent.com/YTxFSGAMERz/WinAurex/master/apply.ps1 } }; iex `$s }`""
     try {
         Start-Process powershell.exe -Verb RunAs -ArgumentList $argsList
         Exit
