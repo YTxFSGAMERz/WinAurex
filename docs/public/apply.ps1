@@ -150,7 +150,9 @@ if (-not (Test-Path $ConversionScript)) {
 }
 
 if (Test-Path $ConversionScript) {
-    powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$ConversionScript" -Force:$Force
+    $convArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $ConversionScript)
+    if ($Force) { $convArgs += "-Force" }
+    & powershell.exe $convArgs
 } else {
     Write-Error "Could not find conversion script in $WorkingDir."
     Exit 1
