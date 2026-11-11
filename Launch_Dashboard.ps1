@@ -918,7 +918,10 @@ $Timer.Add_Tick({
     # 3. Process, Thread & Handle Metrics (.NET Diagnostics)
     try {
         $procs = [System.Diagnostics.Process]::GetProcesses()
-        $TxtProcessCount.Text = "$($procs.Count)"
+        $procCount = $procs.Count
+        if ($null -ne $TxtProcessCount) { $TxtProcessCount.Text = "$procCount" }
+        if ($null -ne $TxtHudProcessCount) { $TxtHudProcessCount.Text = "$procCount" }
+        
         $totalThreads = 0
         $totalHandles = 0
         foreach ($p in $procs) {
@@ -929,12 +932,27 @@ $Timer.Add_Tick({
         }
         if ($null -ne $TxtThreadCount) { $TxtThreadCount.Text = "$totalThreads" }
         if ($null -ne $TxtHandleCount) { $TxtHandleCount.Text = "$totalHandles" }
+        if ($null -ne $TxtHudThreadCount) { $TxtHudThreadCount.Text = "$totalThreads" }
+        if ($null -ne $TxtHudHandleCount) { $TxtHudHandleCount.Text = "$totalHandles" }
     } catch { }
 
     # 4. DPC Latency Proxy (.NET Counter)
     try {
         if ($null -ne $DpcCounter) {
-            $TxtDpcLatency.Text = "$([math]::Round($DpcCounter.NextValue()))"
+            $dpcVal = [math]::Round($DpcCounter.NextValue())
+            if ($null -ne $TxtDpcLatency) { $TxtDpcLatency.Text = "$dpcVal" }
+            if ($null -ne $TxtHudLatencyStatus) {
+                if ($dpcVal -lt 300) {
+                    $TxtHudLatencyStatus.Text = "Optimal ($dpcVal µs)"
+                    $TxtHudLatencyStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+                } elseif ($dpcVal -lt 800) {
+                    $TxtHudLatencyStatus.Text = "Moderate ($dpcVal µs)"
+                    $TxtHudLatencyStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#ffb300")
+                } else {
+                    $TxtHudLatencyStatus.Text = "Spiking ($dpcVal µs)"
+                    $TxtHudLatencyStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#ff5722")
+                }
+            }
         }
     } catch { }
 
@@ -1103,4 +1121,5 @@ $BtnRollbackSelected.Add_Click({
 Load-Transactions
 Update-DriveMetrics
 Update-DefenderStatusUI
+Initialize-HardwareHUD
 $Window.ShowDialog() | Out-Null
