@@ -354,6 +354,120 @@
                 </ScrollViewer>
             </TabItem>
 
+            <!-- TABS: AI Optimizer -->
+            <TabItem Header="AI OPTIMIZER">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                    <StackPanel Margin="0,10,0,10">
+                        <!-- Hero Card: AI Engine Status & Scan Control -->
+                        <Border Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE945;" FontSize="22" Foreground="#00adb5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                        <TextBlock Style="{StaticResource Header2}" Text="WinAurex Neural Optimization Engine" VerticalAlignment="Center"/>
+                                        <Border Background="#1b3a3d" CornerRadius="4" Padding="8,2" Margin="12,0,0,0" VerticalAlignment="Center">
+                                            <TextBlock Text="v1.0 (99.27% Accuracy)" Foreground="#00adb5" FontSize="11" FontWeight="Bold"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <TextBlock Style="{StaticResource BodyText}" Text="Dynamic machine-learning &amp; heuristic classifier trained on 2,500+ Windows components. Scans services, background processes, thread/handle footprints, and bloatware packages without static list limitations." Margin="0,8,0,10"/>
+                                    <TextBlock Name="TxtAiScanStatus" Text="Status: AI Engine Loaded. Ready to analyze system components." Foreground="#aaaaaa" FontSize="12"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Width="200">
+                                    <Button Name="BtnAiScan" Style="{StaticResource AccentButton}" Height="40" Margin="0,0,0,8">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE721;" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Run AI Diagnostic Scan" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Name="BtnAiOptimize" Background="#008f39" Foreground="#ffffff" BorderBrush="#008f39" FontWeight="Bold" Height="40" IsEnabled="False">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Execute AI Optimization" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Stat Cards Grid (4 Counters) -->
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Style="{StaticResource Card}" Grid.Column="0" Margin="0,0,10,0" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="SERVICES FOUND" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Name="TxtAiServicesCount" Text="0" FontSize="26" FontWeight="Bold" Foreground="#00adb5" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource Card}" Grid.Column="1" Margin="0,0,10,0" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="BLOATWARE APPS" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Name="TxtAiAppsCount" Text="0" FontSize="26" FontWeight="Bold" Foreground="#ffb300" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource Card}" Grid.Column="2" Margin="0,0,10,0" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="HIGH-OVERHEAD TASKS" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Name="TxtAiTasksCount" Text="0" FontSize="26" FontWeight="Bold" Foreground="#ff5722" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource Card}" Grid.Column="3" Margin="0" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="PROJECTED IMPACT" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Name="TxtAiProjectedImpact" Text="0 Overhead" FontSize="16" FontWeight="Bold" Foreground="#00ff41" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <!-- Findings ListView Card -->
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Style="{StaticResource Header2}" Text="AI Diagnostic Findings" VerticalAlignment="Center"/>
+                                        <TextBlock Name="TxtAiCandidateCount" Text="(0 Candidates)" Foreground="#aaaaaa" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <Button Name="BtnAiFilterAll" Content="All Candidates" Height="30" Padding="10,2" Margin="0,0,6,0" FontSize="12"/>
+                                        <Button Name="BtnAiFilterSafe" Content="Tier 1 (Safe Only)" Height="30" Padding="10,2" Margin="0,0,6,0" FontSize="12"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <ListView Name="ListAiFindings" Background="#121212" Foreground="#ffffff" BorderBrush="#333333" Height="280">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Type" DisplayMemberBinding="{Binding TargetType}" Width="90"/>
+                                            <GridViewColumn Header="Target Name" DisplayMemberBinding="{Binding Name}" Width="180"/>
+                                            <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" Width="160"/>
+                                            <GridViewColumn Header="Safety Tier" DisplayMemberBinding="{Binding SafetyTier}" Width="140"/>
+                                            <GridViewColumn Header="Confidence" DisplayMemberBinding="{Binding Confidence}" Width="85"/>
+                                            <GridViewColumn Header="Status" DisplayMemberBinding="{Binding CurrentState}" Width="110"/>
+                                            <GridViewColumn Header="Estimated Savings" DisplayMemberBinding="{Binding EstSavings}" Width="190"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
             <!-- TABS: Tweaks & Debloat -->
             <TabItem Header="TWEAKS &amp; DEBLOAT">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">

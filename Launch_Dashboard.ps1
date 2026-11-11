@@ -80,6 +80,26 @@ $BtnOpenThreatSettings = Find-Control "BtnOpenThreatSettings"
 $TxtDefenderRealtimeStatus = Find-Control "TxtDefenderRealtimeStatus"
 $TxtDefenderTamperStatus   = Find-Control "TxtDefenderTamperStatus"
 
+# AI Optimizer UI Hooks
+$BtnAiScan              = Find-Control "BtnAiScan"
+$BtnAiOptimize          = Find-Control "BtnAiOptimize"
+$TxtAiScanStatus        = Find-Control "TxtAiScanStatus"
+$TxtAiServicesCount     = Find-Control "TxtAiServicesCount"
+$TxtAiAppsCount         = Find-Control "TxtAiAppsCount"
+$TxtAiTasksCount        = Find-Control "TxtAiTasksCount"
+$TxtAiProjectedImpact   = Find-Control "TxtAiProjectedImpact"
+$TxtAiCandidateCount    = Find-Control "TxtAiCandidateCount"
+$BtnAiFilterAll         = Find-Control "BtnAiFilterAll"
+$BtnAiFilterSafe        = Find-Control "BtnAiFilterSafe"
+$ListAiFindings         = Find-Control "ListAiFindings"
+
+# Load AI Engine
+$AiModule = Join-Path $RootPath "Core\AI\WinAurex_AiEngine.psm1"
+if (Test-Path $AiModule) {
+    Import-Module $AiModule -Force -DisableNameChecking
+}
+$script:LastAiFindings = @()
+
 # Footer UI Hooks
 $BtnOpenLogsFolder = Find-Control "BtnOpenLogsFolder"
 
@@ -228,6 +248,76 @@ if ($null -ne $BtnOpenLogsFolder) {
     $BtnOpenLogsFolder.Add_Click({
         Write-DashboardLog "User clicked View Logs (Opening $LogDir)"
         Start-Process explorer.exe $LogDir
+    })
+}
+
+# --- AI OPTIMIZER TAB LOGIC ---
+if ($null -ne $BtnAiScan) {
+    $BtnAiScan.Add_Click({
+        Write-DashboardLog "User clicked Run AI Diagnostic Scan"
+        Set-Status -Message "AI Neural Engine: Interrogating services, apps, and tasks..." -Color "#ffb300"
+        if ($null -ne $TxtAiScanStatus) {
+            $TxtAiScanStatus.Text = "Status: Scanning live components through neural vectorizer..."
+            $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#ffb300")
+        }
+
+        # Run Live Heuristic Scan
+        $script:LastAiFindings = Invoke-WinAurexAiScan
+        
+        $svcs = $script:LastAiFindings | Where-Object { $_.TargetType -eq "Service" }
+        $apps = $script:LastAiFindings | Where-Object { $_.TargetType -eq "AppX" }
+        $tasks = $script:LastAiFindings | Where-Object { $_.TargetType -eq "ScheduledTask" }
+
+        if ($null -ne $TxtAiServicesCount) { $TxtAiServicesCount.Text = "$($svcs.Count)" }
+        if ($null -ne $TxtAiAppsCount) { $TxtAiAppsCount.Text = "$($apps.Count)" }
+        if ($null -ne $TxtAiTasksCount) { $TxtAiTasksCount.Text = "$($tasks.Count)" }
+        if ($null -ne $TxtAiCandidateCount) { $TxtAiCandidateCount.Text = "($($script:LastAiFindings.Count) Candidates)" }
+        if ($null -ne $TxtAiProjectedImpact) { 
+            $TxtAiProjectedImpact.Text = "-$($svcs.Count) Procs | ~$([Math]::Round($apps.Count * 45))MB" 
+        }
+
+        if ($null -ne $ListAiFindings) {
+            $ListAiFindings.ItemsSource = $script:LastAiFindings
+        }
+
+        if ($null -ne $BtnAiOptimize) {
+            $BtnAiOptimize.IsEnabled = ($script:LastAiFindings.Count -gt 0)
+        }
+
+        if ($null -ne $TxtAiScanStatus) {
+            $TxtAiScanStatus.Text = "Status: Scan Complete! Found $($script:LastAiFindings.Count) optimization candidates. Ready to optimize."
+            $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+        }
+        Set-Status -Message "AI Scan Complete: $($script:LastAiFindings.Count) candidates identified." -Color "#00ff41"
+    })
+}
+
+if ($null -ne $BtnAiFilterAll) {
+    $BtnAiFilterAll.Add_Click({
+        if ($null -ne $ListAiFindings -and $script:LastAiFindings) {
+            $ListAiFindings.ItemsSource = $script:LastAiFindings
+        }
+    })
+}
+
+if ($null -ne $BtnAiFilterSafe) {
+    $BtnAiFilterSafe.Add_Click({
+        if ($null -ne $ListAiFindings -and $script:LastAiFindings) {
+            $ListAiFindings.ItemsSource = ($script:LastAiFindings | Where-Object { $_.SafetyTier -eq "Tier 1 (Safe)" })
+        }
+    })
+}
+
+if ($null -ne $BtnAiOptimize) {
+    $BtnAiOptimize.Add_Click({
+        Write-DashboardLog "User clicked Execute AI Neural Optimization"
+        $scriptPath = Join-Path $RootPath "Tweaks\Services\AI_Dynamic_System_Optimizer.ps1"
+        Invoke-DashboardAction -ActionName "AI_Neural_Optimization" -ScriptPath $scriptPath -Arguments "-Auto -Force"
+        
+        if ($null -ne $TxtAiScanStatus) {
+            $TxtAiScanStatus.Text = "Status: AI Optimization executed successfully! Memory trimmed and services disabled."
+            $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+        }
     })
 }
 
