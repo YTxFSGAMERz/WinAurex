@@ -44,6 +44,12 @@ if (-not $RepoRoot -or -not (Test-Path $RepoRoot)) {
     }
 }
 
+# Load CLI Progress & Streaming Module
+$ProgressModule = Join-Path $RepoRoot "Core\Helpers\CliProgress.psm1"
+if (Test-Path $ProgressModule) {
+    Import-Module $ProgressModule -Force -DisableNameChecking
+}
+
 Write-Host "======================================================================" -ForegroundColor Cyan
 Write-Host "         WinAurex System Prerequisites & Runtime Provisioner          " -ForegroundColor White
 Write-Host "======================================================================" -ForegroundColor Cyan
@@ -104,20 +110,53 @@ function Download-And-Run {
     )
     $dest = Join-Path $env:TEMP $FileName
     Write-Host "  [*] Downloading $Description..." -ForegroundColor Cyan
-    try {
-        Invoke-WebRequest -Uri $Url -OutFile $dest -UseBasicParsing -TimeoutSec 180
-    } catch {
-        Write-Warning "Failed downloading $($Description) from $Url : $_"
+    
+    $downloadOk = $false
+    if (Get-Command Invoke-DownloadWithProgress -ErrorAction SilentlyContinue) {
+        $downloadOk = Invoke-DownloadWithProgress -Url $Url -OutputFile $dest -Label "$Description download"
+    } else {
+        try {
+            Invoke-WebRequest -Uri $Url -OutFile $dest -UseBasicParsing -TimeoutSec 180
+            $downloadOk = (Test-Path $dest)
+        } catch {
+            Write-Warning "Failed downloading $($Description) from $Url : $_"
+            return $false
+        }
+    }
+
+    if (-not $downloadOk -or -not (Test-Path $dest)) {
+        Write-Warning "Download failed for $Description"
         return $false
     }
 
     Write-Host "  [*] Installing $($Description) silently..." -ForegroundColor Cyan
     try {
+        $pinfo = New-Object System.Diagnostics.ProcessStartInfo
         if ($IsMsi) {
-            $proc = Start-Process msiexec.exe -ArgumentList "/i `"$dest`" $Arguments" -Wait -PassThru
+            $pinfo.FileName = "msiexec.exe"
+            $pinfo.Arguments = "/i `"$dest`" $Arguments"
         } else {
-            $proc = Start-Process -FilePath $dest -ArgumentList $Arguments -Wait -PassThru
+            $pinfo.FileName = $dest
+            $pinfo.Arguments = $Arguments
         }
+        $pinfo.UseShellExecute = $false
+        $pinfo.CreateNoWindow = $true
+
+        $proc = [System.Diagnostics.Process]::Start($pinfo)
+        $spinChars = @('|', '/', '-', '\')
+        $sIdx = 0
+        $sw = [System.Diagnostics.Stopwatch]::StartNew()
+
+        while (-not $proc.HasExited) {
+            $sChar = $spinChars[$sIdx % 4]
+            $elapsed = [math]::Round($sw.Elapsed.TotalSeconds)
+            Write-Host -NoNewline ("`r  [*] Installing $($Description) silently... [$sChar] (${elapsed}s)")
+            Start-Sleep -Milliseconds 150
+            $sIdx++
+        }
+        $sw.Stop()
+        Write-Host ""
+
         $exitCode = $proc.ExitCode
         Remove-Item $dest -Force -ErrorAction SilentlyContinue
         if ($exitCode -eq 0 -or $exitCode -eq 3010) {
