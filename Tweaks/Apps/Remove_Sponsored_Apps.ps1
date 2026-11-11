@@ -8,13 +8,8 @@ param (
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Warning "This script requires Administrator privileges. Please run PowerShell as Admin."
-    Exit
+    Exit 1
 }
-
-$HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
-
-# Write-FrameworkLog -ModuleName "Apps" -Action "Initiating Sponsored Apps Removal"
 
 # Array of known sponsored apps/bloatware
 $SponsoredApps = @(
@@ -38,29 +33,28 @@ $SponsoredApps = @(
 
 $RemovedCount = 0
 
+# Fast batch query
+$allPackages = @(Get-AppxPackage -ErrorAction SilentlyContinue)
+$allProv = @(Get-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue)
+
 foreach ($App in $SponsoredApps) {
     # Remove for current user
-    $Packages = Get-AppxPackage -Name $App -ErrorAction SilentlyContinue
-    
-    if ($Packages) {
-        foreach ($Pkg in $Packages) {
-            Remove-AppxPackage -Package $Pkg.PackageFullName -ErrorAction SilentlyContinue
-#             Write-FrameworkLog -ModuleName "Apps" -Action "Removed Sponsored App" -OldValue $Pkg.Name -NewValue "Removed"
-            $RemovedCount++
-        }
+    $matching = $allPackages | Where-Object { $_.Name -like $App }
+    foreach ($Pkg in $matching) {
+        Remove-AppxPackage -Package $Pkg.PackageFullName -ErrorAction SilentlyContinue
+        $RemovedCount++
     }
     
-    # Remove from provisioned packages (so it doesn't reinstall for new users)
-    $Provisioned = Get-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -like $App }
-    if ($Provisioned) {
-        foreach ($Prov in $Provisioned) {
-            Remove-AppxProvisionedPackage -Online -PackageName $Prov.PackageName -ErrorAction SilentlyContinue | Out-Null
-#             Write-FrameworkLog -ModuleName "Apps" -Action "Deprovisioned Sponsored App" -OldValue $Prov.DisplayName -NewValue "Removed"
-        }
+    # Remove from provisioned packages
+    $matchingProv = $allProv | Where-Object { $_.DisplayName -like $App }
+    foreach ($Prov in $matchingProv) {
+        Remove-AppxProvisionedPackage -Online -PackageName $Prov.PackageName -ErrorAction SilentlyContinue | Out-Null
     }
 }
 
-Write-Host "`n[SUCCESS] Successfully removed $RemovedCount sponsored apps." -ForegroundColor Green
-Write-Host "Third-party bloatware like Candy Crush and TikTok have been scrubbed from the system." -ForegroundColor Yellow
-
-
+if ($RemovedCount -eq 0) {
+    Write-Host "  [-] No third-party sponsored shovelware found on system (Already clean)." -ForegroundColor DarkGray
+} else {
+    Write-Host "`n[SUCCESS] Successfully removed $RemovedCount sponsored apps." -ForegroundColor Green
+    Write-Host "Third-party bloatware like Candy Crush and TikTok have been scrubbed from the system." -ForegroundColor Yellow
+}

@@ -46,29 +46,33 @@ Write-Host "    Active Threads   : $($before.Threads)" -ForegroundColor DarkGray
 Write-Host "    Active Handles   : $($before.Handles)" -ForegroundColor DarkGray
 
 # 2. Disable Background Apps Globally (Prevents UWP apps from spawning background threads)
-Write-Host "`n[*] Disabling background application execution permissions..." -ForegroundColor Cyan
+Write-Host "`n[*] Checking background application execution permissions..." -ForegroundColor Cyan
 try {
-    # AppPrivacy Policy (Machine level)
     $appPriv = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy"
-    if (-not (Test-Path $appPriv)) { New-Item -Path $appPriv -Force | Out-Null }
-    Set-ItemProperty -Path $appPriv -Name "LetAppsRunInBackground" -Value 2 -Type DWord -Force -ErrorAction SilentlyContinue
+    $curLetApps = (Get-ItemProperty $appPriv -Name "LetAppsRunInBackground" -ErrorAction SilentlyContinue).LetAppsRunInBackground
+    
+    if ($curLetApps -eq 2) {
+        Write-Host "  [-] Background app execution permissions already blocked (Skipping)." -ForegroundColor DarkGray
+    } else {
+        if (-not (Test-Path $appPriv)) { New-Item -Path $appPriv -Force | Out-Null }
+        Set-ItemProperty -Path $appPriv -Name "LetAppsRunInBackground" -Value 2 -Type DWord -Force -ErrorAction SilentlyContinue
 
-    # Current User toggles
-    $bgAccess = "HKCU:\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications"
-    if (-not (Test-Path $bgAccess)) { New-Item -Path $bgAccess -Force | Out-Null }
-    Set-ItemProperty -Path $bgAccess -Name "GlobalUserDisabled" -Value 1 -Type DWord -Force -ErrorAction SilentlyContinue
+        $bgAccess = "HKCU:\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications"
+        if (-not (Test-Path $bgAccess)) { New-Item -Path $bgAccess -Force | Out-Null }
+        Set-ItemProperty -Path $bgAccess -Name "GlobalUserDisabled" -Value 1 -Type DWord -Force -ErrorAction SilentlyContinue
 
-    $searchBg = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search"
-    if (-not (Test-Path $searchBg)) { New-Item -Path $searchBg -Force | Out-Null }
-    Set-ItemProperty -Path $searchBg -Name "BackgroundAppGlobalToggle" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
+        $searchBg = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search"
+        if (-not (Test-Path $searchBg)) { New-Item -Path $searchBg -Force | Out-Null }
+        Set-ItemProperty -Path $searchBg -Name "BackgroundAppGlobalToggle" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
 
-    Write-Host "  [+] Background app execution permanently blocked." -ForegroundColor Green
+        Write-Host "  [+] Background app execution permanently blocked." -ForegroundColor Green
+    }
 } catch {
     Write-Warning "Failed configuring BackgroundApp permissions: $_"
 }
 
 # 3. Suppress High-Frequency Telemetry Scheduled Tasks
-Write-Host "`n[*] Suppressing high-frequency telemetry scheduled tasks..." -ForegroundColor Cyan
+Write-Host "`n[*] Checking high-frequency telemetry scheduled tasks..." -ForegroundColor Cyan
 $TelemetryTasks = @(
     "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator",
     "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip",
@@ -84,36 +88,47 @@ $TelemetryTasks = @(
 )
 
 $tasksDisabled = 0
+$tasksAlreadyDisabled = 0
 foreach ($t in $TelemetryTasks) {
     try {
         $path = Split-Path $t -Parent
         $name = Split-Path $t -Leaf
         $task = Get-ScheduledTask -TaskPath "$path\" -TaskName $name -ErrorAction SilentlyContinue
-        if ($task -and $task.State -ne "Disabled") {
-            Disable-ScheduledTask -TaskPath "$path\" -TaskName $name -ErrorAction SilentlyContinue | Out-Null
-            Write-Host "  [+] Disabled Task: $name" -ForegroundColor DarkGray
-            $tasksDisabled++
+        if ($task) {
+            if ($task.State -eq "Disabled") {
+                $tasksAlreadyDisabled++
+            } else {
+                Disable-ScheduledTask -TaskPath "$path\" -TaskName $name -ErrorAction SilentlyContinue | Out-Null
+                Write-Host "  [+] Disabled Task: $name" -ForegroundColor DarkGray
+                $tasksDisabled++
+            }
         }
     } catch {}
 }
-Write-Host "  [+] Successfully suppressed $tasksDisabled background scheduled tasks." -ForegroundColor Green
+if ($tasksDisabled -eq 0) {
+    Write-Host "  [-] All $tasksAlreadyDisabled telemetry tasks already suppressed (Skipping)." -ForegroundColor DarkGray
+} else {
+    Write-Host "  [+] Successfully suppressed $tasksDisabled background tasks ($tasksAlreadyDisabled were already disabled)." -ForegroundColor Green
+}
 
 # 4. Kernel Responsiveness & Worker Thread Tuning
-Write-Host "`n[*] Optimizing Windows NT Kernel Responsiveness..." -ForegroundColor Cyan
+Write-Host "`n[*] Checking Windows NT Kernel Responsiveness..." -ForegroundColor Cyan
 try {
     $sysProfile = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile"
-    if (-not (Test-Path $sysProfile)) { New-Item -Path $sysProfile -Force | Out-Null }
-    # 0 = 100% priority for foreground tasks / games
-    Set-ItemProperty -Path $sysProfile -Name "SystemResponsiveness" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
-    # Disable network packet throttling
-    Set-ItemProperty -Path $sysProfile -Name "NetworkThrottlingIndex" -Value 0xFFFFFFFF -Type DWord -Force -ErrorAction SilentlyContinue
+    $curResp = (Get-ItemProperty $sysProfile -Name "SystemResponsiveness" -ErrorAction SilentlyContinue).SystemResponsiveness
+    if ($curResp -eq 0) {
+        Write-Host "  [-] Kernel foreground responsiveness already optimized (Skipping)." -ForegroundColor DarkGray
+    } else {
+        if (-not (Test-Path $sysProfile)) { New-Item -Path $sysProfile -Force | Out-Null }
+        Set-ItemProperty -Path $sysProfile -Name "SystemResponsiveness" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
+        Set-ItemProperty -Path $sysProfile -Name "NetworkThrottlingIndex" -Value 0xFFFFFFFF -Type DWord -Force -ErrorAction SilentlyContinue
 
-    # Keep kernel drivers in physical memory (prevents paging delays)
-    $memMgmt = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
-    if (Test-Path $memMgmt) {
-        Set-ItemProperty -Path $memMgmt -Name "DisablePagingExecutive" -Value 1 -Type DWord -Force -ErrorAction SilentlyContinue
+        $memMgmt = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
+        if (Test-Path $memMgmt) {
+            Set-ItemProperty -Path $memMgmt -Name "DisablePagingExecutive" -Value 1 -Type DWord -Force -ErrorAction SilentlyContinue
+        }
+        Write-Host "  [+] Foreground responsiveness optimized (SystemResponsiveness = 0)." -ForegroundColor Green
     }
-    Write-Host "  [+] Foreground responsiveness optimized (SystemResponsiveness = 0)." -ForegroundColor Green
 } catch {
     Write-Warning "Failed configuring kernel responsiveness: $_"
 }
@@ -124,7 +139,6 @@ try {
     [System.GC]::Collect()
     [System.GC]::WaitForPendingFinalizers()
     
-    # Optional Win32 EmptyWorkingSet
     $emptyWorkingSetSig = @'
 [DllImport("psapi.dll")]
 public static extern int EmptyWorkingSet(IntPtr hwProc);

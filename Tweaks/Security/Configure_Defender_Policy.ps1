@@ -11,7 +11,8 @@ param (
     [switch]$Disable,
     [switch]$Enable,
     [switch]$Status,
-    [switch]$Force
+    [switch]$Force,
+    [switch]$ForceReapply
 )
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
@@ -54,6 +55,12 @@ if (-not $Enable -and -not $Disable) {
 }
 
 if ($Disable) {
+    $curStatus = Get-DefenderPolicyStatus
+    if ($curStatus -eq "DISABLED" -and -not $ForceReapply) {
+        Write-Host "`n  [-] Microsoft Defender Antivirus is already disabled via Group Policy (Skipping)." -ForegroundColor DarkGray
+        Exit 0
+    }
+
     Write-Host "`n[*] Applying Group Policy: Turn off Microsoft Defender Antivirus..." -ForegroundColor Yellow
     try {
         if (-not (Test-Path $DefenderPolicyKey)) { New-Item -Path $DefenderPolicyKey -Force | Out-Null }
@@ -93,6 +100,12 @@ if ($Disable) {
         Write-Error "Failed applying Defender group policy: $_"
     }
 } elseif ($Enable) {
+    $curStatus = Get-DefenderPolicyStatus
+    if ($curStatus -eq "ACTIVE" -and -not $ForceReapply) {
+        Write-Host "`n  [-] Microsoft Defender Antivirus is already in active default state (Skipping)." -ForegroundColor DarkGray
+        Exit 0
+    }
+
     Write-Host "`n[*] Restoring Microsoft Defender Antivirus to Default Active State..." -ForegroundColor Cyan
     try {
         # Restore registry keys to enabled defaults

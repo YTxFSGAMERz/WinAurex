@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param (
-    [switch]$Force
+    [switch]$Force,
+    [switch]$ForceReapply
 )
 
 # ==============================================================================
@@ -11,6 +12,7 @@ param (
 #   - 100% reversible configuration via SnapshotEngine transactions.
 #   - NEVER deletes files, system DLLs, or services.
 #   - Strictly preserves Microsoft Store, Windows Update, UAC, and core apps.
+#   - IDEMPOTENT: Detects existing state; skips already-applied tweaks in <1ms.
 # ==============================================================================
 
 # 1. Elevation Check & Auto-Relaunch
@@ -18,7 +20,10 @@ $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIden
 if (-not $isAdmin) {
     if ([Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
         Write-Host "Requesting Administrator privileges to apply system-wide optimizations..." -ForegroundColor Yellow
-        Start-Process powershell.exe -Verb RunAs -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`""
+        $relaunchArgs = "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`""
+        if ($Force) { $relaunchArgs += " -Force" }
+        if ($ForceReapply) { $relaunchArgs += " -ForceReapply" }
+        Start-Process powershell.exe -Verb RunAs -ArgumentList $relaunchArgs
         Exit
     } else {
         Write-Warning "This script requires Administrator privileges. Please run PowerShell as Admin."
@@ -77,12 +82,39 @@ if (Test-Path $SnapshotEngine) {
     }
 }
 
-# Helper to run a tweak script safely
+# Metrics Tracking
+$script:SkippedCount = 0
+$script:AppliedCount = 0
+$script:CachedAppxNames = $null
+
+function Get-CachedAppxNames {
+    if ($null -eq $script:CachedAppxNames) {
+        $script:CachedAppxNames = @(Get-AppxPackage -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Name)
+    }
+    return $script:CachedAppxNames
+}
+
+# Helper to run a tweak script safely with high-performance idempotency
 function Invoke-SafeTweak {
     param (
         [string]$SubPath,
-        [string]$Description
+        [string]$Description,
+        [scriptblock]$IsApplied = $null
     )
+
+    # 1. Evaluate idempotency predicate if provided
+    if ($null -ne $IsApplied -and -not $ForceReapply) {
+        try {
+            $alreadyDone = & $IsApplied
+            if ($alreadyDone) {
+                Write-Host "  [-] $Description : Already Applied (Skipping)" -ForegroundColor DarkGray
+                $script:SkippedCount++
+                return
+            }
+        } catch { }
+    }
+
+    # 2. If not applied, execute tweak
     $fullPath = Join-Path $TweaksDir $SubPath
     if (Test-Path $fullPath) {
         Write-Host "`n>>> [$Description]" -ForegroundColor Yellow
@@ -95,6 +127,7 @@ function Invoke-SafeTweak {
             } elseif ($fullPath.EndsWith(".bat")) {
                 & cmd.exe /c "`"$fullPath`""
             }
+            $script:AppliedCount++
         } catch {
             Write-Warning "Failed executing $SubPath : $_"
         }
@@ -110,16 +143,45 @@ Write-Host "`n==================================================" -ForegroundCol
 Write-Host " [1/4] APPLYING PRIVACY & TELEMETRY HARDENING" -ForegroundColor Cyan
 Write-Host "==================================================" -ForegroundColor Cyan
 
-Invoke-SafeTweak "Diagnostics\Disable_Diagnostic_Data.ps1" "Disabling Diagnostic Data (Telemetry = 0)"
-Invoke-SafeTweak "Diagnostics\Disable_Tailored_Experiences.ps1" "Disabling Tailored Ad Experiences"
-Invoke-SafeTweak "Services\Disable_Telemetry_Services.ps1" "Disabling Background Telemetry Services (DiagTrack)"
-Invoke-SafeTweak "Tasks\Disable_Telemetry_Tasks.ps1" "Disabling Telemetry Scheduled Tasks (CEIP / Compatibility Appraiser)"
-Invoke-SafeTweak "Search\Disable_Web_Search.ps1" "Disabling Bing Web Search in Start Menu"
-Invoke-SafeTweak "Search\Disable_Search_Highlights.ps1" "Disabling Search Box Web Highlights Spam"
-Invoke-SafeTweak "Clipboard\Disable_Clipboard_Cloud_Sync.ps1" "Disabling Clipboard Cloud Sync"
-Invoke-SafeTweak "Sync\Disable_Activity_History.ps1" "Disabling Windows Activity History Tracking"
-Invoke-SafeTweak "Privacy\Disable Location.reg" "Setting App Location Permission to Deny"
-Invoke-SafeTweak "Privacy\Disable App Metadata Access.reg" "Restricting App Metadata Snooping"
+Invoke-SafeTweak "Diagnostics\Disable_Diagnostic_Data.ps1" "Disabling Diagnostic Data (Telemetry = 0)" `
+    -IsApplied { (Get-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry" -ErrorAction SilentlyContinue).AllowTelemetry -eq 0 }
+
+Invoke-SafeTweak "Diagnostics\Disable_Tailored_Experiences.ps1" "Disabling Tailored Ad Experiences" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Software\Policies\Microsoft\Windows\CloudContent" -Name "DisableTailoredExperiencesWithDiagnosticData" -ErrorAction SilentlyContinue).DisableTailoredExperiencesWithDiagnosticData -eq 1 }
+
+Invoke-SafeTweak "Services\Disable_Telemetry_Services.ps1" "Disabling Background Telemetry Services (DiagTrack)" `
+    -IsApplied { 
+        $s = Get-Service -Name "DiagTrack" -ErrorAction SilentlyContinue
+        (-not $s) -or ($s.StartType -eq "Disabled" -and $s.Status -ne "Running")
+    }
+
+Invoke-SafeTweak "Tasks\Disable_Telemetry_Tasks.ps1" "Disabling Telemetry Scheduled Tasks (CEIP / Compatibility Appraiser)" `
+    -IsApplied {
+        $t = Get-ScheduledTask -TaskPath "\Microsoft\Windows\Application Experience\" -TaskName "Microsoft Compatibility Appraiser" -ErrorAction SilentlyContinue
+        (-not $t) -or ($t.State -eq "Disabled")
+    }
+
+Invoke-SafeTweak "Search\Disable_Web_Search.ps1" "Disabling Bing Web Search in Start Menu" `
+    -IsApplied {
+        $bing = (Get-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" -Name "BingSearchEnabled" -ErrorAction SilentlyContinue).BingSearchEnabled
+        $box  = (Get-ItemProperty "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -ErrorAction SilentlyContinue).DisableSearchBoxSuggestions
+        $bing -eq 0 -and $box -eq 1
+    }
+
+Invoke-SafeTweak "Search\Disable_Search_Highlights.ps1" "Disabling Search Box Web Highlights Spam" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\SearchSettings" -Name "IsDynamicSearchBoxEnabled" -ErrorAction SilentlyContinue).IsDynamicSearchBoxEnabled -eq 0 }
+
+Invoke-SafeTweak "Clipboard\Disable_Clipboard_Cloud_Sync.ps1" "Disabling Clipboard Cloud Sync" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Software\Microsoft\Clipboard" -Name "CloudClipboardItemSyncEnabled" -ErrorAction SilentlyContinue).CloudClipboardItemSyncEnabled -eq 0 }
+
+Invoke-SafeTweak "Sync\Disable_Activity_History.ps1" "Disabling Windows Activity History Tracking" `
+    -IsApplied { (Get-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableActivityFeed" -ErrorAction SilentlyContinue).EnableActivityFeed -eq 0 }
+
+Invoke-SafeTweak "Privacy\Disable Location.reg" "Setting App Location Permission to Deny" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "Value" -ErrorAction SilentlyContinue).Value -eq "Deny" }
+
+Invoke-SafeTweak "Privacy\Disable App Metadata Access.reg" "Restricting App Metadata Snooping" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\contacts" -Name "Value" -ErrorAction SilentlyContinue).Value -eq "Deny" }
 
 # ==============================================================================
 # BLOCK 2: RESPONSIVENESS & SHELL ENHANCEMENTS
@@ -128,15 +190,40 @@ Write-Host "`n==================================================" -ForegroundCol
 Write-Host " [2/4] APPLYING RESPONSIVENESS & SHELL TWEAKS" -ForegroundColor Cyan
 Write-Host "==================================================" -ForegroundColor Cyan
 
-Invoke-SafeTweak "Visual\Reduce_Menu_Show_Delay.ps1" "Reducing Context Menu Delay to 10ms (Instant Snapping)"
-Invoke-SafeTweak "Visual\Disable_Unnecessary_Animations.ps1" "Disabling Window Maximize/Minimize & Taskbar Animations"
-Invoke-SafeTweak "Visual\Disable_Transparency.ps1" "Disabling DWM Transparency Effects to Free GPU Cycles"
-Invoke-SafeTweak "Explorer\Restore_Classic_ContextMenu.ps1" "Restoring Instant Classic Right-Click Menu in Windows 11"
-Invoke-SafeTweak "Shell\Disable_Copilot_Taskbar.ps1" "Removing Windows Copilot Button from Taskbar"
-Invoke-SafeTweak "Shell\Disable_Windows_Widgets.ps1" "Disabling Windows Widgets Board from Taskbar"
-Invoke-SafeTweak "Shell\Disable_Notification_Spam.ps1" "Disabling Windows Promotional Suggestions & Tips"
-Invoke-SafeTweak "Shell\Remove_Recommended_Section.ps1" "Hiding Recommended Items in Start Menu"
-Invoke-SafeTweak "Explorer\Disable_Recent_Frequent.ps1" "Hiding Recent Files & Frequent Folders in Explorer"
+Invoke-SafeTweak "Visual\Reduce_Menu_Show_Delay.ps1" "Reducing Context Menu Delay to 10ms (Instant Snapping)" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Control Panel\Desktop" -Name "MenuShowDelay" -ErrorAction SilentlyContinue).MenuShowDelay -eq "10" }
+
+Invoke-SafeTweak "Visual\Disable_Unnecessary_Animations.ps1" "Disabling Window Maximize/Minimize & Taskbar Animations" `
+    -IsApplied {
+        $min = (Get-ItemProperty "HKCU:\Control Panel\Desktop\WindowMetrics" -Name "MinAnimate" -ErrorAction SilentlyContinue).MinAnimate
+        $tb  = (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAnimations" -ErrorAction SilentlyContinue).TaskbarAnimations
+        $min -eq "0" -and $tb -eq 0
+    }
+
+Invoke-SafeTweak "Visual\Disable_Transparency.ps1" "Disabling DWM Transparency Effects to Free GPU Cycles" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "EnableTransparency" -ErrorAction SilentlyContinue).EnableTransparency -eq 0 }
+
+Invoke-SafeTweak "Explorer\Restore_Classic_ContextMenu.ps1" "Restoring Instant Classic Right-Click Menu in Windows 11" `
+    -IsApplied { Test-Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" }
+
+Invoke-SafeTweak "Shell\Disable_Copilot_Taskbar.ps1" "Removing Windows Copilot Button from Taskbar" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowCopilotButton" -ErrorAction SilentlyContinue).ShowCopilotButton -eq 0 }
+
+Invoke-SafeTweak "Shell\Disable_Windows_Widgets.ps1" "Disabling Windows Widgets Board from Taskbar" `
+    -IsApplied { (Get-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" -Name "AllowNewsAndInterests" -ErrorAction SilentlyContinue).AllowNewsAndInterests -eq 0 }
+
+Invoke-SafeTweak "Shell\Disable_Notification_Spam.ps1" "Disabling Windows Promotional Suggestions & Tips" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338389Enabled" -ErrorAction SilentlyContinue)."SubscribedContent-338389Enabled" -eq 0 }
+
+Invoke-SafeTweak "Shell\Remove_Recommended_Section.ps1" "Hiding Recommended Items in Start Menu" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideRecentJumplists" -ErrorAction SilentlyContinue).HideRecentJumplists -eq 1 }
+
+Invoke-SafeTweak "Explorer\Disable_Recent_Frequent.ps1" "Hiding Recent Files & Frequent Folders in Explorer" `
+    -IsApplied {
+        $rec = (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "ShowRecent" -ErrorAction SilentlyContinue).ShowRecent
+        $frq = (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "ShowFrequent" -ErrorAction SilentlyContinue).ShowFrequent
+        $rec -eq 0 -and $frq -eq 0
+    }
 
 # ==============================================================================
 # BLOCK 3: GAMING, PERFORMANCE & NETWORK
@@ -145,12 +232,23 @@ Write-Host "`n==================================================" -ForegroundCol
 Write-Host " [3/4] APPLYING GAMING, PERFORMANCE & NETWORK" -ForegroundColor Cyan
 Write-Host "==================================================" -ForegroundColor Cyan
 
-Invoke-SafeTweak "GPU\Enable_Hardware_Accelerated_GPU_Scheduling.ps1" "Enabling Hardware-Accelerated GPU Scheduling (HAGS)"
-Invoke-SafeTweak "GPU\Enable_Game_Mode.ps1" "Enabling Windows Game Mode"
-Invoke-SafeTweak "Input\Disable_Mouse_Acceleration.ps1" "Disabling Enhance Pointer Precision (1:1 Raw Mouse Input)"
-Invoke-SafeTweak "Power\Enable_Ultimate_Performance_Plan.ps1" "Unlocking & Activating Ultimate Performance Power Plan"
-Invoke-SafeTweak "Updates\Disable_Delivery_Optimization.ps1" "Disabling P2P Delivery Optimization Upload Seeding"
-Invoke-SafeTweak "Updates\Disable_Automatic_Driver_Updates.ps1" "Preventing Windows Update from Overwriting Custom Hardware Drivers"
+Invoke-SafeTweak "GPU\Enable_Hardware_Accelerated_GPU_Scheduling.ps1" "Enabling Hardware-Accelerated GPU Scheduling (HAGS)" `
+    -IsApplied { (Get-ItemProperty "HKLM:\System\CurrentControlSet\Control\GraphicsDrivers" -Name "HwSchMode" -ErrorAction SilentlyContinue).HwSchMode -eq 2 }
+
+Invoke-SafeTweak "GPU\Enable_Game_Mode.ps1" "Enabling Windows Game Mode" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Software\Microsoft\GameBar" -Name "AutoGameModeEnabled" -ErrorAction SilentlyContinue).AutoGameModeEnabled -eq 1 }
+
+Invoke-SafeTweak "Input\Disable_Mouse_Acceleration.ps1" "Disabling Enhance Pointer Precision (1:1 Raw Mouse Input)" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Control Panel\Mouse" -Name "MouseSpeed" -ErrorAction SilentlyContinue).MouseSpeed -eq "0" }
+
+Invoke-SafeTweak "Power\Enable_Ultimate_Performance_Plan.ps1" "Unlocking & Activating Ultimate Performance Power Plan" `
+    -IsApplied { (powercfg /getactivescheme) -match "Ultimate Performance" }
+
+Invoke-SafeTweak "Updates\Disable_Delivery_Optimization.ps1" "Disabling P2P Delivery Optimization Upload Seeding" `
+    -IsApplied { (Get-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" -Name "DODownloadMode" -ErrorAction SilentlyContinue).DODownloadMode -eq 0 }
+
+Invoke-SafeTweak "Updates\Disable_Automatic_Driver_Updates.ps1" "Preventing Windows Update from Overwriting Custom Hardware Drivers" `
+    -IsApplied { (Get-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "ExcludeWUDriversInQualityUpdate" -ErrorAction SilentlyContinue).ExcludeWUDriversInQualityUpdate -eq 1 }
 
 # ==============================================================================
 # BLOCK 4: SAFE BLOATWARE SCRUBBING
@@ -159,8 +257,27 @@ Write-Host "`n==================================================" -ForegroundCol
 Write-Host " [4/4] EXECUTING SAFE APPS SCRUBBING" -ForegroundColor Cyan
 Write-Host "==================================================" -ForegroundColor Cyan
 
-Invoke-SafeTweak "Apps\Remove_Sponsored_Apps.ps1" "Removing Third-Party Sponsored Shovelware (TikTok, Candy Crush)"
-Invoke-SafeTweak "Apps\Remove_Unnecessary_MS_Apps.ps1" "Removing Unused Default MS Apps (3D Viewer, Maps, Tips)"
+Invoke-SafeTweak "Apps\Remove_Sponsored_Apps.ps1" "Removing Third-Party Sponsored Shovelware (TikTok, Candy Crush)" `
+    -IsApplied {
+        $pkgs = Get-CachedAppxNames
+        $targets = @("*TikTok*", "*Instagram*", "*Facebook*", "*Twitter*", "*Netflix*", "*Spotify*", "*Disney*", "*CandyCrush*", "*Roblox*")
+        $found = $false
+        foreach ($t in $targets) {
+            if ($pkgs | Where-Object { $_ -like $t }) { $found = $true; break }
+        }
+        -not $found
+    }
+
+Invoke-SafeTweak "Apps\Remove_Unnecessary_MS_Apps.ps1" "Removing Unused Default MS Apps (3D Viewer, Maps, Tips)" `
+    -IsApplied {
+        $pkgs = Get-CachedAppxNames
+        $targets = @("*Microsoft3DViewer*", "*WindowsFeedbackHub*", "*MixedReality.Portal*", "*ZuneVideo*", "*WindowsMaps*", "*BingWeather*")
+        $found = $false
+        foreach ($t in $targets) {
+            if ($pkgs | Where-Object { $_ -like $t }) { $found = $true; break }
+        }
+        -not $found
+    }
 
 # Close transaction if open
 if ($TxnID) {
@@ -171,7 +288,7 @@ if ($TxnID) {
 }
 
 # ==============================================================================
-# POST-EXECUTION HEALTH VERIFICATION
+# POST-EXECUTION HEALTH & IDEMPOTENCY SUMMARY REPORT
 # ==============================================================================
 Write-Host "`n======================================================================" -ForegroundColor Green
 Write-Host "                SYSTEM HEALTH & INTEGRITY REPORT                      " -ForegroundColor White
@@ -204,13 +321,23 @@ try {
     Write-Warning "DNS resolution test timed out or offline."
 }
 
+Write-Host "`n======================================================================" -ForegroundColor Green
+Write-Host "           CURATED SAFE OPTIMIZATION SUITE SUMMARY                   " -ForegroundColor White
 Write-Host "======================================================================" -ForegroundColor Green
-Write-Host " [SUCCESS] Curated Safe Optimization & Privacy Suite finished!" -ForegroundColor Green
+Write-Host " Total Tweaks Evaluated : $($script:SkippedCount + $script:AppliedCount)" -ForegroundColor Cyan
+Write-Host " Already Applied        : $($script:SkippedCount) (Skipped - 0 changes needed)" -ForegroundColor DarkGray
+Write-Host " Applied in this run    : $($script:AppliedCount)" -ForegroundColor Green
+
+if ($script:AppliedCount -eq 0) {
+    Write-Host "`n [OK] System is already fully optimized! No redundant changes made." -ForegroundColor Green
+} else {
+    Write-Host "`n Please RESTART your computer (or restart explorer.exe) to apply new changes." -ForegroundColor Yellow
+}
+
 if ($HasStartedTranscript) {
     Write-Host " [+] Complete execution transcript saved to: $TranscriptPath" -ForegroundColor Cyan
     Stop-Transcript -ErrorAction SilentlyContinue | Out-Null
 }
-Write-Host " Please RESTART your computer (or restart explorer.exe) to apply all changes." -ForegroundColor Yellow
 Write-Host "======================================================================`n"
 
 if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {

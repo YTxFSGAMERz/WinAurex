@@ -3,7 +3,8 @@ Logs/
 *.log
 node_modules/  
 winaurex_py/backups/*.json
-Core/Restore/Backups/*.reg
+Core/Restore/Backups/
+Core/Restore/Input/
 
 # Cloud & Wrangler files
 .wrangler/

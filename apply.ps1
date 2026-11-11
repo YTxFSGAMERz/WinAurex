@@ -10,7 +10,8 @@ param (
     [switch]$Force,
     [switch]$SkipRestorePoint,
     [switch]$LaunchDashboard,
-    [switch]$SkipPrereqs
+    [switch]$SkipPrereqs,
+    [switch]$ForceReapply
 )
 
 # 1. Require Administrator Privileges (Auto-Elevate)
@@ -126,14 +127,31 @@ if exist "$TargetDir\winaurex.cmd" (
 
 # 4. Provision Core System Prerequisites (VC++, WebView2, Python, Node.js)
 if (-not $SkipPrereqs) {
-    Write-Host "`n[2/5] Checking and provisioning system prerequisites..." -ForegroundColor Cyan
-    $PrereqScript = Join-Path $WorkingDir "Core\Prerequisites\Install-Prerequisites.ps1"
-    if (Test-Path $PrereqScript) {
-        $prereqArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $PrereqScript)
-        if ($Force) { $prereqArgs += "-Force" }
-        & powershell.exe $prereqArgs
+    # Check if all 4 runtimes are already installed (<50ms fast audit)
+    $vcInstalled = $false
+    try {
+        $key64 = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64" -ErrorAction SilentlyContinue
+        if ($key64 -and $key64.Installed -eq 1) { $vcInstalled = $true }
+    } catch {}
+
+    $wvInstalled = (Test-Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}") -or 
+                   (Test-Path "HKLM:\SOFTWARE\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}")
+
+    $pyInstalled = [bool](Get-Command "python" -ErrorAction SilentlyContinue) -or [bool](Get-Command "py" -ErrorAction SilentlyContinue)
+    $nodeInstalled = [bool](Get-Command "node" -ErrorAction SilentlyContinue)
+
+    if ($vcInstalled -and $wvInstalled -and $pyInstalled -and $nodeInstalled -and -not $ForceReapply) {
+        Write-Host "`n[2/5] All system prerequisites (VC++, WebView2, Python, Node.js) are already installed. (Skipping in 0.1s)" -ForegroundColor Green
     } else {
-        Write-Warning "Prerequisites script not found at $PrereqScript. Skipping."
+        Write-Host "`n[2/5] Checking and provisioning system prerequisites..." -ForegroundColor Cyan
+        $PrereqScript = Join-Path $WorkingDir "Core\Prerequisites\Install-Prerequisites.ps1"
+        if (Test-Path $PrereqScript) {
+            $prereqArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $PrereqScript)
+            if ($Force) { $prereqArgs += "-Force" }
+            & powershell.exe $prereqArgs
+        } else {
+            Write-Warning "Prerequisites script not found at $PrereqScript. Skipping."
+        }
     }
 } else {
     Write-Host "`n[2/5] Skipping system prerequisites provisioning as requested." -ForegroundColor DarkGray
@@ -141,35 +159,50 @@ if (-not $SkipPrereqs) {
 
 # 5. Create System Restore Point (Disaster Recovery Safeguard)
 if (-not $SkipRestorePoint) {
-    Write-Host "`n[3/5] Creating Windows System Restore Point ('Pre-WinAurex Conversion')..." -ForegroundColor Cyan
-    Write-Host "  [*] Initializing Volume Shadow Copy checkpoint (timeout: 15s)..." -ForegroundColor DarkGray
-    $srJob = Start-Job -ScriptBlock {
-        try {
-            Enable-ComputerRestore -Drive $using:env:SystemDrive -ErrorAction SilentlyContinue
-            # Allow creating restore points on-demand without 24h frequency limit
-            $srKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore"
-            if (-not (Test-Path $srKey)) { New-Item -Path $srKey -Force | Out-Null }
-            Set-ItemProperty -Path $srKey -Name "SystemRestorePointCreationFrequency" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
-            Checkpoint-Computer -Description "Pre-WinAurex Conversion" -RestorePointType "MODIFY_SETTINGS" -ErrorAction Stop
-            return "SUCCESS"
-        } catch {
-            return $_.Exception.Message
+    # Check if a restore point already exists from a previous run
+    $hasRecentRestore = $false
+    try {
+        $recent = Get-ComputerRestorePoint -ErrorAction SilentlyContinue | Where-Object {
+            $_.Description -like "*WinAurex*"
+        } | Select-Object -Last 1
+        if ($recent) {
+            $hasRecentRestore = $true
         }
-    }
+    } catch {}
 
-    $srCompleted = Wait-Job $srJob -Timeout 15
-    if ($srCompleted) {
-        $srResult = Receive-Job $srJob
-        Remove-Job $srJob -Force -ErrorAction SilentlyContinue
-        if ($srResult -eq "SUCCESS") {
-            Write-Host "  [+] System Restore point created successfully!" -ForegroundColor Green
-        } else {
-            Write-Warning "System Restore checkpoint could not be created ($srResult). Proceeding with transactional rollback engine."
-        }
+    if ($hasRecentRestore -and -not $ForceReapply) {
+        Write-Host "`n[3/5] System Restore point already exists from a previous run. Skipping redundant checkpoint." -ForegroundColor DarkGray
     } else {
-        Stop-Job $srJob -ErrorAction SilentlyContinue
-        Remove-Job $srJob -Force -ErrorAction SilentlyContinue
-        Write-Warning "System Restore point creation timed out (VSS busy or locked by background updates). Proceeding with transactional rollback engine."
+        Write-Host "`n[3/5] Creating Windows System Restore Point ('Pre-WinAurex Conversion')..." -ForegroundColor Cyan
+        Write-Host "  [*] Initializing Volume Shadow Copy checkpoint (timeout: 15s)..." -ForegroundColor DarkGray
+        $srJob = Start-Job -ScriptBlock {
+            try {
+                Enable-ComputerRestore -Drive $using:env:SystemDrive -ErrorAction SilentlyContinue
+                # Allow creating restore points on-demand without 24h frequency limit
+                $srKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore"
+                if (-not (Test-Path $srKey)) { New-Item -Path $srKey -Force | Out-Null }
+                Set-ItemProperty -Path $srKey -Name "SystemRestorePointCreationFrequency" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
+                Checkpoint-Computer -Description "Pre-WinAurex Conversion" -RestorePointType "MODIFY_SETTINGS" -ErrorAction Stop
+                return "SUCCESS"
+            } catch {
+                return $_.Exception.Message
+            }
+        }
+
+        $srCompleted = Wait-Job $srJob -Timeout 15
+        if ($srCompleted) {
+            $srResult = Receive-Job $srJob
+            Remove-Job $srJob -Force -ErrorAction SilentlyContinue
+            if ($srResult -eq "SUCCESS") {
+                Write-Host "  [+] System Restore point created successfully!" -ForegroundColor Green
+            } else {
+                Write-Warning "System Restore checkpoint could not be created ($srResult). Proceeding with transactional rollback engine."
+            }
+        } else {
+            Stop-Job $srJob -ErrorAction SilentlyContinue
+            Remove-Job $srJob -Force -ErrorAction SilentlyContinue
+            Write-Warning "System Restore point creation timed out (VSS busy or locked by background updates). Proceeding with transactional rollback engine."
+        }
     }
 } else {
     Write-Host "`n[3/5] Skipping System Restore checkpoint as requested." -ForegroundColor DarkGray
@@ -187,6 +220,7 @@ if (-not (Test-Path $ConversionScript)) {
 if (Test-Path $ConversionScript) {
     $convArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $ConversionScript, "-SkipPrereqs")
     if ($Force) { $convArgs += "-Force" }
+    if ($ForceReapply) { $convArgs += "-ForceReapply" }
     & powershell.exe $convArgs
 } else {
     Write-Error "Could not find conversion script in $WorkingDir."

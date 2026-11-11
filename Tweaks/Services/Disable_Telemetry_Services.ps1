@@ -8,13 +8,8 @@ param (
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Warning "This script requires Administrator privileges. Please run PowerShell as Admin."
-    Exit
+    Exit 1
 }
-
-$HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
-
-# Write-FrameworkLog -ModuleName "Services" -Action "Initiating Telemetry Services Disablement"
 
 # Array of known heavy telemetry services
 $TelemetryServices = @(
@@ -30,7 +25,7 @@ foreach ($ServiceName in $TelemetryServices) {
     if ($Service) {
         $CurrentState = $Service.StartType
         
-        if ($CurrentState -ne "Disabled") {
+        if ($CurrentState -ne "Disabled" -or $Service.Status -eq "Running") {
             # Stop the service if running
             if ($Service.Status -eq "Running") {
                 Stop-Service -Name $ServiceName -Force -ErrorAction SilentlyContinue
@@ -38,14 +33,14 @@ foreach ($ServiceName in $TelemetryServices) {
             
             # Disable startup
             Set-Service -Name $ServiceName -StartupType Disabled -ErrorAction SilentlyContinue
-            
-#             Write-FrameworkLog -ModuleName "Services" -Action "Disabled Service: $ServiceName" -OldValue $CurrentState -NewValue "Disabled"
             $DisabledCount++
         }
     }
 }
 
-Write-Host "`n[SUCCESS] Successfully disabled $DisabledCount background telemetry services." -ForegroundColor Green
-Write-Host "This will reduce idle RAM usage and block Microsoft data collection." -ForegroundColor Yellow
-
-
+if ($DisabledCount -eq 0) {
+    Write-Host "  [-] Background telemetry services (DiagTrack) are already disabled (Skipping)." -ForegroundColor DarkGray
+} else {
+    Write-Host "`n[SUCCESS] Successfully disabled $DisabledCount background telemetry services." -ForegroundColor Green
+    Write-Host "This will reduce idle RAM usage and block Microsoft data collection." -ForegroundColor Yellow
+}

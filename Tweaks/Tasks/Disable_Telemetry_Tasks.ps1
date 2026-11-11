@@ -8,13 +8,8 @@ param (
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Warning "This script requires Administrator privileges. Please run PowerShell as Admin."
-    Exit
+    Exit 1
 }
-
-$HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\..\Core\Helpers"
-# Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
-
-# Write-FrameworkLog -ModuleName "Tasks" -Action "Initiating Telemetry Tasks Disablement"
 
 # Array of known heavy telemetry/CEIP tasks
 $TelemetryTasks = @(
@@ -28,20 +23,23 @@ $TelemetryTasks = @(
 $DisabledCount = 0
 
 foreach ($TaskPath in $TelemetryTasks) {
-    $Task = Get-ScheduledTask -TaskPath ($TaskPath | Split-Path -Parent) -TaskName ($TaskPath | Split-Path -Leaf) -ErrorAction SilentlyContinue
+    $parent = Split-Path $TaskPath -Parent
+    $leaf = Split-Path $TaskPath -Leaf
+    $Task = Get-ScheduledTask -TaskPath "$parent\" -TaskName $leaf -ErrorAction SilentlyContinue
     
     if ($Task) {
         $CurrentState = $Task.State
         
         if ($CurrentState -ne "Disabled") {
-            Disable-ScheduledTask -TaskPath ($TaskPath | Split-Path -Parent) -TaskName ($TaskPath | Split-Path -Leaf) | Out-Null
-#             Write-FrameworkLog -ModuleName "Tasks" -Action "Disabled Task: $TaskPath" -OldValue $CurrentState -NewValue "Disabled"
+            Disable-ScheduledTask -TaskPath "$parent\" -TaskName $leaf -ErrorAction SilentlyContinue | Out-Null
             $DisabledCount++
         }
     }
 }
 
-Write-Host "`n[SUCCESS] Successfully disabled $DisabledCount background telemetry tasks." -ForegroundColor Green
-Write-Host "This will reduce background CPU spikes and disk I/O." -ForegroundColor Yellow
-
-
+if ($DisabledCount -eq 0) {
+    Write-Host "  [-] Telemetry scheduled tasks (CEIP / Compatibility Appraiser) are already disabled (Skipping)." -ForegroundColor DarkGray
+} else {
+    Write-Host "`n[SUCCESS] Successfully disabled $DisabledCount background telemetry tasks." -ForegroundColor Green
+    Write-Host "This will reduce background CPU spikes and disk I/O." -ForegroundColor Yellow
+}

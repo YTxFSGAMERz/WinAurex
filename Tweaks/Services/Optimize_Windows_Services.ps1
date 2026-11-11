@@ -40,6 +40,7 @@ $TargetServices = @(
 )
 
 $ActionCount = 0
+$AlreadyDisabledCount = 0
 
 if ($Revert) {
     Write-Host "[*] Reverting background services to default startup types..." -ForegroundColor Yellow
@@ -49,20 +50,27 @@ if ($Revert) {
         if ($svc) {
             try {
                 $targetType = if ($item.RevertStart -eq 2) { "Automatic" } elseif ($item.RevertStart -eq 3) { "Manual" } else { "Disabled" }
-                Set-Service -Name $name -StartupType $targetType -ErrorAction SilentlyContinue
-                Write-Host "  [+] Restored service: $name ($targetType)" -ForegroundColor DarkGray
-                $ActionCount++
+                if ($svc.StartType -ne $targetType) {
+                    Set-Service -Name $name -StartupType $targetType -ErrorAction SilentlyContinue
+                    Write-Host "  [+] Restored service: $name ($targetType)" -ForegroundColor DarkGray
+                    $ActionCount++
+                }
             } catch {}
         }
     }
     Write-Host "`n[SUCCESS] Reverted $ActionCount services to default configuration." -ForegroundColor Green
 } else {
-    Write-Host "[*] Stopping and disabling non-essential background services..." -ForegroundColor Cyan
+    Write-Host "[*] Evaluating background services for permanent optimization..." -ForegroundColor Cyan
     foreach ($item in $TargetServices) {
         $name = $item.Name
         $desc = $item.Desc
         $svc = Get-Service -Name $name -ErrorAction SilentlyContinue
         if ($svc) {
+            # Check if already disabled and not running
+            if ($svc.StartType -eq "Disabled" -and $svc.Status -ne "Running") {
+                $AlreadyDisabledCount++
+                continue
+            }
             try {
                 if ($svc.Status -eq "Running") {
                     Stop-Service -Name $name -Force -ErrorAction SilentlyContinue
@@ -81,8 +89,12 @@ if ($Revert) {
             }
         }
     }
-    Write-Host "`n[SUCCESS] Permanently disabled $ActionCount non-essential background services." -ForegroundColor Green
-    Write-Host "Idle RAM and background CPU interrupt overhead significantly reduced." -ForegroundColor Yellow
+    if ($ActionCount -eq 0) {
+        Write-Host "`n  [-] All $AlreadyDisabledCount target background services are already disabled. (No changes needed)" -ForegroundColor DarkGray
+    } else {
+        Write-Host "`n[SUCCESS] Permanently disabled $ActionCount services ($AlreadyDisabledCount were already disabled)." -ForegroundColor Green
+        Write-Host "Idle RAM and background CPU interrupt overhead significantly reduced." -ForegroundColor Yellow
+    }
 }
 
 if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
