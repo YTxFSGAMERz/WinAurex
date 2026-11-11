@@ -63,6 +63,10 @@ function Show-Help {
     Write-Host "  rollback                  Revert settings to previous snapshot or defaults"
     Write-Host "                            Subtargets: last, defaults"
     Write-Host "  prereqs | deps            Check & provision runtimes (VC++, WebView2, Python, Node.js)"
+    Write-Host "  debloat                   Deep OS debloat & consumer appx package purge"
+    Write-Host "  services                  Permanently disable 15+ useless background services"
+    Write-Host "  reduce-threads            Reduce active processes, threads, and kernel handles"
+    Write-Host "  defender <action>         Manage Defender policy (actions: disable, enable, status)"
     Write-Host "  update                    Check for & apply latest WinAurex updates from GitHub"
     Write-Host "  dashboard | gui           Launch the Graphical WPF Dashboard"
     Write-Host "  menu                      Launch interactive CLI menu dashboard"
@@ -320,6 +324,41 @@ switch ($Command.ToLowerInvariant()) {
     "install-deps" {
         $f = if ($Force) { @("-Force") } else { @() }
         Invoke-WinAurexScript -RelativePath "Core\Prerequisites\Install-Prerequisites.ps1" -ScriptArgs $f
+    }
+
+    "services" {
+        $f = if ($Force) { @("-Force") } else { @() }
+        Invoke-WinAurexScript -RelativePath "Tweaks\Services\Optimize_Windows_Services.ps1" -ScriptArgs $f
+    }
+
+    "debloat" {
+        $f = if ($Force) { @("-Force") } else { @() }
+        Invoke-WinAurexScript -RelativePath "Tweaks\Apps\Deep_OS_Debloat.ps1" -ScriptArgs $f
+    }
+
+    "reduce-threads" {
+        $f = if ($Force) { @("-Force") } else { @() }
+        Invoke-WinAurexScript -RelativePath "Tweaks\Performance\Reduce_Processes_And_Threads.ps1" -ScriptArgs $f
+    }
+    "reduce-processes" {
+        $f = if ($Force) { @("-Force") } else { @() }
+        Invoke-WinAurexScript -RelativePath "Tweaks\Performance\Reduce_Processes_And_Threads.ps1" -ScriptArgs $f
+    }
+
+    "defender" {
+        $act = $SubTarget.ToLowerInvariant()
+        $argsList = @()
+        if ($act -in @("disable", "off", "stop")) {
+            $argsList += "-Disable"
+        } elseif ($act -in @("enable", "on", "start", "restore")) {
+            $argsList += "-Enable"
+        } elseif ($act -in @("status", "check")) {
+            $argsList += "-Status"
+        } else {
+            $argsList += "-Disable"
+        }
+        if ($Force) { $argsList += "-Force" }
+        Invoke-WinAurexScript -RelativePath "Tweaks\Security\Configure_Defender_Policy.ps1" -ScriptArgs $argsList
     }
 
     "update" {

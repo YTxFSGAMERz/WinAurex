@@ -67,6 +67,15 @@ $TxtDpcLatency = Find-Control "TxtDpcLatency"
 $TxtMemAvailable = Find-Control "TxtMemAvailable"
 $TxtUptime = Find-Control "TxtUptime"
 $TxtProcessCount = Find-Control "TxtProcessCount"
+$TxtThreadCount = Find-Control "TxtThreadCount"
+$TxtHandleCount = Find-Control "TxtHandleCount"
+
+# Tweaks & Debloat UI Hooks
+$BtnOptimizeServices = Find-Control "BtnOptimizeServices"
+$BtnDebloatOS        = Find-Control "BtnDebloatOS"
+$BtnReduceThreads    = Find-Control "BtnReduceThreads"
+$BtnDisableDefender  = Find-Control "BtnDisableDefender"
+$BtnEnableDefender   = Find-Control "BtnEnableDefender"
 
 # PC Cleaner UI Hooks
 $BtnAnalyzeStorage = Find-Control "BtnAnalyzeStorage"
@@ -126,6 +135,42 @@ $BtnApplyEnterprise.Add_Click({
     Set-Status -Message "Enterprise Compliance Applied!" -Color "#00adb5"
 })
 
+# --- TWEAKS & DEBLOAT TAB LOGIC ---
+$BtnOptimizeServices.Add_Click({
+    Set-Status -Message "Optimizing background services..." -Color "#ffb300"
+    $Script = Join-Path $RootPath "Tweaks\Services\Optimize_Windows_Services.ps1"
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`" -Force" -Wait
+    Set-Status -Message "Services pruned successfully!" -Color "#00adb5"
+})
+
+$BtnDebloatOS.Add_Click({
+    Set-Status -Message "Debloating OS & Appx packages..." -Color "#ffb300"
+    $Script = Join-Path $RootPath "Tweaks\Apps\Deep_OS_Debloat.ps1"
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`" -Force" -Wait
+    Set-Status -Message "OS Debloating complete!" -Color "#00adb5"
+})
+
+$BtnReduceThreads.Add_Click({
+    Set-Status -Message "Reducing background processes & threads..." -Color "#ffb300"
+    $Script = Join-Path $RootPath "Tweaks\Performance\Reduce_Processes_And_Threads.ps1"
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`" -Force" -Wait
+    Set-Status -Message "Overhead reduced & memory trimmed!" -Color "#00adb5"
+})
+
+$BtnDisableDefender.Add_Click({
+    Set-Status -Message "Applying Turn off Microsoft Defender Antivirus policy..." -Color "#ffb300"
+    $Script = Join-Path $RootPath "Tweaks\Security\Configure_Defender_Policy.ps1"
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`" -Disable -Force" -Wait
+    Set-Status -Message "Defender disabled via Group Policy! (Reboot recommended)" -Color "#ffb300"
+})
+
+$BtnEnableDefender.Add_Click({
+    Set-Status -Message "Restoring Microsoft Defender Antivirus..." -Color "#ffb300"
+    $Script = Join-Path $RootPath "Tweaks\Security\Configure_Defender_Policy.ps1"
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`" -Enable -Force" -Wait
+    Set-Status -Message "Defender policy restored to active!" -Color "#00adb5"
+})
+
 # --- OBSERVABILITY TAB LOGIC ---
 $BtnAnalyzeFrameTiming.Add_Click({
     Set-Status -Message "Analyzing Frame Timing (15s)..." -Color "#ffb300"
@@ -176,9 +221,20 @@ $Timer.Add_Tick({
         $TxtUptime.Text = "$($Uptime.Days)d $($Uptime.Hours)h $($Uptime.Minutes)m"
     } catch { }
 
-    # 3. Process Count (.NET Diagnostics - fast array count)
+    # 3. Process, Thread & Handle Metrics (.NET Diagnostics)
     try {
-        $TxtProcessCount.Text = "$([System.Diagnostics.Process]::GetProcesses().Count)"
+        $procs = [System.Diagnostics.Process]::GetProcesses()
+        $TxtProcessCount.Text = "$($procs.Count)"
+        $totalThreads = 0
+        $totalHandles = 0
+        foreach ($p in $procs) {
+            try {
+                $totalThreads += $p.Threads.Count
+                $totalHandles += $p.HandleCount
+            } catch {}
+        }
+        if ($null -ne $TxtThreadCount) { $TxtThreadCount.Text = "$totalThreads" }
+        if ($null -ne $TxtHandleCount) { $TxtHandleCount.Text = "$totalHandles" }
     } catch { }
 
     # 4. DPC Latency Proxy (.NET Counter)
