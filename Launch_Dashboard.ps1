@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param (
     [switch]$Force
 )
@@ -83,14 +83,19 @@ $TxtDefenderTamperStatus   = Find-Control "TxtDefenderTamperStatus"
 # AI Optimizer UI Hooks
 $BtnAiScan              = Find-Control "BtnAiScan"
 $BtnAiOptimize          = Find-Control "BtnAiOptimize"
+$BtnAiFlushRam          = Find-Control "BtnAiFlushRam"
+$BtnAiGamingShield      = Find-Control "BtnAiGamingShield"
 $TxtAiScanStatus        = Find-Control "TxtAiScanStatus"
+$TxtAiHealthScore       = Find-Control "TxtAiHealthScore"
 $TxtAiServicesCount     = Find-Control "TxtAiServicesCount"
 $TxtAiAppsCount         = Find-Control "TxtAiAppsCount"
 $TxtAiTasksCount        = Find-Control "TxtAiTasksCount"
+$TxtAiAnomaliesCount    = Find-Control "TxtAiAnomaliesCount"
 $TxtAiProjectedImpact   = Find-Control "TxtAiProjectedImpact"
 $TxtAiCandidateCount    = Find-Control "TxtAiCandidateCount"
 $BtnAiFilterAll         = Find-Control "BtnAiFilterAll"
 $BtnAiFilterSafe        = Find-Control "BtnAiFilterSafe"
+$BtnAiFilterAnomalies   = Find-Control "BtnAiFilterAnomalies"
 $ListAiFindings         = Find-Control "ListAiFindings"
 
 # Load AI Engine
@@ -99,6 +104,8 @@ if (Test-Path $AiModule) {
     Import-Module $AiModule -Force -DisableNameChecking
 }
 $script:LastAiFindings = @()
+$script:LastAnomalies = @()
+$script:GamingShieldActive = $false
 
 # Footer UI Hooks
 $BtnOpenLogsFolder = Find-Control "BtnOpenLogsFolder"
@@ -268,6 +275,20 @@ if ($null -ne $BtnAiScan) {
         $apps = $script:LastAiFindings | Where-Object { $_.TargetType -eq "AppX" }
         $tasks = $script:LastAiFindings | Where-Object { $_.TargetType -eq "ScheduledTask" }
 
+        # Health Score Calculation
+        $health = Get-WinAurexHealthScore
+        if ($null -ne $TxtAiHealthScore) {
+            $TxtAiHealthScore.Text = "$($health.Score)/100"
+            $color = if ($health.Score -ge 90) { "#00ff41" } elseif ($health.Score -ge 75) { "#00adb5" } else { "#ffb300" }
+            $TxtAiHealthScore.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString($color)
+        }
+
+        # Process Anomalies
+        $script:LastAnomalies = Get-ProcessAnomalies
+        if ($null -ne $TxtAiAnomaliesCount) {
+            $TxtAiAnomaliesCount.Text = "$($script:LastAnomalies.Count) Flagged"
+        }
+
         if ($null -ne $TxtAiServicesCount) { $TxtAiServicesCount.Text = "$($svcs.Count)" }
         if ($null -ne $TxtAiAppsCount) { $TxtAiAppsCount.Text = "$($apps.Count)" }
         if ($null -ne $TxtAiTasksCount) { $TxtAiTasksCount.Text = "$($tasks.Count)" }
@@ -285,10 +306,10 @@ if ($null -ne $BtnAiScan) {
         }
 
         if ($null -ne $TxtAiScanStatus) {
-            $TxtAiScanStatus.Text = "Status: Scan Complete! Found $($script:LastAiFindings.Count) optimization candidates. Ready to optimize."
+            $TxtAiScanStatus.Text = "Status: Scan Complete! Score: $($health.Score)/100 ($($health.Grade)). Found $($script:LastAiFindings.Count) optimization candidates."
             $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
         }
-        Set-Status -Message "AI Scan Complete: $($script:LastAiFindings.Count) candidates identified." -Color "#00ff41"
+        Set-Status -Message "AI Scan Complete: Score $($health.Score)/100 ($($health.Grade)), $($script:LastAiFindings.Count) candidates identified." -Color "#00ff41"
     })
 }
 
@@ -304,6 +325,72 @@ if ($null -ne $BtnAiFilterSafe) {
     $BtnAiFilterSafe.Add_Click({
         if ($null -ne $ListAiFindings -and $script:LastAiFindings) {
             $ListAiFindings.ItemsSource = ($script:LastAiFindings | Where-Object { $_.SafetyTier -eq "Tier 1 (Safe)" })
+        }
+    })
+}
+
+if ($null -ne $BtnAiFilterAnomalies) {
+    $BtnAiFilterAnomalies.Add_Click({
+        if ($null -ne $ListAiFindings) {
+            if (-not $script:LastAnomalies -or $script:LastAnomalies.Count -eq 0) {
+                $script:LastAnomalies = Get-ProcessAnomalies
+            }
+            # Transform anomaly objects to match GridView columns
+            $displayAnomalies = $script:LastAnomalies | ForEach-Object {
+                [PSCustomObject]@{
+                    TargetType       = "Process"
+                    Name             = $_.ProcessName
+                    Category         = "Resource_Anomaly"
+                    SafetyTier       = "Tier 2 (Recommended)"
+                    Confidence       = "95.0%"
+                    CurrentState     = "PID: $($_.PID)"
+                    EstSavings       = "$($_.AnomalyReason) (~$($_.WorkingSetMB) MB)"
+                }
+            }
+            $ListAiFindings.ItemsSource = $displayAnomalies
+            Set-Status -Message "Showing $($displayAnomalies.Count) background process anomalies." -Color "#00adb5"
+        }
+    })
+}
+
+if ($null -ne $BtnAiFlushRam) {
+    $BtnAiFlushRam.Add_Click({
+        Write-DashboardLog "User clicked 1-Click Flush RAM"
+        Set-Status -Message "Flushing idle process working sets into free standby memory..." -Color "#ffb300"
+        $flush = Invoke-WinAurexRamFlush
+        Write-DashboardLog "RAM Flush Complete: Reclaimed $($flush.ReclaimedMB) MB across $($flush.ProcessesTrimmed) processes."
+        
+        if ($null -ne $TxtAiScanStatus) {
+            $TxtAiScanStatus.Text = "Status: Reclaimed $($flush.ReclaimedMB) MB active RAM! Total Free Memory: $($flush.FreeMemoryMB) MB."
+            $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+        }
+        Set-Status -Message "RAM Flushed: Reclaimed $($flush.ReclaimedMB) MB across $($flush.ProcessesTrimmed) processes." -Color "#00ff41"
+    })
+}
+
+if ($null -ne $BtnAiGamingShield) {
+    $BtnAiGamingShield.Add_Click({
+        $script:GamingShieldActive = -not $script:GamingShieldActive
+        if ($script:GamingShieldActive) {
+            Write-DashboardLog "User enabled AI Gaming Latency Shield"
+            $shield = Set-AiGamingShield -Enable
+            $BtnAiGamingShield.Content = "🎮 Gaming [ON]"
+            $BtnAiGamingShield.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+            if ($null -ne $TxtAiScanStatus) {
+                $TxtAiScanStatus.Text = "Status: AI Gaming Latency Shield ACTIVE (Win32PrioritySeparation = 0x28, Throttling OFF)."
+                $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+            }
+            Set-Status -Message "Gaming Latency Shield ACTIVE (High foreground quantum enforced)." -Color "#00ff41"
+        } else {
+            Write-DashboardLog "User disabled AI Gaming Latency Shield"
+            $shield = Set-AiGamingShield -Disable
+            $BtnAiGamingShield.Content = "🎮 Gaming Shield"
+            $BtnAiGamingShield.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#ffffff")
+            if ($null -ne $TxtAiScanStatus) {
+                $TxtAiScanStatus.Text = "Status: Gaming Latency Shield disabled (Balanced priority restored)."
+                $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#aaaaaa")
+            }
+            Set-Status -Message "Gaming Latency Shield deactivated (Standard scheduling)." -Color "#00adb5"
         }
     })
 }

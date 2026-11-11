@@ -422,4 +422,198 @@ public static extern int EmptyWorkingSet(IntPtr hwProc);
     }
 }
 
-Export-ModuleMember -Function Initialize-AiModel, Invoke-AiInference, Invoke-WinAurexAiScan, Invoke-WinAurexAiRemediation
+function Get-WinAurexHealthScore {
+    [CmdletBinding()]
+    param()
+
+    $procs = [System.Diagnostics.Process]::GetProcesses()
+    $pCount = $procs.Count
+    $tCount = 0
+    $hCount = 0
+    foreach ($p in $procs) {
+        try {
+            $tCount += $p.Threads.Count
+            $hCount += $p.HandleCount
+        } catch {}
+    }
+
+    # Telemetry services check
+    $knownTelemetry = @("DiagTrack", "dmwappushservice", "WerSvc", "PcaSvc", "MapsBroker", "lfsvc", "RetailDemo", "wisvc", "Fax", "RemoteRegistry")
+    $runningTelemetry = 0
+    foreach ($name in $knownTelemetry) {
+        $s = Get-Service -Name $name -ErrorAction SilentlyContinue
+        if ($s -and $s.Status -eq "Running") {
+            $runningTelemetry++
+        }
+    }
+
+    # Bloatware scheduled tasks check
+    $knownTasks = @(
+        "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator",
+        "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip",
+        "\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser",
+        "\Microsoft\Windows\Windows Error Reporting\QueueReporting"
+    )
+    $runningTasks = 0
+    foreach ($t in $knownTasks) {
+        $p = Split-Path $t -Parent
+        $l = Split-Path $t -Leaf
+        $task = Get-ScheduledTask -TaskPath "$p\" -TaskName $l -ErrorAction SilentlyContinue
+        if ($task -and $task.State -ne "Disabled") {
+            $runningTasks++
+        }
+    }
+
+    $score = 100
+    $score -= ($runningTelemetry * 4)
+    $score -= ($runningTasks * 3)
+    if ($pCount -gt 220) { $score -= 15 }
+    elseif ($pCount -gt 180) { $score -= 8 }
+    elseif ($pCount -gt 140) { $score -= 4 }
+
+    if ($score -lt 30) { $score = 30 }
+    if ($score -gt 100) { $score = 100 }
+
+    $grade = if ($score -ge 95) { "A+" }
+             elseif ($score -ge 88) { "A" }
+             elseif ($score -ge 78) { "B" }
+             elseif ($score -ge 65) { "C" }
+             else { "D (Bloated)" }
+
+    $summary = if ($score -ge 90) { "Optimal - System is cleanly optimized" }
+               elseif ($score -ge 75) { "Moderate - Telemetry and background services active" }
+               else { "Suboptimal - High background drag detected" }
+
+    return [PSCustomObject]@{
+        Score                 = $score
+        Grade                 = $grade
+        Summary               = $summary
+        ActiveTelemetryCount  = $runningTelemetry
+        ActiveTasksCount      = $runningTasks
+        ProcessCount          = $pCount
+        ThreadCount           = $tCount
+        HandleCount           = $hCount
+    }
+}
+
+function Invoke-WinAurexRamFlush {
+    [CmdletBinding()]
+    param()
+
+    $memBefore = (Get-CimInstance Win32_OperatingSystem -ErrorAction SilentlyContinue).FreePhysicalMemory
+
+    [System.GC]::Collect()
+    [System.GC]::WaitForPendingFinalizers()
+
+    $sig = @'
+[DllImport("psapi.dll")]
+public static extern int EmptyWorkingSet(IntPtr hwProc);
+'@
+    $psapi = Add-Type -MemberDefinition $sig -Name "PsapiMemTrimV2" -Namespace "WinAurexRamKern" -PassThru -ErrorAction SilentlyContinue
+
+    $trimmedCount = 0
+    $procs = [System.Diagnostics.Process]::GetProcesses()
+    foreach ($p in $procs) {
+        try {
+            if ($p.Id -ne 0 -and $p.Id -ne 4) {
+                [WinAurexRamKern.PsapiMemTrimV2]::EmptyWorkingSet($p.Handle) | Out-Null
+                $trimmedCount++
+            }
+        } catch {}
+    }
+
+    Start-Sleep -Milliseconds 400
+    $memAfter = (Get-CimInstance Win32_OperatingSystem -ErrorAction SilentlyContinue).FreePhysicalMemory
+
+    $diffKB = $memAfter - $memBefore
+    $diffMB = [Math]::Max(0, [Math]::Round($diffKB / 1024, 1))
+
+    return [PSCustomObject]@{
+        ProcessesTrimmed = $trimmedCount
+        ReclaimedMB      = $diffMB
+        FreeMemoryMB     = [Math]::Round($memAfter / 1024, 0)
+    }
+}
+
+function Get-ProcessAnomalies {
+    [CmdletBinding()]
+    param()
+
+    $anomalies = [System.Collections.Generic.List[PSObject]]::new()
+    $procs = [System.Diagnostics.Process]::GetProcesses()
+    $sysIgnore = @("System", "Idle", "Registry", "smss", "csrss", "wininit", "winlogon", "lsass", "services", "dwm", "explorer")
+
+    foreach ($p in $procs) {
+        try {
+            if ($p.Id -eq 0 -or $p.Id -eq 4 -or $sysIgnore -contains $p.ProcessName) {
+                continue
+            }
+
+            $handles = $p.HandleCount
+            $threads = $p.Threads.Count
+            $memMB = [Math]::Round($p.WorkingSet64 / 1MB, 1)
+            $isHeadless = ($p.MainWindowHandle -eq [IntPtr]::Zero)
+
+            if ($isHeadless -and ($handles -gt 500 -or $threads -gt 30 -or $memMB -gt 250)) {
+                $reason = if ($handles -gt 500) { "High Handle Retention ($handles handles)" }
+                          elseif ($threads -gt 30) { "Excessive Thread Pool ($threads threads)" }
+                          else { "High Idle Working Set ($memMB MB)" }
+
+                $anomalies.Add([PSCustomObject]@{
+                    PID             = $p.Id
+                    ProcessName     = $p.ProcessName
+                    Handles         = $handles
+                    Threads         = $threads
+                    WorkingSetMB    = $memMB
+                    AnomalyReason   = $reason
+                    SuggestedAction = "Trim Working Set / Suppress Background Task"
+                })
+            }
+        } catch {}
+    }
+
+    return $anomalies
+}
+
+function Set-AiGamingShield {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$false)]
+        [switch]$Enable,
+        [switch]$Disable
+    )
+
+    $sysProfile = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile"
+    $priorityControl = "HKLM:\SYSTEM\CurrentControlSet\Control\PriorityControl"
+    $memMgmt = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
+
+    if ($Disable) {
+        if (Test-Path $sysProfile) {
+            Set-ItemProperty -Path $sysProfile -Name "SystemResponsiveness" -Value 20 -Type DWord -Force -ErrorAction SilentlyContinue
+            Set-ItemProperty -Path $sysProfile -Name "NetworkThrottlingIndex" -Value 10 -Type DWord -Force -ErrorAction SilentlyContinue
+        }
+        if (Test-Path $priorityControl) {
+            Set-ItemProperty -Path $priorityControl -Name "Win32PrioritySeparation" -Value 2 -Type DWord -Force -ErrorAction SilentlyContinue
+        }
+        return @{ Status = "Disabled"; PrioritySeparation = "0x2 (Standard)" }
+    } else {
+        if (-not (Test-Path $sysProfile)) { New-Item -Path $sysProfile -Force | Out-Null }
+        Set-ItemProperty -Path $sysProfile -Name "SystemResponsiveness" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
+        Set-ItemProperty -Path $sysProfile -Name "NetworkThrottlingIndex" -Value 0xFFFFFFFF -Type DWord -Force -ErrorAction SilentlyContinue
+
+        if (-not (Test-Path $priorityControl)) { New-Item -Path $priorityControl -Force | Out-Null }
+        Set-ItemProperty -Path $priorityControl -Name "Win32PrioritySeparation" -Value 0x28 -Type DWord -Force -ErrorAction SilentlyContinue
+
+        if (Test-Path $memMgmt) {
+            Set-ItemProperty -Path $memMgmt -Name "DisablePagingExecutive" -Value 1 -Type DWord -Force -ErrorAction SilentlyContinue
+        }
+
+        $pwrThrottling = "HKLM:\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling"
+        if (-not (Test-Path $pwrThrottling)) { New-Item -Path $pwrThrottling -Force | Out-Null }
+        Set-ItemProperty -Path $pwrThrottling -Name "PowerThrottlingOff" -Value 1 -Type DWord -Force -ErrorAction SilentlyContinue
+
+        return @{ Status = "Active"; PrioritySeparation = "0x28 (Short Fixed High Quantum)" }
+    }
+}
+
+Export-ModuleMember -Function Initialize-AiModel, Invoke-AiInference, Invoke-WinAurexAiScan, Invoke-WinAurexAiRemediation, Get-WinAurexHealthScore, Invoke-WinAurexRamFlush, Get-ProcessAnomalies, Set-AiGamingShield

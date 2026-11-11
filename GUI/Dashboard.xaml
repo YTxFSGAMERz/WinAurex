@@ -376,19 +376,27 @@
                                     <TextBlock Style="{StaticResource BodyText}" Text="Dynamic machine-learning &amp; heuristic classifier trained on 2,500+ Windows components. Scans services, background processes, thread/handle footprints, and bloatware packages without static list limitations." Margin="0,8,0,10"/>
                                     <TextBlock Name="TxtAiScanStatus" Text="Status: AI Engine Loaded. Ready to analyze system components." Foreground="#aaaaaa" FontSize="12"/>
                                 </StackPanel>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Width="200">
-                                    <Button Name="BtnAiScan" Style="{StaticResource AccentButton}" Height="40" Margin="0,0,0,8">
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Width="220">
+                                    <Button Name="BtnAiScan" Style="{StaticResource AccentButton}" Height="36" Margin="0,0,0,6">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE721;" Margin="0,0,8,0" VerticalAlignment="Center"/>
                                             <TextBlock Text="Run AI Diagnostic Scan" VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Button>
-                                    <Button Name="BtnAiOptimize" Background="#008f39" Foreground="#ffffff" BorderBrush="#008f39" FontWeight="Bold" Height="40" IsEnabled="False">
+                                    <Button Name="BtnAiOptimize" Background="#008f39" Foreground="#ffffff" BorderBrush="#008f39" FontWeight="Bold" Height="36" Margin="0,0,0,6" IsEnabled="False">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,8,0" VerticalAlignment="Center"/>
                                             <TextBlock Text="Execute AI Optimization" VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Button>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Name="BtnAiFlushRam" Grid.Column="0" Content="⚡ Flush RAM" Height="32" Margin="0,0,3,0" FontSize="11" Padding="2"/>
+                                        <Button Name="BtnAiGamingShield" Grid.Column="1" Content="🎮 Gaming Shield" Height="32" Margin="3,0,0,0" FontSize="11" Padding="2"/>
+                                    </Grid>
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -404,29 +412,29 @@
 
                             <Border Style="{StaticResource Card}" Grid.Column="0" Margin="0,0,10,0" Padding="15">
                                 <StackPanel>
-                                    <TextBlock Text="SERVICES FOUND" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
-                                    <TextBlock Name="TxtAiServicesCount" Text="0" FontSize="26" FontWeight="Bold" Foreground="#00adb5" Margin="0,5,0,0"/>
+                                    <TextBlock Text="SYSTEM HEALTH" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Name="TxtAiHealthScore" Text="--/100" FontSize="22" FontWeight="Bold" Foreground="#00ff41" Margin="0,5,0,0"/>
                                 </StackPanel>
                             </Border>
 
                             <Border Style="{StaticResource Card}" Grid.Column="1" Margin="0,0,10,0" Padding="15">
                                 <StackPanel>
-                                    <TextBlock Text="BLOATWARE APPS" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
-                                    <TextBlock Name="TxtAiAppsCount" Text="0" FontSize="26" FontWeight="Bold" Foreground="#ffb300" Margin="0,5,0,0"/>
+                                    <TextBlock Text="SERVICES FOUND" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Name="TxtAiServicesCount" Text="0" FontSize="22" FontWeight="Bold" Foreground="#00adb5" Margin="0,5,0,0"/>
                                 </StackPanel>
                             </Border>
 
                             <Border Style="{StaticResource Card}" Grid.Column="2" Margin="0,0,10,0" Padding="15">
                                 <StackPanel>
-                                    <TextBlock Text="HIGH-OVERHEAD TASKS" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
-                                    <TextBlock Name="TxtAiTasksCount" Text="0" FontSize="26" FontWeight="Bold" Foreground="#ff5722" Margin="0,5,0,0"/>
+                                    <TextBlock Text="BLOAT APPS" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Name="TxtAiAppsCount" Text="0" FontSize="22" FontWeight="Bold" Foreground="#ffb300" Margin="0,5,0,0"/>
                                 </StackPanel>
                             </Border>
 
                             <Border Style="{StaticResource Card}" Grid.Column="3" Margin="0" Padding="15">
                                 <StackPanel>
-                                    <TextBlock Text="PROJECTED IMPACT" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
-                                    <TextBlock Name="TxtAiProjectedImpact" Text="0 Overhead" FontSize="16" FontWeight="Bold" Foreground="#00ff41" Margin="0,8,0,0"/>
+                                    <TextBlock Text="PROCESS ANOMALIES" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Name="TxtAiAnomaliesCount" Text="0 Detected" FontSize="20" FontWeight="Bold" Foreground="#ff5722" Margin="0,6,0,0"/>
                                 </StackPanel>
                             </Border>
                         </Grid>
@@ -445,7 +453,8 @@
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Orientation="Horizontal">
                                         <Button Name="BtnAiFilterAll" Content="All Candidates" Height="30" Padding="10,2" Margin="0,0,6,0" FontSize="12"/>
-                                        <Button Name="BtnAiFilterSafe" Content="Tier 1 (Safe Only)" Height="30" Padding="10,2" Margin="0,0,6,0" FontSize="12"/>
+                                        <Button Name="BtnAiFilterSafe" Content="Tier 1 (Safe)" Height="30" Padding="10,2" Margin="0,0,6,0" FontSize="12"/>
+                                        <Button Name="BtnAiFilterAnomalies" Content="Process Anomalies" Height="30" Padding="10,2" Margin="0,0,0,0" FontSize="12"/>
                                     </StackPanel>
                                 </Grid>
 
