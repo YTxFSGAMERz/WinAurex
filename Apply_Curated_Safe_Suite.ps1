@@ -183,6 +183,14 @@ Invoke-SafeTweak "Privacy\Disable Location.reg" "Setting App Location Permission
 Invoke-SafeTweak "Privacy\Disable App Metadata Access.reg" "Restricting App Metadata Snooping" `
     -IsApplied { (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\contacts" -Name "Value" -ErrorAction SilentlyContinue).Value -eq "Deny" }
 
+Invoke-SafeTweak "Privacy\Apply_Deep_Privacy_Shield.ps1" "Applying Deep Privacy Shield (Find My Device, Advertising ID, Custom Dict, AI/Recall, App Permissions)" `
+    -IsApplied {
+        $findDevice = (Get-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\FindMyDevice" -Name "AllowFindMyDevice" -ErrorAction SilentlyContinue).AllowFindMyDevice -eq 0
+        $adPolicy   = (Get-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" -Name "DisabledByGroupPolicy" -ErrorAction SilentlyContinue).DisabledByGroupPolicy -eq 1
+        $appPrivacy = (Get-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" -Name "LetAppsAccessContacts" -ErrorAction SilentlyContinue).LetAppsAccessContacts -eq 2
+        $findDevice -and $adPolicy -and $appPrivacy
+    }
+
 # ==============================================================================
 # BLOCK 2: RESPONSIVENESS & SHELL ENHANCEMENTS
 # ==============================================================================
@@ -224,6 +232,12 @@ Invoke-SafeTweak "Explorer\Disable_Recent_Frequent.ps1" "Hiding Recent Files & F
         $frq = (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "ShowFrequent" -ErrorAction SilentlyContinue).ShowFrequent
         $rec -eq 0 -and $frq -eq 0
     }
+
+Invoke-SafeTweak "Shell\Disable_Desktop_Spotlight.ps1" "Hiding Desktop Spotlight 'Learn about this picture' Icon" `
+    -IsApplied { (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" -Name "{2cc5ca98-6485-489a-920e-b3e88a6ccce3}" -ErrorAction SilentlyContinue)."{2cc5ca98-6485-489a-920e-b3e88a6ccce3}" -eq 1 }
+
+Invoke-SafeTweak "Sync\Disable_OneDrive_Nag_And_Backup.ps1" "Blocking OneDrive 'Turn On Windows Backup' Nag Prompts & Autostart" `
+    -IsApplied { (Get-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\OneDrive" -Name "KFMBlockOptIn" -ErrorAction SilentlyContinue).KFMBlockOptIn -eq 1 }
 
 # ==============================================================================
 # BLOCK 3: GAMING, PERFORMANCE & NETWORK

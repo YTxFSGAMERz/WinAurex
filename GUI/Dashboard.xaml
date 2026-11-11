@@ -1,24 +1,26 @@
 <Window 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Windows Configuration &amp; Optimization Framework" 
-    Height="650" Width="900" 
-    Background="#121212" 
+    Title="WinAurex Optimization Workstation" 
+    Height="740" Width="1100" 
+    MinWidth="980" MinHeight="660"
+    Background="#0d1117" 
     WindowStartupLocation="CenterScreen" 
     FontFamily="Segoe UI" 
-    ResizeMode="CanMinimize">
+    WindowStyle="None"
+    ResizeMode="CanResizeWithGrip">
     
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="30" CornerRadius="8" GlassFrameThickness="0" UseAeroCaptionButtons="True"/>
+        <WindowChrome CaptionHeight="38" CornerRadius="10" GlassFrameThickness="0" UseAeroCaptionButtons="False"/>
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-        <!-- Custom ScrollBar Styling (Ultra Minimal) -->
+        <!-- Custom ScrollBar Styling -->
         <Style x:Key="ScrollThumbStyle" TargetType="{x:Type Thumb}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">
-                        <Border Background="#333333" CornerRadius="3" Margin="4,0,0,0"/>
+                        <Border Background="#30363d" CornerRadius="3" Margin="2,0,0,0"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -31,7 +33,7 @@
 
         <Style TargetType="{x:Type ScrollBar}">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Width" Value="8"/>
+            <Setter Property="Width" Value="6"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ScrollBar}">
@@ -72,13 +74,13 @@
 
         <!-- Standard Button Style -->
         <Style TargetType="Button">
-            <Setter Property="Background" Value="#1e1e1e"/>
+            <Setter Property="Background" Value="#161b22"/>
             <Setter Property="Foreground" Value="#ffffff"/>
-            <Setter Property="BorderBrush" Value="#333333"/>
+            <Setter Property="BorderBrush" Value="#30363d"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="15,10"/>
-            <Setter Property="Margin" Value="0,5,0,5"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="Margin" Value="0,4,0,4"/>
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -94,17 +96,12 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#2a2a2a"/>
+                    <Setter Property="Background" Value="#21262d"/>
                     <Setter Property="BorderBrush" Value="#00adb5"/>
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#00adb5" Opacity="0.5"/>
-                        </Setter.Value>
-                    </Setter>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="Background" Value="#00adb5"/>
-                    <Setter Property="Foreground" Value="#ffffff"/>
+                    <Setter Property="Foreground" Value="#0d1117"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -112,35 +109,24 @@
         <!-- Primary Accent Button -->
         <Style x:Key="AccentButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Background" Value="#00adb5"/>
-            <Setter Property="Foreground" Value="#121212"/>
+            <Setter Property="Foreground" Value="#0d1117"/>
             <Setter Property="BorderBrush" Value="#00adb5"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00adb5" Opacity="0.3"/>
-                </Setter.Value>
-            </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#00cfd9"/>
                     <Setter Property="BorderBrush" Value="#00cfd9"/>
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="#00cfd9" Opacity="0.8"/>
-                        </Setter.Value>
-                    </Setter>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="Background" Value="#008a90"/>
                     <Setter Property="Foreground" Value="#ffffff"/>
-                    <Setter Property="Effect" Value="{x:Null}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
 
         <!-- Danger Button -->
         <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="Background" Value="#1e1e1e"/>
+            <Setter Property="Background" Value="#21262d"/>
             <Setter Property="Foreground" Value="#ff5722"/>
             <Setter Property="BorderBrush" Value="#ff5722"/>
             <Style.Triggers>
@@ -151,986 +137,1243 @@
             </Style.Triggers>
         </Style>
 
-        <!-- CheckBox Style -->
-        <Style TargetType="CheckBox">
-            <Setter Property="Foreground" Value="#ffffff"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <!-- Hero Boost Button -->
+        <Style x:Key="HeroButton" TargetType="Button">
+            <Setter Property="Background" Value="#00adb5"/>
+            <Setter Property="Foreground" Value="#0d1117"/>
+            <Setter Property="BorderBrush" Value="#00ff41"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Margin" Value="0,6,0,6"/>
-        </Style>
-
-        <!-- TabItem Style -->
-        <Style TargetType="TabItem">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="TabItem">
-                        <Border Name="Border" Padding="20,10" BorderThickness="0,0,0,2" BorderBrush="Transparent" Background="Transparent" Cursor="Hand">
-                            <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header"/>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#00ff41"/>
+                    <Setter Property="Foreground" Value="#0d1117"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Window Titlebar Button -->
+        <Style x:Key="TitlebarButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#8b949e"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="42"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#21262d"/>
+                    <Setter Property="Foreground" Value="#ffffff"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="TitlebarCloseButton" TargetType="Button" BasedOn="{StaticResource TitlebarButton}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#da3633"/>
+                    <Setter Property="Foreground" Value="#ffffff"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Sidebar Navigation Button Style -->
+        <Style x:Key="NavButton" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#8b949e"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="0,2,0,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Name="NavBorder" Background="{TemplateBinding Background}" CornerRadius="6" Padding="12,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3"/>
+                                    <ColumnDefinition Width="26"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Name="ActivePill" Grid.Column="0" Background="Transparent" Width="3" Height="18" CornerRadius="2" HorizontalAlignment="Left"/>
+                                <TextBlock Grid.Column="1" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="{TemplateBinding Tag}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <TextBlock Grid.Column="2" Text="{TemplateBinding Content}" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                            </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#00adb5" />
-                                <Setter Property="Foreground" Value="#00adb5" />
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="NavBorder" Property="Background" Value="#21262d"/>
+                                <Setter Property="Foreground" Value="#ffffff"/>
                             </Trigger>
-                            <Trigger Property="IsSelected" Value="False">
-                                <Setter Property="Foreground" Value="#888888" />
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="NavBorder" Property="Background" Value="#1f2d3d"/>
+                                <Setter TargetName="ActivePill" Property="Background" Value="#00adb5"/>
+                                <Setter Property="Foreground" Value="#00adb5"/>
                             </Trigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="True"/>
-                                    <Condition Property="IsSelected" Value="False"/>
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Foreground" Value="#ffffff" />
-                            </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
 
-        <!-- TabControl Style -->
-        <Style TargetType="TabControl">
-            <Setter Property="Background" Value="#121212"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabControl">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel Grid.Row="0" IsItemsHost="True" Orientation="Horizontal" Background="#121212" Margin="0,0,0,10"/>
-                            <ContentPresenter Grid.Row="1" ContentSource="SelectedContent"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        <!-- CheckBox Style -->
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
         </Style>
 
         <!-- TextBlocks -->
         <Style x:Key="Header1" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#00adb5"/>
-            <Setter Property="FontSize" Value="28"/>
-            <Setter Property="FontWeight" Value="Light"/>
-            <Setter Property="Margin" Value="0,0,0,20"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
         </Style>
 
         <Style x:Key="Header2" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#ffffff"/>
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Margin" Value="0,15,0,10"/>
+            <Setter Property="Margin" Value="0,10,0,6"/>
         </Style>
 
         <Style x:Key="BodyText" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#a0a0a0"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#8b949e"/>
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
 
         <!-- Cards -->
         <Style x:Key="Card" TargetType="Border">
-            <Setter Property="Background" Value="#1e1e1e"/>
+            <Setter Property="Background" Value="#161b22"/>
             <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="Padding" Value="20"/>
-            <Setter Property="Margin" Value="0,0,0,20"/>
+            <Setter Property="Padding" Value="18"/>
+            <Setter Property="Margin" Value="0,0,0,16"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="#2a2a2a"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect BlurRadius="15" ShadowDepth="4" Direction="270" Color="#000000" Opacity="0.4"/>
-                </Setter.Value>
-            </Setter>
+            <Setter Property="BorderBrush" Value="#30363d"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="#00adb5"/>
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#00adb5" Opacity="0.4"/>
-                        </Setter.Value>
-                    </Setter>
+                    <Setter Property="BorderBrush" Value="#484f58"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
     </Window.Resources>
 
-    <Grid Margin="20,30,20,20">
+    <!-- Main Window Shell Layout -->
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="38"/> <!-- Titlebar -->
+            <RowDefinition Height="*"/>  <!-- Main Body (Sidebar + Content) -->
+            <RowDefinition Height="30"/> <!-- Footer Status Bar -->
         </Grid.RowDefinitions>
 
-        <!-- Add a custom drag area since we're using WindowChrome -->
-        <Border Grid.RowSpan="3" VerticalAlignment="Top" Height="30" Margin="-20,-30,-20,0" Background="Transparent" WindowChrome.IsHitTestVisibleInChrome="True"/>
+        <!-- 1. CUSTOM TITLEBAR -->
+        <Grid Grid.Row="0" Background="#0d1117">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-        <!-- Header -->
-        <StackPanel Grid.Row="0">
-            <TextBlock Style="{StaticResource Header1}" Text="Optimization Framework"/>
-        </StackPanel>
+            <!-- Window Icon & Title (HitTestVisible False enables OS drag) -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="14,0,0,0" WindowChrome.IsHitTestVisibleInChrome="False">
+                <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE945;" FontSize="15" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                <TextBlock Text="WinAurex" Foreground="#ffffff" FontWeight="Bold" FontSize="13" VerticalAlignment="Center"/>
+                <TextBlock Text=" Optimization Workstation" Foreground="#8b949e" FontSize="13" VerticalAlignment="Center"/>
+                <Border Background="#1f2d3d" CornerRadius="4" Padding="6,2" Margin="10,0,0,0">
+                    <TextBlock Text="v5.5 EXTREME" Foreground="#00adb5" FontSize="10" FontWeight="Bold"/>
+                </Border>
+            </StackPanel>
 
-        <!-- Main Content (Tabs) -->
-        <TabControl Grid.Row="1">
-            <!-- TABS: Profiles -->
-            <TabItem Header="PROFILES">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
-                    <StackPanel Margin="0,10,0,10">
-                        <TextBlock Style="{StaticResource BodyText}" Text="Select an orchestrator profile below. Applying a profile automatically captures a state snapshot for secure rollback." Margin="0,0,0,20"/>
-                        
-                        <!-- Profile Card 1 -->
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE945;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Max Performance Profile" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock Style="{StaticResource BodyText}" Text="Target: Esports Gamers, Audio Producers, Latency Obsessives. Strips telemetry, disables mouse acceleration, enforces WASAPI exclusive mode."/>
-                                </StackPanel>
-                                <Button Name="BtnApplyMaxPerf" Grid.Column="1" Style="{StaticResource AccentButton}" Width="140" Height="40">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                        <TextBlock Text="Apply Profile" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                            </Grid>
-                        </Border>
+            <!-- Blank center drag area -->
+            <Grid Grid.Column="1" Background="Transparent"/>
 
-                        <!-- Profile Card 2 -->
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE8F1;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Balanced Creator Profile" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock Style="{StaticResource BodyText}" Text="Target: Developers, Video Editors, Power Users. Optimizes Explorer and removes UI bloat while retaining Windows Update and standard drivers."/>
-                                </StackPanel>
-                                <Button Name="BtnApplyBalanced" Grid.Column="1" Style="{StaticResource AccentButton}" Width="140" Height="40">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                        <TextBlock Text="Apply Profile" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                            </Grid>
-                        </Border>
+            <!-- Window Caption Controls (HitTestVisible True enables button clicks) -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="0,3,6,0" WindowChrome.IsHitTestVisibleInChrome="True">
+                <Button Name="BtnWinMinimize" Style="{StaticResource TitlebarButton}" Content="&#x2014;" ToolTip="Minimize"/>
+                <Button Name="BtnWinMaximize" Style="{StaticResource TitlebarButton}" Content="&#x25A2;" ToolTip="Maximize / Restore"/>
+                <Button Name="BtnWinClose" Style="{StaticResource TitlebarCloseButton}" Content="&#x2715;" ToolTip="Close"/>
+            </StackPanel>
+        </Grid>
 
-                        <!-- Profile Card 3 -->
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE773;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Enterprise Compliance Profile" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock Style="{StaticResource BodyText}" Text="Target: SysAdmins, Corporate Devices. Enforces HVCI/Memory Integrity, strict firewall rules, telemetry isolation, blocks consumer bloatware."/>
-                                </StackPanel>
-                                <Button Name="BtnApplyEnterprise" Grid.Column="1" Style="{StaticResource AccentButton}" Width="140" Height="40">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                        <TextBlock Text="Apply Profile" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                            </Grid>
-                        </Border>
+        <!-- 2. MAIN BODY (SIDEBAR + CONTENT) -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"/> <!-- Sidebar Navigation -->
+                <ColumnDefinition Width="*"/>   <!-- Dynamic Content Host -->
+            </Grid.ColumnDefinitions>
+
+            <!-- A. LEFT SIDEBAR -->
+            <Border Grid.Column="0" Background="#161b22" BorderBrush="#30363d" BorderThickness="0,0,1,0">
+                <Grid Margin="12,14,12,12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/> <!-- Brand Tag -->
+                        <RowDefinition Height="*"/>    <!-- Nav Buttons -->
+                        <RowDefinition Height="Auto"/> <!-- Sidebar Telemetry & Actions -->
+                    </Grid.RowDefinitions>
+
+                    <!-- Section Label -->
+                    <TextBlock Grid.Row="0" Text="NAVIGATION" Foreground="#6e7681" FontSize="10" FontWeight="Bold" Margin="8,0,0,10"/>
+
+                    <!-- Nav Items -->
+                    <StackPanel Grid.Row="1">
+                        <RadioButton Name="NavOverview" Style="{StaticResource NavButton}" Content="Overview HUD" Tag="&#xE80F;" IsChecked="True"/>
+                        <RadioButton Name="NavAiOptimizer" Style="{StaticResource NavButton}" Content="AI Optimizer" Tag="&#xE945;"/>
+                        <RadioButton Name="NavTweaks" Style="{StaticResource NavButton}" Content="Tweaks &amp; Debloat" Tag="&#xE713;"/>
+                        <RadioButton Name="NavSoftwareHub" Style="{StaticResource NavButton}" Content="Software Hub" Tag="&#xE71D;"/>
+                        <RadioButton Name="NavObservability" Style="{StaticResource NavButton}" Content="Live Monitor" Tag="&#xE9D9;"/>
+                        <RadioButton Name="NavPcCleaner" Style="{StaticResource NavButton}" Content="PC Cleaner" Tag="&#xE74D;"/>
+                        <RadioButton Name="NavProfiles" Style="{StaticResource NavButton}" Content="Profiles" Tag="&#xE770;"/>
+                        <RadioButton Name="NavRollback" Style="{StaticResource NavButton}" Content="Rollback Engine" Tag="&#xE777;"/>
                     </StackPanel>
-                </ScrollViewer>
-            </TabItem>
 
-            <!-- TABS: AI Optimizer -->
-            <TabItem Header="AI OPTIMIZER">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
-                    <StackPanel Margin="0,10,0,10">
-                        <!-- Hero Card: AI Engine Status & Scan Control -->
-                        <Border Style="{StaticResource Card}">
+                    <!-- Sidebar Footer Telemetry & Quick Flush -->
+                    <Border Grid.Row="2" Background="#0d1117" BorderBrush="#30363d" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,10,0,0">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,4">
+                                <TextBlock Text="ACTIVE RAM" Foreground="#8b949e" FontSize="10" FontWeight="Bold" HorizontalAlignment="Left"/>
+                                <TextBlock Name="TxtSidebarRam" Text="Calculating..." Foreground="#00ff41" FontSize="10" FontWeight="Bold" HorizontalAlignment="Right"/>
+                            </Grid>
+                            <ProgressBar Name="ProgressSidebarRam" Height="4" Background="#21262d" Foreground="#00adb5" Value="35" Maximum="100" BorderThickness="0" Margin="0,0,0,8"/>
+                            
+                            <Button Name="BtnSidebarFlushRam" Height="28" Background="#161b22" BorderBrush="#00adb5" Foreground="#00adb5" FontSize="11">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7E8;" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Flush Working Set" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- B. DYNAMIC CONTENT HOST -->
+            <Grid Grid.Column="1" Margin="20,15,20,10">
+
+                <!-- ============================================================== -->
+                <!-- VIEW 1: SYSTEM OVERVIEW / HUD (NEW LANDING VIEW)               -->
+                <!-- ============================================================== -->
+                <Grid Name="ViewOverview" Visibility="Visible">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Header1}" Text="System Intelligence &amp; Performance HUD"/>
+                            <TextBlock Style="{StaticResource BodyText}" Text="Real-time hardware interrogation, optimization metrics, and 1-click executive system boost." Margin="0,0,0,16"/>
+
+                            <!-- Hero One-Click Boost Card -->
+                            <Border Style="{StaticResource Card}" Background="#16202c" BorderBrush="#00adb5" Padding="20">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0" VerticalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7E8;" FontSize="20" Foreground="#00ff41" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Executive Performance Boost" Foreground="#ffffff" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Simultaneously launches AI Neural Optimization, flushes RAM working sets, enforces 3:1 CPU foreground priority, and primes low-latency DNS in one smooth automated pass."/>
+                                    </StackPanel>
+                                    <Button Name="BtnExecutiveBoost" Grid.Column="1" Style="{StaticResource HeroButton}" Width="240" Height="48">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE896;" Margin="0,0,8,0" VerticalAlignment="Center" FontSize="18"/>
+                                            <TextBlock Text="ONE-CLICK OPTIMIZE" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </Border>
+
+                            <!-- Hardware Telemetry Matrix (4 Columns) -->
+                            <Grid Margin="0,0,0,16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Hardware 1: Processor -->
+                                <Border Grid.Column="0" Style="{StaticResource Card}" Padding="14">
+                                    <StackPanel>
+                                        <TextBlock Text="PROCESSOR" Foreground="#6e7681" FontSize="10" FontWeight="Bold"/>
+                                        <TextBlock Name="TxtHudCpuName" Text="Interrogating..." Foreground="#ffffff" FontSize="14" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Margin="0,4,0,2"/>
+                                        <TextBlock Name="TxtHudCpuCores" Text="Cores / Threads" Foreground="#00adb5" FontSize="12"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Hardware 2: Memory -->
+                                <Border Grid.Column="2" Style="{StaticResource Card}" Padding="14">
+                                    <StackPanel>
+                                        <TextBlock Text="MEMORY" Foreground="#6e7681" FontSize="10" FontWeight="Bold"/>
+                                        <TextBlock Name="TxtHudRamTotal" Text="Interrogating..." Foreground="#ffffff" FontSize="14" FontWeight="SemiBold" Margin="0,4,0,2"/>
+                                        <TextBlock Name="TxtHudRamUsed" Text="Active Working Set" Foreground="#00ff41" FontSize="12"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Hardware 3: OS & Build -->
+                                <Border Grid.Column="4" Style="{StaticResource Card}" Padding="14">
+                                    <StackPanel>
+                                        <TextBlock Text="OPERATING SYSTEM" Foreground="#6e7681" FontSize="10" FontWeight="Bold"/>
+                                        <TextBlock Name="TxtHudOsBuild" Text="Windows 11" Foreground="#ffffff" FontSize="14" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Margin="0,4,0,2"/>
+                                        <TextBlock Name="TxtHudPowerPlan" Text="Power Plan" Foreground="#00adb5" FontSize="12" TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Hardware 4: AI Health Grade -->
+                                <Border Grid.Column="6" Style="{StaticResource Card}" Padding="14" BorderBrush="#a855f7">
+                                    <StackPanel>
+                                        <TextBlock Text="AI HEALTH SCORE" Foreground="#a855f7" FontSize="10" FontWeight="Bold"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,4,0,2">
+                                            <TextBlock Name="TxtHudHealthGrade" Text="A+" Foreground="#00ff41" FontSize="20" FontWeight="Bold" Margin="0,0,8,0"/>
+                                            <TextBlock Name="TxtHudHealthScore" Text="98 / 100" Foreground="#ffffff" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Text="Optimal Workstation" Foreground="#8b949e" FontSize="12"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                            <!-- Process, Thread & Latency Live Matrix -->
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource Header2}" Text="System Threading &amp; Real-Time Responsiveness" Margin="0,0,0,12"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Active Processes" Foreground="#8b949e" FontSize="12"/>
+                                            <TextBlock Name="TxtHudProcessCount" Text="---" Foreground="#ffffff" FontSize="20" FontWeight="Bold"/>
+                                            <TextBlock Text="Standard target: &lt; 140" Foreground="#6e7681" FontSize="11"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="Total Threads" Foreground="#8b949e" FontSize="12"/>
+                                            <TextBlock Name="TxtHudThreadCount" Text="---" Foreground="#ffffff" FontSize="20" FontWeight="Bold"/>
+                                            <TextBlock Text="Reduced scheduler jitter" Foreground="#6e7681" FontSize="11"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Text="Open Handles" Foreground="#8b949e" FontSize="12"/>
+                                            <TextBlock Name="TxtHudHandleCount" Text="---" Foreground="#ffffff" FontSize="20" FontWeight="Bold"/>
+                                            <TextBlock Text="Memory leak guard" Foreground="#6e7681" FontSize="11"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="3">
+                                            <TextBlock Text="DPC Latency" Foreground="#8b949e" FontSize="12"/>
+                                            <TextBlock Name="TxtHudLatencyStatus" Text="Optimal (&lt; 300µs)" Foreground="#00ff41" FontSize="18" FontWeight="Bold"/>
+                                            <TextBlock Text="Real-time frame pacing" Foreground="#6e7681" FontSize="11"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+                <!-- ============================================================== -->
+                <!-- VIEW 2: AI OPTIMIZER                                           -->
+                <!-- ============================================================== -->
+                <Grid Name="ViewAiOptimizer" Visibility="Collapsed">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Header1}" Text="AI Heuristic &amp; Neural System Optimizer"/>
+                            <TextBlock Style="{StaticResource BodyText}" Text="Automated machine learning classification across running processes, services, AppX packages, and telemetry tasks." Margin="0,0,0,16"/>
+
+                            <!-- Score & Action Bar -->
+                            <Border Style="{StaticResource Card}" Background="#161e2a" BorderBrush="#00adb5" Padding="18">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Health Badge -->
+                                    <Border Grid.Column="0" Background="#0d1117" BorderBrush="#00adb5" BorderThickness="2" CornerRadius="12" Width="100" Height="90" Margin="0,0,20,0">
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="HEALTH" Foreground="#8b949e" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                            <TextBlock Name="TxtAiHealthScore" Text="98" Foreground="#00ff41" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="SCORE" Foreground="#00adb5" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Center Telemetry Summary -->
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Name="TxtAiScanStatus" Text="Status: AI Engine ready for full diagnostic scan." Foreground="#ffffff" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <TextBlock Text="Services Flagged: " Foreground="#8b949e" FontSize="12"/>
+                                            <TextBlock Name="TxtAiServicesCount" Text="0" Foreground="#ffb300" FontWeight="Bold" FontSize="12" Margin="0,0,12,0"/>
+                                            <TextBlock Text="AppX Candidates: " Foreground="#8b949e" FontSize="12"/>
+                                            <TextBlock Name="TxtAiAppsCount" Text="0" Foreground="#00adb5" FontWeight="Bold" FontSize="12" Margin="0,0,12,0"/>
+                                            <TextBlock Text="Tasks Flagged: " Foreground="#8b949e" FontSize="12"/>
+                                            <TextBlock Name="TxtAiTasksCount" Text="0" Foreground="#ff5722" FontWeight="Bold" FontSize="12" Margin="0,0,12,0"/>
+                                            <TextBlock Text="Anomalies: " Foreground="#8b949e" FontSize="12"/>
+                                            <TextBlock Name="TxtAiAnomaliesCount" Text="0" Foreground="#ff5722" FontWeight="Bold" FontSize="12"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Projected RAM Reclaim: " Foreground="#8b949e" FontSize="12"/>
+                                            <TextBlock Name="TxtAiProjectedImpact" Text="0 MB" Foreground="#00ff41" FontWeight="Bold" FontSize="12" Margin="0,0,12,0"/>
+                                            <TextBlock Text="Candidates: " Foreground="#8b949e" FontSize="12"/>
+                                            <TextBlock Name="TxtAiCandidateCount" Text="0" Foreground="#ffffff" FontWeight="Bold" FontSize="12"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <!-- Action Buttons -->
+                                    <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
+                                        <Button Name="BtnAiScan" Style="{StaticResource AccentButton}" Width="190" Height="36" Margin="0,0,0,6">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE721;" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Run AI Diagnostic Scan" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Name="BtnAiOptimize" Style="{StaticResource DangerButton}" Width="190" Height="34" Margin="0,0,0,6">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7E8;" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Execute AI Optimization" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Name="BtnAiFlushRam" Width="92" Height="30" Margin="0,0,6,0" FontSize="11">
+                                                <TextBlock Text="⚡ Flush RAM" VerticalAlignment="Center"/>
+                                            </Button>
+                                            <Button Name="BtnAiGamingShield" Width="92" Height="30" FontSize="11" Foreground="#00adb5" BorderBrush="#00adb5">
+                                                <TextBlock Text="🎮 Gaming Shield" VerticalAlignment="Center"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Filter Pills & Data Grid -->
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <Grid Margin="0,0,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Style="{StaticResource Header2}" Text="AI Classification Findings &amp; Heuristic Evaluation" Margin="0" VerticalAlignment="Center"/>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                            <Button Name="BtnAiFilterAll" Content="All Candidates" Height="28" Padding="10,0" Margin="0,0,6,0" FontSize="11"/>
+                                            <Button Name="BtnAiFilterSafe" Content="Tier 1 Safe" Height="28" Padding="10,0" Margin="0,0,6,0" FontSize="11"/>
+                                            <Button Name="BtnAiFilterAnomalies" Content="Process Anomalies" Height="28" Padding="10,0" FontSize="11" Foreground="#ff5722"/>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <ListView Name="ListAiFindings" Background="#0d1117" Foreground="#ffffff" BorderBrush="#30363d" Height="260">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Type" DisplayMemberBinding="{Binding TargetType}" Width="100"/>
+                                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="180"/>
+                                                <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" Width="140"/>
+                                                <GridViewColumn Header="Confidence" DisplayMemberBinding="{Binding Confidence}" Width="90"/>
+                                                <GridViewColumn Header="Tier" DisplayMemberBinding="{Binding RiskTier}" Width="70"/>
+                                                <GridViewColumn Header="Action Recommendation" DisplayMemberBinding="{Binding Action}" Width="170"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+                <!-- ============================================================== -->
+                <!-- VIEW 3: TWEAKS & DEBLOAT                                       -->
+                <!-- ============================================================== -->
+                <Grid Name="ViewTweaks" Visibility="Collapsed">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Header1}" Text="Modular Tweaks &amp; OS Debloat Engine"/>
+                            <TextBlock Style="{StaticResource BodyText}" Text="Permanent background service pruners, shovelware scrubbers, shell modernizers, and low-latency network tuning." Margin="0,0,0,16"/>
+
+                            <!-- Tweak 1: Services Optimizer -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE713;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Permanent Service Pruning" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Stops and disables 15+ useless background services (DiagTrack, WerSvc, MapsBroker, lfsvc, RemoteRegistry, RetailDemo, Xbox Live, etc.) to free RAM."/>
+                                    </StackPanel>
+                                    <Button Name="BtnOptimizeServices" Grid.Column="1" Style="{StaticResource AccentButton}" Width="160" Height="36">
+                                        <TextBlock Text="Prune Services" VerticalAlignment="Center"/>
+                                    </Button>
+                                </Grid>
+                            </Border>
+
+                            <!-- Tweak 2: Deep OS Debloat -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE74D;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Guarded OS Debloat &amp; Appx Purge" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Scrubs third-party sponsored shovelware (Candy Crush, TikTok) and consumer bloat (Tips, Feedback Hub, Solitaire, News) while strictly protecting Microsoft Store, Terminal, and Calculator."/>
+                                    </StackPanel>
+                                    <Button Name="BtnDebloatOS" Grid.Column="1" Style="{StaticResource AccentButton}" Width="160" Height="36">
+                                        <TextBlock Text="Debloat OS" VerticalAlignment="Center"/>
+                                    </Button>
+                                </Grid>
+                            </Border>
+
+                            <!-- Tweak 3: Process & Thread Reducer -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE950;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Process, Thread &amp; Handle Reducer" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Blocks background apps execution globally, suppresses heavy telemetry scheduled tasks, sets foreground CPU priority (SystemResponsiveness = 0), and flushes memory working sets."/>
+                                    </StackPanel>
+                                    <Button Name="BtnReduceThreads" Grid.Column="1" Style="{StaticResource AccentButton}" Width="160" Height="36">
+                                        <TextBlock Text="Reduce Overhead" VerticalAlignment="Center"/>
+                                    </Button>
+                                </Grid>
+                            </Border>
+
+                            <!-- Tweak 4: Microsoft Defender Controller -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE72E;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Microsoft Defender Controller" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Disables real-time scanning and sample submission via official Group Policy. Automatically detects Tamper Protection constraints and guides 1-click toggling."/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                            <TextBlock Text="Real-Time Protection: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtDefenderRealtimeStatus" Text="Checking..." Foreground="#00ff41" FontSize="11" FontWeight="Bold" Margin="0,0,14,0"/>
+                                            <TextBlock Text="Tamper Protection: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtDefenderTamperStatus" Text="Checking..." Foreground="#ffb300" FontSize="11" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <Button Name="BtnDisableDefender" Style="{StaticResource AccentButton}" Width="160" Height="32" Margin="0,0,0,4">
+                                            <TextBlock Text="Disable Defender" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnOpenThreatSettings" Width="160" Height="28" Margin="0,0,0,4" Background="#16202c" Foreground="#ffb300" BorderBrush="#ffb300" FontSize="11">
+                                            <TextBlock Text="Security Settings" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnEnableDefender" Width="160" Height="28">
+                                            <TextBlock Text="Restore Defender" VerticalAlignment="Center"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Tweak 5: Windows 11 Explorer & UI Modernizer -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE770;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Windows 11 Explorer &amp; UI Modernizer" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Restores classic instant context menu, compact density, always-on file extensions and hidden items, sets 'This PC' as default, and decouples Start search from Bing cloud queries."/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <Button Name="BtnModernizeExplorer" Style="{StaticResource AccentButton}" Width="160" Height="32" Margin="0,0,0,4">
+                                            <TextBlock Text="Modernize UI" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnRestoreExplorer" Width="160" Height="28">
+                                            <TextBlock Text="Restore Defaults" VerticalAlignment="Center"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Tweak 6: DNS & Network Accelerator -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE774;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="DNS &amp; Low-Latency Network Accelerator" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Switches active adapters to ultra-low latency DNS (Cloudflare, Google, AdGuard ad-blocking), flushes Windows DNS cache, and tunes TCP Auto-Tuning and ECN parameters."/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <Button Name="BtnDnsCloudflare" Style="{StaticResource AccentButton}" Width="160" Height="28" Margin="0,0,0,3">
+                                            <TextBlock Text="Cloudflare 1.1.1.1" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnDnsGoogle" Width="160" Height="28" Margin="0,0,0,3">
+                                            <TextBlock Text="Google 8.8.8.8" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnDnsAdGuard" Width="160" Height="28" Margin="0,0,0,3">
+                                            <TextBlock Text="AdGuard (Ad-Block)" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnDnsDhcp" Width="160" Height="28" Margin="0,0,0,3">
+                                            <TextBlock Text="Reset to DHCP" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnDnsFlush" Width="160" Height="28" Foreground="#00adb5" BorderBrush="#00adb5">
+                                            <TextBlock Text="⚡ Flush DNS Cache" VerticalAlignment="Center"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Tweak 7: Hardware Power & Storage Engine -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7E8;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Hardware Power &amp; Storage Engine" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Unlocks the hidden Windows Ultimate Performance power plan, recovers 8 GB–32 GB SSD storage by compressing hiberfil.sys, and executes native NVMe/SSD hardware TRIM."/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <Button Name="BtnUnlockUltimatePlan" Style="{StaticResource AccentButton}" Width="160" Height="30" Margin="0,0,0,3">
+                                            <TextBlock Text="Ultimate Plan" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnReclaimHiberfil" Width="160" Height="28" Margin="0,0,0,3">
+                                            <TextBlock Text="Reclaim SSD Space" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnRunSsdTrim" Width="160" Height="28">
+                                            <TextBlock Text="Run SSD TRIM" VerticalAlignment="Center"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Tweak 8: Automated Startup Optimizer -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7B5;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Automated Startup Optimizer" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Scans system and user registry autoruns, safely relocating high-impact bloatware (Teams, OneDrive, Spotify, Cortana, Skype, Discord) to Run-Disabled for near-instant cold boot speeds."/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <Button Name="BtnOptimizeStartup" Style="{StaticResource AccentButton}" Width="160" Height="30" Margin="0,0,0,3">
+                                            <TextBlock Text="Prune Startup" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnRestoreStartup" Width="160" Height="28">
+                                            <TextBlock Text="Restore All" VerticalAlignment="Center"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Tweak 9: Deep Privacy & App Permissions Shield -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE72D;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Deep Privacy &amp; App Permissions Shield" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Disables Find My Device, Recommendations &amp; Advertising ID, Inking/Typing keystroke logging, Online Speech Recognition, Voice Activation ('Hey Copilot'), On-Device AI/Recall analysis, and restricts background app capability access (Contacts, Calendar, Tasks, Diagnostics, Radios)."/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <Button Name="BtnApplyPrivacyShield" Style="{StaticResource AccentButton}" Width="160" Height="30" Margin="0,0,0,3">
+                                            <TextBlock Text="Harden Privacy" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnRestorePrivacy" Width="160" Height="28">
+                                            <TextBlock Text="Restore Defaults" VerticalAlignment="Center"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Tweak 10: Shell Clutter, Widgets & Backup Nag Killer -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE74C;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Shell Clutter, Widgets &amp; Backup Nag Killer" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Completely terminates and disables the Windows 11 Widgets Board &amp; MSN news feeds, hides the un-deletable 'Learn about this picture' desktop Spotlight icon, and blocks OneDrive 'Turn On Windows Backup' nag prompts."/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <Button Name="BtnKillShellClutter" Style="{StaticResource AccentButton}" Width="160" Height="30" Margin="0,0,0,3">
+                                            <TextBlock Text="Eliminate Clutter" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnRestoreShellClutter" Width="160" Height="28">
+                                            <TextBlock Text="Restore Defaults" VerticalAlignment="Center"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+                <!-- ============================================================== -->
+                <!-- VIEW 4: SOFTWARE HUB                                           -->
+                <!-- ============================================================== -->
+                <Grid Name="ViewSoftwareHub" Visibility="Collapsed">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Header1}" Text="Curated Software Hub &amp; Unattended Package Hub"/>
+                            <TextBlock Style="{StaticResource BodyText}" Text="Curated 1-click silent unattended installer powered by native Windows Package Manager (winget). Select packages and install in batch without telemetry or installers bloat." Margin="0,0,0,16"/>
+
+                            <!-- Controls & Search Bar -->
+                            <Border Style="{StaticResource Card}" Padding="16">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Top Row: Search and Action Buttons -->
+                                    <Grid Grid.Row="0" Margin="0,0,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="280"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Search Box -->
+                                        <Border Grid.Column="0" Background="#0d1117" BorderBrush="#30363d" BorderThickness="1" CornerRadius="6" Height="34">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="30"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE721;" Foreground="#6e7681" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                <TextBox Name="TxtSoftwareSearch" Grid.Column="1" Background="Transparent" Foreground="#ffffff" BorderThickness="0" VerticalAlignment="Center" FontSize="13" Padding="0,0,8,0" CaretBrush="#00adb5"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <!-- Category Selectors -->
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="14,0,0,0" VerticalAlignment="Center">
+                                            <Button Name="BtnSoftwareSelectAll" Content="All" Height="28" Padding="10,0" Margin="0,0,6,0" FontSize="11"/>
+                                            <Button Name="BtnFilterBrowsers" Content="Browsers" Height="28" Padding="10,0" Margin="0,0,6,0" FontSize="11"/>
+                                            <Button Name="BtnFilterGaming" Content="Gaming" Height="28" Padding="10,0" Margin="0,0,6,0" FontSize="11"/>
+                                            <Button Name="BtnFilterDev" Content="Dev &amp; Tools" Height="28" Padding="10,0" Margin="0,0,6,0" FontSize="11"/>
+                                            <Button Name="BtnSoftwareClear" Content="Clear" Height="28" Padding="10,0" FontSize="11"/>
+                                        </StackPanel>
+
+                                        <!-- Install Button -->
+                                        <Button Name="BtnSoftwareInstall" Grid.Column="2" Style="{StaticResource AccentButton}" Width="190" Height="36">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE896;" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Install Selected Apps" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+
+                                    <!-- Bottom Row: Status and Progress Bar -->
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ProgressBar Name="ProgressSoftware" Grid.Column="0" Height="4" Background="#21262d" Foreground="#00ff41" Value="0" Maximum="100" BorderThickness="0" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                                        <TextBlock Name="TxtSoftwareStatus" Grid.Column="1" Text="Ready to install" Foreground="#00adb5" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+
+                            <!-- Software Categories Grid -->
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="14"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="14"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE945;" FontSize="22" Foreground="#00adb5" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="WinAurex Neural Optimization Engine" VerticalAlignment="Center"/>
-                                        <Border Background="#1b3a3d" CornerRadius="4" Padding="8,2" Margin="12,0,0,0" VerticalAlignment="Center">
-                                            <TextBlock Text="v1.0 (99.27% Accuracy)" Foreground="#00adb5" FontSize="11" FontWeight="Bold"/>
-                                        </Border>
+
+                                <!-- Column 1: Web Browsers -->
+                                <Border Grid.Column="0" Style="{StaticResource Card}">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE774;" FontSize="16" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Web Browsers" Margin="0" FontSize="15" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <CheckBox Name="ChkAppBrave" Content="Brave Browser" Tag="Brave.Brave" IsChecked="True"/>
+                                        <CheckBox Name="ChkAppChrome" Content="Google Chrome" Tag="Google.Chrome"/>
+                                        <CheckBox Name="ChkAppFirefox" Content="Mozilla Firefox" Tag="Mozilla.Firefox"/>
                                     </StackPanel>
-                                    <TextBlock Style="{StaticResource BodyText}" Text="Dynamic machine-learning &amp; heuristic classifier trained on 2,500+ Windows components. Scans services, background processes, thread/handle footprints, and bloatware packages without static list limitations." Margin="0,8,0,10"/>
-                                    <TextBlock Name="TxtAiScanStatus" Text="Status: AI Engine Loaded. Ready to analyze system components." Foreground="#aaaaaa" FontSize="12"/>
+                                </Border>
+
+                                <!-- Column 2: Gaming & Media -->
+                                <Border Grid.Column="2" Style="{StaticResource Card}">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7FC;" FontSize="16" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Gaming &amp; Media" Margin="0" FontSize="15" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <CheckBox Name="ChkAppSteam" Content="Steam" Tag="Valve.Steam"/>
+                                        <CheckBox Name="ChkAppDiscord" Content="Discord" Tag="Discord.Discord"/>
+                                        <CheckBox Name="ChkAppOBS" Content="OBS Studio" Tag="OBSProject.OBSStudio"/>
+                                        <CheckBox Name="ChkAppVLC" Content="VLC Media Player" Tag="VideoLAN.VLC" IsChecked="True"/>
+                                        <CheckBox Name="ChkAppSpotify" Content="Spotify" Tag="Spotify.Spotify"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Column 3: Dev & Power Tools -->
+                                <Border Grid.Column="4" Style="{StaticResource Card}">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE756;" FontSize="16" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Dev &amp; Utilities" Margin="0" FontSize="15" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <CheckBox Name="ChkAppVSCode" Content="VS Code" Tag="Microsoft.VisualStudioCode"/>
+                                        <CheckBox Name="ChkAppGit" Content="Git" Tag="Git.Git"/>
+                                        <CheckBox Name="ChkAppPython" Content="Python 3.12" Tag="Python.Python.3.12"/>
+                                        <CheckBox Name="ChkAppNode" Content="Node.js (LTS)" Tag="OpenJS.NodeJS.LTS"/>
+                                        <CheckBox Name="ChkApp7Zip" Content="7-Zip" Tag="7zip.7zip" IsChecked="True"/>
+                                        <CheckBox Name="ChkAppNotepad" Content="Notepad++" Tag="Notepad++.Notepad++" IsChecked="True"/>
+                                        <CheckBox Name="ChkAppEverything" Content="Everything Search" Tag="voidtools.Everything" IsChecked="True"/>
+                                        <CheckBox Name="ChkAppPowerToys" Content="PowerToys" Tag="Microsoft.PowerToys"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+                <!-- ============================================================== -->
+                <!-- VIEW 5: LIVE MONITOR / OBSERVABILITY                           -->
+                <!-- ============================================================== -->
+                <Grid Name="ViewObservability" Visibility="Collapsed">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Header1}" Text="Live System Telemetry &amp; DPC Latency Monitor"/>
+                            <TextBlock Style="{StaticResource BodyText}" Text="Real-time native telemetry polling via Performance Counters and WMI. Monitors DPC latency thresholds and memory leaks." Margin="0,0,0,16"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="14"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Left Column -->
+                                <StackPanel Grid.Column="0">
+                                    <Border Style="{StaticResource Card}">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                                <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE909;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                <TextBlock Style="{StaticResource Header2}" Text="Deferred Procedure Calls (DPC/sec)" Margin="0" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Name="TxtDpcLatency" Text="---" FontSize="36" FontWeight="Bold" Foreground="#00ff41"/>
+                                            <TextBlock Style="{StaticResource BodyText}" Text="Real-time kernel deferred execution. Sustained spikes indicate driver bottlenecks or frame drops."/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Style="{StaticResource Card}">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                                <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE950;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                <TextBlock Style="{StaticResource Header2}" Text="Available Physical Memory (MB)" Margin="0" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Name="TxtMemAvailable" Text="---" FontSize="36" FontWeight="Bold" Foreground="#00adb5"/>
+                                            <TextBlock Style="{StaticResource BodyText}" Text="Active unallocated RAM ready for applications."/>
+                                        </StackPanel>
+                                    </Border>
                                 </StackPanel>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Width="220">
-                                    <Button Name="BtnAiScan" Style="{StaticResource AccentButton}" Height="36" Margin="0,0,0,6">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE721;" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Run AI Diagnostic Scan" VerticalAlignment="Center"/>
+
+                                <!-- Right Column -->
+                                <StackPanel Grid.Column="2">
+                                    <Border Style="{StaticResource Card}">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                                <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE823;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                <TextBlock Style="{StaticResource Header2}" Text="System Uptime" Margin="0" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Name="TxtUptime" Text="---" FontSize="36" FontWeight="Bold" Foreground="#ffffff"/>
+                                            <TextBlock Style="{StaticResource BodyText}" Text="Elapsed time since last kernel boot session."/>
                                         </StackPanel>
-                                    </Button>
-                                    <Button Name="BtnAiOptimize" Background="#008f39" Foreground="#ffffff" BorderBrush="#008f39" FontWeight="Bold" Height="36" Margin="0,0,0,6" IsEnabled="False">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Execute AI Optimization" VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <Border Style="{StaticResource Card}">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                                <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE9D9;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                <TextBlock Style="{StaticResource Header2}" Text="Active Execution Metrics" Margin="0" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <Grid Margin="0,6,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0">
+                                                    <TextBlock Text="Processes" Foreground="#8b949e" FontSize="11"/>
+                                                    <TextBlock Name="TxtProcessCount" Text="---" FontSize="18" FontWeight="Bold" Foreground="#ffffff"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBlock Text="Threads" Foreground="#8b949e" FontSize="11"/>
+                                                    <TextBlock Name="TxtThreadCount" Text="---" FontSize="18" FontWeight="Bold" Foreground="#ffffff"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="2">
+                                                    <TextBlock Text="Handles" Foreground="#8b949e" FontSize="11"/>
+                                                    <TextBlock Name="TxtHandleCount" Text="---" FontSize="18" FontWeight="Bold" Foreground="#ffffff"/>
+                                                </StackPanel>
+                                            </Grid>
                                         </StackPanel>
-                                    </Button>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Benchmark & Diagnostics Bar -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Style="{StaticResource Header2}" Text="Diagnostic Profiling Tools" Margin="0,0,0,4"/>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Execute kernel benchmarks to analyze frame timing stability and trace cold boot latency."/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Button Name="BtnAnalyzeFrameTiming" Content="Frame Timing (15s)" Margin="0,0,8,0" Height="32"/>
+                                        <Button Name="BtnMeasureBootTime" Content="Boot Latency" Margin="0,0,8,0" Height="32"/>
+                                        <Button Name="BtnGenerateReport" Style="{StaticResource AccentButton}" Content="Generate Report" Height="32"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+                <!-- ============================================================== -->
+                <!-- VIEW 6: PC CLEANER                                             -->
+                <!-- ============================================================== -->
+                <Grid Name="ViewPcCleaner" Visibility="Collapsed">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Header1}" Text="System Storage &amp; Bloatware Cleaner"/>
+                            <TextBlock Style="{StaticResource BodyText}" Text="Analyzes and safely purges temporary caches, crash dumps, and Windows Component Store bloat." Margin="0,0,0,16"/>
+
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Style="{StaticResource Header2}" Text="Volume Metrics (C:)" Margin="0,0,0,6"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Total: " Foreground="#8b949e"/>
+                                            <TextBlock Name="TxtDriveCapacity" Text="---" Foreground="#ffffff" FontWeight="Bold" Margin="0,0,15,0"/>
+                                            <TextBlock Text="Used: " Foreground="#8b949e"/>
+                                            <TextBlock Name="TxtDriveUsed" Text="---" Foreground="#ffffff" FontWeight="Bold" Margin="0,0,15,0"/>
+                                            <TextBlock Text="Free: " Foreground="#8b949e"/>
+                                            <TextBlock Name="TxtDriveFree" Text="---" Foreground="#00ff41" FontWeight="Bold" Margin="0,0,15,0"/>
+                                            <TextBlock Text="Reclaimable: " Foreground="#8b949e"/>
+                                            <TextBlock Name="TxtReclaimableTotal" Text="0 MB" Foreground="#ffb300" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Button Name="BtnAnalyzeStorage" Content="Analyze Storage" Margin="0,0,8,0" Height="34"/>
+                                        <Button Name="BtnCleanStorage" Style="{StaticResource AccentButton}" Content="Clean Now" Height="34"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Cleaner Target Checkboxes -->
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource Header2}" Text="Target Storage Locations" Margin="0,0,0,12"/>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Button Name="BtnAiFlushRam" Grid.Column="0" Content="⚡ Flush RAM" Height="32" Margin="0,0,3,0" FontSize="11" Padding="2"/>
-                                        <Button Name="BtnAiGamingShield" Grid.Column="1" Content="🎮 Gaming Shield" Height="32" Margin="3,0,0,0" FontSize="11" Padding="2"/>
+                                        <StackPanel Grid.Column="0">
+                                            <CheckBox Name="ChkSystemTemp" IsChecked="True">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="System &amp; User Temp Folders "/>
+                                                    <TextBlock Name="TxtSizeSystemTemp" Text="(0 MB)" Foreground="#8b949e"/>
+                                                </StackPanel>
+                                            </CheckBox>
+                                            <CheckBox Name="ChkCrashDumps" IsChecked="True">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Crash Dumps &amp; Error Reports "/>
+                                                    <TextBlock Name="TxtSizeCrashDumps" Text="(0 MB)" Foreground="#8b949e"/>
+                                                </StackPanel>
+                                            </CheckBox>
+                                            <CheckBox Name="ChkAIIndex" IsChecked="True">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="AI Vector / Search Caches "/>
+                                                    <TextBlock Name="TxtSizeAIIndex" Text="(0 MB)" Foreground="#8b949e"/>
+                                                </StackPanel>
+                                            </CheckBox>
+                                            <CheckBox Name="ChkAppUpdaters" IsChecked="True">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Application Updater Caches "/>
+                                                    <TextBlock Name="TxtSizeAppUpdaters" Text="(0 MB)" Foreground="#8b949e"/>
+                                                </StackPanel>
+                                            </CheckBox>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <CheckBox Name="ChkSquirrel" IsChecked="True">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Discord / Teams Squirrel Packages "/>
+                                                    <TextBlock Name="TxtSizeSquirrel" Text="(0 MB)" Foreground="#8b949e"/>
+                                                </StackPanel>
+                                            </CheckBox>
+                                            <CheckBox Name="ChkBrowserCaches" IsChecked="False">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Web Browser Shader Caches "/>
+                                                    <TextBlock Name="TxtSizeBrowserCaches" Text="(0 MB)" Foreground="#8b949e"/>
+                                                </StackPanel>
+                                            </CheckBox>
+                                            <CheckBox Name="ChkDevCaches" IsChecked="False">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Developer Package Caches (pip/npm) "/>
+                                                    <TextBlock Name="TxtSizeDevCaches" Text="(0 MB)" Foreground="#8b949e"/>
+                                                </StackPanel>
+                                            </CheckBox>
+                                            <CheckBox Name="ChkLooseInstallers" IsChecked="False">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Loose Downloaded Installers "/>
+                                                    <TextBlock Name="TxtSizeLooseInstallers" Text="(0 MB)" Foreground="#8b949e"/>
+                                                </StackPanel>
+                                            </CheckBox>
+                                            <CheckBox Name="ChkComponentStore" IsChecked="False">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="WinSxS Component Store "/>
+                                                    <TextBlock Name="TxtSizeComponentStore" Text="(0 MB)" Foreground="#8b949e"/>
+                                                </StackPanel>
+                                            </CheckBox>
+                                        </StackPanel>
                                     </Grid>
                                 </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <!-- Stat Cards Grid (4 Counters) -->
-                        <Grid Margin="0,0,0,15">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Border Style="{StaticResource Card}" Grid.Column="0" Margin="0,0,10,0" Padding="15">
-                                <StackPanel>
-                                    <TextBlock Text="SYSTEM HEALTH" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
-                                    <TextBlock Name="TxtAiHealthScore" Text="--/100" FontSize="22" FontWeight="Bold" Foreground="#00ff41" Margin="0,5,0,0"/>
-                                </StackPanel>
                             </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
 
-                            <Border Style="{StaticResource Card}" Grid.Column="1" Margin="0,0,10,0" Padding="15">
-                                <StackPanel>
-                                    <TextBlock Text="SERVICES FOUND" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
-                                    <TextBlock Name="TxtAiServicesCount" Text="0" FontSize="22" FontWeight="Bold" Foreground="#00adb5" Margin="0,5,0,0"/>
-                                </StackPanel>
-                            </Border>
+                <!-- ============================================================== -->
+                <!-- VIEW 7: PROFILES                                               -->
+                <!-- ============================================================== -->
+                <Grid Name="ViewProfiles" Visibility="Collapsed">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Header1}" Text="Hardware Optimization Profiles"/>
+                            <TextBlock Style="{StaticResource BodyText}" Text="Choose an optimization baseline tuned specifically for gaming, workstation productivity, or enterprise compliance." Margin="0,0,0,16"/>
 
-                            <Border Style="{StaticResource Card}" Grid.Column="2" Margin="0,0,10,0" Padding="15">
-                                <StackPanel>
-                                    <TextBlock Text="BLOAT APPS" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
-                                    <TextBlock Name="TxtAiAppsCount" Text="0" FontSize="22" FontWeight="Bold" Foreground="#ffb300" Margin="0,5,0,0"/>
-                                </StackPanel>
-                            </Border>
-
-                            <Border Style="{StaticResource Card}" Grid.Column="3" Margin="0" Padding="15">
-                                <StackPanel>
-                                    <TextBlock Text="PROCESS ANOMALIES" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold"/>
-                                    <TextBlock Name="TxtAiAnomaliesCount" Text="0 Detected" FontSize="20" FontWeight="Bold" Foreground="#ff5722" Margin="0,6,0,0"/>
-                                </StackPanel>
-                            </Border>
-                        </Grid>
-
-                        <!-- Findings ListView Card -->
-                        <Border Style="{StaticResource Card}">
-                            <StackPanel>
-                                <Grid Margin="0,0,0,12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                        <TextBlock Style="{StaticResource Header2}" Text="AI Diagnostic Findings" VerticalAlignment="Center"/>
-                                        <TextBlock Name="TxtAiCandidateCount" Text="(0 Candidates)" Foreground="#aaaaaa" Margin="10,0,0,0" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                        <Button Name="BtnAiFilterAll" Content="All Candidates" Height="30" Padding="10,2" Margin="0,0,6,0" FontSize="12"/>
-                                        <Button Name="BtnAiFilterSafe" Content="Tier 1 (Safe)" Height="30" Padding="10,2" Margin="0,0,6,0" FontSize="12"/>
-                                        <Button Name="BtnAiFilterAnomalies" Content="Process Anomalies" Height="30" Padding="10,2" Margin="0,0,0,0" FontSize="12"/>
-                                    </StackPanel>
-                                </Grid>
-
-                                <ListView Name="ListAiFindings" Background="#121212" Foreground="#ffffff" BorderBrush="#333333" Height="280">
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="Type" DisplayMemberBinding="{Binding TargetType}" Width="90"/>
-                                            <GridViewColumn Header="Target Name" DisplayMemberBinding="{Binding Name}" Width="180"/>
-                                            <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" Width="160"/>
-                                            <GridViewColumn Header="Safety Tier" DisplayMemberBinding="{Binding SafetyTier}" Width="140"/>
-                                            <GridViewColumn Header="Confidence" DisplayMemberBinding="{Binding Confidence}" Width="85"/>
-                                            <GridViewColumn Header="Status" DisplayMemberBinding="{Binding CurrentState}" Width="110"/>
-                                            <GridViewColumn Header="Estimated Savings" DisplayMemberBinding="{Binding EstSavings}" Width="190"/>
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </ScrollViewer>
-            </TabItem>
-
-            <!-- TABS: Tweaks & Debloat -->
-            <TabItem Header="TWEAKS &amp; DEBLOAT">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
-                    <StackPanel Margin="0,10,0,10">
-                        <TextBlock Style="{StaticResource BodyText}" Text="Modular system optimizations, bloatware scrubbers, background service pruners, and thread reducers." Margin="0,0,0,20"/>
-                        
-                        <!-- Tweak Card 1: Services Optimizer -->
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE713;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Permanent Service Pruning" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock Style="{StaticResource BodyText}" Text="Stops and permanently disables 15+ useless background services (DiagTrack, WerSvc, MapsBroker, lfsvc, RemoteRegistry, RetailDemo, Xbox Live, etc.) to free RAM."/>
-                                </StackPanel>
-                                <Button Name="BtnOptimizeServices" Grid.Column="1" Style="{StaticResource AccentButton}" Width="150" Height="40">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                        <TextBlock Text="Prune Services" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                            </Grid>
-                        </Border>
-
-                        <!-- Tweak Card 2: Deep OS Debloat -->
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE74D;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Guarded OS Debloat &amp; Appx Purge" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock Style="{StaticResource BodyText}" Text="Scrubs third-party sponsored shovelware (Candy Crush, TikTok) and consumer bloat (Tips, Feedback Hub, Solitaire, News) while strictly protecting Microsoft Store, Terminal, and Calculator."/>
-                                </StackPanel>
-                                <Button Name="BtnDebloatOS" Grid.Column="1" Style="{StaticResource AccentButton}" Width="150" Height="40">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                        <TextBlock Text="Debloat OS" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                            </Grid>
-                        </Border>
-
-                        <!-- Tweak Card 3: Process, Thread & Handle Reducer -->
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE950;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Process, Thread &amp; Handle Reducer" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock Style="{StaticResource BodyText}" Text="Blocks background apps execution globally, suppresses heavy telemetry scheduled tasks, sets foreground CPU priority (SystemResponsiveness = 0), and flushes memory working sets."/>
-                                </StackPanel>
-                                <Button Name="BtnReduceThreads" Grid.Column="1" Style="{StaticResource AccentButton}" Width="150" Height="40">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                        <TextBlock Text="Reduce Overhead" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                            </Grid>
-                        </Border>
-
-                        <!-- Tweak Card 4: Defender Group Policy Controller -->
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE72E;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Microsoft Defender Controller" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock Style="{StaticResource BodyText}" Text="Turn off Microsoft Defender real-time scanning and cloud telemetry via official Group Policy (DisableAntiSpyware) without corrupting Windows Update or system servicing."/>
-                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                        <TextBlock Text="Real-Time Protection: " Foreground="#888888" FontSize="12"/>
-                                        <TextBlock Name="TxtDefenderRealtimeStatus" Text="Checking..." Foreground="#00ff41" FontSize="12" FontWeight="Bold" Margin="0,0,15,0"/>
-                                        <TextBlock Text="Tamper Protection: " Foreground="#888888" FontSize="12"/>
-                                        <TextBlock Name="TxtDefenderTamperStatus" Text="Checking..." Foreground="#ffb300" FontSize="12" FontWeight="Bold"/>
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1" Orientation="Vertical">
-                                    <Button Name="BtnDisableDefender" Style="{StaticResource AccentButton}" Width="160" Height="34" Margin="0,2,0,3">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE71A;" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Disable Defender" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button Name="BtnOpenThreatSettings" Width="160" Height="30" Margin="0,2,0,3" Background="#1f2833" Foreground="#ffb300" BorderBrush="#ffb300" BorderThickness="1" FontSize="11">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE713;" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Security Settings" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button Name="BtnEnableDefender" Width="160" Height="30" Margin="0,2,0,2">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE8FB;" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Restore Defender" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <!-- Tweak Card 5: Windows 11 Explorer & UI Modernizer -->
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE770;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Windows 11 Explorer &amp; UI Modernizer" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock Style="{StaticResource BodyText}" Text="Restores classic instant right-click context menu (bypasses Windows 11 'Show more options' delay), enables compact list view, forces file extensions &amp; hidden files visible, configures 'This PC' as default, and decouples Start search from Bing cloud queries."/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1" Orientation="Vertical">
-                                    <Button Name="BtnModernizeExplorer" Style="{StaticResource AccentButton}" Width="160" Height="34" Margin="0,2,0,3">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Modernize UI" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button Name="BtnRestoreExplorer" Width="160" Height="30" Margin="0,2,0,2">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE8FB;" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Restore Defaults" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <!-- Tweak Card 6: DNS & Low-Latency Network Accelerator -->
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE774;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="DNS &amp; Low-Latency Network Accelerator" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock Style="{StaticResource BodyText}" Text="Switches network adapters to ultra-low latency, zero-logging DNS (Cloudflare, Google, AdGuard ad-blocking, Quad9), flushes Windows DNS cache, and tunes TCP Auto-Tuning and ECN parameters for competitive gaming."/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1" Orientation="Vertical">
-                                    <Button Name="BtnDnsCloudflare" Style="{StaticResource AccentButton}" Width="160" Height="32" Margin="0,2,0,3">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE896;" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Cloudflare 1.1.1.1" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button Name="BtnDnsGoogle" Width="160" Height="30" Margin="0,2,0,3">
-                                        <TextBlock Text="Google 8.8.8.8" VerticalAlignment="Center"/>
-                                    </Button>
-                                    <Button Name="BtnDnsAdGuard" Width="160" Height="30" Margin="0,2,0,3">
-                                        <TextBlock Text="AdGuard (Ad-Block)" VerticalAlignment="Center"/>
-                                    </Button>
-                                    <Button Name="BtnDnsDhcp" Width="160" Height="30" Margin="0,2,0,3">
-                                        <TextBlock Text="Reset to DHCP" VerticalAlignment="Center"/>
-                                    </Button>
-                                    <Button Name="BtnDnsFlush" Width="160" Height="30" Margin="0,2,0,2" Foreground="#00adb5" BorderBrush="#00adb5">
-                                        <TextBlock Text="⚡ Flush DNS Cache" VerticalAlignment="Center"/>
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <!-- Tweak Card 7: Hardware Power & Storage Engine -->
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7E8;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Hardware Power &amp; Storage Engine" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock Style="{StaticResource BodyText}" Text="Unlocks the hidden Windows Ultimate Performance power plan (eliminating CPU core parking latency), recovers 8 GB–32 GB SSD storage by compressing hiberfil.sys, and executes native NVMe/SSD hardware TRIM."/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1" Orientation="Vertical">
-                                    <Button Name="BtnUnlockUltimatePlan" Style="{StaticResource AccentButton}" Width="160" Height="34" Margin="0,2,0,3">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7E8;" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Ultimate Plan" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button Name="BtnReclaimHiberfil" Width="160" Height="30" Margin="0,2,0,3">
-                                        <TextBlock Text="Reclaim SSD Space" VerticalAlignment="Center"/>
-                                    </Button>
-                                    <Button Name="BtnRunSsdTrim" Width="160" Height="30" Margin="0,2,0,2">
-                                        <TextBlock Text="Run SSD TRIM" VerticalAlignment="Center"/>
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <!-- Tweak Card 8: Automated Startup Optimizer -->
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7B5;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Automated Startup Optimizer" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock Style="{StaticResource BodyText}" Text="Scans system and user registry autoruns, safely relocating high-impact bloatware (Teams, OneDrive, Spotify, Cortana, Skype, Discord) to Run-Disabled for near-instant cold boot speeds."/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1" Orientation="Vertical">
-                                    <Button Name="BtnOptimizeStartup" Style="{StaticResource AccentButton}" Width="160" Height="34" Margin="0,2,0,3">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Prune Startup" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button Name="BtnRestoreStartup" Width="160" Height="30" Margin="0,2,0,2">
-                                        <TextBlock Text="Restore All" VerticalAlignment="Center"/>
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-                </ScrollViewer>
-            </TabItem>
-
-            <!-- TABS: Software Hub -->
-            <TabItem Header="SOFTWARE HUB">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
-                    <StackPanel Margin="0,10,0,10">
-                        <TextBlock Style="{StaticResource BodyText}" Text="Curated 1-click silent unattended installer powered by the native Windows Package Manager (winget). Select packages and install in batch without telemetry or installers bloat." Margin="0,0,0,15"/>
-                        
-                        <!-- Action Bar & Controls -->
-                        <Border Style="{StaticResource Card}" Padding="15">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button Name="BtnSoftwareSelectAll" Content="Select All" Width="100" Height="32" Margin="0,0,10,0"/>
-                                    <Button Name="BtnSoftwareClear" Content="Clear" Width="80" Height="32" Margin="0,0,15,0"/>
-                                    <TextBlock Name="TxtSoftwareStatus" Text="Ready to install" Foreground="#00adb5" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold"/>
-                                </StackPanel>
-                                <Button Name="BtnSoftwareInstall" Grid.Column="1" Style="{StaticResource AccentButton}" Width="200" Height="38">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE896;" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                        <TextBlock Text="Install Selected Apps" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                            </Grid>
-                        </Border>
-
-                        <!-- Software Categories Grid -->
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="15"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="15"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <!-- Column 1: Web Browsers -->
-                            <Border Grid.Column="0" Style="{StaticResource Card}">
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE774;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Web Browsers" Margin="0" FontSize="16" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <CheckBox Name="ChkAppBrave" Content="Brave Browser" Tag="Brave.Brave" IsChecked="True"/>
-                                    <CheckBox Name="ChkAppChrome" Content="Google Chrome" Tag="Google.Chrome"/>
-                                    <CheckBox Name="ChkAppFirefox" Content="Mozilla Firefox" Tag="Mozilla.Firefox"/>
-                                </StackPanel>
-                            </Border>
-
-                            <!-- Column 2: Gaming & Media -->
-                            <Border Grid.Column="2" Style="{StaticResource Card}">
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7FC;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Gaming &amp; Media" Margin="0" FontSize="16" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <CheckBox Name="ChkAppSteam" Content="Steam" Tag="Valve.Steam"/>
-                                    <CheckBox Name="ChkAppDiscord" Content="Discord" Tag="Discord.Discord"/>
-                                    <CheckBox Name="ChkAppOBS" Content="OBS Studio" Tag="OBSProject.OBSStudio"/>
-                                    <CheckBox Name="ChkAppVLC" Content="VLC Media Player" Tag="VideoLAN.VLC" IsChecked="True"/>
-                                    <CheckBox Name="ChkAppSpotify" Content="Spotify" Tag="Spotify.Spotify"/>
-                                </StackPanel>
-                            </Border>
-
-                            <!-- Column 3: Dev & Power Tools -->
-                            <Border Grid.Column="4" Style="{StaticResource Card}">
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE756;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource Header2}" Text="Dev &amp; Utilities" Margin="0" FontSize="16" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <CheckBox Name="ChkAppVSCode" Content="VS Code" Tag="Microsoft.VisualStudioCode"/>
-                                    <CheckBox Name="ChkAppGit" Content="Git" Tag="Git.Git"/>
-                                    <CheckBox Name="ChkAppPython" Content="Python 3.12" Tag="Python.Python.3.12"/>
-                                    <CheckBox Name="ChkAppNode" Content="Node.js (LTS)" Tag="OpenJS.NodeJS.LTS"/>
-                                    <CheckBox Name="ChkApp7Zip" Content="7-Zip" Tag="7zip.7zip" IsChecked="True"/>
-                                    <CheckBox Name="ChkAppNotepad" Content="Notepad++" Tag="Notepad++.Notepad++" IsChecked="True"/>
-                                    <CheckBox Name="ChkAppEverything" Content="Everything Search" Tag="voidtools.Everything" IsChecked="True"/>
-                                    <CheckBox Name="ChkAppPowerToys" Content="PowerToys" Tag="Microsoft.PowerToys"/>
-                                </StackPanel>
-                            </Border>
-                        </Grid>
-                    </StackPanel>
-                </ScrollViewer>
-            </TabItem>
-
-            <!-- TABS: Observability -->
-            <TabItem Header="OBSERVABILITY">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
-                    <StackPanel Margin="0,10,0,10">
-                        <TextBlock Style="{StaticResource BodyText}" Text="Real-time native telemetry polling via WMI and Performance Counters. Monitoring system bottlenecks and scheduling behavior." Margin="0,0,0,20"/>
-                        
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="20"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <!-- Left Column -->
-                            <StackPanel Grid.Column="0">
-                                <Border Style="{StaticResource Card}">
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE909;" FontSize="20" Foreground="#00adb5" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                            <TextBlock Style="{StaticResource Header2}" Text="System Interrupts (DPC/sec)" Margin="0" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                        <TextBlock Name="TxtDpcLatency" Foreground="#ffffff" FontSize="36" FontWeight="Light" Text="--"/>
-                                        <TextBlock Style="{StaticResource BodyText}" Text="Hardware interrupt latency. Lower is better." Margin="0,5,0,0"/>
-                                    </StackPanel>
-                                </Border>
-                                
-                                <Border Style="{StaticResource Card}">
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE8B7;" FontSize="20" Foreground="#00adb5" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                            <TextBlock Style="{StaticResource Header2}" Text="Available Memory (MB)" Margin="0" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                        <TextBlock Name="TxtMemAvailable" Foreground="#ffffff" FontSize="36" FontWeight="Light" Text="--"/>
-                                        <TextBlock Style="{StaticResource BodyText}" Text="Unused physical memory." Margin="0,5,0,0"/>
-                                    </StackPanel>
-                                </Border>
-
-                                <Border Style="{StaticResource Card}">
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7C5;" FontSize="20" Foreground="#00adb5" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                            <TextBlock Style="{StaticResource Header2}" Text="Kernel Handles" Margin="0" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                        <TextBlock Name="TxtHandleCount" Foreground="#ffffff" FontSize="36" FontWeight="Light" Text="--"/>
-                                        <TextBlock Style="{StaticResource BodyText}" Text="Open kernel object handles. Lower indicates less background bloat." Margin="0,5,0,0"/>
-                                    </StackPanel>
-                                </Border>
-                            </StackPanel>
-                            
-                            <!-- Right Column -->
-                            <StackPanel Grid.Column="2">
-                                <Border Style="{StaticResource Card}">
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE783;" FontSize="20" Foreground="#00adb5" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                            <TextBlock Style="{StaticResource Header2}" Text="System Uptime" Margin="0" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                        <TextBlock Name="TxtUptime" Foreground="#ffffff" FontSize="36" FontWeight="Light" Text="--"/>
-                                        <TextBlock Style="{StaticResource BodyText}" Text="Time since last cold boot." Margin="0,5,0,0"/>
-                                    </StackPanel>
-                                </Border>
-                                
-                                <Border Style="{StaticResource Card}">
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE8D8;" FontSize="20" Foreground="#00adb5" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                            <TextBlock Style="{StaticResource Header2}" Text="Process Count" Margin="0" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                        <TextBlock Name="TxtProcessCount" Foreground="#ffffff" FontSize="36" FontWeight="Light" Text="--"/>
-                                        <TextBlock Style="{StaticResource BodyText}" Text="Active background processes &amp; services." Margin="0,5,0,0"/>
-                                    </StackPanel>
-                                </Border>
-
-                                <Border Style="{StaticResource Card}">
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE950;" FontSize="20" Foreground="#00adb5" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                            <TextBlock Style="{StaticResource Header2}" Text="Active Threads" Margin="0" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                        <TextBlock Name="TxtThreadCount" Foreground="#ffffff" FontSize="36" FontWeight="Light" Text="--"/>
-                                        <TextBlock Style="{StaticResource BodyText}" Text="Active execution threads. Less threads = less context switching." Margin="0,5,0,0"/>
-                                    </StackPanel>
-                                </Border>
-                            </StackPanel>
-                        </Grid>
-
-                        <Border Style="{StaticResource Card}" Margin="0,0,0,10">
-                            <StackPanel>
-                                <TextBlock Style="{StaticResource Header2}" Text="Observability Actions" Margin="0,0,0,10"/>
-                                
+                            <!-- Profile 1: Max Performance -->
+                            <Border Style="{StaticResource Card}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="10"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Name="BtnAnalyzeFrameTiming" Grid.Column="0" Content="Analyze Frame Timing &amp; Queues" Height="40"/>
-                                    <Button Name="BtnMeasureBootTime" Grid.Column="2" Content="Measure Boot Time" Height="40"/>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7E8;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Max Performance Profile" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Ultra-low latency configuration tailored for competitive gaming. Disables telemetry, minimizes DPC interrupts, forces GPU hardware scheduling, and optimizes memory working sets."/>
+                                    </StackPanel>
+                                    <Button Name="BtnApplyMaxPerf" Grid.Column="1" Style="{StaticResource AccentButton}" Width="160" Height="36">
+                                        <TextBlock Text="Apply Max Perf" VerticalAlignment="Center"/>
+                                    </Button>
                                 </Grid>
-                                
-                                <Grid Margin="0,10,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="10"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Button Name="BtnGenerateReport" Grid.Column="0" Style="{StaticResource AccentButton}" Content="Generate Performance HTML Report" Height="40"/>
-                                    <Button Name="BtnDetectThirdParty" Grid.Column="2" Content="Detect Third-Party Benchmarks" Height="40"/>
-                                </Grid>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </ScrollViewer>
-            </TabItem>
+                            </Border>
 
-            <!-- TABS: PC Cleaner -->
-            <TabItem Header="PC CLEANER">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
-                    <StackPanel Margin="0,10,0,10">
-                        <TextBlock Style="{StaticResource BodyText}" Text="Scan your system drive for useless temporary files, crash dumps, stale AI indexes, and obsolete app versions, then safely purge them with 1-click." Margin="0,0,0,20"/>
-                        
-                        <!-- Storage Status Card -->
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                
-                                <Grid Grid.Row="0">
+                            <!-- Profile 2: Balanced Creator -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE790;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Balanced Creator Profile" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Optimized for workstation creators and video editors. Balances high throughput with visual fidelity, preserving color profiles and Bluetooth audio."/>
+                                    </StackPanel>
+                                    <Button Name="BtnApplyBalanced" Grid.Column="1" Width="160" Height="36">
+                                        <TextBlock Text="Apply Balanced" VerticalAlignment="Center"/>
+                                    </Button>
+                                </Grid>
+                            </Border>
+
+                            <!-- Profile 3: Enterprise Compliance -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE8B7;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Enterprise Compliance Profile" Margin="0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Hardens Windows for corporate environments. Enforces BitLocker compliance, disables remote diagnostic telemetry, and secures credential guard."/>
+                                    </StackPanel>
+                                    <Button Name="BtnApplyEnterprise" Grid.Column="1" Width="160" Height="36">
+                                        <TextBlock Text="Apply Enterprise" VerticalAlignment="Center"/>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+                <!-- ============================================================== -->
+                <!-- VIEW 8: ROLLBACK ENGINE                                        -->
+                <!-- ============================================================== -->
+                <Grid Name="ViewRollback" Visibility="Collapsed">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Header1}" Text="Transactional Rollback Engine"/>
+                            <TextBlock Style="{StaticResource BodyText}" Text="Preview captured snapshots and safely rollback configuration states with cryptographic validation." Margin="0,0,0,16"/>
+
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <TextBlock Style="{StaticResource Header2}" Text="Transaction Manifests" Margin="0,0,0,8"/>
+                                        <ListView Name="ListTransactions" Background="#0d1117" Foreground="#ffffff" BorderBrush="#30363d" Height="260">
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding TransactionID}" Width="140"/>
+                                                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}" Width="140"/>
+                                                    <GridViewColumn Header="Profile" DisplayMemberBinding="{Binding Profile}" Width="100"/>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                        <Button Name="BtnRefreshTransactions" Content="Refresh List" Margin="0,10,0,0"/>
+                                    </StackPanel>
+                                    
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Style="{StaticResource Header2}" Text="Transaction Details" Margin="0,0,0,8"/>
+                                        <Border Background="#0d1117" BorderBrush="#30363d" BorderThickness="1" CornerRadius="6" Padding="14" Height="260">
+                                            <ScrollViewer>
+                                                <TextBlock Name="TxtTransactionDetails" Style="{StaticResource BodyText}" Text="Select a transaction to preview changes..."/>
+                                            </ScrollViewer>
+                                        </Border>
+                                        <Button Name="BtnRollbackSelected" Style="{StaticResource DangerButton}" Content="Rollback Selected Transaction" Margin="0,10,0,0" Height="36" IsEnabled="False"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0">
-                                        <TextBlock Style="{StaticResource BodyText}" Text="TOTAL CAPACITY" FontSize="11"/>
-                                        <TextBlock Name="TxtDriveCapacity" Text="-- GB" FontSize="18" Foreground="#ffffff" FontWeight="Bold"/>
+                                        <TextBlock Style="{StaticResource Header2}" Text="Third-Party Modification Detector" Margin="0,0,0,4"/>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Audit registry for unauthorized changes outside the WinAurex transaction engine."/>
                                     </StackPanel>
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Style="{StaticResource BodyText}" Text="USED SPACE" FontSize="11"/>
-                                        <TextBlock Name="TxtDriveUsed" Text="-- GB" FontSize="18" Foreground="#ff5722" FontWeight="Bold"/>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="2">
-                                        <TextBlock Style="{StaticResource BodyText}" Text="FREE SPACE" FontSize="11"/>
-                                        <TextBlock Name="TxtDriveFree" Text="-- GB" FontSize="18" Foreground="#00adb5" FontWeight="Bold"/>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="3">
-                                        <TextBlock Style="{StaticResource BodyText}" Text="RECLAIMABLE JUNK" FontSize="11"/>
-                                        <TextBlock Name="TxtReclaimableTotal" Text="Not Scanned" FontSize="18" Foreground="#00ff41" FontWeight="Bold"/>
-                                    </StackPanel>
+                                    <Button Name="BtnDetectThirdParty" Grid.Column="1" Content="Detect Changes" Height="32"/>
                                 </Grid>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
 
-                                <Grid Grid.Row="1" Margin="0,20,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Button Name="BtnAnalyzeStorage" Grid.Column="0" Style="{StaticResource AccentButton}" Content="ANALYZE STORAGE JUNK" Margin="0,0,10,0" Height="42"/>
-                                    <Button Name="BtnCleanStorage" Grid.Column="1" Style="{StaticResource DangerButton}" Content="PURGE SELECTED JUNK" Margin="10,0,0,0" Height="42" IsEnabled="False"/>
-                                </Grid>
-                            </Grid>
-                        </Border>
-
-                        <!-- Categories Card -->
-                        <Border Style="{StaticResource Card}">
-                            <StackPanel>
-                                <TextBlock Style="{StaticResource Header2}" Text="Select Storage Tiers to Clean" Margin="0,0,0,15"/>
-                                
-                                <Grid Margin="0,4,0,4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <CheckBox Name="ChkSystemTemp" Grid.Column="0" Content="System &amp; User Temp Files ($env:TEMP, Windows\Temp, CBS logs)" IsChecked="True"/>
-                                    <TextBlock Name="TxtSizeSystemTemp" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                                </Grid>
-
-                                <Grid Margin="0,4,0,4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <CheckBox Name="ChkCrashDumps" Grid.Column="0" Content="Crash Dumps (.dmp) &amp; Error Reporting Archives" IsChecked="True"/>
-                                    <TextBlock Name="TxtSizeCrashDumps" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                                </Grid>
-
-                                <Grid Margin="0,4,0,4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <CheckBox Name="ChkAIIndex" Grid.Column="0" Content="Stale Copilot / AI Search Index Dumps (.retired, spill-*.tmp)" IsChecked="True"/>
-                                    <TextBlock Name="TxtSizeAIIndex" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                                </Grid>
-
-                                <Grid Margin="0,4,0,4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <CheckBox Name="ChkAppUpdaters" Grid.Column="0" Content="Orphan Application Updater Installers (Kimi, Ollama)" IsChecked="True"/>
-                                    <TextBlock Name="TxtSizeAppUpdaters" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                                </Grid>
-
-                                <Grid Margin="0,4,0,4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <CheckBox Name="ChkSquirrel" Grid.Column="0" Content="Obsolete Electron/Squirrel Versions (GitHub Desktop, Discord, Claude)" IsChecked="True"/>
-                                    <TextBlock Name="TxtSizeSquirrel" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                                </Grid>
-
-                                <Grid Margin="0,4,0,4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <CheckBox Name="ChkBrowserCaches" Grid.Column="0" Content="Web Browser Media &amp; Code Caches (Preserves passwords &amp; logins)" IsChecked="True"/>
-                                    <TextBlock Name="TxtSizeBrowserCaches" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                                </Grid>
-
-                                <Grid Margin="0,4,0,4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <CheckBox Name="ChkDevCaches" Grid.Column="0" Content="Developer Caches (npm, pnpm, pip, Playwright, root node_modules)" IsChecked="True"/>
-                                    <TextBlock Name="TxtSizeDevCaches" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                                </Grid>
-
-                                <Grid Margin="0,4,0,4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <CheckBox Name="ChkLooseInstallers" Grid.Column="0" Content="Root C:\ VC Redist Debris &amp; Broken Download Parts" IsChecked="True"/>
-                                    <TextBlock Name="TxtSizeLooseInstallers" Grid.Column="1" Text="Pending Scan" Foreground="#a0a0a0" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                                </Grid>
-
-                                <Grid Margin="0,4,0,4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <CheckBox Name="ChkComponentStore" Grid.Column="0" Content="Windows Component Store Deep Clean (Official DISM - takes 3 mins)" IsChecked="False"/>
-                                    <TextBlock Name="TxtSizeComponentStore" Grid.Column="1" Text="~3.8 GB" Foreground="#e0e0e0" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                                </Grid>
-
-                                <!-- Protected Shield -->
-                                <Border Background="#142429" BorderBrush="#00adb5" BorderThickness="1" CornerRadius="6" Padding="12" Margin="0,15,0,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="🛡️ " FontSize="16" VerticalAlignment="Center"/>
-                                        <TextBlock Style="{StaticResource BodyText}" Text="SAFETY GUARANTEE: Downloads, Photos/Pictures, Virtual Machines, and Git Repositories are strictly protected." Foreground="#00adb5" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                                    </StackPanel>
-                                </Border>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </ScrollViewer>
-            </TabItem>
-
-            <!-- TABS: Rollback Engine -->
-            <TabItem Header="ROLLBACK ENGINE">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
-                    <StackPanel Margin="0,10,0,10">
-                        <TextBlock Style="{StaticResource BodyText}" Text="View captured snapshots and safely rollback configuration states." Margin="0,0,0,20"/>
-                        
-                        <Border Style="{StaticResource Card}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                                    <TextBlock Style="{StaticResource Header2}" Text="Transaction Manifests" Margin="0,0,0,10"/>
-                                    <ListView Name="ListTransactions" Background="#121212" Foreground="#ffffff" BorderBrush="#333333" Height="250">
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn Header="ID" DisplayMemberBinding="{Binding TransactionID}" Width="150"/>
-                                                <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}" Width="150"/>
-                                                <GridViewColumn Header="Profile" DisplayMemberBinding="{Binding Profile}" Width="120"/>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                    <Button Name="BtnRefreshTransactions" Content="Refresh List" Margin="0,10,0,0"/>
-                                </StackPanel>
-                                
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Style="{StaticResource Header2}" Text="Transaction Details" Margin="0,0,0,10"/>
-                                    <Border Background="#121212" BorderBrush="#333333" BorderThickness="1" CornerRadius="4" Padding="15" Height="250">
-                                        <ScrollViewer>
-                                            <TextBlock Name="TxtTransactionDetails" Style="{StaticResource BodyText}" Text="Select a transaction to preview changes..."/>
-                                        </ScrollViewer>
-                                    </Border>
-                                    <Button Name="BtnRollbackSelected" Style="{StaticResource DangerButton}" Content="Rollback Selected Transaction" Margin="0,10,0,0" Height="40" IsEnabled="False"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-                </ScrollViewer>
-            </TabItem>
-        </TabControl>
-
-        <!-- Footer -->
-        <Grid Grid.Row="2" Margin="0,20,0,0">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <TextBlock Style="{StaticResource BodyText}" Text="v5.0 Enterprise Edition" VerticalAlignment="Center" Margin="0,0,15,0"/>
-                <Button Name="BtnOpenLogsFolder" Height="26" Padding="10,2" Background="#1f2833" Foreground="#00adb5" BorderBrush="#00adb5" BorderThickness="1" FontSize="11" Cursor="Hand">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xED25;" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="View Logs" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-            <TextBlock Name="TxtStatus" Style="{StaticResource BodyText}" Text="Status: Ready" Foreground="#00adb5" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold"/>
+            </Grid>
         </Grid>
+
+        <!-- 3. FOOTER STATUS BAR -->
+        <Border Grid.Row="2" Background="#161b22" BorderBrush="#30363d" BorderThickness="0,1,0,0" Padding="14,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="v5.5 Extreme Edition" Foreground="#6e7681" FontSize="11" Margin="0,0,14,0" VerticalAlignment="Center"/>
+                    <Button Name="BtnOpenLogsFolder" Height="22" Padding="8,0" Background="#21262d" Foreground="#00adb5" BorderBrush="#30363d" BorderThickness="1" FontSize="10" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xED25;" Margin="0,0,5,0" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBlock Text="View Logs" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <TextBlock Name="TxtStatus" Grid.Column="2" Style="{StaticResource BodyText}" Text="Status: Ready" Foreground="#00adb5" FontWeight="Bold" FontSize="11" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

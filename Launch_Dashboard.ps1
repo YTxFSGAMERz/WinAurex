@@ -49,6 +49,57 @@ function Find-Control {
 }
 
 # Hook Controls
+$BtnWinMinimize = Find-Control "BtnWinMinimize"
+$BtnWinMaximize = Find-Control "BtnWinMaximize"
+$BtnWinClose    = Find-Control "BtnWinClose"
+
+# Sidebar Navigation Controls
+$NavOverview      = Find-Control "NavOverview"
+$NavAiOptimizer   = Find-Control "NavAiOptimizer"
+$NavTweaks        = Find-Control "NavTweaks"
+$NavSoftwareHub   = Find-Control "NavSoftwareHub"
+$NavObservability = Find-Control "NavObservability"
+$NavPcCleaner     = Find-Control "NavPcCleaner"
+$NavProfiles      = Find-Control "NavProfiles"
+$NavRollback      = Find-Control "NavRollback"
+
+# Content Views
+$ViewOverview      = Find-Control "ViewOverview"
+$ViewProfiles      = Find-Control "ViewProfiles"
+$ViewAiOptimizer   = Find-Control "ViewAiOptimizer"
+$ViewTweaks        = Find-Control "ViewTweaks"
+$ViewSoftwareHub   = Find-Control "ViewSoftwareHub"
+$ViewObservability = Find-Control "ViewObservability"
+$ViewPcCleaner     = Find-Control "ViewPcCleaner"
+$ViewRollback      = Find-Control "ViewRollback"
+
+# Overview HUD Controls
+$BtnExecutiveBoost   = Find-Control "BtnExecutiveBoost"
+$TxtHudCpuName       = Find-Control "TxtHudCpuName"
+$TxtHudCpuCores      = Find-Control "TxtHudCpuCores"
+$TxtHudRamTotal      = Find-Control "TxtHudRamTotal"
+$TxtHudRamUsed       = Find-Control "TxtHudRamUsed"
+$TxtHudOsBuild       = Find-Control "TxtHudOsBuild"
+$TxtHudPowerPlan     = Find-Control "TxtHudPowerPlan"
+$TxtHudHealthGrade   = Find-Control "TxtHudHealthGrade"
+$TxtHudHealthScore   = Find-Control "TxtHudHealthScore"
+$TxtHudProcessCount  = Find-Control "TxtHudProcessCount"
+$TxtHudThreadCount   = Find-Control "TxtHudThreadCount"
+$TxtHudHandleCount   = Find-Control "TxtHudHandleCount"
+$TxtHudLatencyStatus = Find-Control "TxtHudLatencyStatus"
+
+# Sidebar Telemetry & Actions
+$TxtSidebarRam       = Find-Control "TxtSidebarRam"
+$ProgressSidebarRam  = Find-Control "ProgressSidebarRam"
+$BtnSidebarFlushRam  = Find-Control "BtnSidebarFlushRam"
+
+# Software Hub Extended Controls
+$TxtSoftwareSearch   = Find-Control "TxtSoftwareSearch"
+$BtnFilterBrowsers   = Find-Control "BtnFilterBrowsers"
+$BtnFilterGaming     = Find-Control "BtnFilterGaming"
+$BtnFilterDev        = Find-Control "BtnFilterDev"
+$ProgressSoftware    = Find-Control "ProgressSoftware"
+
 $BtnApplyMaxPerf = Find-Control "BtnApplyMaxPerf"
 $BtnApplyBalanced = Find-Control "BtnApplyBalanced"
 $BtnApplyEnterprise = Find-Control "BtnApplyEnterprise"
@@ -93,6 +144,10 @@ $BtnReclaimHiberfil     = Find-Control "BtnReclaimHiberfil"
 $BtnRunSsdTrim          = Find-Control "BtnRunSsdTrim"
 $BtnOptimizeStartup     = Find-Control "BtnOptimizeStartup"
 $BtnRestoreStartup      = Find-Control "BtnRestoreStartup"
+$BtnApplyPrivacyShield  = Find-Control "BtnApplyPrivacyShield"
+$BtnRestorePrivacy      = Find-Control "BtnRestorePrivacy"
+$BtnKillShellClutter    = Find-Control "BtnKillShellClutter"
+$BtnRestoreShellClutter = Find-Control "BtnRestoreShellClutter"
 
 # Software Hub UI Hooks
 $BtnSoftwareSelectAll   = Find-Control "BtnSoftwareSelectAll"
@@ -164,6 +219,206 @@ function Write-DashboardLog {
 }
 
 Write-DashboardLog "WinAurex GUI Dashboard session initialized by $([Environment]::UserName)"
+
+# --- WINDOW CAPTION CONTROLS ---
+if ($null -ne $BtnWinMinimize) {
+    $BtnWinMinimize.Add_Click({
+        $Window.WindowState = [System.Windows.WindowState]::Minimized
+    })
+}
+if ($null -ne $BtnWinMaximize) {
+    $BtnWinMaximize.Add_Click({
+        if ($Window.WindowState -eq [System.Windows.WindowState]::Maximized) {
+            $Window.WindowState = [System.Windows.WindowState]::Normal
+        } else {
+            $Window.WindowState = [System.Windows.WindowState]::Maximized
+        }
+    })
+}
+if ($null -ne $BtnWinClose) {
+    $BtnWinClose.Add_Click({
+        $Window.Close()
+    })
+}
+
+# --- SIDEBAR VIEW SWITCHER ---
+$script:DashboardViews = @{
+    "Overview"      = $ViewOverview
+    "Profiles"      = $ViewProfiles
+    "AiOptimizer"   = $ViewAiOptimizer
+    "Tweaks"        = $ViewTweaks
+    "SoftwareHub"   = $ViewSoftwareHub
+    "Observability" = $ViewObservability
+    "PcCleaner"     = $ViewPcCleaner
+    "Rollback"      = $ViewRollback
+}
+
+function Show-DashboardView([string]$ViewName) {
+    foreach ($key in $script:DashboardViews.Keys) {
+        $viewObj = $script:DashboardViews[$key]
+        if ($null -ne $viewObj) {
+            if ($key -eq $ViewName) {
+                $viewObj.Visibility = [System.Windows.Visibility]::Visible
+            } else {
+                $viewObj.Visibility = [System.Windows.Visibility]::Collapsed
+            }
+        }
+    }
+}
+
+if ($null -ne $NavOverview)      { $NavOverview.Add_Checked({ Show-DashboardView "Overview" }) }
+if ($null -ne $NavProfiles)      { $NavProfiles.Add_Checked({ Show-DashboardView "Profiles" }) }
+if ($null -ne $NavAiOptimizer)   { $NavAiOptimizer.Add_Checked({ Show-DashboardView "AiOptimizer" }) }
+if ($null -ne $NavTweaks)        { $NavTweaks.Add_Checked({ Show-DashboardView "Tweaks" }) }
+if ($null -ne $NavSoftwareHub)   { $NavSoftwareHub.Add_Checked({ Show-DashboardView "SoftwareHub" }) }
+if ($null -ne $NavObservability) { $NavObservability.Add_Checked({ Show-DashboardView "Observability" }) }
+if ($null -ne $NavPcCleaner)     { $NavPcCleaner.Add_Checked({ Show-DashboardView "PcCleaner" }) }
+if ($null -ne $NavRollback)      { $NavRollback.Add_Checked({ Show-DashboardView "Rollback" }) }
+
+# --- HARDWARE SPECS & HUD INITIALIZATION ---
+function Initialize-HardwareHUD {
+    try {
+        # CPU
+        $cpu = Get-CimInstance Win32_Processor -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($cpu -and $null -ne $TxtHudCpuName) {
+            $TxtHudCpuName.Text = "$($cpu.Name.Trim())"
+            $TxtHudCpuCores.Text = "$($cpu.NumberOfCores) Cores / $($cpu.NumberOfLogicalProcessors) Threads"
+        }
+
+        # Memory
+        $cs = Get-CimInstance Win32_ComputerSystem -ErrorAction SilentlyContinue | Select-Object -First 1
+        $os = Get-CimInstance Win32_OperatingSystem -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($cs -and $null -ne $TxtHudRamTotal) {
+            $totalGB = [math]::Round($cs.TotalPhysicalMemory / 1GB, 1)
+            $TxtHudRamTotal.Text = "$totalGB GB Installed"
+        }
+        if ($os -and $null -ne $TxtHudRamUsed) {
+            $totalKB = $os.TotalVisibleMemorySize
+            $freeKB  = $os.FreePhysicalMemory
+            $usedGB  = [math]::Round(($totalKB - $freeKB) / 1MB, 1)
+            $pct     = [math]::Round((($totalKB - $freeKB) / $totalKB) * 100)
+            $TxtHudRamUsed.Text = "Active: $usedGB GB ($pct%)"
+            if ($null -ne $TxtSidebarRam) { $TxtSidebarRam.Text = "$usedGB / $([math]::Round($totalKB / 1MB, 1)) GB" }
+            if ($null -ne $ProgressSidebarRam) { $ProgressSidebarRam.Value = $pct }
+        }
+
+        # OS Build
+        if ($os -and $null -ne $TxtHudOsBuild) {
+            $TxtHudOsBuild.Text = "$($os.Caption) ($($os.BuildNumber))"
+        }
+
+        # Active Power Scheme
+        try {
+            $scheme = powercfg /getactivescheme
+            if ($scheme -match "\((.*?)\)") {
+                $TxtHudPowerPlan.Text = "Plan: $($matches[1])"
+            }
+        } catch {}
+
+        # AI Health Score
+        if (Get-Command Get-WinAurexHealthScore -ErrorAction SilentlyContinue) {
+            $health = Get-WinAurexHealthScore
+            if ($null -ne $TxtHudHealthScore) { $TxtHudHealthScore.Text = "$($health.Score) / 100" }
+            if ($null -ne $TxtHudHealthGrade) { $TxtHudHealthGrade.Text = "$($health.Grade)" }
+            if ($null -ne $TxtAiHealthScore)  { $TxtAiHealthScore.Text = "$($health.Score)" }
+        }
+    } catch {
+        Write-DashboardLog "Hardware HUD initialization warning: $_" "WARN"
+    }
+}
+
+# --- EXECUTIVE BOOST & SIDEBAR ACTION HANDLERS ---
+if ($null -ne $BtnExecutiveBoost) {
+    $BtnExecutiveBoost.Add_Click({
+        Write-DashboardLog "User triggered ONE-CLICK EXTREME OPTIMIZE (Executive Boost)"
+        Set-Status -Message "Executing One-Click Extreme Optimization..." -Color "#00ff41"
+
+        # 1. AI dynamic system optimization
+        $scriptPath = Join-Path $RootPath "Tweaks\Services\AI_Dynamic_System_Optimizer.ps1"
+        Invoke-DashboardAction -ActionName "Executive_Boost" -ScriptPath $scriptPath -Arguments "-Auto -Force"
+
+        # 2. Flush RAM working sets
+        if (Get-Command Invoke-WinAurexRamFlush -ErrorAction SilentlyContinue) {
+            $res = Invoke-WinAurexRamFlush
+            Write-DashboardLog "Executive Boost RAM Flush: Reclaimed $($res.ReclaimedMB) MB"
+        }
+
+        # 3. Enable Gaming Latency Shield
+        if (Get-Command Set-AiGamingShield -ErrorAction SilentlyContinue) {
+            Set-AiGamingShield -Enable | Out-Null
+            $script:GamingShieldActive = $true
+            if ($null -ne $BtnAiGamingShield) {
+                $BtnAiGamingShield.Content = "🎮 Gaming [ON]"
+                $BtnAiGamingShield.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+            }
+        }
+
+        # 4. Flush DNS
+        try { Clear-DnsClientCache } catch {}
+
+        # Refresh UI
+        Initialize-HardwareHUD
+        Set-Status -Message "Executive Boost Complete! System tuned for maximum responsiveness." -Color "#00ff41"
+    })
+}
+
+if ($null -ne $BtnSidebarFlushRam) {
+    $BtnSidebarFlushRam.Add_Click({
+        if (Get-Command Invoke-WinAurexRamFlush -ErrorAction SilentlyContinue) {
+            $res = Invoke-WinAurexRamFlush
+            Set-Status -Message "RAM Flush: Reclaimed $($res.ReclaimedMB) MB across $($res.ProcessesTrimmed) processes!" -Color "#00ff41"
+            Initialize-HardwareHUD
+        }
+    })
+}
+
+if ($null -ne $BtnSidebarViewLogs) {
+    $BtnSidebarViewLogs.Add_Click({
+        Start-Process explorer.exe $LogDir
+    })
+}
+
+# --- SOFTWARE HUB SEARCH & CATEGORY FILTERS ---
+if ($null -ne $TxtSoftwareSearch) {
+    $TxtSoftwareSearch.Add_TextChanged({
+        $query = $TxtSoftwareSearch.Text.Trim().ToLower()
+        foreach ($chk in $AppCheckboxes) {
+            if ([string]::IsNullOrWhiteSpace($query)) {
+                $chk.Visibility = [System.Windows.Visibility]::Visible
+            } else {
+                $name = "$($chk.Content) $($chk.Tag)".ToLower()
+                $chk.Visibility = if ($name -match [regex]::Escape($query)) { [System.Windows.Visibility]::Visible } else { [System.Windows.Visibility]::Collapsed }
+            }
+        }
+    })
+}
+
+if ($null -ne $BtnFilterBrowsers) {
+    $BtnFilterBrowsers.Add_Click({
+        foreach ($chk in $AppCheckboxes) {
+            $chk.IsChecked = ($chk.Tag -in @("Brave.Brave", "Google.Chrome", "Mozilla.Firefox"))
+        }
+        if ($null -ne $TxtSoftwareStatus) { $TxtSoftwareStatus.Text = "Selected: Browsers" }
+    })
+}
+
+if ($null -ne $BtnFilterGaming) {
+    $BtnFilterGaming.Add_Click({
+        foreach ($chk in $AppCheckboxes) {
+            $chk.IsChecked = ($chk.Tag -in @("Valve.Steam", "Discord.Discord", "OBSProject.OBSStudio", "VideoLAN.VLC", "Spotify.Spotify"))
+        }
+        if ($null -ne $TxtSoftwareStatus) { $TxtSoftwareStatus.Text = "Selected: Gaming & Media" }
+    })
+}
+
+if ($null -ne $BtnFilterDev) {
+    $BtnFilterDev.Add_Click({
+        foreach ($chk in $AppCheckboxes) {
+            $chk.IsChecked = ($chk.Tag -in @("Microsoft.VisualStudioCode", "Git.Git", "Python.Python.3.12", "OpenJS.NodeJS.LTS", "7zip.7zip", "Notepad++.Notepad++", "voidtools.Everything", "Microsoft.PowerToys"))
+        }
+        if ($null -ne $TxtSoftwareStatus) { $TxtSoftwareStatus.Text = "Selected: Dev & Utilities" }
+    })
+}
 
 # --- DEFENDER LIVE STATUS UI UPDATER ---
 function Update-DefenderStatusUI {
@@ -358,6 +613,32 @@ if ($null -ne $BtnOptimizeStartup) {
 if ($null -ne $BtnRestoreStartup) {
     $BtnRestoreStartup.Add_Click({
         Invoke-DashboardAction -ActionName "Startup_Restore" -ScriptPath (Join-Path $RootPath "Tweaks\Startup\Optimize_Startup_Apps.ps1") -Arguments "-RestoreAll -Force"
+    })
+}
+
+if ($null -ne $BtnApplyPrivacyShield) {
+    $BtnApplyPrivacyShield.Add_Click({
+        Invoke-DashboardAction -ActionName "Privacy_Shield_Apply" -ScriptPath (Join-Path $RootPath "Tweaks\Privacy\Apply_Deep_Privacy_Shield.ps1") -Arguments "-Force"
+    })
+}
+if ($null -ne $BtnRestorePrivacy) {
+    $BtnRestorePrivacy.Add_Click({
+        Invoke-DashboardAction -ActionName "Privacy_Shield_Restore" -ScriptPath (Join-Path $RootPath "Tweaks\Privacy\Restore_Privacy_Defaults.ps1") -Arguments "-Force"
+    })
+}
+
+if ($null -ne $BtnKillShellClutter) {
+    $BtnKillShellClutter.Add_Click({
+        Invoke-DashboardAction -ActionName "Shell_KillWidgets" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Disable_Windows_Widgets.ps1") -Arguments "-Force -RestartExplorer"
+        Invoke-DashboardAction -ActionName "Shell_KillSpotlight" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Disable_Desktop_Spotlight.ps1") -Arguments "-Force"
+        Invoke-DashboardAction -ActionName "Shell_KillOneDriveNag" -ScriptPath (Join-Path $RootPath "Tweaks\Sync\Disable_OneDrive_Nag_And_Backup.ps1") -Arguments "-Force"
+    })
+}
+if ($null -ne $BtnRestoreShellClutter) {
+    $BtnRestoreShellClutter.Add_Click({
+        Invoke-DashboardAction -ActionName "Shell_RestoreWidgets" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Enable_Windows_Widgets.ps1") -Arguments "-Force -RestartExplorer"
+        Invoke-DashboardAction -ActionName "Shell_RestoreSpotlight" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Enable_Desktop_Spotlight.ps1") -Arguments "-Force"
+        Invoke-DashboardAction -ActionName "Shell_RestoreOneDrive" -ScriptPath (Join-Path $RootPath "Tweaks\Sync\Enable_OneDrive_Nag_And_Backup.ps1") -Arguments "-Force"
     })
 }
 
