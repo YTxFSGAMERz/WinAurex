@@ -167,7 +167,7 @@ if (-not $SkipRestorePoint) {
             Write-Warning "System Restore checkpoint could not be created ($srResult). Proceeding with transactional rollback engine."
         }
     } else {
-        Stop-Job $srJob -Force -ErrorAction SilentlyContinue
+        Stop-Job $srJob -ErrorAction SilentlyContinue
         Remove-Job $srJob -Force -ErrorAction SilentlyContinue
         Write-Warning "System Restore point creation timed out (VSS busy or locked by background updates). Proceeding with transactional rollback engine."
     }

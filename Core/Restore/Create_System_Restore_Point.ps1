@@ -46,7 +46,7 @@ try {
             Write-Host "`n[ERROR] Failed to create restore point: $result" -ForegroundColor Red
         }
     } else {
-        Stop-Job $srJob -Force -ErrorAction SilentlyContinue
+        Stop-Job $srJob -ErrorAction SilentlyContinue
         Remove-Job $srJob -Force -ErrorAction SilentlyContinue
         Write-FrameworkLog -ModuleName "RestoreEngine" -Action "Restore point creation timed out" -Level WARN
         Write-Host "`n[WARNING] Restore point creation timed out (VSS busy or locked). Transactional rollback engine remains active." -ForegroundColor Yellow

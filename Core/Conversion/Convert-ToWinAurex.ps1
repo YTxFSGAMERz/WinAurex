@@ -54,11 +54,8 @@ Write-Host "`n[*] Executing Curated Safe Optimizations & Privacy Hardening..." -
 $SafeSuite = Join-Path $RepoRoot "Apply_Curated_Safe_Suite.ps1"
 
 if (Test-Path $SafeSuite) {
-    if ($Force) {
-        & $SafeSuite -Force
-    } else {
-        & $SafeSuite
-    }
+    # Run unattended during conversion to eliminate nested mid-flight prompt pauses
+    & $SafeSuite -Force
 } else {
     Write-Warning "Apply_Curated_Safe_Suite.ps1 not found in $RepoRoot. Skipping automated tweak execution."
 }
