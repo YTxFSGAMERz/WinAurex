@@ -11,7 +11,16 @@
   {
     "name": "dmwappushservice",
     "type": "service",
-    "desc": "WAP Push Message Routing Service",
+    "desc": "WAP Push Message Routing Service for enterprise and device telemetry",
+    "vendor": "Microsoft",
+    "category": "Telemetry_Tracking",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "diagnosticshub.standardcollector.service",
+    "type": "service",
+    "desc": "Microsoft Diagnostics Hub Standard Collector ETW tracing",
     "vendor": "Microsoft",
     "category": "Telemetry_Tracking",
     "risk_tier": 1,
@@ -20,16 +29,7 @@
   {
     "name": "WerSvc",
     "type": "service",
-    "desc": "Windows Error Reporting Service",
-    "vendor": "Microsoft",
-    "category": "Telemetry_Tracking",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "PcaSvc",
-    "type": "service",
-    "desc": "Program Compatibility Assistant Service",
+    "desc": "Windows Error Reporting Service automated crash dump upload",
     "vendor": "Microsoft",
     "category": "Telemetry_Tracking",
     "risk_tier": 1,
@@ -45,9 +45,9 @@
     "is_safe": true
   },
   {
-    "name": "diagnosticshub.standardcollector.service",
+    "name": "PcaSvc",
     "type": "service",
-    "desc": "Microsoft Diagnostics Hub Standard Collector Service",
+    "desc": "Program Compatibility Assistant monitoring and shim injection",
     "vendor": "Microsoft",
     "category": "Telemetry_Tracking",
     "risk_tier": 1,
@@ -72,99 +72,567 @@
     "is_safe": true
   },
   {
+    "name": "DPS",
+    "type": "service",
+    "desc": "Diagnostic Policy Service problem detection",
+    "vendor": "Microsoft",
+    "category": "Telemetry_Tracking",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "diagsvc",
+    "type": "service",
+    "desc": "Diagnostic Execution Service",
+    "vendor": "Microsoft",
+    "category": "Telemetry_Tracking",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "autotimesvc",
+    "type": "service",
+    "desc": "Cellular Time Synchronization Service",
+    "vendor": "Microsoft",
+    "category": "Telemetry_Tracking",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "InventorySvc",
+    "type": "service",
+    "desc": "System inventory and telemetry scanner",
+    "vendor": "Microsoft",
+    "category": "Telemetry_Tracking",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "cloudidsvc",
+    "type": "service",
+    "desc": "Microsoft Cloud Identity and telemetry service",
+    "vendor": "Microsoft",
+    "category": "Telemetry_Tracking",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
     "name": "CompatTelRunner.exe",
     "type": "process",
-    "desc": "Microsoft Compatibility Telemetry Runner",
+    "desc": "Microsoft Compatibility Telemetry Runner background scanner",
     "vendor": "Microsoft",
     "category": "Telemetry_Tracking",
     "risk_tier": 1,
     "is_safe": true
   },
   {
-    "name": "Consolidator",
-    "type": "task",
-    "desc": "Customer Experience Improvement Program Consolidator",
-    "vendor": "Microsoft",
-    "category": "Telemetry_Tracking",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "UsbCeip",
-    "type": "task",
-    "desc": "USB Customer Experience Improvement Program",
-    "vendor": "Microsoft",
-    "category": "Telemetry_Tracking",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "Microsoft Compatibility Appraiser",
-    "type": "task",
-    "desc": "Collects telemetry information to assess application compatibility",
-    "vendor": "Microsoft",
-    "category": "Telemetry_Tracking",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "ProgramDataUpdater",
-    "type": "task",
-    "desc": "Collects program telemetry information",
-    "vendor": "Microsoft",
-    "category": "Telemetry_Tracking",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "StartupAppTask",
-    "type": "task",
-    "desc": "Scans startup items for telemetry",
-    "vendor": "Microsoft",
-    "category": "Telemetry_Tracking",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "QueueReporting",
-    "type": "task",
-    "desc": "Windows Error Reporting queue upload",
-    "vendor": "Microsoft",
-    "category": "Telemetry_Tracking",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "DmClient",
-    "type": "task",
-    "desc": "Feedback and diagnostic telemetry client",
-    "vendor": "Microsoft",
-    "category": "Telemetry_Tracking",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "DmClientOnScenarioDownload",
-    "type": "task",
-    "desc": "Feedback scenario download telemetry",
-    "vendor": "Microsoft",
-    "category": "Telemetry_Tracking",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "Microsoft-Windows-DiskDiagnosticDataCollector",
-    "type": "task",
-    "desc": "Disk diagnostic telemetry collector",
-    "vendor": "Microsoft",
-    "category": "Telemetry_Tracking",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "Dell Client Management Service",
+    "name": "RetailDemo",
     "type": "service",
-    "desc": "Dell hardware telemetry and management",
+    "desc": "Retail Demo Service for store display PCs",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "MapsBroker",
+    "type": "service",
+    "desc": "Downloaded Maps Manager offline map sync",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "lfsvc",
+    "type": "service",
+    "desc": "Geolocation Service location tracking",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "Fax",
+    "type": "service",
+    "desc": "Legacy Fax Service dial-up fax transmission",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "RemoteRegistry",
+    "type": "service",
+    "desc": "Remote Registry network modification service",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "RemoteAccess",
+    "type": "service",
+    "desc": "Routing and Remote Access legacy NAT server",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "SharedAccess",
+    "type": "service",
+    "desc": "Internet Connection Sharing (ICS)",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "PhoneSvc",
+    "type": "service",
+    "desc": "Phone Service telephony integration",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "SmsRouter",
+    "type": "service",
+    "desc": "Microsoft Windows SMS Router cellular routing",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "SEMgrSvc",
+    "type": "service",
+    "desc": "Payments and NFC/SE Manager",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "WalletService",
+    "type": "service",
+    "desc": "Microsoft Pay and Wallet background host",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "PushToInstall",
+    "type": "service",
+    "desc": "Windows PushToInstall Service for remote app pushes",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "wisvc",
+    "type": "service",
+    "desc": "Windows Insider Service preview build validator",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "WpcMonSvc",
+    "type": "service",
+    "desc": "Parental Controls activity logger and blocker",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "AJRouter",
+    "type": "service",
+    "desc": "AllJoyn Router Service IoT routing",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "WMPNetworkSvc",
+    "type": "service",
+    "desc": "Windows Media Player Network Sharing UPnP DLNA",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "PeerDistSvc",
+    "type": "service",
+    "desc": "BranchCache enterprise local intranet cache",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "CscService",
+    "type": "service",
+    "desc": "Offline Files network caching client",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "RpcLocator",
+    "type": "service",
+    "desc": "Remote Procedure Call (RPC) Locator legacy database",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "TrkWks",
+    "type": "service",
+    "desc": "Distributed Link Tracking Client NTFS network link tracker",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "shpamsvc",
+    "type": "service",
+    "desc": "Shared PC Account Manager kiosk account cleaner",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "UevAgentService",
+    "type": "service",
+    "desc": "User Experience Virtualization Service roaming profile manager",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "AppVClient",
+    "type": "service",
+    "desc": "Microsoft App-V Client virtualization engine",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "SessionEnv",
+    "type": "service",
+    "desc": "Remote Desktop Configuration",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "TermService",
+    "type": "service",
+    "desc": "Remote Desktop Services daemon",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "UmRdpService",
+    "type": "service",
+    "desc": "User Profile Service for Remote Desktop",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "SensorDataService",
+    "type": "service",
+    "desc": "Sensor Data Service accelerometer orientation",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "SensrSvc",
+    "type": "service",
+    "desc": "Sensor Monitoring Service ambient light auto-rotation",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "SensorService",
+    "type": "service",
+    "desc": "Unified Windows Sensor broker",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "TabletInputService",
+    "type": "service",
+    "desc": "Touch Keyboard and Handwriting Panel",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "WFDSConSvc",
+    "type": "service",
+    "desc": "Wi-Fi Direct Services Connection Manager Miracast",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "WwanSvc",
+    "type": "service",
+    "desc": "WWAN AutoConfig cellular SIM broadband manager",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DusmSvc",
+    "type": "service",
+    "desc": "Data Usage Monitoring Service cellular bandwidth meter",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "icssvc",
+    "type": "service",
+    "desc": "Windows Mobile Hotspot Service",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "XblAuthManager",
+    "type": "service",
+    "desc": "Xbox Live Auth Manager gamertag authentication",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "XblGameSave",
+    "type": "service",
+    "desc": "Xbox Live Game Save Service cloud sync",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "XboxNetApiSvc",
+    "type": "service",
+    "desc": "Xbox Live Networking Service Teredo multiplayer tunnel",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "XboxGipSvc",
+    "type": "service",
+    "desc": "Xbox Accessory Management Service wireless controller firmware",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "DoSvc",
+    "type": "service",
+    "desc": "Delivery Optimization P2P upload and bandwidth seeder",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "CDPUserSvc",
+    "type": "service",
+    "desc": "Connected Devices Platform User Service cross-device sync",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "OneSyncSvc",
+    "type": "service",
+    "desc": "Sync Host contacts and calendar background synchronizer",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "UserDataSvc",
+    "type": "service",
+    "desc": "User Data Access Service storage synchronization",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "UnistoreSvc",
+    "type": "service",
+    "desc": "User Data Storage Service email contact store",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "PimIndexMaintenanceSvc",
+    "type": "service",
+    "desc": "Contact Data Indexing Service",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "MessagingService",
+    "type": "service",
+    "desc": "Messaging Service SMS and text synchronization",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "WpnUserService",
+    "type": "service",
+    "desc": "Windows Push Notifications User Service background push host",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DevicePickerUserSvc",
+    "type": "service",
+    "desc": "Device Picker User Service Miracast casting",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DevicesFlowUserSvc",
+    "type": "service",
+    "desc": "Devices Flow User Service hardware accessory wizard",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "CloudBackupRestoreSvc",
+    "type": "service",
+    "desc": "Cloud Backup and Restore User Service OneDrive syncing",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DellClientManagementService",
+    "type": "service",
+    "desc": "Dell hardware telemetry and remote inventory agent",
+    "vendor": "Dell",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DellDataVault",
+    "type": "service",
+    "desc": "Dell Data Vault continuous hardware health telemetry logger",
+    "vendor": "Dell",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DellDataVaultCollector",
+    "type": "service",
+    "desc": "Dell Data Vault crash and diagnostic dump aggregator",
+    "vendor": "Dell",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DellDataVaultProcessor",
+    "type": "service",
+    "desc": "Dell Data Vault sensor and metrics processor",
+    "vendor": "Dell",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DellHardwareSupport",
+    "type": "service",
+    "desc": "Dell SupportAssist hardware background scanner",
+    "vendor": "Dell",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DellSupportAssistAgent",
+    "type": "service",
+    "desc": "Dell SupportAssist automated diagnostics and updater agent",
+    "vendor": "Dell",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DellUpdate",
+    "type": "service",
+    "desc": "Dell Update Service periodic background poller",
+    "vendor": "Dell",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DDVDataCollector",
+    "type": "service",
+    "desc": "Dell Data Vault Data Collector background logger",
     "vendor": "Dell",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
@@ -173,79 +641,115 @@
   {
     "name": "Dell TechHub",
     "type": "service",
-    "desc": "Dell background support and analytics",
+    "desc": "Dell TechHub diagnostics and telemetry background server",
     "vendor": "Dell",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
     "is_safe": true
   },
   {
-    "name": "Dell SupportAssist",
+    "name": "HPAppHelperCap",
     "type": "service",
-    "desc": "Dell SupportAssist automated diagnostics and telemetry",
-    "vendor": "Dell",
-    "category": "OEM_Bloatware",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "Dell Data Vault",
-    "type": "service",
-    "desc": "Dell Data Vault telemetry storage collector",
-    "vendor": "Dell",
-    "category": "OEM_Bloatware",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "HP Touchpoint Analytics Client",
-    "type": "service",
-    "desc": "HP hardware analytics and usage tracking",
+    "desc": "HP App Helper HSA Service companion app bridge",
     "vendor": "HP",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
     "is_safe": true
   },
   {
-    "name": "HP Support Assistant Quick Start",
+    "name": "HPCommRecovery",
     "type": "service",
-    "desc": "HP support assistant background launcher",
+    "desc": "HP Network HSA Service telemetry monitor",
     "vendor": "HP",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
     "is_safe": true
   },
   {
-    "name": "HP Comm Recovery",
+    "name": "HPDiagsCap",
     "type": "service",
-    "desc": "HP communication recovery background daemon",
+    "desc": "HP Diagnostics HSA Service automated hardware testing",
     "vendor": "HP",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
     "is_safe": true
   },
   {
-    "name": "Lenovo Vantage Service",
+    "name": "HPSysInfoCap",
     "type": "service",
-    "desc": "Lenovo Vantage background diagnostics and updates",
+    "desc": "HP System Info HSA Service identifier collector",
+    "vendor": "HP",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "HPTouchpointAnalyticsService",
+    "type": "service",
+    "desc": "HP Touchpoint Analytics Client daily metrics telemetry",
+    "vendor": "HP",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "CaslData",
+    "type": "service",
+    "desc": "HP CASL Framework Service legacy companion software",
+    "vendor": "HP",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "LenovoVantageService",
+    "type": "service",
+    "desc": "Lenovo Vantage Service background telemetry and updates",
     "vendor": "Lenovo",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
     "is_safe": true
   },
   {
-    "name": "Lenovo Hotkeys",
+    "name": "ImControllerService",
     "type": "service",
-    "desc": "Lenovo background utility hotkey monitor",
+    "desc": "Lenovo System Interface Foundation Service background daemon",
     "vendor": "Lenovo",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "LenovoTransition",
+    "type": "service",
+    "desc": "Lenovo Transition screen auto-rotate detector",
+    "vendor": "Lenovo",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "LenovoBrowserGuard",
+    "type": "service",
+    "desc": "Lenovo Browser Guard search protection add-on",
+    "vendor": "Lenovo",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "LenovoHotkeys",
+    "type": "service",
+    "desc": "Lenovo Hotkeys OSD overlay monitor",
+    "vendor": "Lenovo",
+    "category": "OEM_Bloatware",
+    "risk_tier": 2,
     "is_safe": true
   },
   {
     "name": "LenovoSystemUpdateFoundations",
     "type": "service",
-    "desc": "Lenovo automated update polling engine",
+    "desc": "Lenovo System Update background poller",
     "vendor": "Lenovo",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
@@ -254,7 +758,16 @@
   {
     "name": "ArmouryCrateControlInterface",
     "type": "service",
-    "desc": "ASUS Armoury Crate RGB and hardware controller",
+    "desc": "ASUS Armoury Crate RGB hardware and fan daemon",
+    "vendor": "ASUS",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "ArmouryCrateService",
+    "type": "service",
+    "desc": "ASUS Armoury Crate User Session Helper telemetry",
     "vendor": "ASUS",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
@@ -263,25 +776,34 @@
   {
     "name": "AsusAppService",
     "type": "service",
-    "desc": "ASUS application telemetry and support service",
+    "desc": "ASUS App Service communication layer for MyASUS",
     "vendor": "ASUS",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
     "is_safe": true
   },
   {
-    "name": "ASUSLinkNear",
+    "name": "AsusLinkNear",
     "type": "service",
-    "desc": "ASUS Link proximity and cross-device syncing",
+    "desc": "ASUS Link Near proximity Wi-Fi and Bluetooth scanner",
     "vendor": "ASUS",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
     "is_safe": true
   },
   {
-    "name": "ASUSLinkRemote",
+    "name": "AsusLinkRemote",
     "type": "service",
-    "desc": "ASUS Link remote background daemon",
+    "desc": "ASUS Link Remote mobile pairing connection client",
+    "vendor": "ASUS",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "ASUSOptimization",
+    "type": "service",
+    "desc": "ASUS Optimization Service power fan profile switcher",
     "vendor": "ASUS",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
@@ -290,7 +812,34 @@
   {
     "name": "ASUSSoftwareManager",
     "type": "service",
-    "desc": "ASUS background software updater",
+    "desc": "ASUS Software Manager promotional updater",
+    "vendor": "ASUS",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "ASUSSystemAnalysis",
+    "type": "service",
+    "desc": "ASUS System Analysis hardware diagnostic telemetry",
+    "vendor": "ASUS",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "ASUSSystemDiagnosis",
+    "type": "service",
+    "desc": "ASUS System Diagnosis detailed crash log collector",
+    "vendor": "ASUS",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "LightingService",
+    "type": "service",
+    "desc": "Aura Lighting Service Asus RGB controller driver",
     "vendor": "ASUS",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
@@ -306,9 +855,9 @@
     "is_safe": true
   },
   {
-    "name": "Razer Chroma Stream Server",
+    "name": "Razer Central Service",
     "type": "service",
-    "desc": "Razer lighting broadcast server",
+    "desc": "Razer Central Service promotional launcher and telemetry",
     "vendor": "Razer",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
@@ -317,8 +866,98 @@
   {
     "name": "Razer Game Manager",
     "type": "service",
-    "desc": "Razer background game tracking service",
+    "desc": "Razer Game Manager background process game scanner",
     "vendor": "Razer",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Razer Chroma Stream Server",
+    "type": "service",
+    "desc": "Razer Chroma Stream Server lighting broadcaster",
+    "vendor": "Razer",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Razer Update Service",
+    "type": "service",
+    "desc": "Razer Update Service background updater",
+    "vendor": "Razer",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "AcerCareCenterService",
+    "type": "service",
+    "desc": "Acer Care Center automated hardware diagnostics and updater",
+    "vendor": "Acer",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "AcerConfigurationService",
+    "type": "service",
+    "desc": "Acer Configuration Service background settings synchronizer",
+    "vendor": "Acer",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "AcerQuickAccessConsole",
+    "type": "service",
+    "desc": "Acer Quick Access Service hotkey overlay daemon",
+    "vendor": "Acer",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "AcerLightingService",
+    "type": "service",
+    "desc": "Acer Predator RGB lighting controller",
+    "vendor": "Acer",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "AcerSysHardwareService",
+    "type": "service",
+    "desc": "Acer System Hardware monitor telemetry agent",
+    "vendor": "Acer",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "AcerHardwareService",
+    "type": "service",
+    "desc": "Acer Hardware Service diagnostic broker",
+    "vendor": "Acer",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "ESRV_SVC_WILLAMETTE",
+    "type": "service",
+    "desc": "Intel(R) SUR System Usage Report hardware telemetry",
+    "vendor": "Intel",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "USER_ESRV_SVC_WILLAMETTE",
+    "type": "service",
+    "desc": "Intel(R) SUR User Session telemetry collector agent",
+    "vendor": "Intel",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
     "is_safe": true
@@ -326,7 +965,16 @@
   {
     "name": "IntelAudioService",
     "type": "service",
-    "desc": "Intel audio telemetry assistant",
+    "desc": "Intel Audio Service audio telemetry and smart sound assistant",
+    "vendor": "Intel",
+    "category": "OEM_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "LMS",
+    "type": "service",
+    "desc": "Intel(R) Management and Security Application Local Management Service",
     "vendor": "Intel",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
@@ -344,7 +992,7 @@
   {
     "name": "Intel(R) Content Protection HECI Service",
     "type": "service",
-    "desc": "Intel content protection DRM daemon",
+    "desc": "Intel content protection DRM background daemon",
     "vendor": "Intel",
     "category": "OEM_Bloatware",
     "risk_tier": 1,
@@ -371,7 +1019,7 @@
   {
     "name": "AGSService",
     "type": "service",
-    "desc": "Adobe Genuine Software Integrity Service",
+    "desc": "Adobe Genuine Software Integrity Service telemetry",
     "vendor": "Adobe",
     "category": "ThirdParty_Updater",
     "risk_tier": 1,
@@ -396,6 +1044,24 @@
     "is_safe": true
   },
   {
+    "name": "GoogleUpdaterService",
+    "type": "service",
+    "desc": "Google Chrome modern background updater",
+    "vendor": "Google",
+    "category": "ThirdParty_Updater",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "GoogleUpdaterInternalService",
+    "type": "service",
+    "desc": "Google Chrome internal maintenance updater",
+    "vendor": "Google",
+    "category": "ThirdParty_Updater",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
     "name": "edgeupdate",
     "type": "service",
     "desc": "Microsoft Edge Update Service (edgeupdate)",
@@ -414,135 +1080,36 @@
     "is_safe": true
   },
   {
-    "name": "MapsBroker",
+    "name": "MozillaMaintenance",
     "type": "service",
-    "desc": "Downloaded Maps Manager",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
-    "risk_tier": 2,
-    "is_safe": true
-  },
-  {
-    "name": "lfsvc",
-    "type": "service",
-    "desc": "Geolocation Service",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
-    "risk_tier": 2,
-    "is_safe": true
-  },
-  {
-    "name": "RetailDemo",
-    "type": "service",
-    "desc": "Retail Demo Service for display store PCs",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
+    "desc": "Mozilla Maintenance Service Firefox background updater",
+    "vendor": "Mozilla",
+    "category": "ThirdParty_Updater",
     "risk_tier": 1,
     "is_safe": true
   },
   {
-    "name": "wisvc",
+    "name": "OperaCrashReporter",
     "type": "service",
-    "desc": "Windows Insider Service for preview builds",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
-    "risk_tier": 2,
-    "is_safe": true
-  },
-  {
-    "name": "Fax",
-    "type": "service",
-    "desc": "Legacy Fax Service",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
+    "desc": "Opera Browser crash dump reporting agent",
+    "vendor": "Opera",
+    "category": "ThirdParty_Updater",
     "risk_tier": 1,
     "is_safe": true
   },
   {
-    "name": "RemoteRegistry",
+    "name": "CCleanerUpdate",
     "type": "service",
-    "desc": "Enables remote users to modify registry settings",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
+    "desc": "CCleaner Emergency Update telemetry agent",
+    "vendor": "Piriform",
+    "category": "ThirdParty_Updater",
     "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "WalletService",
-    "type": "service",
-    "desc": "Microsoft Pay and Wallet background host",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "PushToInstall",
-    "type": "service",
-    "desc": "Windows PushToInstall Service",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
-    "risk_tier": 1,
-    "is_safe": true
-  },
-  {
-    "name": "PhoneSvc",
-    "type": "service",
-    "desc": "Phone Service for telephony integration",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
-    "risk_tier": 2,
-    "is_safe": true
-  },
-  {
-    "name": "DoSvc",
-    "type": "service",
-    "desc": "Delivery Optimization P2P upload daemon",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
-    "risk_tier": 2,
-    "is_safe": true
-  },
-  {
-    "name": "XblAuthManager",
-    "type": "service",
-    "desc": "Xbox Live Auth Manager",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
-    "risk_tier": 2,
-    "is_safe": true
-  },
-  {
-    "name": "XblGameSave",
-    "type": "service",
-    "desc": "Xbox Live Game Save Service",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
-    "risk_tier": 2,
-    "is_safe": true
-  },
-  {
-    "name": "XboxNetApiSvc",
-    "type": "service",
-    "desc": "Xbox Live Networking Service",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
-    "risk_tier": 2,
-    "is_safe": true
-  },
-  {
-    "name": "DusmSvc",
-    "type": "service",
-    "desc": "Data Usage Monitoring Service",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
-    "risk_tier": 2,
     "is_safe": true
   },
   {
     "name": "TikTok",
     "type": "appx",
-    "desc": "TikTok sponsored social app",
+    "desc": "TikTok sponsored social media video app",
     "vendor": "Bytedance",
     "category": "Consumer_Bloatware",
     "risk_tier": 1,
@@ -567,9 +1134,18 @@
     "is_safe": true
   },
   {
+    "name": "WhatsApp",
+    "type": "appx",
+    "desc": "WhatsApp Desktop preinstalled client",
+    "vendor": "Meta",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
     "name": "SpotifyAB.SpotifyMusic",
     "type": "appx",
-    "desc": "Spotify Music streaming client",
+    "desc": "Spotify Music streaming client preload",
     "vendor": "Spotify",
     "category": "Consumer_Bloatware",
     "risk_tier": 1,
@@ -578,8 +1154,17 @@
   {
     "name": "DisneyMagicKingdoms",
     "type": "appx",
-    "desc": "Disney sponsored game",
+    "desc": "Disney Magic Kingdoms sponsored game",
     "vendor": "Gameloft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Disney.37853FC22B2CE",
+    "type": "appx",
+    "desc": "Disney+ streaming media preload",
+    "vendor": "Disney",
     "category": "Consumer_Bloatware",
     "risk_tier": 1,
     "is_safe": true
@@ -587,8 +1172,107 @@
   {
     "name": "King.com.CandyCrushSaga",
     "type": "appx",
-    "desc": "Candy Crush sponsored game",
+    "desc": "Candy Crush Saga sponsored game",
     "vendor": "King",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "King.com.CandyCrushSodaSaga",
+    "type": "appx",
+    "desc": "Candy Crush Soda Saga sponsored game",
+    "vendor": "King",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "King.com.CandyCrushFriends",
+    "type": "appx",
+    "desc": "Candy Crush Friends sponsored game",
+    "vendor": "King",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Amazon.AmazonVideo",
+    "type": "appx",
+    "desc": "Amazon Prime Video streaming app",
+    "vendor": "Amazon",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Amazon.AmazonPrime",
+    "type": "appx",
+    "desc": "Amazon Prime delivery shopping preload",
+    "vendor": "Amazon",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Clipchamp.Clipchamp",
+    "type": "appx",
+    "desc": "Clipchamp freemium video editor preload",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "Fitbit.FitbitCoach",
+    "type": "appx",
+    "desc": "Fitbit Coach fitness sponsored app",
+    "vendor": "Fitbit",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "LinkedIn",
+    "type": "appx",
+    "desc": "LinkedIn social network preload",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Netflix",
+    "type": "appx",
+    "desc": "Netflix streaming client preload",
+    "vendor": "Netflix",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "HiddenCityMysteryofShadows",
+    "type": "appx",
+    "desc": "Hidden City sponsored game",
+    "vendor": "G5",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "MarchofEmpires",
+    "type": "appx",
+    "desc": "March of Empires sponsored game",
+    "vendor": "Gameloft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "RoyalRevolt",
+    "type": "appx",
+    "desc": "Royal Revolt sponsored strategy game",
+    "vendor": "Flaregames",
     "category": "Consumer_Bloatware",
     "risk_tier": 1,
     "is_safe": true
@@ -596,7 +1280,7 @@
   {
     "name": "Microsoft.BingWeather",
     "type": "appx",
-    "desc": "Bing Weather consumer app",
+    "desc": "Bing Weather consumer forecast app",
     "vendor": "Microsoft",
     "category": "Consumer_Bloatware",
     "risk_tier": 1,
@@ -605,7 +1289,7 @@
   {
     "name": "Microsoft.BingNews",
     "type": "appx",
-    "desc": "Bing News consumer news feed",
+    "desc": "Bing News consumer MSN news feed",
     "vendor": "Microsoft",
     "category": "Consumer_Bloatware",
     "risk_tier": 1,
@@ -614,7 +1298,7 @@
   {
     "name": "Microsoft.BingFinance",
     "type": "appx",
-    "desc": "Bing Finance stock tracker",
+    "desc": "Bing Finance MSN stock market tracker",
     "vendor": "Microsoft",
     "category": "Consumer_Bloatware",
     "risk_tier": 1,
@@ -623,7 +1307,7 @@
   {
     "name": "Microsoft.BingSports",
     "type": "appx",
-    "desc": "Bing Sports consumer app",
+    "desc": "Bing Sports consumer sports tracker",
     "vendor": "Microsoft",
     "category": "Consumer_Bloatware",
     "risk_tier": 1,
@@ -632,7 +1316,7 @@
   {
     "name": "Microsoft.MicrosoftSolitaireCollection",
     "type": "appx",
-    "desc": "Solitaire preloaded card games with ads",
+    "desc": "Solitaire card game collection with in-app advertising",
     "vendor": "Microsoft",
     "category": "Consumer_Bloatware",
     "risk_tier": 1,
@@ -641,7 +1325,7 @@
   {
     "name": "Microsoft.GetHelp",
     "type": "appx",
-    "desc": "Get Help support app",
+    "desc": "Get Help interactive assistant support app",
     "vendor": "Microsoft",
     "category": "Consumer_Bloatware",
     "risk_tier": 1,
@@ -650,14 +1334,41 @@
   {
     "name": "Microsoft.Getstarted",
     "type": "appx",
-    "desc": "Windows Tips and Getting Started app",
+    "desc": "Tips and Getting Started promotional app",
     "vendor": "Microsoft",
     "category": "Consumer_Bloatware",
     "risk_tier": 1,
     "is_safe": true
   },
   {
-    "name": "Microsoft.FeedbackHub",
+    "name": "Microsoft.MicrosoftOfficeHub",
+    "type": "appx",
+    "desc": "Office 365 promotional hub",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft.People",
+    "type": "appx",
+    "desc": "People contact synchronizer app",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft.Todos",
+    "type": "appx",
+    "desc": "Microsoft To-Do task manager preload",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft.WindowsFeedbackHub",
     "type": "appx",
     "desc": "Feedback Hub telemetry reporting tool",
     "vendor": "Microsoft",
@@ -666,36 +1377,261 @@
     "is_safe": true
   },
   {
-    "name": "Microsoft.YourPhone",
+    "name": "Microsoft.WindowsMaps",
     "type": "appx",
-    "desc": "Phone Link synchronization app",
-    "vendor": "Microsoft",
-    "category": "Consumer_Bloatware",
-    "risk_tier": 2,
-    "is_safe": true
-  },
-  {
-    "name": "Microsoft.549981C3F5F10",
-    "type": "appx",
-    "desc": "Cortana voice assistant",
+    "desc": "Windows Maps offline maps client",
     "vendor": "Microsoft",
     "category": "Consumer_Bloatware",
     "risk_tier": 1,
     "is_safe": true
   },
   {
-    "name": "Clipchamp.Clipchamp",
+    "name": "Microsoft.YourPhone",
     "type": "appx",
-    "desc": "Clipchamp web-based video editor preinstall",
+    "desc": "Phone Link phone synchronization app",
     "vendor": "Microsoft",
     "category": "Consumer_Bloatware",
     "risk_tier": 2,
     "is_safe": true
   },
   {
+    "name": "Microsoft.ZuneMusic",
+    "type": "appx",
+    "desc": "Groove Music media player preload",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft.ZuneVideo",
+    "type": "appx",
+    "desc": "Films and TV video player preload",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft.SkypeApp",
+    "type": "appx",
+    "desc": "Skype modern communications client",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft.MixedReality.Portal",
+    "type": "appx",
+    "desc": "Windows Mixed Reality portal",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft.549981C3F5F10",
+    "type": "appx",
+    "desc": "Cortana voice assistant app",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft.WindowsCommunicationsApps",
+    "type": "appx",
+    "desc": "Legacy Windows Mail and Calendar apps",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft.PowerAutomateDesktop",
+    "type": "appx",
+    "desc": "Power Automate workflow engine preload",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft.MicrosoftStickyNotes",
+    "type": "appx",
+    "desc": "Sticky Notes companion app",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft.XboxGamingOverlay",
+    "type": "appx",
+    "desc": "Xbox Game Bar heavy overlay injector",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft.XboxApp",
+    "type": "appx",
+    "desc": "Xbox Console Companion",
+    "vendor": "Microsoft",
+    "category": "Consumer_Bloatware",
+    "risk_tier": 2,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft Compatibility Appraiser",
+    "type": "task",
+    "desc": "Application Experience daily full-disk telemetry compatibility scanner",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "ProgramDataUpdater",
+    "type": "task",
+    "desc": "Application Experience crash history and telemetry updater",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "StartupAppTask",
+    "type": "task",
+    "desc": "Application Experience startup impact profiler",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "PcaPatchDbTask",
+    "type": "task",
+    "desc": "Application Experience compatibility shim database updater",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Consolidator",
+    "type": "task",
+    "desc": "Customer Experience Improvement Program metrics consolidator and packager",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "UsbCeip",
+    "type": "task",
+    "desc": "Customer Experience Improvement Program USB telemetry collector",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "KernelCeipTask",
+    "type": "task",
+    "desc": "Customer Experience Improvement Program kernel halt event collector",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft-Windows-DiskDiagnosticDataCollector",
+    "type": "task",
+    "desc": "Disk diagnostic telemetry collector S.M.A.R.T. health uploader",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Microsoft-Windows-DiskDiagnosticResolver",
+    "type": "task",
+    "desc": "Disk diagnostic resolver error prompter",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "QueueReporting",
+    "type": "task",
+    "desc": "Windows Error Reporting queue upload flushing agent",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DmClient",
+    "type": "task",
+    "desc": "Feedback and diagnostic survey client uploader",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "DmClientOnScenarioDownload",
+    "type": "task",
+    "desc": "Feedback scenario download telemetry trigger",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "Autochk Proxy",
+    "type": "task",
+    "desc": "Autochk disk corruption report proxy uploader",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
     "name": "WinSAT",
     "type": "task",
-    "desc": "Windows System Assessment benchmark task",
+    "desc": "Windows System Assessment benchmark execution task",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "AnalyzeSystem",
+    "type": "task",
+    "desc": "Power efficiency diagnostic trace collector",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "MapsUpdateTask",
+    "type": "task",
+    "desc": "Offline maps periodic poller",
+    "vendor": "Microsoft",
+    "category": "High_Overhead_Task",
+    "risk_tier": 1,
+    "is_safe": true
+  },
+  {
+    "name": "MapsToastTask",
+    "type": "task",
+    "desc": "Offline maps toast notification manager",
     "vendor": "Microsoft",
     "category": "High_Overhead_Task",
     "risk_tier": 1,
@@ -704,25 +1640,439 @@
   {
     "name": "ScheduledDefrag",
     "type": "task",
-    "desc": "Automatic background drive optimization",
+    "desc": "Automatic background drive defragmentation and trimming",
     "vendor": "Microsoft",
     "category": "High_Overhead_Task",
     "risk_tier": 2,
     "is_safe": true
   },
   {
-    "name": "Autochk Proxy",
-    "type": "task",
-    "desc": "Disk autochk proxy reporting task",
+    "name": "Appinfo",
+    "type": "service",
+    "desc": "Application Information Service for UAC Administrative Elevation",
     "vendor": "Microsoft",
-    "category": "High_Overhead_Task",
-    "risk_tier": 1,
-    "is_safe": true
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "RpcSs",
+    "type": "service",
+    "desc": "Remote Procedure Call (RPC) Core Kernel Message Engine",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "RpcEptMapper",
+    "type": "service",
+    "desc": "RPC Endpoint Mapper IPC Broker",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "DcomLaunch",
+    "type": "service",
+    "desc": "DCOM Server Process Launcher Core Object Host",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "StateRepository",
+    "type": "service",
+    "desc": "State Repository Service AppX manifest and database manager",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "ClipSVC",
+    "type": "service",
+    "desc": "Client License Service (ClipSVC) Microsoft Store digital licenses",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "wuauserv",
+    "type": "service",
+    "desc": "Windows Update Service operating system security patcher",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "TrustedInstaller",
+    "type": "service",
+    "desc": "Windows Modules Installer Component-Based Servicing CBS",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "UsoSvc",
+    "type": "service",
+    "desc": "Update Session Orchestrator update workflow manager",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "WaaSMedicSvc",
+    "type": "service",
+    "desc": "Windows Update Medic Service self-healing repair engine",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "InstallService",
+    "type": "service",
+    "desc": "Microsoft Store Install Service UWP application installer",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "AppXSvc",
+    "type": "service",
+    "desc": "AppX Deployment Service UWP manifest deployer",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "AppReadiness",
+    "type": "service",
+    "desc": "App Readiness Service user login setup broker",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Audiosrv",
+    "type": "service",
+    "desc": "Windows Audio Service audio playback and mixing engine",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "AudioEndpointBuilder",
+    "type": "service",
+    "desc": "Windows Audio Endpoint Builder sound device enumerator",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "CryptSvc",
+    "type": "service",
+    "desc": "Cryptographic Services driver signature and catalog validator",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Dhcp",
+    "type": "service",
+    "desc": "DHCP Client local network IP address lease manager",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Dnscache",
+    "type": "service",
+    "desc": "DNS Client Cache domain name resolution broker",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "WlanSvc",
+    "type": "service",
+    "desc": "WLAN AutoConfig Wi-Fi radio and authentication engine",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "LanmanWorkstation",
+    "type": "service",
+    "desc": "Workstation network client SMB share connector",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "netprofm",
+    "type": "service",
+    "desc": "Network List Service network connection status provider",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "NlaSvc",
+    "type": "service",
+    "desc": "Network Location Awareness network state reporter",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "nsi",
+    "type": "service",
+    "desc": "Network Store Interface Service kernel network notification",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "PlugPlay",
+    "type": "service",
+    "desc": "Plug and Play hardware device detection bus",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Power",
+    "type": "service",
+    "desc": "Power Service ACPI power plan and sleep state coordinator",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "ProfSvc",
+    "type": "service",
+    "desc": "User Profile Service Windows desktop account login broker",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "SamSs",
+    "type": "service",
+    "desc": "Security Accounts Manager local user credential database",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "LsaIso",
+    "type": "service",
+    "desc": "Credential Guard LSA Isolated Process authentication host",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "KeyIso",
+    "type": "service",
+    "desc": "CNG Key Isolation TPM and BitLocker cryptography host",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "VaultSvc",
+    "type": "service",
+    "desc": "Credential Manager saved Windows credentials host",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "mpssvc",
+    "type": "service",
+    "desc": "Windows Defender Firewall network security and UWP sandbox bridge",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "BFE",
+    "type": "service",
+    "desc": "Base Filtering Engine firewall and packet filter manager",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "BDESVC",
+    "type": "service",
+    "desc": "BitLocker Drive Encryption Service storage encryption host",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "FontCache",
+    "type": "service",
+    "desc": "Windows Font Cache Service font glyph rendering accelerator",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "FontCache3.0.0.0",
+    "type": "service",
+    "desc": "Windows Presentation Foundation WPF Font Cache Service",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "EventLog",
+    "type": "service",
+    "desc": "Windows Event Log system auditing provider",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Schedule",
+    "type": "service",
+    "desc": "Task Scheduler engine automated maintenance host",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "UserManager",
+    "type": "service",
+    "desc": "User Manager multi-user shell broker",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Themes",
+    "type": "service",
+    "desc": "Themes visual styles manager",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Winmgmt",
+    "type": "service",
+    "desc": "Windows Management Instrumentation WMI system query host",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "nvsvc",
+    "type": "service",
+    "desc": "NVIDIA Display Driver Service GPU hardware management",
+    "vendor": "NVIDIA",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "NVDisplay.Container.exe",
+    "type": "process",
+    "desc": "NVIDIA Driver Container Service",
+    "vendor": "NVIDIA",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "amdfendrs",
+    "type": "service",
+    "desc": "AMD Crash Defender Driver Service GPU hardware safety",
+    "vendor": "AMD",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "AMD External Events Utility",
+    "type": "service",
+    "desc": "AMD Catalyst Hardware Event Driver Service",
+    "vendor": "AMD",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "AmdPpkgSvc",
+    "type": "service",
+    "desc": "AMD Provisioning Package Core Driver Service",
+    "vendor": "AMD",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "amdpmfservice",
+    "type": "service",
+    "desc": "AMD Platform Management Framework Service",
+    "vendor": "AMD",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "vmtoolsd",
+    "type": "service",
+    "desc": "VMware Tools Core Daemon virtualization driver",
+    "vendor": "VMware",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
   },
   {
     "name": "System",
     "type": "process",
-    "desc": "NT Kernel & System Process",
+    "desc": "NT Kernel and System Process",
     "vendor": "Microsoft",
     "category": "Core_OS_Essential",
     "risk_tier": 0,
@@ -839,7 +2189,7 @@
   {
     "name": "ctfmon.exe",
     "type": "process",
-    "desc": "CTF Loader & Input Architecture",
+    "desc": "CTF Loader and Input Architecture",
     "vendor": "Microsoft",
     "category": "Core_OS_Essential",
     "risk_tier": 0,
@@ -963,402 +2313,6 @@
     "is_safe": false
   },
   {
-    "name": "NVDisplay.Container.exe",
-    "type": "process",
-    "desc": "NVIDIA Driver Container Service",
-    "vendor": "NVIDIA",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "wuauserv",
-    "type": "service",
-    "desc": "Windows Update Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "TrustedInstaller",
-    "type": "service",
-    "desc": "Windows Modules Installer",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "CryptSvc",
-    "type": "service",
-    "desc": "Cryptographic Services",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "BITS",
-    "type": "service",
-    "desc": "Background Intelligent Transfer Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "msiserver",
-    "type": "service",
-    "desc": "Windows Installer Engine",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "UsoSvc",
-    "type": "service",
-    "desc": "Update Orchestrator Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "InstallService",
-    "type": "service",
-    "desc": "Microsoft Store Install Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "ClipSVC",
-    "type": "service",
-    "desc": "Client License Service (ClipSVC)",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "AppXSvc",
-    "type": "service",
-    "desc": "AppX Deployment Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "AppReadiness",
-    "type": "service",
-    "desc": "App Readiness Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "Audiosrv",
-    "type": "service",
-    "desc": "Windows Audio Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "AudioEndpointBuilder",
-    "type": "service",
-    "desc": "Windows Audio Endpoint Builder",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "nvsvc",
-    "type": "service",
-    "desc": "NVIDIA Display Driver Service",
-    "vendor": "NVIDIA",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "amdfendrs",
-    "type": "service",
-    "desc": "AMD Crash Defender Driver Service",
-    "vendor": "AMD",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "Dhcp",
-    "type": "service",
-    "desc": "DHCP Client",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "Dnscache",
-    "type": "service",
-    "desc": "DNS Client Cache Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "WlanSvc",
-    "type": "service",
-    "desc": "WLAN AutoConfig Service (Wi-Fi)",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "LanmanWorkstation",
-    "type": "service",
-    "desc": "Workstation Network Client",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "netprofm",
-    "type": "service",
-    "desc": "Network List Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "NlaSvc",
-    "type": "service",
-    "desc": "Network Location Awareness",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "Appinfo",
-    "type": "service",
-    "desc": "Application Information Service for UAC Elevation",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "BDESVC",
-    "type": "service",
-    "desc": "BitLocker Drive Encryption Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "AMD External Events Utility",
-    "type": "service",
-    "desc": "AMD Catalyst Hardware Event Driver Service",
-    "vendor": "AMD",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "AmdPpkgSvc",
-    "type": "service",
-    "desc": "AMD Provisioning Package Core Driver Service",
-    "vendor": "AMD",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "amdpmfservice",
-    "type": "service",
-    "desc": "AMD Platform Management Framework Service",
-    "vendor": "AMD",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "ALG",
-    "type": "service",
-    "desc": "Application Layer Gateway Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "AxInstSV",
-    "type": "service",
-    "desc": "ActiveX Installer Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "AppMgmt",
-    "type": "service",
-    "desc": "Application Management Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "EventLog",
-    "type": "service",
-    "desc": "Windows Event Log Core Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "RpcSs",
-    "type": "service",
-    "desc": "Remote Procedure Call (RPC)",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "RpcEptMapper",
-    "type": "service",
-    "desc": "RPC Endpoint Mapper",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "DcomLaunch",
-    "type": "service",
-    "desc": "DCOM Server Process Launcher",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "PlugPlay",
-    "type": "service",
-    "desc": "Plug and Play Hardware Manager",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "Schedule",
-    "type": "service",
-    "desc": "Task Scheduler Engine",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "UserManager",
-    "type": "service",
-    "desc": "User Manager Session Broker",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "ProfSvc",
-    "type": "service",
-    "desc": "User Profile Service",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "gpsvc",
-    "type": "service",
-    "desc": "Group Policy Client",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "BraveElevationService",
-    "type": "service",
-    "desc": "Brave Browser Elevation Service",
-    "vendor": "Brave",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "GoogleChromeElevationService",
-    "type": "service",
-    "desc": "Google Chrome Elevation Service",
-    "vendor": "Google",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "LsaIso",
-    "type": "service",
-    "desc": "Credential Guard / LSA Isolated Process",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "SamSs",
-    "type": "service",
-    "desc": "Security Accounts Manager",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "KeyIso",
-    "type": "service",
-    "desc": "CNG Key Isolation",
-    "vendor": "Microsoft",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
-    "name": "vmtoolsd",
-    "type": "service",
-    "desc": "VMware Tools Core Daemon",
-    "vendor": "VMware",
-    "category": "Core_OS_Essential",
-    "risk_tier": 0,
-    "is_safe": false
-  },
-  {
     "name": "Microsoft.WindowsStore",
     "type": "appx",
     "desc": "Microsoft Store App Platform",
@@ -1370,7 +2324,16 @@
   {
     "name": "Microsoft.DesktopAppInstaller",
     "type": "appx",
-    "desc": "Windows Package Manager (winget)",
+    "desc": "Windows Package Manager winget MSIX installer",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Microsoft.StorePurchaseApp",
+    "type": "appx",
+    "desc": "Store In-App Purchase API Provider",
     "vendor": "Microsoft",
     "category": "Core_OS_Essential",
     "risk_tier": 0,
@@ -1395,9 +2358,63 @@
     "is_safe": false
   },
   {
+    "name": "Microsoft.WindowsNotepad",
+    "type": "appx",
+    "desc": "Windows Notepad Text Editor",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
     "name": "Microsoft.ScreenSketch",
     "type": "appx",
     "desc": "Snipping Tool Screen Capture Utility",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Microsoft.Paint",
+    "type": "appx",
+    "desc": "Paint Graphic Editor",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Microsoft.UI.Xaml.2.8",
+    "type": "appx",
+    "desc": "Modern UI Visual Runtime Library",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Microsoft.VCLibs.140.00",
+    "type": "appx",
+    "desc": "Visual C++ Runtime Binaries for Modern Apps",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Microsoft.NET.Native.Framework.2.2",
+    "type": "appx",
+    "desc": ".NET Native Runtime Framework",
+    "vendor": "Microsoft",
+    "category": "Core_OS_Essential",
+    "risk_tier": 0,
+    "is_safe": false
+  },
+  {
+    "name": "Microsoft.AccountsControl",
+    "type": "appx",
+    "desc": "Account Authentication Modal Broker",
     "vendor": "Microsoft",
     "category": "Core_OS_Essential",
     "risk_tier": 0,

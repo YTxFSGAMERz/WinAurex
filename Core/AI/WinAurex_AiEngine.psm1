@@ -416,6 +416,28 @@ public static extern int EmptyWorkingSet(IntPtr hwProc);
         }
     } catch {}
 
+    # Apply Baseline Network, Privacy & Latency Policy Suppressions
+    try {
+        # 1. Delivery Optimization HTTP only (no P2P background uploads)
+        $doPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization"
+        if (-not (Test-Path $doPath)) { New-Item -Path $doPath -Force | Out-Null }
+        Set-ItemProperty -Path $doPath -Name "DODownloadMode" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
+
+        # 2. Advertising ID tracking off
+        $adPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo"
+        if (-not (Test-Path $adPath)) { New-Item -Path $adPath -Force | Out-Null }
+        Set-ItemProperty -Path $adPath -Name "Enabled" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
+
+        # 3. Game DVR background recording off (eliminates micro-stutter)
+        $gConfig = "HKCU:\System\GameConfigStore"
+        if (-not (Test-Path $gConfig)) { New-Item -Path $gConfig -Force | Out-Null }
+        Set-ItemProperty -Path $gConfig -Name "GameDVR_Enabled" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
+
+        $gDvr = "HKCU:\Software\Microsoft\Windows\CurrentVersion\GameDVR"
+        if (-not (Test-Path $gDvr)) { New-Item -Path $gDvr -Force | Out-Null }
+        Set-ItemProperty -Path $gDvr -Name "AppCaptureEnabled" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
+    } catch {}
+
     return @{
         Applied = $appliedCount
         Skipped = $skippedCount
