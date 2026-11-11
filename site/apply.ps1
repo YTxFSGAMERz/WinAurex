@@ -142,16 +142,34 @@ if (-not $SkipPrereqs) {
 # 5. Create System Restore Point (Disaster Recovery Safeguard)
 if (-not $SkipRestorePoint) {
     Write-Host "`n[3/5] Creating Windows System Restore Point ('Pre-WinAurex Conversion')..." -ForegroundColor Cyan
-    try {
-        Enable-ComputerRestore -Drive $env:SystemDrive -ErrorAction SilentlyContinue
-        # Allow creating restore points on-demand without 24h frequency limit
-        $srKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore"
-        if (-not (Test-Path $srKey)) { New-Item -Path $srKey -Force | Out-Null }
-        Set-ItemProperty -Path $srKey -Name "SystemRestorePointCreationFrequency" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
-        Checkpoint-Computer -Description "Pre-WinAurex Conversion" -RestorePointType "MODIFY_SETTINGS" -ErrorAction Stop
-        Write-Host "[+] System Restore point created successfully!" -ForegroundColor Green
-    } catch {
-        Write-Warning "System Restore checkpoint could not be created ($($_.Exception.Message)). Proceeding with transactional rollback engine."
+    Write-Host "  [*] Initializing Volume Shadow Copy checkpoint (timeout: 15s)..." -ForegroundColor DarkGray
+    $srJob = Start-Job -ScriptBlock {
+        try {
+            Enable-ComputerRestore -Drive $using:env:SystemDrive -ErrorAction SilentlyContinue
+            # Allow creating restore points on-demand without 24h frequency limit
+            $srKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore"
+            if (-not (Test-Path $srKey)) { New-Item -Path $srKey -Force | Out-Null }
+            Set-ItemProperty -Path $srKey -Name "SystemRestorePointCreationFrequency" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
+            Checkpoint-Computer -Description "Pre-WinAurex Conversion" -RestorePointType "MODIFY_SETTINGS" -ErrorAction Stop
+            return "SUCCESS"
+        } catch {
+            return $_.Exception.Message
+        }
+    }
+
+    $srCompleted = Wait-Job $srJob -Timeout 15
+    if ($srCompleted) {
+        $srResult = Receive-Job $srJob
+        Remove-Job $srJob -Force -ErrorAction SilentlyContinue
+        if ($srResult -eq "SUCCESS") {
+            Write-Host "  [+] System Restore point created successfully!" -ForegroundColor Green
+        } else {
+            Write-Warning "System Restore checkpoint could not be created ($srResult). Proceeding with transactional rollback engine."
+        }
+    } else {
+        Stop-Job $srJob -Force -ErrorAction SilentlyContinue
+        Remove-Job $srJob -Force -ErrorAction SilentlyContinue
+        Write-Warning "System Restore point creation timed out (VSS busy or locked by background updates). Proceeding with transactional rollback engine."
     }
 } else {
     Write-Host "`n[3/5] Skipping System Restore checkpoint as requested." -ForegroundColor DarkGray
