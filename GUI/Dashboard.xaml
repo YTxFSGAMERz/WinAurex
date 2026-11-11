@@ -594,6 +594,220 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
+
+                        <!-- Tweak Card 5: Windows 11 Explorer & UI Modernizer -->
+                        <Border Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE770;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
+                                        <TextBlock Style="{StaticResource Header2}" Text="Windows 11 Explorer &amp; UI Modernizer" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <TextBlock Style="{StaticResource BodyText}" Text="Restores classic instant right-click context menu (bypasses Windows 11 'Show more options' delay), enables compact list view, forces file extensions &amp; hidden files visible, configures 'This PC' as default, and decouples Start search from Bing cloud queries."/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                    <Button Name="BtnModernizeExplorer" Style="{StaticResource AccentButton}" Width="160" Height="34" Margin="0,2,0,3">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Modernize UI" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Name="BtnRestoreExplorer" Width="160" Height="30" Margin="0,2,0,2">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE8FB;" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Restore Defaults" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Tweak Card 6: DNS & Low-Latency Network Accelerator -->
+                        <Border Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE774;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
+                                        <TextBlock Style="{StaticResource Header2}" Text="DNS &amp; Low-Latency Network Accelerator" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <TextBlock Style="{StaticResource BodyText}" Text="Switches network adapters to ultra-low latency, zero-logging DNS (Cloudflare, Google, AdGuard ad-blocking, Quad9), flushes Windows DNS cache, and tunes TCP Auto-Tuning and ECN parameters for competitive gaming."/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                    <Button Name="BtnDnsCloudflare" Style="{StaticResource AccentButton}" Width="160" Height="32" Margin="0,2,0,3">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE896;" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Cloudflare 1.1.1.1" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Name="BtnDnsGoogle" Width="160" Height="30" Margin="0,2,0,3">
+                                        <TextBlock Text="Google 8.8.8.8" VerticalAlignment="Center"/>
+                                    </Button>
+                                    <Button Name="BtnDnsAdGuard" Width="160" Height="30" Margin="0,2,0,3">
+                                        <TextBlock Text="AdGuard (Ad-Block)" VerticalAlignment="Center"/>
+                                    </Button>
+                                    <Button Name="BtnDnsDhcp" Width="160" Height="30" Margin="0,2,0,3">
+                                        <TextBlock Text="Reset to DHCP" VerticalAlignment="Center"/>
+                                    </Button>
+                                    <Button Name="BtnDnsFlush" Width="160" Height="30" Margin="0,2,0,2" Foreground="#00adb5" BorderBrush="#00adb5">
+                                        <TextBlock Text="⚡ Flush DNS Cache" VerticalAlignment="Center"/>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Tweak Card 7: Hardware Power & Storage Engine -->
+                        <Border Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7E8;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
+                                        <TextBlock Style="{StaticResource Header2}" Text="Hardware Power &amp; Storage Engine" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <TextBlock Style="{StaticResource BodyText}" Text="Unlocks the hidden Windows Ultimate Performance power plan (eliminating CPU core parking latency), recovers 8 GB–32 GB SSD storage by compressing hiberfil.sys, and executes native NVMe/SSD hardware TRIM."/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                    <Button Name="BtnUnlockUltimatePlan" Style="{StaticResource AccentButton}" Width="160" Height="34" Margin="0,2,0,3">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7E8;" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Ultimate Plan" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Name="BtnReclaimHiberfil" Width="160" Height="30" Margin="0,2,0,3">
+                                        <TextBlock Text="Reclaim SSD Space" VerticalAlignment="Center"/>
+                                    </Button>
+                                    <Button Name="BtnRunSsdTrim" Width="160" Height="30" Margin="0,2,0,2">
+                                        <TextBlock Text="Run SSD TRIM" VerticalAlignment="Center"/>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Tweak Card 8: Automated Startup Optimizer -->
+                        <Border Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7B5;" FontSize="20" Foreground="#00adb5" Margin="0,15,10,10" VerticalAlignment="Center"/>
+                                        <TextBlock Style="{StaticResource Header2}" Text="Automated Startup Optimizer" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <TextBlock Style="{StaticResource BodyText}" Text="Scans system and user registry autoruns, safely relocating high-impact bloatware (Teams, OneDrive, Spotify, Cortana, Skype, Discord) to Run-Disabled for near-instant cold boot speeds."/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                    <Button Name="BtnOptimizeStartup" Style="{StaticResource AccentButton}" Width="160" Height="34" Margin="0,2,0,3">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Prune Startup" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Name="BtnRestoreStartup" Width="160" Height="30" Margin="0,2,0,2">
+                                        <TextBlock Text="Restore All" VerticalAlignment="Center"/>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- TABS: Software Hub -->
+            <TabItem Header="SOFTWARE HUB">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                    <StackPanel Margin="0,10,0,10">
+                        <TextBlock Style="{StaticResource BodyText}" Text="Curated 1-click silent unattended installer powered by the native Windows Package Manager (winget). Select packages and install in batch without telemetry or installers bloat." Margin="0,0,0,15"/>
+                        
+                        <!-- Action Bar & Controls -->
+                        <Border Style="{StaticResource Card}" Padding="15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Button Name="BtnSoftwareSelectAll" Content="Select All" Width="100" Height="32" Margin="0,0,10,0"/>
+                                    <Button Name="BtnSoftwareClear" Content="Clear" Width="80" Height="32" Margin="0,0,15,0"/>
+                                    <TextBlock Name="TxtSoftwareStatus" Text="Ready to install" Foreground="#00adb5" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <Button Name="BtnSoftwareInstall" Grid.Column="1" Style="{StaticResource AccentButton}" Width="200" Height="38">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE896;" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Install Selected Apps" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </Border>
+
+                        <!-- Software Categories Grid -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Column 1: Web Browsers -->
+                            <Border Grid.Column="0" Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE774;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                        <TextBlock Style="{StaticResource Header2}" Text="Web Browsers" Margin="0" FontSize="16" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <CheckBox Name="ChkAppBrave" Content="Brave Browser" Tag="Brave.Brave" IsChecked="True"/>
+                                    <CheckBox Name="ChkAppChrome" Content="Google Chrome" Tag="Google.Chrome"/>
+                                    <CheckBox Name="ChkAppFirefox" Content="Mozilla Firefox" Tag="Mozilla.Firefox"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Column 2: Gaming & Media -->
+                            <Border Grid.Column="2" Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7FC;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                        <TextBlock Style="{StaticResource Header2}" Text="Gaming &amp; Media" Margin="0" FontSize="16" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <CheckBox Name="ChkAppSteam" Content="Steam" Tag="Valve.Steam"/>
+                                    <CheckBox Name="ChkAppDiscord" Content="Discord" Tag="Discord.Discord"/>
+                                    <CheckBox Name="ChkAppOBS" Content="OBS Studio" Tag="OBSProject.OBSStudio"/>
+                                    <CheckBox Name="ChkAppVLC" Content="VLC Media Player" Tag="VideoLAN.VLC" IsChecked="True"/>
+                                    <CheckBox Name="ChkAppSpotify" Content="Spotify" Tag="Spotify.Spotify"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Column 3: Dev & Power Tools -->
+                            <Border Grid.Column="4" Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE756;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                        <TextBlock Style="{StaticResource Header2}" Text="Dev &amp; Utilities" Margin="0" FontSize="16" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <CheckBox Name="ChkAppVSCode" Content="VS Code" Tag="Microsoft.VisualStudioCode"/>
+                                    <CheckBox Name="ChkAppGit" Content="Git" Tag="Git.Git"/>
+                                    <CheckBox Name="ChkAppPython" Content="Python 3.12" Tag="Python.Python.3.12"/>
+                                    <CheckBox Name="ChkAppNode" Content="Node.js (LTS)" Tag="OpenJS.NodeJS.LTS"/>
+                                    <CheckBox Name="ChkApp7Zip" Content="7-Zip" Tag="7zip.7zip" IsChecked="True"/>
+                                    <CheckBox Name="ChkAppNotepad" Content="Notepad++" Tag="Notepad++.Notepad++" IsChecked="True"/>
+                                    <CheckBox Name="ChkAppEverything" Content="Everything Search" Tag="voidtools.Everything" IsChecked="True"/>
+                                    <CheckBox Name="ChkAppPowerToys" Content="PowerToys" Tag="Microsoft.PowerToys"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

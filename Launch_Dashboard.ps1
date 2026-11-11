@@ -80,6 +80,44 @@ $BtnOpenThreatSettings = Find-Control "BtnOpenThreatSettings"
 $TxtDefenderRealtimeStatus = Find-Control "TxtDefenderRealtimeStatus"
 $TxtDefenderTamperStatus   = Find-Control "TxtDefenderTamperStatus"
 
+# Tweaks & Debloat Extended UI Hooks
+$BtnModernizeExplorer   = Find-Control "BtnModernizeExplorer"
+$BtnRestoreExplorer     = Find-Control "BtnRestoreExplorer"
+$BtnDnsCloudflare       = Find-Control "BtnDnsCloudflare"
+$BtnDnsGoogle           = Find-Control "BtnDnsGoogle"
+$BtnDnsAdGuard          = Find-Control "BtnDnsAdGuard"
+$BtnDnsDhcp             = Find-Control "BtnDnsDhcp"
+$BtnDnsFlush            = Find-Control "BtnDnsFlush"
+$BtnUnlockUltimatePlan  = Find-Control "BtnUnlockUltimatePlan"
+$BtnReclaimHiberfil     = Find-Control "BtnReclaimHiberfil"
+$BtnRunSsdTrim          = Find-Control "BtnRunSsdTrim"
+$BtnOptimizeStartup     = Find-Control "BtnOptimizeStartup"
+$BtnRestoreStartup      = Find-Control "BtnRestoreStartup"
+
+# Software Hub UI Hooks
+$BtnSoftwareSelectAll   = Find-Control "BtnSoftwareSelectAll"
+$BtnSoftwareClear       = Find-Control "BtnSoftwareClear"
+$TxtSoftwareStatus      = Find-Control "TxtSoftwareStatus"
+$BtnSoftwareInstall     = Find-Control "BtnSoftwareInstall"
+$AppCheckboxes = @(
+    (Find-Control "ChkAppBrave"),
+    (Find-Control "ChkAppChrome"),
+    (Find-Control "ChkAppFirefox"),
+    (Find-Control "ChkAppSteam"),
+    (Find-Control "ChkAppDiscord"),
+    (Find-Control "ChkAppOBS"),
+    (Find-Control "ChkAppVLC"),
+    (Find-Control "ChkAppSpotify"),
+    (Find-Control "ChkAppVSCode"),
+    (Find-Control "ChkAppGit"),
+    (Find-Control "ChkAppPython"),
+    (Find-Control "ChkAppNode"),
+    (Find-Control "ChkApp7Zip"),
+    (Find-Control "ChkAppNotepad"),
+    (Find-Control "ChkAppEverything"),
+    (Find-Control "ChkAppPowerToys")
+) | Where-Object { $null -ne $_ }
+
 # AI Optimizer UI Hooks
 $BtnAiScan              = Find-Control "BtnAiScan"
 $BtnAiOptimize          = Find-Control "BtnAiOptimize"
@@ -255,6 +293,144 @@ if ($null -ne $BtnOpenLogsFolder) {
     $BtnOpenLogsFolder.Add_Click({
         Write-DashboardLog "User clicked View Logs (Opening $LogDir)"
         Start-Process explorer.exe $LogDir
+    })
+}
+
+# --- EXTENDED TWEAKS EVENT HANDLERS ---
+if ($null -ne $BtnModernizeExplorer) {
+    $BtnModernizeExplorer.Add_Click({
+        Invoke-DashboardAction -ActionName "Explorer_Modernize" -ScriptPath (Join-Path $RootPath "Tweaks\Explorer\Apply_Explorer_Modernizer.ps1") -Arguments "-Force"
+    })
+}
+if ($null -ne $BtnRestoreExplorer) {
+    $BtnRestoreExplorer.Add_Click({
+        Invoke-DashboardAction -ActionName "Explorer_Restore" -ScriptPath (Join-Path $RootPath "Tweaks\Explorer\Apply_Explorer_Modernizer.ps1") -Arguments "-Revert -Force"
+    })
+}
+
+if ($null -ne $BtnDnsCloudflare) {
+    $BtnDnsCloudflare.Add_Click({
+        Invoke-DashboardAction -ActionName "DNS_Cloudflare" -ScriptPath (Join-Path $RootPath "Tweaks\Network\Set_Dns_And_Network_Optimization.ps1") -Arguments "-Provider Cloudflare -Force"
+    })
+}
+if ($null -ne $BtnDnsGoogle) {
+    $BtnDnsGoogle.Add_Click({
+        Invoke-DashboardAction -ActionName "DNS_Google" -ScriptPath (Join-Path $RootPath "Tweaks\Network\Set_Dns_And_Network_Optimization.ps1") -Arguments "-Provider Google -Force"
+    })
+}
+if ($null -ne $BtnDnsAdGuard) {
+    $BtnDnsAdGuard.Add_Click({
+        Invoke-DashboardAction -ActionName "DNS_AdGuard" -ScriptPath (Join-Path $RootPath "Tweaks\Network\Set_Dns_And_Network_Optimization.ps1") -Arguments "-Provider AdGuard -Force"
+    })
+}
+if ($null -ne $BtnDnsDhcp) {
+    $BtnDnsDhcp.Add_Click({
+        Invoke-DashboardAction -ActionName "DNS_Reset_DHCP" -ScriptPath (Join-Path $RootPath "Tweaks\Network\Set_Dns_And_Network_Optimization.ps1") -Arguments "-Provider DHCP -Force"
+    })
+}
+if ($null -ne $BtnDnsFlush) {
+    $BtnDnsFlush.Add_Click({
+        Invoke-DashboardAction -ActionName "DNS_Flush_Cache" -ScriptPath (Join-Path $RootPath "Tweaks\Network\Set_Dns_And_Network_Optimization.ps1") -Arguments "-FlushOnly -Force"
+    })
+}
+
+if ($null -ne $BtnUnlockUltimatePlan) {
+    $BtnUnlockUltimatePlan.Add_Click({
+        Invoke-DashboardAction -ActionName "Power_UltimatePlan" -ScriptPath (Join-Path $RootPath "Tweaks\Power\Manage_Hardware_Power_And_Storage.ps1") -Arguments "-Action UnlockUltimatePlan -Force"
+    })
+}
+if ($null -ne $BtnReclaimHiberfil) {
+    $BtnReclaimHiberfil.Add_Click({
+        Invoke-DashboardAction -ActionName "Storage_HiberfilReclaim" -ScriptPath (Join-Path $RootPath "Tweaks\Power\Manage_Hardware_Power_And_Storage.ps1") -Arguments "-Action ReclaimHiberfil -Force"
+    })
+}
+if ($null -ne $BtnRunSsdTrim) {
+    $BtnRunSsdTrim.Add_Click({
+        Invoke-DashboardAction -ActionName "Storage_SSD_TRIM" -ScriptPath (Join-Path $RootPath "Tweaks\Power\Manage_Hardware_Power_And_Storage.ps1") -Arguments "-Action RunSsdTrim -Force"
+    })
+}
+
+if ($null -ne $BtnOptimizeStartup) {
+    $BtnOptimizeStartup.Add_Click({
+        Invoke-DashboardAction -ActionName "Startup_Optimize" -ScriptPath (Join-Path $RootPath "Tweaks\Startup\Optimize_Startup_Apps.ps1") -Arguments "-Force"
+    })
+}
+if ($null -ne $BtnRestoreStartup) {
+    $BtnRestoreStartup.Add_Click({
+        Invoke-DashboardAction -ActionName "Startup_Restore" -ScriptPath (Join-Path $RootPath "Tweaks\Startup\Optimize_Startup_Apps.ps1") -Arguments "-RestoreAll -Force"
+    })
+}
+
+# --- SOFTWARE HUB TAB LOGIC ---
+if ($null -ne $BtnSoftwareSelectAll) {
+    $BtnSoftwareSelectAll.Add_Click({
+        foreach ($chk in $AppCheckboxes) { $chk.IsChecked = $true }
+        if ($null -ne $TxtSoftwareStatus) { $TxtSoftwareStatus.Text = "All packages selected ($($AppCheckboxes.Count))" }
+    })
+}
+
+if ($null -ne $BtnSoftwareClear) {
+    $BtnSoftwareClear.Add_Click({
+        foreach ($chk in $AppCheckboxes) { $chk.IsChecked = $false }
+        if ($null -ne $TxtSoftwareStatus) { $TxtSoftwareStatus.Text = "Selection cleared (0 packages)" }
+    })
+}
+
+if ($null -ne $BtnSoftwareInstall) {
+    $BtnSoftwareInstall.Add_Click({
+        $selected = $AppCheckboxes | Where-Object { $_.IsChecked }
+        if ($null -eq $selected -or $selected.Count -eq 0) {
+            if ($null -ne $TxtSoftwareStatus) {
+                $TxtSoftwareStatus.Text = "Please select at least one package."
+                $TxtSoftwareStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#ff5722")
+            }
+            return
+        }
+
+        $packageIds = ($selected | ForEach-Object { $_.Tag }) -join ","
+        Write-DashboardLog "User requested batch software installation: $packageIds"
+        
+        if ($null -ne $TxtSoftwareStatus) {
+            $TxtSoftwareStatus.Text = "Installing $($selected.Count) packages via winget in background..."
+            $TxtSoftwareStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#ffb300")
+        }
+
+        $tempScript = Join-Path $env:TEMP "winaurex_batch_installer.ps1"
+        $scriptContent = @'
+[CmdletBinding()]
+param([string]$Ids)
+$ErrorActionPreference = 'Continue'
+Write-Host '======================================================================' -ForegroundColor Cyan
+Write-Host '         WinAurex Silent Batch Software Installer                     ' -ForegroundColor White
+Write-Host '======================================================================' -ForegroundColor Cyan
+$wg = Get-Command 'winget' -ErrorAction SilentlyContinue
+if (-not $wg) {
+    Write-Error 'Windows Package Manager (winget.exe) is not installed on this system.'
+    Exit 1
+}
+$idList = $Ids -split ','
+$total = $idList.Count
+$idx = 0
+foreach ($id in $idList) {
+    $idx++
+    Write-Host "`n[$idx/$total] Installing $id via winget..." -ForegroundColor Cyan
+    $proc = Start-Process winget -ArgumentList "install --id `"$id`" -e --silent --accept-package-agreements --accept-source-agreements --disable-interactivity" -Wait -PassThru -NoNewWindow
+    if ($proc.ExitCode -eq 0 -or $proc.ExitCode -eq -1978335189) {
+        Write-Host "  [+] $id installed successfully!" -ForegroundColor Green
+    } else {
+        Write-Warning "  [-] $id install exited with code: $($proc.ExitCode)"
+    }
+}
+Write-Host "`n[SUCCESS] Batch software installation completed!" -ForegroundColor Cyan
+'@
+        Set-Content -Path $tempScript -Value $scriptContent -Force
+
+        Invoke-DashboardAction -ActionName "Software_Batch_Install" -ScriptPath $tempScript -Arguments "-Ids `"$packageIds`""
+        
+        if ($null -ne $TxtSoftwareStatus) {
+            $TxtSoftwareStatus.Text = "Installation finished! Check Logs for details."
+            $TxtSoftwareStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+        }
     })
 }
 
