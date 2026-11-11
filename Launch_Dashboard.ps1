@@ -76,6 +76,75 @@ $BtnDebloatOS        = Find-Control "BtnDebloatOS"
 $BtnReduceThreads    = Find-Control "BtnReduceThreads"
 $BtnDisableDefender  = Find-Control "BtnDisableDefender"
 $BtnEnableDefender   = Find-Control "BtnEnableDefender"
+$BtnOpenThreatSettings = Find-Control "BtnOpenThreatSettings"
+$TxtDefenderRealtimeStatus = Find-Control "TxtDefenderRealtimeStatus"
+$TxtDefenderTamperStatus   = Find-Control "TxtDefenderTamperStatus"
+
+# Footer UI Hooks
+$BtnOpenLogsFolder = Find-Control "BtnOpenLogsFolder"
+
+# Central Logging Engine Setup
+$LogDir = "$env:SystemDrive\WinAurex\Logs"
+if (-not (Test-Path $LogDir)) {
+    $LogDir = Join-Path $RootPath "Logs"
+    if (-not (Test-Path $LogDir)) { New-Item -Path $LogDir -ItemType Directory -Force | Out-Null }
+}
+$DashboardSessionLog = Join-Path $LogDir "Dashboard_Session_$(Get-Date -Format 'yyyyMMdd').log"
+
+function Write-DashboardLog {
+    param([string]$Message, [string]$Level = "INFO")
+    $time = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $line = "[$time] [$Level] $Message"
+    Add-Content -Path $DashboardSessionLog -Value $line -ErrorAction SilentlyContinue
+}
+
+Write-DashboardLog "WinAurex GUI Dashboard session initialized by $([Environment]::UserName)"
+
+# --- DEFENDER LIVE STATUS UI UPDATER ---
+function Update-DefenderStatusUI {
+    try {
+        $mp = Get-MpComputerStatus -ErrorAction SilentlyContinue
+        if ($null -ne $TxtDefenderRealtimeStatus) {
+            if ($mp -and $mp.RealTimeProtectionEnabled) {
+                $TxtDefenderRealtimeStatus.Text = "Active (Scanning)"
+                $TxtDefenderRealtimeStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+            } else {
+                $TxtDefenderRealtimeStatus.Text = "Disabled (Off)"
+                $TxtDefenderRealtimeStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#ff5722")
+            }
+        }
+        if ($null -ne $TxtDefenderTamperStatus) {
+            if ($mp -and $mp.IsTamperProtected) {
+                $TxtDefenderTamperStatus.Text = "ON (Blocks changes)"
+                $TxtDefenderTamperStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#ff5722")
+            } else {
+                $TxtDefenderTamperStatus.Text = "OFF (Modifiable)"
+                $TxtDefenderTamperStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00adb5")
+            }
+        }
+    } catch {}
+}
+
+# --- UNIFIED DASHBOARD ACTION RUNNER & LOGGER ---
+function Invoke-DashboardAction {
+    param (
+        [string]$ActionName,
+        [string]$ScriptPath,
+        [string]$Arguments = "-Force"
+    )
+    Write-DashboardLog "Starting Action: $ActionName (Target: $ScriptPath $Arguments)"
+    Set-Status -Message "Executing $ActionName..." -Color "#ffb300"
+    
+    $ActionLog = Join-Path $LogDir "${ActionName}_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
+    $cmd = "& { Start-Transcript -Path `"$ActionLog`" -Append -Force; try { & `"$ScriptPath`" $Arguments } finally { Stop-Transcript } }"
+    
+    $proc = Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"$cmd`"" -Wait -PassThru
+    $exitCode = if ($proc) { $proc.ExitCode } else { 0 }
+    
+    Write-DashboardLog "Completed Action: $ActionName (ExitCode: $exitCode, Log: $ActionLog)"
+    Set-Status -Message "$ActionName complete! Log: $(Split-Path $ActionLog -Leaf)" -Color "#00adb5"
+    Update-DefenderStatusUI
+}
 
 # PC Cleaner UI Hooks
 $BtnAnalyzeStorage = Find-Control "BtnAnalyzeStorage"
@@ -115,61 +184,52 @@ function Set-Status {
 
 # --- PROFILES TAB LOGIC ---
 $BtnApplyMaxPerf.Add_Click({
-    Set-Status -Message "Applying Max Performance Profile..." -Color "#ffb300"
-    $Script = Join-Path $RootPath "Profiles\Max_Performance_Profile.ps1"
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`"" -Wait
-    Set-Status -Message "Max Performance Applied!" -Color "#00adb5"
+    Invoke-DashboardAction -ActionName "Profile_MaxPerformance" -ScriptPath (Join-Path $RootPath "Profiles\Max_Performance_Profile.ps1")
 })
 
 $BtnApplyBalanced.Add_Click({
-    Set-Status -Message "Applying Balanced Creator Profile..." -Color "#ffb300"
-    $Script = Join-Path $RootPath "Profiles\Balanced_Creator_Profile.ps1"
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`"" -Wait
-    Set-Status -Message "Balanced Creator Applied!" -Color "#00adb5"
+    Invoke-DashboardAction -ActionName "Profile_Balanced" -ScriptPath (Join-Path $RootPath "Profiles\Balanced_Creator_Profile.ps1")
 })
 
 $BtnApplyEnterprise.Add_Click({
-    Set-Status -Message "Applying Enterprise Compliance Profile..." -Color "#ffb300"
-    $Script = Join-Path $RootPath "Profiles\Enterprise_Compliance_Profile.ps1"
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`"" -Wait
-    Set-Status -Message "Enterprise Compliance Applied!" -Color "#00adb5"
+    Invoke-DashboardAction -ActionName "Profile_Enterprise" -ScriptPath (Join-Path $RootPath "Profiles\Enterprise_Compliance_Profile.ps1")
 })
 
 # --- TWEAKS & DEBLOAT TAB LOGIC ---
 $BtnOptimizeServices.Add_Click({
-    Set-Status -Message "Optimizing background services..." -Color "#ffb300"
-    $Script = Join-Path $RootPath "Tweaks\Services\Optimize_Windows_Services.ps1"
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`" -Force" -Wait
-    Set-Status -Message "Services pruned successfully!" -Color "#00adb5"
+    Invoke-DashboardAction -ActionName "Optimize_Services" -ScriptPath (Join-Path $RootPath "Tweaks\Services\Optimize_Windows_Services.ps1") -Arguments "-Force"
 })
 
 $BtnDebloatOS.Add_Click({
-    Set-Status -Message "Debloating OS & Appx packages..." -Color "#ffb300"
-    $Script = Join-Path $RootPath "Tweaks\Apps\Deep_OS_Debloat.ps1"
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`" -Force" -Wait
-    Set-Status -Message "OS Debloating complete!" -Color "#00adb5"
+    Invoke-DashboardAction -ActionName "Debloat_OS" -ScriptPath (Join-Path $RootPath "Tweaks\Apps\Deep_OS_Debloat.ps1") -Arguments "-Force"
 })
 
 $BtnReduceThreads.Add_Click({
-    Set-Status -Message "Reducing background processes & threads..." -Color "#ffb300"
-    $Script = Join-Path $RootPath "Tweaks\Performance\Reduce_Processes_And_Threads.ps1"
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`" -Force" -Wait
-    Set-Status -Message "Overhead reduced & memory trimmed!" -Color "#00adb5"
+    Invoke-DashboardAction -ActionName "Reduce_Threads" -ScriptPath (Join-Path $RootPath "Tweaks\Performance\Reduce_Processes_And_Threads.ps1") -Arguments "-Force"
 })
 
 $BtnDisableDefender.Add_Click({
-    Set-Status -Message "Applying Turn off Microsoft Defender Antivirus policy..." -Color "#ffb300"
-    $Script = Join-Path $RootPath "Tweaks\Security\Configure_Defender_Policy.ps1"
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`" -Disable -Force" -Wait
-    Set-Status -Message "Defender disabled via Group Policy! (Reboot recommended)" -Color "#ffb300"
+    Invoke-DashboardAction -ActionName "Defender_Disable" -ScriptPath (Join-Path $RootPath "Tweaks\Security\Configure_Defender_Policy.ps1") -Arguments "-Disable -Force"
 })
 
 $BtnEnableDefender.Add_Click({
-    Set-Status -Message "Restoring Microsoft Defender Antivirus..." -Color "#ffb300"
-    $Script = Join-Path $RootPath "Tweaks\Security\Configure_Defender_Policy.ps1"
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`" -Enable -Force" -Wait
-    Set-Status -Message "Defender policy restored to active!" -Color "#00adb5"
+    Invoke-DashboardAction -ActionName "Defender_Enable" -ScriptPath (Join-Path $RootPath "Tweaks\Security\Configure_Defender_Policy.ps1") -Arguments "-Enable -Force"
 })
+
+if ($null -ne $BtnOpenThreatSettings) {
+    $BtnOpenThreatSettings.Add_Click({
+        Write-DashboardLog "User clicked Open Security Settings"
+        Set-Status -Message "Opening Windows Security Threat Settings..." -Color "#ffb300"
+        Start-Process "windowsdefender://threatsettings"
+    })
+}
+
+if ($null -ne $BtnOpenLogsFolder) {
+    $BtnOpenLogsFolder.Add_Click({
+        Write-DashboardLog "User clicked View Logs (Opening $LogDir)"
+        Start-Process explorer.exe $LogDir
+    })
+}
 
 # --- OBSERVABILITY TAB LOGIC ---
 $BtnAnalyzeFrameTiming.Add_Click({
@@ -243,6 +303,12 @@ $Timer.Add_Tick({
             $TxtDpcLatency.Text = "$([math]::Round($DpcCounter.NextValue()))"
         }
     } catch { }
+
+    # 5. Periodic Defender Live Status Refresh (every 6 seconds / 3 ticks)
+    $script:defTick = ($script:defTick + 1) % 3
+    if ($script:defTick -eq 0) {
+        Update-DefenderStatusUI
+    }
 })
 $Timer.Start()
 
@@ -402,4 +468,5 @@ $BtnRollbackSelected.Add_Click({
 # Initialize Window
 Load-Transactions
 Update-DriveMetrics
+Update-DefenderStatusUI
 $Window.ShowDialog() | Out-Null

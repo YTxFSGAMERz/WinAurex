@@ -442,15 +442,27 @@
                                         <TextBlock Style="{StaticResource Header2}" Text="Microsoft Defender Controller" VerticalAlignment="Center"/>
                                     </StackPanel>
                                     <TextBlock Style="{StaticResource BodyText}" Text="Turn off Microsoft Defender real-time scanning and cloud telemetry via official Group Policy (DisableAntiSpyware) without corrupting Windows Update or system servicing."/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                        <TextBlock Text="Real-Time Protection: " Foreground="#888888" FontSize="12"/>
+                                        <TextBlock Name="TxtDefenderRealtimeStatus" Text="Checking..." Foreground="#00ff41" FontSize="12" FontWeight="Bold" Margin="0,0,15,0"/>
+                                        <TextBlock Text="Tamper Protection: " Foreground="#888888" FontSize="12"/>
+                                        <TextBlock Name="TxtDefenderTamperStatus" Text="Checking..." Foreground="#ffb300" FontSize="12" FontWeight="Bold"/>
+                                    </StackPanel>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Orientation="Vertical">
-                                    <Button Name="BtnDisableDefender" Style="{StaticResource AccentButton}" Width="150" Height="36" Margin="0,2,0,4">
+                                    <Button Name="BtnDisableDefender" Style="{StaticResource AccentButton}" Width="160" Height="34" Margin="0,2,0,3">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE71A;" Margin="0,0,6,0" VerticalAlignment="Center"/>
                                             <TextBlock Text="Disable Defender" VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Button>
-                                    <Button Name="BtnEnableDefender" Width="150" Height="34" Margin="0,2,0,2">
+                                    <Button Name="BtnOpenThreatSettings" Width="160" Height="30" Margin="0,2,0,3" Background="#1f2833" Foreground="#ffb300" BorderBrush="#ffb300" BorderThickness="1" FontSize="11">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE713;" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Security Settings" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Name="BtnEnableDefender" Width="160" Height="30" Margin="0,2,0,2">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE8FB;" Margin="0,0,6,0" VerticalAlignment="Center"/>
                                             <TextBlock Text="Restore Defender" VerticalAlignment="Center"/>
@@ -772,7 +784,15 @@
 
         <!-- Footer -->
         <Grid Grid.Row="2" Margin="0,20,0,0">
-            <TextBlock Style="{StaticResource BodyText}" Text="v5.0 Enterprise Edition" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <TextBlock Style="{StaticResource BodyText}" Text="v5.0 Enterprise Edition" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                <Button Name="BtnOpenLogsFolder" Height="26" Padding="10,2" Background="#1f2833" Foreground="#00adb5" BorderBrush="#00adb5" BorderThickness="1" FontSize="11" Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xED25;" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="View Logs" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
             <TextBlock Name="TxtStatus" Style="{StaticResource BodyText}" Text="Status: Ready" Foreground="#00adb5" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold"/>
         </Grid>
     </Grid>

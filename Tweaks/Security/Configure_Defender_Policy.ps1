@@ -2,9 +2,8 @@
 .SYNOPSIS
     WinAurex Microsoft Defender Policy Controller
 .DESCRIPTION
-    Configures Microsoft Defender Antivirus state via official Group Policy registry settings.
-    Allows disabling real-time scanning, cloud telemetry, and background worker threads without
-    damaging Windows Update, CBS servicing, or system file integrity.
+    Configures Microsoft Defender Antivirus state via official Group Policy and Set-MpPreference.
+    Detects Tamper Protection, real-time protection, and guides users through modern Windows 11 security constraints.
 #>
 [CmdletBinding()]
 param (
@@ -12,7 +11,8 @@ param (
     [switch]$Enable,
     [switch]$Status,
     [switch]$Force,
-    [switch]$ForceReapply
+    [switch]$ForceReapply,
+    [switch]$OpenSettings
 )
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
@@ -29,23 +29,34 @@ $RealTimeKey       = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Ti
 $ReportingKey      = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting"
 $SpynetKey         = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet"
 
-function Get-DefenderPolicyStatus {
+function Get-LiveDefenderStatus {
+    $mp = $null
+    try { $mp = Get-MpComputerStatus -ErrorAction SilentlyContinue } catch {}
+    
     $antiSpyware = (Get-ItemProperty $DefenderPolicyKey -Name "DisableAntiSpyware" -ErrorAction SilentlyContinue).DisableAntiSpyware
-    $rtm = (Get-ItemProperty $RealTimeKey -Name "DisableRealtimeMonitoring" -ErrorAction SilentlyContinue).DisableRealtimeMonitoring
-    if ($antiSpyware -eq 1 -or $rtm -eq 1) {
-        return "DISABLED"
-    } else {
-        return "ACTIVE"
+    $rtmPolicy   = (Get-ItemProperty $RealTimeKey -Name "DisableRealtimeMonitoring" -ErrorAction SilentlyContinue).DisableRealtimeMonitoring
+
+    return @{
+        IsTamperProtected         = if ($mp) { [bool]$mp.IsTamperProtected } else { $false }
+        RealTimeProtectionEnabled = if ($mp) { [bool]$mp.RealTimeProtectionEnabled } else { $true }
+        AntivirusEnabled          = if ($mp) { [bool]$mp.AntivirusEnabled } else { $true }
+        GroupPolicyApplied        = ($antiSpyware -eq 1 -or $rtmPolicy -eq 1)
     }
 }
 
+if ($OpenSettings) {
+    Write-Host "`n[*] Opening Windows Security Threat Settings..." -ForegroundColor Cyan
+    Start-Process "windowsdefender://threatsettings"
+    Exit 0
+}
+
 if ($Status) {
-    $curStatus = Get-DefenderPolicyStatus
-    if ($curStatus -eq "DISABLED") {
-        Write-Host "`n[STATUS] Microsoft Defender Antivirus is: DISABLED (Group Policy Applied)" -ForegroundColor Yellow
-    } else {
-        Write-Host "`n[STATUS] Microsoft Defender Antivirus is: ACTIVE (Protection Enabled)" -ForegroundColor Green
-    }
+    $st = Get-LiveDefenderStatus
+    Write-Host "`n[LIVE STATUS REPORT]" -ForegroundColor Yellow
+    Write-Host "  Real-Time Protection : $(if ($st.RealTimeProtectionEnabled) { 'ACTIVE (Scanning)' } else { 'DISABLED (Off)' })" -ForegroundColor $(if ($st.RealTimeProtectionEnabled) { 'Green' } else { 'Yellow' })
+    Write-Host "  Tamper Protection    : $(if ($st.IsTamperProtected) { 'ON (Blocking script changes)' } else { 'OFF (Allows modifications)' })" -ForegroundColor $(if ($st.IsTamperProtected) { 'Red' } else { 'Green' })
+    Write-Host "  Group Policy Keys    : $(if ($st.GroupPolicyApplied) { 'TurnOff Policies Present' } else { 'Default (None)' })" -ForegroundColor Cyan
+    Write-Host "  Antivirus Engine     : $(if ($st.AntivirusEnabled) { 'Enabled' } else { 'Disabled' })" -ForegroundColor White
     Exit 0
 }
 
@@ -55,60 +66,88 @@ if (-not $Enable -and -not $Disable) {
 }
 
 if ($Disable) {
-    $curStatus = Get-DefenderPolicyStatus
-    if ($curStatus -eq "DISABLED" -and -not $ForceReapply) {
-        Write-Host "`n  [-] Microsoft Defender Antivirus is already disabled via Group Policy (Skipping)." -ForegroundColor DarkGray
+    $st = Get-LiveDefenderStatus
+    
+    # Check if already fully disabled
+    if (-not $st.RealTimeProtectionEnabled -and $st.GroupPolicyApplied -and -not $ForceReapply) {
+        Write-Host "`n  [-] Microsoft Defender Real-Time Protection is already DISABLED (Skipping)." -ForegroundColor DarkGray
         Exit 0
     }
 
-    Write-Host "`n[*] Applying Group Policy: Turn off Microsoft Defender Antivirus..." -ForegroundColor Yellow
+    # Warn if Tamper Protection is blocking
+    if ($st.IsTamperProtected) {
+        Write-Warning "TAMPER PROTECTION IS CURRENTLY ON!"
+        Write-Host "In Windows 11, Tamper Protection actively blocks Group Policy from turning off Defender." -ForegroundColor Red
+        Write-Host "You must toggle 'Tamper Protection' to OFF in Windows Security settings for Defender to be disabled." -ForegroundColor Yellow
+        Write-Host "Opening Windows Security directly to the Tamper Protection toggle..." -ForegroundColor Cyan
+        try { Start-Process "windowsdefender://threatsettings" } catch {}
+    }
+
+    Write-Host "`n[*] Disabling Microsoft Defender Antivirus & Real-Time Monitoring..." -ForegroundColor Yellow
     try {
+        # 1. Apply Set-MpPreference (takes immediate effect when Tamper Protection is OFF)
+        try {
+            Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
+            Set-MpPreference -DisableBehaviorMonitoring $true -ErrorAction SilentlyContinue
+            Set-MpPreference -DisableIOAVProtection $true -ErrorAction SilentlyContinue
+            Set-MpPreference -DisableScriptScanning $true -ErrorAction SilentlyContinue
+            Set-MpPreference -SubmitSamplesConsent 2 -ErrorAction SilentlyContinue
+        } catch {}
+
+        # 2. Apply Official Group Policy Keys
         if (-not (Test-Path $DefenderPolicyKey)) { New-Item -Path $DefenderPolicyKey -Force | Out-Null }
         if (-not (Test-Path $RealTimeKey))       { New-Item -Path $RealTimeKey -Force | Out-Null }
         if (-not (Test-Path $ReportingKey))      { New-Item -Path $ReportingKey -Force | Out-Null }
         if (-not (Test-Path $SpynetKey))         { New-Item -Path $SpynetKey -Force | Out-Null }
 
-        # Group Policy: Turn off Microsoft Defender Antivirus
         Set-ItemProperty -Path $DefenderPolicyKey -Name "DisableAntiSpyware" -Value 1 -Type DWord -Force
         Set-ItemProperty -Path $DefenderPolicyKey -Name "DisableAntiVirus"   -Value 1 -Type DWord -Force
 
-        # Real-time monitoring and behavior analysis suppression
         Set-ItemProperty -Path $RealTimeKey -Name "DisableRealtimeMonitoring"    -Value 1 -Type DWord -Force
         Set-ItemProperty -Path $RealTimeKey -Name "DisableBehaviorMonitoring"    -Value 1 -Type DWord -Force
         Set-ItemProperty -Path $RealTimeKey -Name "DisableOnAccessProtection"    -Value 1 -Type DWord -Force
         Set-ItemProperty -Path $RealTimeKey -Name "DisableScanOnRealtimeEnable"  -Value 1 -Type DWord -Force
         Set-ItemProperty -Path $RealTimeKey -Name "DisableIOAVProtection"        -Value 1 -Type DWord -Force
 
-        # Disable telemetry and warning notifications
         Set-ItemProperty -Path $ReportingKey -Name "DisableEnhancedNotifications" -Value 1 -Type DWord -Force
         Set-ItemProperty -Path $SpynetKey -Name "DisableBlockAtFirstSeen"          -Value 1 -Type DWord -Force
         Set-ItemProperty -Path $SpynetKey -Name "SubmitSamplesConsent"             -Value 2 -Type DWord -Force
         Set-ItemProperty -Path $SpynetKey -Name "SpynetReporting"                  -Value 0 -Type DWord -Force
 
-        # Inject scanning exclusions for development and performance
+        # Exclusions
         try {
             Add-MpPreference -ExclusionPath "C:\WinAurex" -ErrorAction SilentlyContinue
             Add-MpPreference -ExclusionPath "$env:TEMP" -ErrorAction SilentlyContinue
         } catch {}
 
+        Write-Host "  [+] Set-MpPreference applied: Real-time, behavior, and IOAV monitoring stopped." -ForegroundColor Green
         Write-Host "  [+] Group Policy applied: Turn off Microsoft Defender Antivirus." -ForegroundColor Green
-        Write-Host "  [+] Real-time scanning, file interception, and behavior analysis disabled." -ForegroundColor Green
         Write-Host "  [+] Cloud telemetry and sample submission blocked." -ForegroundColor Green
-        Write-Host "`n[NOTE] Windows requires a RESTART for the group policy to take full effect." -ForegroundColor Cyan
-        Write-Host "If Tamper Protection is enabled in Windows Security, toggle it off in Settings." -ForegroundColor DarkGray
+        
+        $newSt = Get-LiveDefenderStatus
+        if ($newSt.IsTamperProtected) {
+            Write-Host "`n[ACTION REQUIRED] In the Windows Security window that just opened:" -ForegroundColor Yellow
+            Write-Host "  1. Click 'Manage settings' under Virus & threat protection settings." -ForegroundColor White
+            Write-Host "  2. Scroll down and toggle 'Tamper Protection' to OFF." -ForegroundColor White
+            Write-Host "  3. Re-run this script (or click 'Disable Defender' again in the dashboard)." -ForegroundColor White
+        } else {
+            Write-Host "`n[SUCCESS] Microsoft Defender Real-Time Protection is now DISABLED!" -ForegroundColor Green
+        }
     } catch {
-        Write-Error "Failed applying Defender group policy: $_"
+        Write-Error "Failed applying Defender disablement: $_"
     }
 } elseif ($Enable) {
-    $curStatus = Get-DefenderPolicyStatus
-    if ($curStatus -eq "ACTIVE" -and -not $ForceReapply) {
-        Write-Host "`n  [-] Microsoft Defender Antivirus is already in active default state (Skipping)." -ForegroundColor DarkGray
-        Exit 0
-    }
-
     Write-Host "`n[*] Restoring Microsoft Defender Antivirus to Default Active State..." -ForegroundColor Cyan
     try {
-        # Restore registry keys to enabled defaults
+        # Restore Set-MpPreference
+        try {
+            Set-MpPreference -DisableRealtimeMonitoring $false -ErrorAction SilentlyContinue
+            Set-MpPreference -DisableBehaviorMonitoring $false -ErrorAction SilentlyContinue
+            Set-MpPreference -DisableIOAVProtection $false -ErrorAction SilentlyContinue
+            Set-MpPreference -DisableScriptScanning $false -ErrorAction SilentlyContinue
+        } catch {}
+
+        # Restore registry keys
         if (Test-Path $DefenderPolicyKey) {
             Remove-ItemProperty -Path $DefenderPolicyKey -Name "DisableAntiSpyware" -ErrorAction SilentlyContinue
             Remove-ItemProperty -Path $DefenderPolicyKey -Name "DisableAntiVirus" -ErrorAction SilentlyContinue
@@ -128,8 +167,8 @@ if ($Disable) {
             Remove-ItemProperty -Path $SpynetKey -Name "SubmitSamplesConsent" -ErrorAction SilentlyContinue
             Remove-ItemProperty -Path $SpynetKey -Name "SpynetReporting" -ErrorAction SilentlyContinue
         }
-        Write-Host "  [+] Group Policy removed. Microsoft Defender Antivirus restored to Active." -ForegroundColor Green
-        Write-Host "`n[NOTE] Please RESTART your computer to complete the restoration." -ForegroundColor Yellow
+        Write-Host "  [+] Real-time monitoring enabled and Group Policy overrides removed." -ForegroundColor Green
+        Write-Host "  [+] Microsoft Defender Antivirus restored to Active defaults." -ForegroundColor Green
     } catch {
         Write-Error "Failed restoring Defender policy: $_"
     }
