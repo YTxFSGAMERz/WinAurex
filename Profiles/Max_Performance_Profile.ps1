@@ -12,7 +12,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $EngineDir = Join-Path -Path $PSScriptRoot -ChildPath "..\Core\Restore\Engine"
-Import-Module (Join-Path -Path $EngineDir -ChildPath "SnapshotEngine.psm1") -Force
+Import-Module (Join-Path -Path $EngineDir -ChildPath "SnapshotEngine.psm1") -DisableNameChecking -Force
 $HelpersDir = Join-Path -Path $PSScriptRoot -ChildPath "..\Core\Helpers"
 Import-Module (Join-Path -Path $HelpersDir -ChildPath "Logging.psm1") -Force
 

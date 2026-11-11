@@ -38,7 +38,7 @@ function New-Transaction {
     return $TransactionID
 }
 
-function Snapshot-RegistryKey {
+function Export-RegistrySnapshot {
     param (
         [Parameter(Mandatory=$true)]
         [string]$KeyPath,
@@ -78,7 +78,7 @@ function Snapshot-RegistryKey {
     & reg export $KeyPath $RegBackupPath /y 2>$null | Out-Null
 }
 
-function Snapshot-Service {
+function Export-ServiceSnapshot {
     param (
         [Parameter(Mandatory=$true)]
         [string]$ServiceName,
@@ -116,7 +116,7 @@ function Snapshot-Service {
     $Global:CurrentTransaction.Changes += $Change
 }
 
-function Snapshot-Task {
+function Export-TaskSnapshot {
     param (
         [Parameter(Mandatory=$true)]
         [string]$TaskPath,
@@ -156,4 +156,9 @@ function Close-Transaction {
     $Global:TransactionDir = $null
 }
 
-Export-ModuleMember -Function New-Transaction, Snapshot-RegistryKey, Snapshot-Service, Snapshot-Task, Close-Transaction
+# Backward Compatibility Aliases
+Set-Alias -Name Snapshot-RegistryKey -Value Export-RegistrySnapshot
+Set-Alias -Name Snapshot-Service -Value Export-ServiceSnapshot
+Set-Alias -Name Snapshot-Task -Value Export-TaskSnapshot
+
+Export-ModuleMember -Function New-Transaction, Close-Transaction, Export-RegistrySnapshot, Export-ServiceSnapshot, Export-TaskSnapshot -Alias Snapshot-RegistryKey, Snapshot-Service, Snapshot-Task

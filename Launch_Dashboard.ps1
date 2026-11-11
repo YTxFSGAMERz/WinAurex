@@ -26,14 +26,14 @@ if (-not (Test-Path $XamlPath)) {
 
 # Import Engine for Rollback Tab
 $EngineDir = Join-Path -Path $RootPath -ChildPath "Core\Restore\Engine"
-Import-Module (Join-Path -Path $EngineDir -ChildPath "ValidationEngine.psm1") -Force
-Import-Module (Join-Path -Path $EngineDir -ChildPath "RestoreEngine.psm1") -Force
+Import-Module (Join-Path -Path $EngineDir -ChildPath "ValidationEngine.psm1") -DisableNameChecking -Force
+Import-Module (Join-Path -Path $EngineDir -ChildPath "RestoreEngine.psm1") -DisableNameChecking -Force
 $BackupsDir = Join-Path -Path $RootPath -ChildPath "Core\Restore\Backups"
 
 # Import PC Cleaner Engine
 $CleanerModule = Join-Path -Path $RootPath -ChildPath "Tools\Cleaner\WinAurex-Cleaner.psm1"
 if (Test-Path $CleanerModule) {
-    Import-Module $CleanerModule -Force
+    Import-Module $CleanerModule -DisableNameChecking -Force
 }
 
 # Load XAML

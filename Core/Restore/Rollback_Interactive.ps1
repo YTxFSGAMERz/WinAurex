@@ -12,8 +12,8 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $EngineDir = Join-Path -Path $PSScriptRoot -ChildPath "Engine"
-Import-Module (Join-Path -Path $EngineDir -ChildPath "ValidationEngine.psm1") -Force
-Import-Module (Join-Path -Path $EngineDir -ChildPath "RestoreEngine.psm1") -Force
+Import-Module (Join-Path -Path $EngineDir -ChildPath "ValidationEngine.psm1") -DisableNameChecking -Force
+Import-Module (Join-Path -Path $EngineDir -ChildPath "RestoreEngine.psm1") -DisableNameChecking -Force
 
 $BackupsDir = Join-Path -Path $PSScriptRoot -ChildPath "Backups"
 

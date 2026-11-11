@@ -1,7 +1,7 @@
 # Windows Configuration & Optimization Framework
 # Validation Engine (Core/Restore/Engine/ValidationEngine.psm1)
 
-function Validate-Manifest {
+function Test-Manifest {
     param (
         [Parameter(Mandatory=$true)]
         [string]$ManifestPath
@@ -53,7 +53,7 @@ function Validate-Manifest {
     return $true
 }
 
-function Preview-Manifest {
+function Show-Manifest {
     param (
         [Parameter(Mandatory=$true)]
         [string]$ManifestPath
@@ -85,4 +85,8 @@ function Preview-Manifest {
     Write-Host "========================`n"
 }
 
-Export-ModuleMember -Function Validate-Manifest, Preview-Manifest
+# Backward Compatibility Aliases
+Set-Alias -Name Validate-Manifest -Value Test-Manifest
+Set-Alias -Name Preview-Manifest -Value Show-Manifest
+
+Export-ModuleMember -Function Test-Manifest, Show-Manifest -Alias Validate-Manifest, Preview-Manifest
