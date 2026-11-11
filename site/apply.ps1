@@ -9,7 +9,8 @@
 param (
     [switch]$Force,
     [switch]$SkipRestorePoint,
-    [switch]$LaunchDashboard
+    [switch]$LaunchDashboard,
+    [switch]$SkipPrereqs
 )
 
 # 1. Require Administrator Privileges (Auto-Elevate)
@@ -45,6 +46,7 @@ Write-Host "                       https://winaurex.tech                        
 Write-Host "======================================================================" -ForegroundColor Cyan
 Write-Host " Converts your existing PC into WinAurex with full optimizations:" -ForegroundColor White
 Write-Host "  * 100% In-Place: ZERO file loss, no clean install required" -ForegroundColor Green
+Write-Host "  * Auto-provisions runtimes: VC++ Redists, WebView2, Python, Node.js" -ForegroundColor Green
 Write-Host "  * Strips telemetry & bloatware while protecting Microsoft Store" -ForegroundColor Green
 Write-Host "  * 10ms instant context menus, 1:1 raw mouse input, HAGS enabled" -ForegroundColor Green
 Write-Host "  * Unlocks Ultimate Performance Plan & disables update seeding" -ForegroundColor Green
@@ -73,7 +75,7 @@ if (-not [string]::IsNullOrWhiteSpace($PSScriptRoot) -and (Test-Path (Join-Path 
 }
 
 if (-not $LocalRepoRoot) {
-    Write-Host "[1/4] Downloading latest WinAurex suite from GitHub..." -ForegroundColor Cyan
+    Write-Host "[1/5] Downloading latest WinAurex suite from GitHub..." -ForegroundColor Cyan
     try {
         if (-not (Test-Path $TargetDir)) { New-Item -Path $TargetDir -ItemType Directory -Force | Out-Null }
         
@@ -118,13 +120,28 @@ if exist "$TargetDir\winaurex.cmd" (
         Exit 1
     }
 } else {
-    Write-Host "[1/4] Running from local repository at: $LocalRepoRoot" -ForegroundColor Green
+    Write-Host "[1/5] Running from local repository at: $LocalRepoRoot" -ForegroundColor Green
     $WorkingDir = $LocalRepoRoot
 }
 
-# 4. Create System Restore Point (Disaster Recovery Safeguard)
+# 4. Provision Core System Prerequisites (VC++, WebView2, Python, Node.js)
+if (-not $SkipPrereqs) {
+    Write-Host "`n[2/5] Checking and provisioning system prerequisites..." -ForegroundColor Cyan
+    $PrereqScript = Join-Path $WorkingDir "Core\Prerequisites\Install-Prerequisites.ps1"
+    if (Test-Path $PrereqScript) {
+        $prereqArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $PrereqScript)
+        if ($Force) { $prereqArgs += "-Force" }
+        & powershell.exe $prereqArgs
+    } else {
+        Write-Warning "Prerequisites script not found at $PrereqScript. Skipping."
+    }
+} else {
+    Write-Host "`n[2/5] Skipping system prerequisites provisioning as requested." -ForegroundColor DarkGray
+}
+
+# 5. Create System Restore Point (Disaster Recovery Safeguard)
 if (-not $SkipRestorePoint) {
-    Write-Host "`n[2/4] Creating Windows System Restore Point ('Pre-WinAurex Conversion')..." -ForegroundColor Cyan
+    Write-Host "`n[3/5] Creating Windows System Restore Point ('Pre-WinAurex Conversion')..." -ForegroundColor Cyan
     try {
         Enable-ComputerRestore -Drive $env:SystemDrive -ErrorAction SilentlyContinue
         # Allow creating restore points on-demand without 24h frequency limit
@@ -137,11 +154,11 @@ if (-not $SkipRestorePoint) {
         Write-Warning "System Restore checkpoint could not be created ($($_.Exception.Message)). Proceeding with transactional rollback engine."
     }
 } else {
-    Write-Host "`n[2/4] Skipping System Restore checkpoint as requested." -ForegroundColor DarkGray
+    Write-Host "`n[3/5] Skipping System Restore checkpoint as requested." -ForegroundColor DarkGray
 }
 
-# 5. Execute In-Place Conversion Engine
-Write-Host "`n[3/4] Executing In-Place Conversion Engine..." -ForegroundColor Cyan
+# 6. Execute In-Place Conversion Engine
+Write-Host "`n[4/5] Executing In-Place Conversion Engine..." -ForegroundColor Cyan
 $ConversionScript = Join-Path $WorkingDir "Core\Conversion\Convert-ToWinAurex.ps1"
 
 if (-not (Test-Path $ConversionScript)) {
@@ -150,7 +167,7 @@ if (-not (Test-Path $ConversionScript)) {
 }
 
 if (Test-Path $ConversionScript) {
-    $convArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $ConversionScript)
+    $convArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $ConversionScript, "-SkipPrereqs")
     if ($Force) { $convArgs += "-Force" }
     & powershell.exe $convArgs
 } else {
@@ -158,8 +175,8 @@ if (Test-Path $ConversionScript) {
     Exit 1
 }
 
-# 6. Finalize System Integration
-Write-Host "`n[4/4] Finalizing shortcuts and system integration..." -ForegroundColor Cyan
+# 7. Finalize System Integration
+Write-Host "`n[5/5] Finalizing shortcuts and system integration..." -ForegroundColor Cyan
 if ($LaunchDashboard) {
     Write-Host "Launching WinAurex GUI Dashboard..." -ForegroundColor Cyan
     $DashboardScript = Join-Path $WorkingDir "Launch_Dashboard.ps1"

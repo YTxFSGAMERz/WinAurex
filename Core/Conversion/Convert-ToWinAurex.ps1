@@ -10,7 +10,8 @@
 #>
 [CmdletBinding()]
 param (
-    [switch]$Force
+    [switch]$Force,
+    [switch]$SkipPrereqs
 )
 
 # 1. Require Administrator Privileges
@@ -24,6 +25,16 @@ $RepoRoot = (Get-Item (Join-Path $PSScriptRoot "..\..")).FullName
 Write-Host "======================================================================" -ForegroundColor Cyan
 Write-Host "             WinAurex In-Place PC Conversion Engine                   " -ForegroundColor White
 Write-Host "======================================================================" -ForegroundColor Cyan
+
+# Ensure Core Prerequisites are provisioned
+if (-not $SkipPrereqs) {
+    $PrereqScript = Join-Path $RepoRoot "Core\Prerequisites\Install-Prerequisites.ps1"
+    if (Test-Path $PrereqScript) {
+        $pArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $PrereqScript)
+        if ($Force) { $pArgs += "-Force" }
+        & powershell.exe $pArgs
+    }
+}
 
 # 2. Inject WinAurex OEM Branding into Windows System Information
 Write-Host "`n[*] Applying WinAurex OEM Branding to System Properties..." -ForegroundColor Cyan

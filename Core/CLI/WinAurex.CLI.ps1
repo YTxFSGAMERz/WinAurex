@@ -62,6 +62,7 @@ function Show-Help {
     Write-Host "                            Types: boot, timing, health"
     Write-Host "  rollback                  Revert settings to previous snapshot or defaults"
     Write-Host "                            Subtargets: last, defaults"
+    Write-Host "  prereqs | deps            Check & provision runtimes (VC++, WebView2, Python, Node.js)"
     Write-Host "  update                    Check for & apply latest WinAurex updates from GitHub"
     Write-Host "  dashboard | gui           Launch the Graphical WPF Dashboard"
     Write-Host "  menu                      Launch interactive CLI menu dashboard"
@@ -126,11 +127,11 @@ function Invoke-WinAurexScript {
     if ($fullPath.EndsWith(".bat") -or $fullPath.EndsWith(".cmd")) {
         $cmdLine = "`"$fullPath`" " + ($ScriptArgs -join " ")
         & cmd.exe /c $cmdLine
-        return $LASTEXITCODE
+        return
     } else {
         $pArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "`"$fullPath`"") + $ScriptArgs
         & powershell.exe $pArgs
-        return $LASTEXITCODE
+        return
     }
 }
 
@@ -302,6 +303,23 @@ switch ($Command.ToLowerInvariant()) {
         Write-Host "[*] Launching WinAurex Graphical Dashboard..." -ForegroundColor Cyan
         $f = if ($Force) { @("-Force") } else { @() }
         Invoke-WinAurexScript -RelativePath "Launch_Dashboard.ps1" -ScriptArgs $f
+    }
+
+    "prereqs" {
+        $f = if ($Force) { @("-Force") } else { @() }
+        Invoke-WinAurexScript -RelativePath "Core\Prerequisites\Install-Prerequisites.ps1" -ScriptArgs $f
+    }
+    "requirements" {
+        $f = if ($Force) { @("-Force") } else { @() }
+        Invoke-WinAurexScript -RelativePath "Core\Prerequisites\Install-Prerequisites.ps1" -ScriptArgs $f
+    }
+    "deps" {
+        $f = if ($Force) { @("-Force") } else { @() }
+        Invoke-WinAurexScript -RelativePath "Core\Prerequisites\Install-Prerequisites.ps1" -ScriptArgs $f
+    }
+    "install-deps" {
+        $f = if ($Force) { @("-Force") } else { @() }
+        Invoke-WinAurexScript -RelativePath "Core\Prerequisites\Install-Prerequisites.ps1" -ScriptArgs $f
     }
 
     "update" {
