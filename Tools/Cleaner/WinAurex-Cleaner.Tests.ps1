@@ -74,6 +74,11 @@ foreach ($p in $protectedSamples) {
     Assert-Condition "Safety check protects: $p" $isProtected
 }
 
+# Test 5: Verify no invalid file redirections to reserved DOS devices (>nul, >null)
+$scriptContent = Get-Content -Path $ModulePath -Raw
+$invalidRedirection = $scriptContent | Select-String -Pattern '>\s*nul(l)?\b'
+Assert-Condition "No invalid PowerShell redirection to >nul or >null in module" ($null -eq $invalidRedirection)
+
 Write-Host ""
 Write-Host "==============================================" -ForegroundColor DarkCyan
 Write-Host "TEST RESULTS: Passed: $passedTests | Failed: $failedTests" -ForegroundColor $(if ($failedTests -eq 0) { "Green" } else { "Red" })

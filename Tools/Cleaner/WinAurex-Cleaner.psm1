@@ -380,7 +380,9 @@ function Invoke-WinAurexCleanup {
     # 6. Dev Caches
     if ("DevCaches" -in $Categories) {
         Report-Step "[*] Cleaning package manager and build caches..."
-        try { cmd.exe /c "npm cache clean --force" >nul 2>&1 } catch { }
+        try {
+            Start-Process -FilePath "cmd.exe" -ArgumentList "/c", "npm cache clean --force" -Wait -WindowStyle Hidden -ErrorAction SilentlyContinue
+        } catch { }
         if (Test-Path "$localAppData\npm-cache") {
             Remove-Item -Path "$localAppData\npm-cache" -Recurse -Force -ErrorAction SilentlyContinue
         }
@@ -444,8 +446,16 @@ function Invoke-WinAurexCleanup {
     # 9. DISM Component Store
     if ("ComponentStore" -in $Categories) {
         Report-Step "[*] Executing DISM Component Store deep cleanup (this may take 2-5 minutes)..."
-        cmd.exe /c "dism.exe /Online /Cleanup-Image /StartComponentCleanup /ResetBase" >nul 2>&1
-        Report-Step "[+] Windows Component Store cleanup complete."
+        try {
+            $dismProc = Start-Process -FilePath "dism.exe" -ArgumentList "/Online", "/Cleanup-Image", "/StartComponentCleanup", "/ResetBase" -Wait -PassThru -WindowStyle Hidden -ErrorAction Stop
+            if ($dismProc.ExitCode -in @(0, 3010)) {
+                Report-Step "[+] Windows Component Store cleanup complete."
+            } else {
+                Report-Step "[!] Windows Component Store cleanup completed with code $($dismProc.ExitCode)."
+            }
+        } catch {
+            Report-Step "[!] DISM execution failed: $_"
+        }
     }
 
     # Calculate freed storage
