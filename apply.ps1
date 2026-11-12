@@ -38,7 +38,8 @@ function Invoke-DownloadWithProgress {
     param (
         [Parameter(Mandatory=$true)][string]$Url,
         [Parameter(Mandatory=$true)][string]$OutputFile,
-        [string]$Label = "Downloading"
+        [string]$Label = "Downloading",
+        [double]$EstimatedTotalMB = 0
     )
 
     $parentDir = Split-Path $OutputFile -Parent
@@ -46,6 +47,7 @@ function Invoke-DownloadWithProgress {
         New-Item -Path $parentDir -ItemType Directory -Force | Out-Null
     }
 
+    Write-Host -NoNewline "  [*] Connecting to download server... "
     $req = [System.Net.HttpWebRequest]::Create($Url)
     $req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) WinAurex-Bootstrapper"
     $req.Timeout = 90000
@@ -56,6 +58,7 @@ function Invoke-DownloadWithProgress {
 
     try {
         $resp = $req.GetResponse()
+        Write-Host "`r  [*] Connected! Streaming package...             "
         $totalBytes = $resp.ContentLength
         $stream = $resp.GetResponseStream()
         $fileStream = [System.IO.File]::Create($OutputFile)
@@ -64,18 +67,22 @@ function Invoke-DownloadWithProgress {
         $totalRead = 0
         $sw = [System.Diagnostics.Stopwatch]::StartNew()
         $lastUpdate = [DateTime]::MinValue
-        $barWidth = 26
+        $barWidth = 24
+        $spinChars = @('|', '/', '-', '\')
+        $tick = 0
 
         while (($bytesRead = $stream.Read($buffer, 0, $buffer.Length)) -gt 0) {
             $fileStream.Write($buffer, 0, $bytesRead)
             $totalRead += $bytesRead
 
             $now = [DateTime]::UtcNow
-            if (($now - $lastUpdate).TotalMilliseconds -ge 120 -or $totalRead -eq $totalBytes) {
+            if (($now - $lastUpdate).TotalMilliseconds -ge 100 -or ($totalBytes -gt 0 -and $totalRead -eq $totalBytes)) {
                 $lastUpdate = $now
+                $tick++
                 $elapsedSec = [math]::Max(0.001, $sw.Elapsed.TotalSeconds)
                 $speedMBs = [math]::Round(($totalRead / 1MB) / $elapsedSec, 2)
                 $curMB = [math]::Round($totalRead / 1MB, 2)
+                $sChar = $spinChars[$tick % 4]
 
                 if ($totalBytes -gt 0) {
                     $totMB = [math]::Round($totalBytes / 1MB, 2)
@@ -86,9 +93,25 @@ function Invoke-DownloadWithProgress {
                     $bar = ("=" * $filled) + $pointer + (" " * [math]::Max(0, $empty - 1))
                     $barStr = $bar.PadRight($barWidth).Substring(0, $barWidth)
                     Write-Host -NoNewline ("`r  [$barStr] {0,3}% ({1,5} MB / {2,5} MB) [{3,5} MB/s]" -f $pct, $curMB, $totMB, $speedMBs)
+                } elseif ($EstimatedTotalMB -gt 0) {
+                    $estBytes = $EstimatedTotalMB * 1MB
+                    $pct = [math]::Min(99, [int](($totalRead / $estBytes) * 100))
+                    $filled = [int](($pct / 100) * $barWidth)
+                    $empty = [math]::Max(0, $barWidth - $filled)
+                    $pointer = if ($empty -gt 0) { ">" } else { "" }
+                    $bar = ("=" * $filled) + $pointer + (" " * [math]::Max(0, $empty - 1))
+                    $barStr = $bar.PadRight($barWidth).Substring(0, $barWidth)
+                    Write-Host -NoNewline ("`r  [$barStr] ~{0,2}% ({1,5} MB / ~{2,2} MB) [{3,5} MB/s]" -f $pct, $curMB, [int]$EstimatedTotalMB, $speedMBs)
                 } else {
-                    $barStr = "=>".PadRight($barWidth)
-                    Write-Host -NoNewline ("`r  [$barStr] {0,5} MB received [{1,5} MB/s]" -f $curMB, $speedMBs)
+                    $scanWidth = 6
+                    $maxPos = $barWidth - $scanWidth
+                    $pos = $tick % ($maxPos * 2)
+                    if ($pos -ge $maxPos) { $pos = ($maxPos * 2) - $pos }
+                    $left = " " * $pos
+                    $right = " " * [math]::Max(0, ($barWidth - $scanWidth - $pos))
+                    $bar = "$left<====>$right"
+                    $barStr = $bar.PadRight($barWidth).Substring(0, $barWidth)
+                    Write-Host -NoNewline ("`r  [$barStr] $sChar  {0,5} MB received [{1,5} MB/s]" -f $curMB, $speedMBs)
                 }
             }
         }
@@ -134,6 +157,7 @@ function Expand-ZipWithProgress {
         if ($firstEntry -match "^([^/]+/)") {
             $topPrefix = $matches[1]
         }
+        Write-Host "  [*] Preparing direct-to-disk extraction ($totalEntries files)..." -ForegroundColor DarkGray
 
         $barWidth = 26
         $currentIdx = 0
@@ -242,7 +266,7 @@ if (-not $LocalRepoRoot) {
         } catch {}
 
         Write-Host "Fetching repository archive..." -ForegroundColor DarkGray
-        $downloadSuccess = Invoke-DownloadWithProgress -Url $ZipUrl -OutputFile $ZipFile -Label "Repository archive download"
+        $downloadSuccess = Invoke-DownloadWithProgress -Url $ZipUrl -OutputFile $ZipFile -Label "Repository archive download" -EstimatedTotalMB 72
         if (-not $downloadSuccess -or -not (Test-Path $ZipFile)) {
             throw "Failed to download repository archive from $ZipUrl"
         }

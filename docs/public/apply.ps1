@@ -33,6 +33,185 @@ $ProgressPreference = 'SilentlyContinue'
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force -ErrorAction SilentlyContinue
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
 
+# Embedded High-Performance CLI Streaming & Progress Engines
+function Invoke-DownloadWithProgress {
+    param (
+        [Parameter(Mandatory=$true)][string]$Url,
+        [Parameter(Mandatory=$true)][string]$OutputFile,
+        [string]$Label = "Downloading",
+        [double]$EstimatedTotalMB = 0
+    )
+
+    $parentDir = Split-Path $OutputFile -Parent
+    if ($parentDir -and -not (Test-Path $parentDir)) {
+        New-Item -Path $parentDir -ItemType Directory -Force | Out-Null
+    }
+
+    Write-Host -NoNewline "  [*] Connecting to download server... "
+    $req = [System.Net.HttpWebRequest]::Create($Url)
+    $req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) WinAurex-Bootstrapper"
+    $req.Timeout = 90000
+    
+    $resp = $null
+    $stream = $null
+    $fileStream = $null
+
+    try {
+        $resp = $req.GetResponse()
+        Write-Host "`r  [*] Connected! Streaming package...             "
+        $totalBytes = $resp.ContentLength
+        $stream = $resp.GetResponseStream()
+        $fileStream = [System.IO.File]::Create($OutputFile)
+        $buffer = New-Object byte[] 65536
+        $bytesRead = 0
+        $totalRead = 0
+        $sw = [System.Diagnostics.Stopwatch]::StartNew()
+        $lastUpdate = [DateTime]::MinValue
+        $barWidth = 24
+        $spinChars = @('|', '/', '-', '\')
+        $tick = 0
+
+        while (($bytesRead = $stream.Read($buffer, 0, $buffer.Length)) -gt 0) {
+            $fileStream.Write($buffer, 0, $bytesRead)
+            $totalRead += $bytesRead
+
+            $now = [DateTime]::UtcNow
+            if (($now - $lastUpdate).TotalMilliseconds -ge 100 -or ($totalBytes -gt 0 -and $totalRead -eq $totalBytes)) {
+                $lastUpdate = $now
+                $tick++
+                $elapsedSec = [math]::Max(0.001, $sw.Elapsed.TotalSeconds)
+                $speedMBs = [math]::Round(($totalRead / 1MB) / $elapsedSec, 2)
+                $curMB = [math]::Round($totalRead / 1MB, 2)
+                $sChar = $spinChars[$tick % 4]
+
+                if ($totalBytes -gt 0) {
+                    $totMB = [math]::Round($totalBytes / 1MB, 2)
+                    $pct = [math]::Min(100, [int](($totalRead / $totalBytes) * 100))
+                    $filled = [int](($pct / 100) * $barWidth)
+                    $empty = [math]::Max(0, $barWidth - $filled)
+                    $pointer = if ($empty -gt 0) { ">" } else { "" }
+                    $bar = ("=" * $filled) + $pointer + (" " * [math]::Max(0, $empty - 1))
+                    $barStr = $bar.PadRight($barWidth).Substring(0, $barWidth)
+                    Write-Host -NoNewline ("`r  [$barStr] {0,3}% ({1,5} MB / {2,5} MB) [{3,5} MB/s]" -f $pct, $curMB, $totMB, $speedMBs)
+                } elseif ($EstimatedTotalMB -gt 0) {
+                    $estBytes = $EstimatedTotalMB * 1MB
+                    $pct = [math]::Min(99, [int](($totalRead / $estBytes) * 100))
+                    $filled = [int](($pct / 100) * $barWidth)
+                    $empty = [math]::Max(0, $barWidth - $filled)
+                    $pointer = if ($empty -gt 0) { ">" } else { "" }
+                    $bar = ("=" * $filled) + $pointer + (" " * [math]::Max(0, $empty - 1))
+                    $barStr = $bar.PadRight($barWidth).Substring(0, $barWidth)
+                    Write-Host -NoNewline ("`r  [$barStr] ~{0,2}% ({1,5} MB / ~{2,2} MB) [{3,5} MB/s]" -f $pct, $curMB, [int]$EstimatedTotalMB, $speedMBs)
+                } else {
+                    $scanWidth = 6
+                    $maxPos = $barWidth - $scanWidth
+                    $pos = $tick % ($maxPos * 2)
+                    if ($pos -ge $maxPos) { $pos = ($maxPos * 2) - $pos }
+                    $left = " " * $pos
+                    $right = " " * [math]::Max(0, ($barWidth - $scanWidth - $pos))
+                    $bar = "$left<====>$right"
+                    $barStr = $bar.PadRight($barWidth).Substring(0, $barWidth)
+                    Write-Host -NoNewline ("`r  [$barStr] $sChar  {0,5} MB received [{1,5} MB/s]" -f $curMB, $speedMBs)
+                }
+            }
+        }
+        $sw.Stop()
+        Write-Host ""
+        $finalMB = [math]::Round($totalRead / 1MB, 2)
+        $finalSec = [math]::Round($sw.Elapsed.TotalSeconds, 1)
+        Write-Host "  [+] $Label complete! ($finalMB MB in ${finalSec}s)" -ForegroundColor Green
+        return $true
+    } catch {
+        Write-Host ""
+        Write-Warning "Download error: $_"
+        return $false
+    } finally {
+        if ($fileStream) { $fileStream.Dispose() }
+        if ($stream) { $stream.Dispose() }
+        if ($resp) { $resp.Dispose() }
+    }
+}
+
+function Expand-ZipWithProgress {
+    param (
+        [Parameter(Mandatory=$true)][string]$ZipFile,
+        [Parameter(Mandatory=$true)][string]$DestinationPath,
+        [string]$Label = "Direct extraction"
+    )
+
+    Add-Type -AssemblyName System.IO.Compression.FileSystem -ErrorAction SilentlyContinue
+    if (-not (Test-Path $DestinationPath)) {
+        New-Item -Path $DestinationPath -ItemType Directory -Force | Out-Null
+    }
+
+    $archive = $null
+    try {
+        $archive = [System.IO.Compression.ZipFile]::OpenRead($ZipFile)
+        $entries = $archive.Entries
+        $totalEntries = $entries.Count
+        if ($totalEntries -eq 0) { return }
+
+        # Detect top-level root folder prefix (e.g. "WinAurex-master/")
+        $firstEntry = $entries[0].FullName
+        $topPrefix = ""
+        if ($firstEntry -match "^([^/]+/)") {
+            $topPrefix = $matches[1]
+        }
+        Write-Host "  [*] Preparing direct-to-disk extraction ($totalEntries files)..." -ForegroundColor DarkGray
+
+        $barWidth = 26
+        $currentIdx = 0
+        $sw = [System.Diagnostics.Stopwatch]::StartNew()
+        $lastUpdate = [DateTime]::MinValue
+
+        foreach ($entry in $entries) {
+            $currentIdx++
+            $relPath = $entry.FullName
+            if ($topPrefix -and $relPath.StartsWith($topPrefix)) {
+                $relPath = $relPath.Substring($topPrefix.Length)
+            }
+            if ([string]::IsNullOrWhiteSpace($relPath)) { continue }
+
+            $targetFile = [System.IO.Path]::Combine($DestinationPath, $relPath.Replace('/', [System.IO.Path]::DirectorySeparatorChar))
+
+            if ($entry.FullName.EndsWith('/')) {
+                if (-not (Test-Path $targetFile)) {
+                    [System.IO.Directory]::CreateDirectory($targetFile) | Out-Null
+                }
+            } else {
+                $targetDir = [System.IO.Path]::GetDirectoryName($targetFile)
+                if (-not (Test-Path $targetDir)) {
+                    [System.IO.Directory]::CreateDirectory($targetDir) | Out-Null
+                }
+                [System.IO.Compression.ZipFileExtensions]::ExtractToFile($entry, $targetFile, $true)
+            }
+
+            $now = [DateTime]::UtcNow
+            if (($now - $lastUpdate).TotalMilliseconds -ge 100 -or $currentIdx -eq $totalEntries) {
+                $lastUpdate = $now
+                $pct = [int](($currentIdx / $totalEntries) * 100)
+                $filled = [int](($pct / 100) * $barWidth)
+                $empty = [math]::Max(0, $barWidth - $filled)
+                $pointer = if ($empty -gt 0) { ">" } else { "" }
+                $bar = ("=" * $filled) + $pointer + (" " * [math]::Max(0, $empty - 1))
+                $barStr = $bar.PadRight($barWidth).Substring(0, $barWidth)
+                Write-Host -NoNewline ("`r  [$barStr] {0,3}% ({1}/{2} files)" -f $pct, $currentIdx, $totalEntries)
+            }
+        }
+        $sw.Stop()
+        Write-Host ""
+        $finalSec = [math]::Round($sw.Elapsed.TotalSeconds, 1)
+        Write-Host "  [+] $Label complete! ($totalEntries files extracted in ${finalSec}s)" -ForegroundColor Green
+        return $true
+    } catch {
+        Write-Host ""
+        Write-Warning "Zip extraction error: $_"
+        return $false
+    } finally {
+        if ($archive) { $archive.Dispose() }
+    }
+}
+
 Clear-Host
 Write-Host "======================================================================" -ForegroundColor Cyan
 Write-Host "        __          ___             /\                                " -ForegroundColor Cyan
@@ -87,18 +266,19 @@ if (-not $LocalRepoRoot) {
         } catch {}
 
         Write-Host "Fetching repository archive..." -ForegroundColor DarkGray
-        Invoke-WebRequest -Uri $ZipUrl -OutFile $ZipFile -UseBasicParsing
+        $downloadSuccess = Invoke-DownloadWithProgress -Url $ZipUrl -OutputFile $ZipFile -Label "Repository archive download" -EstimatedTotalMB 72
+        if (-not $downloadSuccess -or -not (Test-Path $ZipFile)) {
+            throw "Failed to download repository archive from $ZipUrl"
+        }
         
-        Write-Host "Extracting to $TargetDir..." -ForegroundColor DarkGray
-        Expand-Archive -Path $ZipFile -DestinationPath "$env:TEMP\winaurex_extract" -Force
+        Write-Host "Extracting files directly to $TargetDir..." -ForegroundColor DarkGray
+        $extractSuccess = Expand-ZipWithProgress -ZipFile $ZipFile -DestinationPath $TargetDir -Label "Direct extraction"
+        if (-not $extractSuccess) {
+            throw "Failed to extract repository archive to $TargetDir"
+        }
         
-        # Copy contents of extracted master folder to TargetDir
-        $ExtractedFolder = Get-ChildItem "$env:TEMP\winaurex_extract" -Directory | Select-Object -First 1
-        Copy-Item -Path "$($ExtractedFolder.FullName)\*" -Destination $TargetDir -Recurse -Force
-        
-        # Clean temporary download files
+        # Clean temporary download file
         Remove-Item $ZipFile -Force -ErrorAction SilentlyContinue
-        Remove-Item "$env:TEMP\winaurex_extract" -Recurse -Force -ErrorAction SilentlyContinue
         
         # Deploy Global Windows System Shim so 'winaurex' is immediately accessible everywhere
         $SystemShimContent = @"
@@ -115,7 +295,7 @@ if exist "$TargetDir\winaurex.cmd" (
         } catch {}
 
         $WorkingDir = $TargetDir
-        Write-Host "[+] Download and extraction complete!" -ForegroundColor Green
+        Write-Host "`n[+] WinAurex suite successfully deployed to $TargetDir!" -ForegroundColor Green
     } catch {
         Write-Error "Failed to download WinAurex from GitHub: $_"
         Exit 1
