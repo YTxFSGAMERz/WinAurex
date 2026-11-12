@@ -1708,6 +1708,15 @@
                     </Button>
                 </StackPanel>
 
+                <Grid Grid.Column="1" Margin="20,0" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="TxtProgressDetail" Grid.Column="0" Text="" Foreground="#8b949e" FontSize="11" Margin="0,0,10,0" Visibility="Collapsed" VerticalAlignment="Center"/>
+                    <ProgressBar Name="ProgressGlobal" Grid.Column="1" Height="6" Background="#21262d" Foreground="#00adb5" Value="0" Maximum="100" BorderThickness="0" Visibility="Collapsed" VerticalAlignment="Center"/>
+                </Grid>
+
                 <TextBlock Name="TxtStatus" Grid.Column="2" Style="{StaticResource BodyText}" Text="Status: Ready" Foreground="#00adb5" FontWeight="Bold" FontSize="11" VerticalAlignment="Center"/>
             </Grid>
         </Border>

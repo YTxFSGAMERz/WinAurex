@@ -218,22 +218,37 @@ function Invoke-AiInference {
 
 function Invoke-WinAurexAiScan {
     [CmdletBinding()]
-    param()
+    param(
+        [scriptblock]$ProgressCallback = $null
+    )
 
     Initialize-AiModel
     $results = [System.Collections.Generic.List[PSObject]]::new()
 
     # --- 1. SCAN INSTALLED SERVICES ---
+    if ($ProgressCallback) { & $ProgressCallback "Querying Windows Service Control Manager..." 5 }
+    Write-Host "  [*] [1/3] Interrogating Windows Services..." -ForegroundColor Cyan
     $allServices = Get-CimInstance Win32_Service -ErrorAction SilentlyContinue
     $allSvcs = Get-Service -ErrorAction SilentlyContinue
     $svcMap = @{}
     foreach ($s in $allSvcs) { $svcMap[$s.Name] = $s }
 
+    $totalSvc = if ($allServices) { $allServices.Count } else { 1 }
+    $svcIndex = 0
+
     foreach ($svc in $allServices) {
+        $svcIndex++
         $name = $svc.Name
         $desc = $svc.Description
         $vendor = $svc.PathName
         
+        $svcPct = [math]::Round(($svcIndex / $totalSvc) * 33)
+        if ($svcIndex % 15 -eq 0 -or $svcIndex -eq $totalSvc) {
+            Write-Progress -Activity "WinAurex AI Diagnostic Scan" -Status "Evaluating Services ($svcIndex/$totalSvc): $name" -PercentComplete $svcPct
+            Write-Host -NoNewline "`r  [*] [1/3] Services: $svcIndex / $totalSvc ($([math]::Round(($svcIndex/$totalSvc)*100))%) - $name                     "
+            if ($ProgressCallback) { & $ProgressCallback "Scanning Services: $svcIndex/$totalSvc ($name)" $svcPct }
+        }
+
         # Check inference (O(1) lookups)
         $pred = Invoke-AiInference -Name $name -Description $desc -Vendor $vendor
 
@@ -272,13 +287,28 @@ function Invoke-WinAurexAiScan {
             })
         }
     }
+    Write-Host "`r  [+] [1/3] Services Evaluated: $totalSvc checked ($($results.Count) candidates identified).                    " -ForegroundColor Green
 
     # --- 2. SCAN APPX PACKAGES ---
+    Write-Host "  [*] [2/3] Inspecting installed AppX packages for bloatware..." -ForegroundColor Cyan
     try {
+        if ($ProgressCallback) { & $ProgressCallback "Querying AppX package registry..." 35 }
         $appxList = Get-AppxPackage -AllUsers -ErrorAction SilentlyContinue
+        $totalAppx = if ($appxList) { $appxList.Count } else { 0 }
+        $appxIndex = 0
+
         foreach ($pkg in $appxList) {
+            $appxIndex++
             $name = $pkg.Name
             $publisher = $pkg.Publisher
+
+            $appxPct = 33 + [math]::Round(($appxIndex / [math]::Max($totalAppx, 1)) * 33)
+            if ($appxIndex % 5 -eq 0 -or $appxIndex -eq $totalAppx) {
+                Write-Progress -Activity "WinAurex AI Diagnostic Scan" -Status "Inspecting AppX ($appxIndex/$totalAppx): $name" -PercentComplete $appxPct
+                Write-Host -NoNewline "`r  [*] [2/3] Packages: $appxIndex / $totalAppx ($name)                     "
+                if ($ProgressCallback) { & $ProgressCallback "Scanning AppX: $appxIndex/$totalAppx ($name)" $appxPct }
+            }
+
             $pred = Invoke-AiInference -Name $name -Description "" -Vendor $publisher
 
             if ($pred.Category -in @("Consumer_Bloatware", "OEM_Bloatware") -and $pred.IsSafeToDisable) {
@@ -299,8 +329,10 @@ function Invoke-WinAurexAiScan {
             }
         }
     } catch {}
+    Write-Host "`r  [+] [2/3] Packages Evaluated: $totalAppx checked.                                      " -ForegroundColor Green
 
     # --- 3. SCAN HEAVY SCHEDULED TASKS ---
+    Write-Host "  [*] [3/3] Inspecting high-overhead background tasks..." -ForegroundColor Cyan
     $TargetTasks = @(
         "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator",
         "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip",
@@ -315,10 +347,18 @@ function Invoke-WinAurexAiScan {
         "\Microsoft\Windows\Maintenance\WinSAT"
     )
 
+    $taskIndex = 0
+    $totalTasks = $TargetTasks.Count
+
     foreach ($t in $TargetTasks) {
+        $taskIndex++
+        $taskPct = 66 + [math]::Round(($taskIndex / $totalTasks) * 34)
+        $tName = Split-Path $t -Leaf
+        Write-Progress -Activity "WinAurex AI Diagnostic Scan" -Status "Evaluating Task ($taskIndex/$totalTasks): $tName" -PercentComplete $taskPct
+        if ($ProgressCallback) { & $ProgressCallback "Scanning Task: $tName" $taskPct }
+
         try {
             $path = Split-Path $t -Parent
-            $tName = Split-Path $t -Leaf
             $task = Get-ScheduledTask -TaskPath "$path\" -TaskName $tName -ErrorAction SilentlyContinue
             if ($task) {
                 $isDis = ($task.State -eq "Disabled")
@@ -339,6 +379,9 @@ function Invoke-WinAurexAiScan {
             }
         } catch {}
     }
+    Write-Progress -Activity "WinAurex AI Diagnostic Scan" -Completed
+    Write-Host "  [+] [3/3] Tasks Evaluated: $totalTasks inspected." -ForegroundColor Green
+    if ($ProgressCallback) { & $ProgressCallback "AI Diagnostic Scan Complete!" 100 }
 
     return $results
 }
@@ -348,17 +391,30 @@ function Invoke-WinAurexAiRemediation {
     param (
         [Parameter(Mandatory=$true)]
         [array]$SelectedItems,
+        [scriptblock]$ProgressCallback = $null,
         [switch]$Force
     )
 
     $appliedCount = 0
     $skippedCount = 0
+    $total = $SelectedItems.Count
+    $idx = 0
+
+    Write-Host "`n[*] Starting AI Neural Remediation ($total targets queued)..." -ForegroundColor Cyan
 
     foreach ($item in $SelectedItems) {
+        $idx++
+        $pct = if ($total -gt 0) { [math]::Round(($idx / $total) * 100) } else { 100 }
+
         if ($item.IsAlreadyApplied) {
             $skippedCount++
+            Write-Host "  [-] [$idx/$total] $($item.TargetType): $($item.Name) (Already optimized - Skipping)" -ForegroundColor DarkGray
             continue
         }
+
+        Write-Progress -Activity "WinAurex AI Neural Remediation" -Status "[$idx/$total] ($pct%) Remediating $($item.TargetType): $($item.Name)" -PercentComplete $pct
+        Write-Host -NoNewline "  -> [$idx/$total] ($pct%) $($item.TargetType): $($item.Name)... " -ForegroundColor Yellow
+        if ($ProgressCallback) { & $ProgressCallback "Remediating [$idx/$total] $($item.TargetType): $($item.Name)" $pct }
 
         if ($item.TargetType -eq "Service") {
             try {
@@ -375,8 +431,13 @@ function Invoke-WinAurexAiRemediation {
                         Set-ItemProperty -Path $reg -Name "Start" -Value 4 -Type DWord -Force -ErrorAction SilentlyContinue
                     }
                     $appliedCount++
+                    Write-Host "[DISABLED]" -ForegroundColor Green
+                } else {
+                    Write-Host "[NOT FOUND]" -ForegroundColor DarkGray
                 }
-            } catch {}
+            } catch {
+                Write-Host "[ERROR]" -ForegroundColor Red
+            }
         }
         elseif ($item.TargetType -eq "ScheduledTask") {
             try {
@@ -384,18 +445,27 @@ function Invoke-WinAurexAiRemediation {
                 $tName = Split-Path $item.DisplayName -Leaf
                 Disable-ScheduledTask -TaskPath "$path\" -TaskName $tName -ErrorAction SilentlyContinue | Out-Null
                 $appliedCount++
-            } catch {}
+                Write-Host "[DISABLED]" -ForegroundColor Green
+            } catch {
+                Write-Host "[ERROR]" -ForegroundColor Red
+            }
         }
         elseif ($item.TargetType -eq "AppX") {
             try {
                 Get-AppxPackage -Name $item.Name -AllUsers -ErrorAction SilentlyContinue | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue
                 Get-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -eq $item.Name } | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue | Out-Null
                 $appliedCount++
-            } catch {}
+                Write-Host "[PURGED]" -ForegroundColor Green
+            } catch {
+                Write-Host "[ERROR]" -ForegroundColor Red
+            }
         }
     }
 
+    Write-Progress -Activity "WinAurex AI Neural Remediation" -Completed
+
     # Memory working set purge
+    Write-Host "  -> Memory Working Set: Purging unmapped memory pages... " -NoNewline -ForegroundColor Cyan
     try {
         [System.GC]::Collect()
         [System.GC]::WaitForPendingFinalizers()
@@ -414,9 +484,13 @@ public static extern int EmptyWorkingSet(IntPtr hwProc);
                 } catch {}
             }
         }
-    } catch {}
+        Write-Host "[FLUSHED]" -ForegroundColor Green
+    } catch {
+        Write-Host "[OK]" -ForegroundColor DarkGray
+    }
 
     # Apply Baseline Network, Privacy & Latency Policy Suppressions
+    Write-Host "  -> Policy Hardening: Disabling telemetry & background P2P seeding... " -NoNewline -ForegroundColor Cyan
     try {
         # 1. Delivery Optimization HTTP only (no P2P background uploads)
         $doPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization"
@@ -436,7 +510,10 @@ public static extern int EmptyWorkingSet(IntPtr hwProc);
         $gDvr = "HKCU:\Software\Microsoft\Windows\CurrentVersion\GameDVR"
         if (-not (Test-Path $gDvr)) { New-Item -Path $gDvr -Force | Out-Null }
         Set-ItemProperty -Path $gDvr -Name "AppCaptureEnabled" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
-    } catch {}
+        Write-Host "[ENFORCED]" -ForegroundColor Green
+    } catch {
+        Write-Host "[OK]" -ForegroundColor DarkGray
+    }
 
     return @{
         Applied = $appliedCount

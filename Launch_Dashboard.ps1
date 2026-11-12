@@ -252,6 +252,8 @@ $script:GamingShieldActive = $false
 
 # Footer UI Hooks
 $BtnOpenLogsFolder = Find-Control "BtnOpenLogsFolder"
+$ProgressGlobal    = Find-Control "ProgressGlobal"
+$TxtProgressDetail = Find-Control "TxtProgressDetail"
 
 # Central Logging Engine Setup
 $LogDir = "$env:SystemDrive\WinAurex\Logs"
@@ -517,6 +519,17 @@ function Update-DefenderStatusUI {
     } catch {}
 }
 
+function DoEvents-WPF {
+    try {
+        $frame = New-Object System.Windows.Threading.DispatcherFrame
+        [System.Windows.Threading.Dispatcher]::CurrentDispatcher.BeginInvoke(
+            [System.Windows.Threading.DispatcherPriority]::Background,
+            [Action]{ $frame.Continue = $false }
+        ) | Out-Null
+        [System.Windows.Threading.Dispatcher]::PushFrame($frame)
+    } catch {}
+}
+
 # --- UNIFIED DASHBOARD ACTION RUNNER & LOGGER ---
 function Invoke-DashboardAction {
     param (
@@ -527,11 +540,56 @@ function Invoke-DashboardAction {
     Write-DashboardLog "Starting Action: $ActionName (Target: $ScriptPath $Arguments)"
     Set-Status -Message "Executing $ActionName..." -Color "#ffb300"
     
+    if ($null -ne $ProgressGlobal) {
+        $ProgressGlobal.Visibility = "Visible"
+        $ProgressGlobal.IsIndeterminate = $true
+    }
+    if ($null -ne $TxtProgressDetail) {
+        $TxtProgressDetail.Visibility = "Visible"
+        $TxtProgressDetail.Text = "Running $ActionName..."
+    }
+    DoEvents-WPF
+
     $ActionLog = Join-Path $LogDir "${ActionName}_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
     $cmd = "& { Start-Transcript -Path `"$ActionLog`" -Append -Force; try { & `"$ScriptPath`" $Arguments } finally { Stop-Transcript } }"
     
-    $proc = Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"$cmd`"" -Wait -PassThru
+    $proc = Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"$cmd`"" -PassThru
+    
+    # Non-blocking Dispatcher polling loop: UI remains responsive, window stays interactive
+    $lastLogSize = 0
+    while ($proc -and -not $proc.HasExited) {
+        DoEvents-WPF
+        Start-Sleep -Milliseconds 120
+        
+        # Read latest transcript lines to show live progress detail
+        if (Test-Path $ActionLog) {
+            try {
+                $fileInfo = Get-Item $ActionLog -ErrorAction SilentlyContinue
+                if ($fileInfo -and $fileInfo.Length -gt $lastLogSize) {
+                    $lastLogSize = $fileInfo.Length
+                    $tail = Get-Content -Path $ActionLog -Tail 1 -ErrorAction SilentlyContinue
+                    if ($tail -and -not [string]::IsNullOrWhiteSpace($tail) -and -not ($tail -match "^(Transcript|[*=]+|$)")) {
+                        $cleanTail = $tail.Trim()
+                        if ($cleanTail.Length -gt 55) { $cleanTail = $cleanTail.Substring(0, 52) + "..." }
+                        if ($null -ne $TxtProgressDetail) {
+                            $TxtProgressDetail.Text = $cleanTail
+                        }
+                    }
+                }
+            } catch {}
+        }
+    }
+
     $exitCode = if ($proc) { $proc.ExitCode } else { 0 }
+
+    if ($null -ne $ProgressGlobal) {
+        $ProgressGlobal.IsIndeterminate = $false
+        $ProgressGlobal.Visibility = "Collapsed"
+    }
+    if ($null -ne $TxtProgressDetail) {
+        $TxtProgressDetail.Visibility = "Collapsed"
+        $TxtProgressDetail.Text = ""
+    }
     
     Write-DashboardLog "Completed Action: $ActionName (ExitCode: $exitCode, Log: $ActionLog)"
     Set-Status -Message "$ActionName complete! Log: $(Split-Path $ActionLog -Leaf)" -Color "#00adb5"
@@ -905,6 +963,15 @@ if ($null -ne $BtnApplySelectedTweak) {
             if ($null -ne $TxtSelectedTweakStatus) {
                 $TxtSelectedTweakStatus.Text = "Executing $($item.Name)..."
             }
+            if ($null -ne $ProgressGlobal) {
+                $ProgressGlobal.Visibility = "Visible"
+                $ProgressGlobal.IsIndeterminate = $true
+            }
+            if ($null -ne $TxtProgressDetail) {
+                $TxtProgressDetail.Visibility = "Visible"
+                $TxtProgressDetail.Text = "Applying $($item.Name)..."
+            }
+            DoEvents-WPF
 
             try {
                 if (Get-Command Invoke-WinAurexItem -ErrorAction SilentlyContinue) {
@@ -931,6 +998,15 @@ if ($null -ne $BtnApplySelectedTweak) {
                 Set-Status -Message "Failed to apply $($item.Name): $($_.Exception.Message)" -Color "#ff5252"
                 if ($null -ne $TxtSelectedTweakStatus) {
                     $TxtSelectedTweakStatus.Text = "Error applying $($item.Name): $($_.Exception.Message)"
+                }
+            } finally {
+                if ($null -ne $ProgressGlobal) {
+                    $ProgressGlobal.IsIndeterminate = $false
+                    $ProgressGlobal.Visibility = "Collapsed"
+                }
+                if ($null -ne $TxtProgressDetail) {
+                    $TxtProgressDetail.Visibility = "Collapsed"
+                    $TxtProgressDetail.Text = ""
                 }
             }
         }
@@ -1102,8 +1178,38 @@ if ($null -ne $BtnAiScan) {
             $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#ffb300")
         }
 
-        # Run Live Heuristic Scan
-        $script:LastAiFindings = Invoke-WinAurexAiScan
+        if ($null -ne $ProgressGlobal) {
+            $ProgressGlobal.Visibility = "Visible"
+            $ProgressGlobal.IsIndeterminate = $true
+        }
+        if ($null -ne $TxtProgressDetail) {
+            $TxtProgressDetail.Visibility = "Visible"
+            $TxtProgressDetail.Text = "Scanning components..."
+        }
+        DoEvents-WPF
+
+        $cb = {
+            param([string]$msg, [int]$pct)
+            if ($null -ne $TxtAiScanStatus) {
+                $TxtAiScanStatus.Text = "Status: $msg"
+            }
+            if ($null -ne $TxtProgressDetail) {
+                $TxtProgressDetail.Text = $msg
+            }
+            DoEvents-WPF
+        }
+
+        # Run Live Heuristic Scan with real-time UI progress updates
+        $script:LastAiFindings = Invoke-WinAurexAiScan -ProgressCallback $cb
+
+        if ($null -ne $ProgressGlobal) {
+            $ProgressGlobal.IsIndeterminate = $false
+            $ProgressGlobal.Visibility = "Collapsed"
+        }
+        if ($null -ne $TxtProgressDetail) {
+            $TxtProgressDetail.Visibility = "Collapsed"
+            $TxtProgressDetail.Text = ""
+        }
         
         $svcs = $script:LastAiFindings | Where-Object { $_.TargetType -eq "Service" }
         $apps = $script:LastAiFindings | Where-Object { $_.TargetType -eq "AppX" }
@@ -1361,6 +1467,15 @@ $Global:LastCleanerAnalysis = $null
 if ($null -ne $BtnAnalyzeStorage) {
     $BtnAnalyzeStorage.Add_Click({
         Set-Status -Message "Scanning storage tiers for junk..." -Color "#ffb300"
+        if ($null -ne $ProgressGlobal) {
+            $ProgressGlobal.Visibility = "Visible"
+            $ProgressGlobal.IsIndeterminate = $true
+        }
+        if ($null -ne $TxtProgressDetail) {
+            $TxtProgressDetail.Visibility = "Visible"
+            $TxtProgressDetail.Text = "Analyzing disk tiers..."
+        }
+        DoEvents-WPF
         
         # Run analysis
         $analysis = Get-WinAurexJunkAnalysis
@@ -1385,6 +1500,16 @@ if ($null -ne $BtnAnalyzeStorage) {
         
         if ($null -ne $TxtReclaimableTotal) { $TxtReclaimableTotal.Text = Format-Bytes $totalBytes }
         if ($null -ne $BtnCleanStorage) { $BtnCleanStorage.IsEnabled = $true }
+
+        if ($null -ne $ProgressGlobal) {
+            $ProgressGlobal.IsIndeterminate = $false
+            $ProgressGlobal.Visibility = "Collapsed"
+        }
+        if ($null -ne $TxtProgressDetail) {
+            $TxtProgressDetail.Visibility = "Collapsed"
+            $TxtProgressDetail.Text = ""
+        }
+
         Set-Status -Message "Storage analysis complete! Review tiers and click PURGE SELECTED JUNK." -Color "#00ff41"
     })
 }
@@ -1416,9 +1541,28 @@ if ($null -ne $BtnCleanStorage) {
         
         if ($confirm -eq 'Yes') {
             Set-Status -Message "Purging selected junk..." -Color "#ff5722"
+            if ($null -ne $ProgressGlobal) {
+                $ProgressGlobal.Visibility = "Visible"
+                $ProgressGlobal.IsIndeterminate = $true
+            }
+            if ($null -ne $TxtProgressDetail) {
+                $TxtProgressDetail.Visibility = "Visible"
+                $TxtProgressDetail.Text = "Purging selected storage tiers..."
+            }
+            DoEvents-WPF
+
             $result = Invoke-WinAurexCleanup -Categories $selected
             Update-DriveMetrics
             
+            if ($null -ne $ProgressGlobal) {
+                $ProgressGlobal.IsIndeterminate = $false
+                $ProgressGlobal.Visibility = "Collapsed"
+            }
+            if ($null -ne $TxtProgressDetail) {
+                $TxtProgressDetail.Visibility = "Collapsed"
+                $TxtProgressDetail.Text = ""
+            }
+
             [System.Windows.MessageBox]::Show(
                 "Cleanup completed successfully!`n`nStorage Freed: $($result.FreedText)`nNew Free Space: $($result.EndFreeText)",
                 "WinAurex PC Cleaner",
