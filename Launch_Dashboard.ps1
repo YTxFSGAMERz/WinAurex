@@ -75,6 +75,9 @@ $ViewRollback      = Find-Control "ViewRollback"
 
 # Overview HUD Controls
 $BtnExecutiveBoost   = Find-Control "BtnExecutiveBoost"
+$BtnNavToAi          = Find-Control "BtnNavToAi"
+$TxtHudAiScore       = Find-Control "TxtHudAiScore"
+$TxtHudAiState       = Find-Control "TxtHudAiState"
 $TxtHudCpuName       = Find-Control "TxtHudCpuName"
 $TxtHudCpuCores      = Find-Control "TxtHudCpuCores"
 $TxtHudRamTotal      = Find-Control "TxtHudRamTotal"
@@ -126,10 +129,12 @@ $BtnOptimizeServices = Find-Control "BtnOptimizeServices"
 $BtnDebloatOS        = Find-Control "BtnDebloatOS"
 $BtnReduceThreads    = Find-Control "BtnReduceThreads"
 $BtnDisableDefender  = Find-Control "BtnDisableDefender"
+$BtnDisableDefenderPermanent = Find-Control "BtnDisableDefenderPermanent"
 $BtnEnableDefender   = Find-Control "BtnEnableDefender"
 $BtnOpenThreatSettings = Find-Control "BtnOpenThreatSettings"
 $TxtDefenderRealtimeStatus = Find-Control "TxtDefenderRealtimeStatus"
 $TxtDefenderTamperStatus   = Find-Control "TxtDefenderTamperStatus"
+$TxtDefenderServicesStatus = Find-Control "TxtDefenderServicesStatus"
 
 # Tweaks & Debloat Extended UI Hooks
 $BtnModernizeExplorer   = Find-Control "BtnModernizeExplorer"
@@ -148,6 +153,8 @@ $BtnApplyPrivacyShield  = Find-Control "BtnApplyPrivacyShield"
 $BtnRestorePrivacy      = Find-Control "BtnRestorePrivacy"
 $BtnKillShellClutter    = Find-Control "BtnKillShellClutter"
 $BtnRestoreShellClutter = Find-Control "BtnRestoreShellClutter"
+$BtnDeepRemoveWidgets   = Find-Control "BtnDeepRemoveWidgets"
+$BtnRestoreWidgets      = Find-Control "BtnRestoreWidgets"
 
 # Software Hub UI Hooks
 $BtnSoftwareSelectAll   = Find-Control "BtnSoftwareSelectAll"
@@ -321,6 +328,7 @@ function Initialize-HardwareHUD {
             if ($null -ne $TxtHudHealthScore) { $TxtHudHealthScore.Text = "$($health.Score) / 100" }
             if ($null -ne $TxtHudHealthGrade) { $TxtHudHealthGrade.Text = "$($health.Grade)" }
             if ($null -ne $TxtAiHealthScore)  { $TxtAiHealthScore.Text = "$($health.Score)" }
+            if ($null -ne $TxtHudAiScore)     { $TxtHudAiScore.Text = "$($health.Score)/100 (Grade $($health.Grade))" }
         }
     } catch {
         Write-DashboardLog "Hardware HUD initialization warning: $_" "WARN"
@@ -359,6 +367,14 @@ if ($null -ne $BtnExecutiveBoost) {
         # Refresh UI
         Initialize-HardwareHUD
         Set-Status -Message "Executive Boost Complete! System tuned for maximum responsiveness." -Color "#00ff41"
+    })
+}
+
+if ($null -ne $BtnNavToAi) {
+    $BtnNavToAi.Add_Click({
+        Write-DashboardLog "User clicked Open WinAurex AI Suite"
+        Show-DashboardView "AiOptimizer"
+        if ($null -ne $NavAiOptimizer) { $NavAiOptimizer.IsChecked = $true }
     })
 }
 
@@ -440,6 +456,17 @@ function Update-DefenderStatusUI {
             } else {
                 $TxtDefenderTamperStatus.Text = "OFF (Modifiable)"
                 $TxtDefenderTamperStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00adb5")
+            }
+        }
+        if ($null -ne $TxtDefenderServicesStatus) {
+            $svcWinDefend = (Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\WinDefend" -Name "Start" -ErrorAction SilentlyContinue).Start
+            $svcWdNisSvc  = (Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\WdNisSvc" -Name "Start" -ErrorAction SilentlyContinue).Start
+            if ($svcWinDefend -eq 4 -and $svcWdNisSvc -eq 4) {
+                $TxtDefenderServicesStatus.Text = "Disabled (Permanent)"
+                $TxtDefenderServicesStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+            } else {
+                $TxtDefenderServicesStatus.Text = "Active (Auto/Manual)"
+                $TxtDefenderServicesStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#ffb300")
             }
         }
     } catch {}
@@ -530,7 +557,15 @@ $BtnReduceThreads.Add_Click({
 
 $BtnDisableDefender.Add_Click({
     Invoke-DashboardAction -ActionName "Defender_Disable" -ScriptPath (Join-Path $RootPath "Tweaks\Security\Configure_Defender_Policy.ps1") -Arguments "-Disable -Force"
+    Update-DefenderStatusUI
 })
+
+if ($null -ne $BtnDisableDefenderPermanent) {
+    $BtnDisableDefenderPermanent.Add_Click({
+        Invoke-DashboardAction -ActionName "Defender_PermanentDisable" -ScriptPath (Join-Path $RootPath "Tweaks\Security\Configure_Defender_Policy.ps1") -Arguments "-Disable -PermanentServices -Force"
+        Update-DefenderStatusUI
+    })
+}
 
 $BtnEnableDefender.Add_Click({
     Invoke-DashboardAction -ActionName "Defender_Enable" -ScriptPath (Join-Path $RootPath "Tweaks\Security\Configure_Defender_Policy.ps1") -Arguments "-Enable -Force"
@@ -629,14 +664,28 @@ if ($null -ne $BtnRestorePrivacy) {
 
 if ($null -ne $BtnKillShellClutter) {
     $BtnKillShellClutter.Add_Click({
-        Invoke-DashboardAction -ActionName "Shell_KillWidgets" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Disable_Windows_Widgets.ps1") -Arguments "-Force -RestartExplorer"
+        Invoke-DashboardAction -ActionName "Shell_KillWidgets" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Deep_Remove_Widgets_And_Weather.ps1") -Arguments "-Force -RestartExplorer"
+        Invoke-DashboardAction -ActionName "Shell_KillSpotlight" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Disable_Desktop_Spotlight.ps1") -Arguments "-Force"
+        Invoke-DashboardAction -ActionName "Shell_KillOneDriveNag" -ScriptPath (Join-Path $RootPath "Tweaks\Sync\Disable_OneDrive_Nag_And_Backup.ps1") -Arguments "-Force"
+    })
+}
+if ($null -ne $BtnDeepRemoveWidgets) {
+    $BtnDeepRemoveWidgets.Add_Click({
+        Invoke-DashboardAction -ActionName "Shell_DeepRemoveWidgets" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Deep_Remove_Widgets_And_Weather.ps1") -Arguments "-Force -RestartExplorer"
         Invoke-DashboardAction -ActionName "Shell_KillSpotlight" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Disable_Desktop_Spotlight.ps1") -Arguments "-Force"
         Invoke-DashboardAction -ActionName "Shell_KillOneDriveNag" -ScriptPath (Join-Path $RootPath "Tweaks\Sync\Disable_OneDrive_Nag_And_Backup.ps1") -Arguments "-Force"
     })
 }
 if ($null -ne $BtnRestoreShellClutter) {
     $BtnRestoreShellClutter.Add_Click({
-        Invoke-DashboardAction -ActionName "Shell_RestoreWidgets" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Enable_Windows_Widgets.ps1") -Arguments "-Force -RestartExplorer"
+        Invoke-DashboardAction -ActionName "Shell_RestoreWidgets" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Restore_Widgets_And_Weather.ps1") -Arguments "-Force -RestartExplorer"
+        Invoke-DashboardAction -ActionName "Shell_RestoreSpotlight" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Enable_Desktop_Spotlight.ps1") -Arguments "-Force"
+        Invoke-DashboardAction -ActionName "Shell_RestoreOneDrive" -ScriptPath (Join-Path $RootPath "Tweaks\Sync\Enable_OneDrive_Nag_And_Backup.ps1") -Arguments "-Force"
+    })
+}
+if ($null -ne $BtnRestoreWidgets) {
+    $BtnRestoreWidgets.Add_Click({
+        Invoke-DashboardAction -ActionName "Shell_RestoreWidgets" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Restore_Widgets_And_Weather.ps1") -Arguments "-Force -RestartExplorer"
         Invoke-DashboardAction -ActionName "Shell_RestoreSpotlight" -ScriptPath (Join-Path $RootPath "Tweaks\Shell\Enable_Desktop_Spotlight.ps1") -Arguments "-Force"
         Invoke-DashboardAction -ActionName "Shell_RestoreOneDrive" -ScriptPath (Join-Path $RootPath "Tweaks\Sync\Enable_OneDrive_Nag_And_Backup.ps1") -Arguments "-Force"
     })

@@ -12,7 +12,8 @@ param (
     [switch]$Status,
     [switch]$Force,
     [switch]$ForceReapply,
-    [switch]$OpenSettings
+    [switch]$OpenSettings,
+    [switch]$PermanentServices
 )
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
@@ -35,12 +36,16 @@ function Get-LiveDefenderStatus {
     
     $antiSpyware = (Get-ItemProperty $DefenderPolicyKey -Name "DisableAntiSpyware" -ErrorAction SilentlyContinue).DisableAntiSpyware
     $rtmPolicy   = (Get-ItemProperty $RealTimeKey -Name "DisableRealtimeMonitoring" -ErrorAction SilentlyContinue).DisableRealtimeMonitoring
+    $svcWinDefend = (Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\WinDefend" -Name "Start" -ErrorAction SilentlyContinue).Start
+    $svcWdNisSvc  = (Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\WdNisSvc" -Name "Start" -ErrorAction SilentlyContinue).Start
+    $servicesDisabled = ($svcWinDefend -eq 4 -and $svcWdNisSvc -eq 4)
 
     return @{
         IsTamperProtected         = if ($mp) { [bool]$mp.IsTamperProtected } else { $false }
         RealTimeProtectionEnabled = if ($mp) { [bool]$mp.RealTimeProtectionEnabled } else { $true }
         AntivirusEnabled          = if ($mp) { [bool]$mp.AntivirusEnabled } else { $true }
         GroupPolicyApplied        = ($antiSpyware -eq 1 -or $rtmPolicy -eq 1)
+        ServicesDisabled          = $servicesDisabled
     }
 }
 
@@ -55,6 +60,7 @@ if ($Status) {
     Write-Host "`n[LIVE STATUS REPORT]" -ForegroundColor Yellow
     Write-Host "  Real-Time Protection : $(if ($st.RealTimeProtectionEnabled) { 'ACTIVE (Scanning)' } else { 'DISABLED (Off)' })" -ForegroundColor $(if ($st.RealTimeProtectionEnabled) { 'Green' } else { 'Yellow' })
     Write-Host "  Tamper Protection    : $(if ($st.IsTamperProtected) { 'ON (Blocking script changes)' } else { 'OFF (Allows modifications)' })" -ForegroundColor $(if ($st.IsTamperProtected) { 'Red' } else { 'Green' })
+    Write-Host "  Core Services (Start=4): $(if ($st.ServicesDisabled) { 'DISABLED (Permanent)' } else { 'Enabled (Auto/Manual)' })" -ForegroundColor $(if ($st.ServicesDisabled) { 'Green' } else { 'Yellow' })
     Write-Host "  Group Policy Keys    : $(if ($st.GroupPolicyApplied) { 'TurnOff Policies Present' } else { 'Default (None)' })" -ForegroundColor Cyan
     Write-Host "  Antivirus Engine     : $(if ($st.AntivirusEnabled) { 'Enabled' } else { 'Disabled' })" -ForegroundColor White
     Exit 0
@@ -69,7 +75,7 @@ if ($Disable) {
     $st = Get-LiveDefenderStatus
     
     # Check if already fully disabled
-    if (-not $st.RealTimeProtectionEnabled -and $st.GroupPolicyApplied -and -not $ForceReapply) {
+    if (-not $st.RealTimeProtectionEnabled -and $st.GroupPolicyApplied -and ($PermanentServices -eq $st.ServicesDisabled) -and -not $ForceReapply) {
         Write-Host "`n  [-] Microsoft Defender Real-Time Protection is already DISABLED (Skipping)." -ForegroundColor DarkGray
         Exit 0
     }
@@ -124,6 +130,28 @@ if ($Disable) {
         Write-Host "  [+] Group Policy applied: Turn off Microsoft Defender Antivirus." -ForegroundColor Green
         Write-Host "  [+] Cloud telemetry and sample submission blocked." -ForegroundColor Green
         
+        # 3. Permanent Defender Services Disablement
+        if ($PermanentServices) {
+            Write-Host "  [*] Permanently disabling core Defender background services..." -ForegroundColor Cyan
+            $services = @("WinDefend", "Sense", "WdNisSvc", "WdNisDrv", "SecurityHealthService")
+            foreach ($svc in $services) {
+                try {
+                    $svcKey = "HKLM:\SYSTEM\CurrentControlSet\Services\$svc"
+                    if (Test-Path $svcKey) {
+                        Set-ItemProperty -Path $svcKey -Name "Start" -Value 4 -Type DWord -Force -ErrorAction SilentlyContinue
+                        Write-Host "    [-] Service set to Disabled (Start=4): $svc" -ForegroundColor DarkGray
+                    }
+                } catch {}
+            }
+            Stop-Service -Name "WinDefend", "Sense", "WdNisSvc" -Force -ErrorAction SilentlyContinue
+
+            # 4. Disable Scheduled Defender Maintenance Tasks
+            try {
+                Get-ScheduledTask -TaskPath "\Microsoft\Windows\Windows Defender\*" -ErrorAction SilentlyContinue | Disable-ScheduledTask -ErrorAction SilentlyContinue | Out-Null
+                Write-Host "  [+] Microsoft Defender maintenance scheduled tasks disabled." -ForegroundColor Green
+            } catch {}
+        }
+
         $newSt = Get-LiveDefenderStatus
         if ($newSt.IsTamperProtected) {
             Write-Host "`n[ACTION REQUIRED] In the Windows Security window that just opened:" -ForegroundColor Yellow
@@ -131,7 +159,7 @@ if ($Disable) {
             Write-Host "  2. Scroll down and toggle 'Tamper Protection' to OFF." -ForegroundColor White
             Write-Host "  3. Re-run this script (or click 'Disable Defender' again in the dashboard)." -ForegroundColor White
         } else {
-            Write-Host "`n[SUCCESS] Microsoft Defender Real-Time Protection is now DISABLED!" -ForegroundColor Green
+            Write-Host "`n[SUCCESS] Microsoft Defender Real-Time Protection $(if ($PermanentServices) { '& Core Services ' } else { '' })is now DISABLED!" -ForegroundColor Green
         }
     } catch {
         Write-Error "Failed applying Defender disablement: $_"
@@ -145,6 +173,31 @@ if ($Disable) {
             Set-MpPreference -DisableBehaviorMonitoring $false -ErrorAction SilentlyContinue
             Set-MpPreference -DisableIOAVProtection $false -ErrorAction SilentlyContinue
             Set-MpPreference -DisableScriptScanning $false -ErrorAction SilentlyContinue
+        } catch {}
+
+        # Restore Core Services
+        Write-Host "  [*] Restoring Defender core service start types to defaults..." -ForegroundColor Cyan
+        $svcDefaults = @{
+            "WinDefend"             = 2
+            "WdNisSvc"              = 3
+            "Sense"                 = 3
+            "SecurityHealthService" = 2
+            "WdNisDrv"              = 3
+        }
+        foreach ($sName in $svcDefaults.Keys) {
+            try {
+                $svcKey = "HKLM:\SYSTEM\CurrentControlSet\Services\$sName"
+                if (Test-Path $svcKey) {
+                    Set-ItemProperty -Path $svcKey -Name "Start" -Value $svcDefaults[$sName] -Type DWord -Force -ErrorAction SilentlyContinue
+                    Write-Host "    [+] Restored service $sName (Start=$($svcDefaults[$sName]))" -ForegroundColor DarkGray
+                }
+            } catch {}
+        }
+
+        # Re-enable scheduled tasks
+        try {
+            Get-ScheduledTask -TaskPath "\Microsoft\Windows\Windows Defender\*" -ErrorAction SilentlyContinue | Enable-ScheduledTask -ErrorAction SilentlyContinue | Out-Null
+            Write-Host "  [+] Microsoft Defender scheduled maintenance tasks re-enabled." -ForegroundColor Green
         } catch {}
 
         # Restore registry keys

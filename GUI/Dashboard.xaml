@@ -347,7 +347,7 @@
                     <!-- Nav Items -->
                     <StackPanel Grid.Row="1">
                         <RadioButton Name="NavOverview" Style="{StaticResource NavButton}" Content="Overview HUD" Tag="&#xE80F;" IsChecked="True"/>
-                        <RadioButton Name="NavAiOptimizer" Style="{StaticResource NavButton}" Content="AI Optimizer" Tag="&#xE945;"/>
+                        <RadioButton Name="NavAiOptimizer" Style="{StaticResource NavButton}" Content="WinAurex AI" Tag="&#xE945;"/>
                         <RadioButton Name="NavTweaks" Style="{StaticResource NavButton}" Content="Tweaks &amp; Debloat" Tag="&#xE713;"/>
                         <RadioButton Name="NavSoftwareHub" Style="{StaticResource NavButton}" Content="Software Hub" Tag="&#xE71D;"/>
                         <RadioButton Name="NavObservability" Style="{StaticResource NavButton}" Content="Live Monitor" Tag="&#xE9D9;"/>
@@ -406,6 +406,47 @@
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE896;" Margin="0,0,8,0" VerticalAlignment="Center" FontSize="18"/>
                                             <TextBlock Text="ONE-CLICK OPTIMIZE" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </Border>
+
+                            <!-- WinAurex AI Neural Engine Hero Card -->
+                            <Border Style="{StaticResource Card}" Background="#1a1429" BorderBrush="#a855f7" Padding="18">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- AI Brain Icon Badge -->
+                                    <Border Grid.Column="0" Background="#0d1117" BorderBrush="#a855f7" BorderThickness="2" CornerRadius="12" Width="68" Height="68" Margin="0,0,16,0" VerticalAlignment="Center">
+                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE945;" FontSize="32" Foreground="#a855f7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <!-- Text Summary -->
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,16,0">
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <TextBlock Text="WINAUREX AI" Foreground="#a855f7" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            <Border Background="#2e1065" CornerRadius="4" Padding="6,2" Margin="8,0,0,0" VerticalAlignment="Center">
+                                                <TextBlock Text="NEURAL ENGINE READY" Foreground="#d8b4fe" FontSize="9" FontWeight="Bold"/>
+                                            </Border>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Automated machine learning heuristics classify running background services, scheduled tasks, and bloatware with sub-millisecond offline deterministic scoring." Margin="0,0,0,4"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Health Score: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtHudAiScore" Text="98/100 (Optimal)" Foreground="#00ff41" FontSize="11" FontWeight="Bold" Margin="0,0,14,0"/>
+                                            <TextBlock Text="Engine State: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtHudAiState" Text="Armed &amp; Ready" Foreground="#00adb5" FontSize="11" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <!-- Action Button -->
+                                    <Button Name="BtnNavToAi" Grid.Column="2" Width="200" Height="42" Background="#2e1065" BorderBrush="#a855f7" BorderThickness="1" Foreground="#ffffff" FontSize="12" FontWeight="SemiBold" Cursor="Hand" VerticalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE945;" FontSize="15" Margin="0,0,8,0" VerticalAlignment="Center" Foreground="#d8b4fe"/>
+                                            <TextBlock Text="Open WinAurex AI Suite" VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Button>
                                 </Grid>
@@ -690,22 +731,27 @@
                                             <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE72E;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
                                             <TextBlock Style="{StaticResource Header2}" Text="Microsoft Defender Controller" Margin="0" VerticalAlignment="Center"/>
                                         </StackPanel>
-                                        <TextBlock Style="{StaticResource BodyText}" Text="Disables real-time scanning and sample submission via official Group Policy. Automatically detects Tamper Protection constraints and guides 1-click toggling."/>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Disables real-time scanning and sample submission via official Group Policy. Permanently disables core Defender services (WinDefend, WdNisSvc, Sense) when Tamper Protection is toggled."/>
                                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                                             <TextBlock Text="Real-Time Protection: " Foreground="#8b949e" FontSize="11"/>
                                             <TextBlock Name="TxtDefenderRealtimeStatus" Text="Checking..." Foreground="#00ff41" FontSize="11" FontWeight="Bold" Margin="0,0,14,0"/>
                                             <TextBlock Text="Tamper Protection: " Foreground="#8b949e" FontSize="11"/>
-                                            <TextBlock Name="TxtDefenderTamperStatus" Text="Checking..." Foreground="#ffb300" FontSize="11" FontWeight="Bold"/>
+                                            <TextBlock Name="TxtDefenderTamperStatus" Text="Checking..." Foreground="#ffb300" FontSize="11" FontWeight="Bold" Margin="0,0,14,0"/>
+                                            <TextBlock Text="Core Services: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtDefenderServicesStatus" Text="Checking..." Foreground="#00ff41" FontSize="11" FontWeight="Bold"/>
                                         </StackPanel>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Orientation="Vertical">
-                                        <Button Name="BtnDisableDefender" Style="{StaticResource AccentButton}" Width="160" Height="32" Margin="0,0,0,4">
-                                            <TextBlock Text="Disable Defender" VerticalAlignment="Center"/>
+                                        <Button Name="BtnDisableDefender" Style="{StaticResource AccentButton}" Width="160" Height="30" Margin="0,0,0,4">
+                                            <TextBlock Text="Disable Real-Time" VerticalAlignment="Center"/>
                                         </Button>
-                                        <Button Name="BtnOpenThreatSettings" Width="160" Height="28" Margin="0,0,0,4" Background="#16202c" Foreground="#ffb300" BorderBrush="#ffb300" FontSize="11">
+                                        <Button Name="BtnDisableDefenderPermanent" Width="160" Height="28" Margin="0,0,0,4" Background="#2a1215" Foreground="#ff5252" BorderBrush="#ff5252" FontSize="11">
+                                            <TextBlock Text="Permanent Disable" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button Name="BtnOpenThreatSettings" Width="160" Height="26" Margin="0,0,0,4" Background="#16202c" Foreground="#ffb300" BorderBrush="#ffb300" FontSize="11">
                                             <TextBlock Text="Security Settings" VerticalAlignment="Center"/>
                                         </Button>
-                                        <Button Name="BtnEnableDefender" Width="160" Height="28">
+                                        <Button Name="BtnEnableDefender" Width="160" Height="26">
                                             <TextBlock Text="Restore Defender" VerticalAlignment="Center"/>
                                         </Button>
                                     </StackPanel>
@@ -859,15 +905,15 @@
                                     <StackPanel Grid.Column="0" Margin="0,0,20,0">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE74C;" FontSize="18" Foreground="#00adb5" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                            <TextBlock Style="{StaticResource Header2}" Text="Shell Clutter, Widgets &amp; Backup Nag Killer" Margin="0" VerticalAlignment="Center"/>
+                                            <TextBlock Style="{StaticResource Header2}" Text="Eradicate All Widgets, Weather &amp; Shell Clutter" Margin="0" VerticalAlignment="Center"/>
                                         </StackPanel>
-                                        <TextBlock Style="{StaticResource BodyText}" Text="Completely terminates and disables the Windows 11 Widgets Board &amp; MSN news feeds, hides the un-deletable 'Learn about this picture' desktop Spotlight icon, and blocks OneDrive 'Turn On Windows Backup' nag prompts."/>
+                                        <TextBlock Style="{StaticResource BodyText}" Text="Purges the Windows 11 Widgets Board, WebExperience AppX package, MSN Weather, and Bing News across all user profiles and online staging images. Disables scheduled telemetry tasks, removes the desktop Spotlight icon, and blocks OneDrive backup nag prompts."/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Orientation="Vertical">
-                                        <Button Name="BtnKillShellClutter" Style="{StaticResource AccentButton}" Width="160" Height="30" Margin="0,0,0,3">
-                                            <TextBlock Text="Eliminate Clutter" VerticalAlignment="Center"/>
+                                        <Button Name="BtnDeepRemoveWidgets" Style="{StaticResource AccentButton}" Width="160" Height="30" Margin="0,0,0,3">
+                                            <TextBlock Text="Eradicate Widgets" VerticalAlignment="Center"/>
                                         </Button>
-                                        <Button Name="BtnRestoreShellClutter" Width="160" Height="28">
+                                        <Button Name="BtnRestoreWidgets" Width="160" Height="28">
                                             <TextBlock Text="Restore Defaults" VerticalAlignment="Center"/>
                                         </Button>
                                     </StackPanel>
