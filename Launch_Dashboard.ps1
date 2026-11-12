@@ -36,6 +36,12 @@ if (Test-Path $CleanerModule) {
     Import-Module $CleanerModule -DisableNameChecking -Force
 }
 
+# Import Dynamic Catalog Engine for Tweaks & Tools
+$CatalogModule = Join-Path -Path $RootPath -ChildPath "Core\Helpers\CatalogEngine.psm1"
+if (Test-Path $CatalogModule) {
+    Import-Module $CatalogModule -DisableNameChecking -Force
+}
+
 # Load XAML
 [xml]$Global:xmlWPF = Get-Content -Path $XamlPath
 $StringReader = New-Object System.IO.StringReader $Global:xmlWPF.OuterXml
@@ -57,6 +63,7 @@ $BtnWinClose    = Find-Control "BtnWinClose"
 $NavOverview      = Find-Control "NavOverview"
 $NavAiOptimizer   = Find-Control "NavAiOptimizer"
 $NavTweaks        = Find-Control "NavTweaks"
+$NavToolsHub      = Find-Control "NavToolsHub"
 $NavSoftwareHub   = Find-Control "NavSoftwareHub"
 $NavObservability = Find-Control "NavObservability"
 $NavPcCleaner     = Find-Control "NavPcCleaner"
@@ -68,6 +75,7 @@ $ViewOverview      = Find-Control "ViewOverview"
 $ViewProfiles      = Find-Control "ViewProfiles"
 $ViewAiOptimizer   = Find-Control "ViewAiOptimizer"
 $ViewTweaks        = Find-Control "ViewTweaks"
+$ViewToolsHub      = Find-Control "ViewToolsHub"
 $ViewSoftwareHub   = Find-Control "ViewSoftwareHub"
 $ViewObservability = Find-Control "ViewObservability"
 $ViewPcCleaner     = Find-Control "ViewPcCleaner"
@@ -155,6 +163,41 @@ $BtnKillShellClutter    = Find-Control "BtnKillShellClutter"
 $BtnRestoreShellClutter = Find-Control "BtnRestoreShellClutter"
 $BtnDeepRemoveWidgets   = Find-Control "BtnDeepRemoveWidgets"
 $BtnRestoreWidgets      = Find-Control "BtnRestoreWidgets"
+
+# Universal Tweaks Catalog UI Hooks
+$TxtTweakSearch         = Find-Control "TxtTweakSearch"
+$ComboTweakCategory     = Find-Control "ComboTweakCategory"
+$ComboTweakType         = Find-Control "ComboTweakType"
+$BtnClearTweakFilters   = Find-Control "BtnClearTweakFilters"
+$ListAllTweaks          = Find-Control "ListAllTweaks"
+$BtnInspectTweak        = Find-Control "BtnInspectTweak"
+$BtnApplySelectedTweak  = Find-Control "BtnApplySelectedTweak"
+$TxtTweakCount          = Find-Control "TxtTweakCount"
+$TxtSelectedTweakStatus = Find-Control "TxtSelectedTweakStatus"
+
+# Tools & Utilities Hub UI Hooks
+$BtnToolCpuZ          = Find-Control "BtnToolCpuZ"
+$BtnToolGpuZ          = Find-Control "BtnToolGpuZ"
+$BtnToolHwMonitor     = Find-Control "BtnToolHwMonitor"
+$BtnToolProcExp       = Find-Control "BtnToolProcExp"
+$BtnToolMemReduct     = Find-Control "BtnToolMemReduct"
+$BtnToolEverything    = Find-Control "BtnToolEverything"
+$BtnToolTcpOpt        = Find-Control "BtnToolTcpOpt"
+$BtnToolMsiUtil       = Find-Control "BtnToolMsiUtil"
+$BtnToolCru           = Find-Control "BtnToolCru"
+$BtnToolRufus         = Find-Control "BtnToolRufus"
+$BtnTool7Zip          = Find-Control "BtnTool7Zip"
+$BtnToolUnlocker      = Find-Control "BtnToolUnlocker"
+$BtnToolRepairAudio   = Find-Control "BtnToolRepairAudio"
+$BtnToolRepairNetwork = Find-Control "BtnToolRepairNetwork"
+$BtnToolRepairUpdate  = Find-Control "BtnToolRepairUpdate"
+$BtnToolRepairSfc     = Find-Control "BtnToolRepairSfc"
+$BtnToolBenchmarkBoot = Find-Control "BtnToolBenchmarkBoot"
+$BtnToolBenchmarkFrames = Find-Control "BtnToolBenchmarkFrames"
+$BtnToolBenchmarkReport = Find-Control "BtnToolBenchmarkReport"
+$BtnToolDetectThirdParty = Find-Control "BtnToolDetectThirdParty"
+$BtnToolCleanLogs     = Find-Control "BtnToolCleanLogs"
+$BtnToolHypervisor    = Find-Control "BtnToolHypervisor"
 
 # Software Hub UI Hooks
 $BtnSoftwareSelectAll   = Find-Control "BtnSoftwareSelectAll"
@@ -254,6 +297,7 @@ $script:DashboardViews = @{
     "Profiles"      = $ViewProfiles
     "AiOptimizer"   = $ViewAiOptimizer
     "Tweaks"        = $ViewTweaks
+    "ToolsHub"      = $ViewToolsHub
     "SoftwareHub"   = $ViewSoftwareHub
     "Observability" = $ViewObservability
     "PcCleaner"     = $ViewPcCleaner
@@ -277,6 +321,7 @@ if ($null -ne $NavOverview)      { $NavOverview.Add_Checked({ Show-DashboardView
 if ($null -ne $NavProfiles)      { $NavProfiles.Add_Checked({ Show-DashboardView "Profiles" }) }
 if ($null -ne $NavAiOptimizer)   { $NavAiOptimizer.Add_Checked({ Show-DashboardView "AiOptimizer" }) }
 if ($null -ne $NavTweaks)        { $NavTweaks.Add_Checked({ Show-DashboardView "Tweaks" }) }
+if ($null -ne $NavToolsHub)      { $NavToolsHub.Add_Checked({ Show-DashboardView "ToolsHub" }) }
 if ($null -ne $NavSoftwareHub)   { $NavSoftwareHub.Add_Checked({ Show-DashboardView "SoftwareHub" }) }
 if ($null -ne $NavObservability) { $NavObservability.Add_Checked({ Show-DashboardView "Observability" }) }
 if ($null -ne $NavPcCleaner)     { $NavPcCleaner.Add_Checked({ Show-DashboardView "PcCleaner" }) }
@@ -690,6 +735,289 @@ if ($null -ne $BtnRestoreWidgets) {
         Invoke-DashboardAction -ActionName "Shell_RestoreOneDrive" -ScriptPath (Join-Path $RootPath "Tweaks\Sync\Enable_OneDrive_Nag_And_Backup.ps1") -Arguments "-Force"
     })
 }
+
+# --- UNIVERSAL TWEAKS CATALOG LOGIC ---
+$script:AllTweaksCatalog = @()
+$script:IsCatalogUpdating = $false
+
+function Initialize-TweaksCatalog {
+    try {
+        if (-not (Get-Command Get-WinAurexTweaksCatalog -ErrorAction SilentlyContinue)) {
+            Write-DashboardLog "[WARN] Get-WinAurexTweaksCatalog command not available."
+            return
+        }
+
+        $script:AllTweaksCatalog = Get-WinAurexTweaksCatalog -TweaksRoot (Join-Path $RootPath "Tweaks")
+        Write-DashboardLog "Indexed $($script:AllTweaksCatalog.Count) tweaks across repository."
+
+        $script:IsCatalogUpdating = $true
+
+        # Populate Category Dropdown
+        if ($null -ne $ComboTweakCategory) {
+            $ComboTweakCategory.Items.Clear()
+            $ComboTweakCategory.Items.Add("All Categories ($($script:AllTweaksCatalog.Count))") | Out-Null
+            
+            $cats = $script:AllTweaksCatalog | Group-Object Category | Sort-Object Name
+            foreach ($cat in $cats) {
+                $ComboTweakCategory.Items.Add("$($cat.Name) ($($cat.Count))") | Out-Null
+            }
+            $ComboTweakCategory.SelectedIndex = 0
+        }
+
+        # Populate Type Dropdown
+        if ($null -ne $ComboTweakType) {
+            $ComboTweakType.Items.Clear()
+            $ComboTweakType.Items.Add("All Formats") | Out-Null
+            $ComboTweakType.Items.Add("PS1 (PowerShell)") | Out-Null
+            $ComboTweakType.Items.Add("REG (Registry)") | Out-Null
+            $ComboTweakType.Items.Add("BAT (Batch)") | Out-Null
+            $ComboTweakType.Items.Add("CMD (Command Script)") | Out-Null
+            $ComboTweakType.SelectedIndex = 0
+        }
+
+        $script:IsCatalogUpdating = $false
+        Update-TweaksCatalogFilter
+    } catch {
+        Write-DashboardLog "[ERROR] Failed to initialize Tweaks Catalog: $_"
+        $script:IsCatalogUpdating = $false
+    }
+}
+
+function Update-TweaksCatalogFilter {
+    if ($script:IsCatalogUpdating -or -not $script:AllTweaksCatalog) { return }
+
+    $query = if ($null -ne $TxtTweakSearch -and -not [string]::IsNullOrWhiteSpace($TxtTweakSearch.Text)) { 
+        $TxtTweakSearch.Text.Trim().ToLower() 
+    } else { "" }
+
+    $selectedCategory = if ($null -ne $ComboTweakCategory -and $null -ne $ComboTweakCategory.SelectedItem) {
+        $rawCat = $ComboTweakCategory.SelectedItem.ToString()
+        if ($rawCat -match "^(.*?)\s*\(\d+\)$") { $matches[1] } else { $rawCat }
+    } else { "All Categories" }
+
+    $selectedType = if ($null -ne $ComboTweakType -and $null -ne $ComboTweakType.SelectedItem) {
+        $rawType = $ComboTweakType.SelectedItem.ToString()
+        if ($rawType -match "^([A-Za-z0-9]+)") { $matches[1].ToUpper() } else { "ALL" }
+    } else { "ALL" }
+
+    $filtered = $script:AllTweaksCatalog | Where-Object {
+        $matchQuery = $true
+        if ($query -ne "") {
+            $matchQuery = ($_.Name.ToLower().Contains($query) -or 
+                           $_.Category.ToLower().Contains($query) -or 
+                           $_.Synopsis.ToLower().Contains($query) -or 
+                           $_.FileName.ToLower().Contains($query))
+        }
+
+        $matchCat = $true
+        if ($selectedCategory -ne "All Categories") {
+            $matchCat = ($_.Category -eq $selectedCategory)
+        }
+
+        $matchType = $true
+        if ($selectedType -ne "ALL" -and $selectedType -ne "ALL FORMATS") {
+            $matchType = ($_.Type -eq $selectedType)
+        }
+
+        $matchQuery -and $matchCat -and $matchType
+    }
+
+    if ($null -ne $ListAllTweaks) {
+        $ListAllTweaks.ItemsSource = $filtered
+    }
+
+    if ($null -ne $TxtTweakCount) {
+        $TxtTweakCount.Text = "$($filtered.Count) of $($script:AllTweaksCatalog.Count) tweaks loaded"
+    }
+
+    # Reset preview status
+    if ($null -ne $TxtSelectedTweakStatus) {
+        $TxtSelectedTweakStatus.Text = "Select a tweak to inspect code or execute..."
+    }
+    if ($null -ne $BtnApplySelectedTweak) { $BtnApplySelectedTweak.IsEnabled = $false }
+    if ($null -ne $BtnInspectTweak) { $BtnInspectTweak.IsEnabled = $false }
+}
+
+# Tweaks Catalog Event Listeners
+if ($null -ne $TxtTweakSearch) {
+    $TxtTweakSearch.Add_TextChanged({ Update-TweaksCatalogFilter })
+}
+if ($null -ne $ComboTweakCategory) {
+    $ComboTweakCategory.Add_SelectionChanged({ Update-TweaksCatalogFilter })
+}
+if ($null -ne $ComboTweakType) {
+    $ComboTweakType.Add_SelectionChanged({ Update-TweaksCatalogFilter })
+}
+if ($null -ne $BtnClearTweakFilters) {
+    $BtnClearTweakFilters.Add_Click({
+        $script:IsCatalogUpdating = $true
+        if ($null -ne $TxtTweakSearch) { $TxtTweakSearch.Text = "" }
+        if ($null -ne $ComboTweakCategory) { $ComboTweakCategory.SelectedIndex = 0 }
+        if ($null -ne $ComboTweakType) { $ComboTweakType.SelectedIndex = 0 }
+        $script:IsCatalogUpdating = $false
+        Update-TweaksCatalogFilter
+    })
+}
+
+if ($null -ne $ListAllTweaks) {
+    $ListAllTweaks.Add_SelectionChanged({
+        if ($null -ne $ListAllTweaks.SelectedItem) {
+            $item = $ListAllTweaks.SelectedItem
+            if ($null -ne $TxtSelectedTweakStatus) {
+                $TxtSelectedTweakStatus.Text = "Ready: $($item.Name) ($($item.Type)) [Category: $($item.Category)]"
+            }
+            if ($null -ne $BtnApplySelectedTweak) { $BtnApplySelectedTweak.IsEnabled = $true }
+            if ($null -ne $BtnInspectTweak) { $BtnInspectTweak.IsEnabled = $true }
+        } else {
+            if ($null -ne $TxtSelectedTweakStatus) {
+                $TxtSelectedTweakStatus.Text = "Select a tweak to inspect code or execute..."
+            }
+            if ($null -ne $BtnApplySelectedTweak) { $BtnApplySelectedTweak.IsEnabled = $false }
+            if ($null -ne $BtnInspectTweak) { $BtnInspectTweak.IsEnabled = $false }
+        }
+    })
+}
+
+if ($null -ne $BtnInspectTweak) {
+    $BtnInspectTweak.Add_Click({
+        if ($null -ne $ListAllTweaks.SelectedItem) {
+            $item = $ListAllTweaks.SelectedItem
+            if (Test-Path $item.Path) {
+                Write-DashboardLog "User inspected tweak code: $($item.Path)"
+                Start-Process notepad.exe -ArgumentList "`"$($item.Path)`""
+                Set-Status -Message "Opened $($item.FileName) in Notepad" -Color "#00adb5"
+            }
+        }
+    })
+}
+
+if ($null -ne $BtnApplySelectedTweak) {
+    $BtnApplySelectedTweak.Add_Click({
+        if ($null -ne $ListAllTweaks.SelectedItem) {
+            $item = $ListAllTweaks.SelectedItem
+            if (-not (Test-Path $item.Path)) {
+                Set-Status -Message "Tweak file missing: $($item.FileName)" -Color "#ff5252"
+                return
+            }
+
+            Write-DashboardLog "User triggered execution of catalog tweak: $($item.Name) ($($item.Path))"
+            Set-Status -Message "Applying $($item.Name)..." -Color "#ffb300"
+            if ($null -ne $TxtSelectedTweakStatus) {
+                $TxtSelectedTweakStatus.Text = "Executing $($item.Name)..."
+            }
+
+            try {
+                if (Get-Command Invoke-WinAurexItem -ErrorAction SilentlyContinue) {
+                    $res = Invoke-WinAurexItem -ItemPath $item.Path
+                    if ($res.Success) {
+                        Write-DashboardLog "Catalog tweak applied successfully: $($item.Name)"
+                        Set-Status -Message "Applied: $($item.Name)" -Color "#00adb5"
+                        if ($null -ne $TxtSelectedTweakStatus) {
+                            $TxtSelectedTweakStatus.Text = "Success: $($item.Name) applied successfully (Exit: $($res.ExitCode))"
+                        }
+                    } else {
+                        Write-DashboardLog "[WARN] Catalog tweak exited with code $($res.ExitCode): $($res.Error)"
+                        Set-Status -Message "Completed $($item.Name) with code $($res.ExitCode)" -Color "#ffb300"
+                        if ($null -ne $TxtSelectedTweakStatus) {
+                            $TxtSelectedTweakStatus.Text = "Completed with warnings: $($item.Name) (Exit: $($res.ExitCode))"
+                        }
+                    }
+                } else {
+                    Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$($item.Path)`"" -Wait
+                    Set-Status -Message "Applied: $($item.Name)" -Color "#00adb5"
+                }
+            } catch {
+                Write-DashboardLog "[ERROR] Execution exception on $($item.Name): $_"
+                Set-Status -Message "Failed to apply $($item.Name): $($_.Exception.Message)" -Color "#ff5252"
+                if ($null -ne $TxtSelectedTweakStatus) {
+                    $TxtSelectedTweakStatus.Text = "Error applying $($item.Name): $($_.Exception.Message)"
+                }
+            }
+        }
+    })
+}
+
+# --- TOOLS & UTILITIES HUB LOGIC ---
+function Launch-WinAurexTool {
+    param (
+        [Parameter(Mandatory=$true)][string]$ToolRelativePath,
+        [Parameter(Mandatory=$true)][string]$DisplayName,
+        [string]$Arguments = ""
+    )
+
+    $fullPath = Join-Path $RootPath $ToolRelativePath
+    if (-not (Test-Path $fullPath)) {
+        # Check if parent exists and find matching file
+        $parent = Split-Path $fullPath -Parent
+        $leafName = [System.IO.Path]::GetFileNameWithoutExtension($fullPath)
+        if (Test-Path $parent) {
+            $matched = Get-ChildItem -Path $parent -Filter "*$leafName*" -File | Select-Object -First 1
+            if ($matched) {
+                $fullPath = $matched.FullName
+            }
+        }
+    }
+
+    if (-not (Test-Path $fullPath)) {
+        Write-DashboardLog "[ERROR] Tool not found: $ToolRelativePath (Resolved: $fullPath)"
+        Set-Status -Message "Tool not found: $DisplayName" -Color "#ff5252"
+        [System.Windows.MessageBox]::Show("Could not find tool file at:`n$fullPath", "Tool Missing", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
+        return
+    }
+
+    Write-DashboardLog "Launching tool: $DisplayName ($fullPath $Arguments)"
+    Set-Status -Message "Launching $DisplayName..." -Color "#ffb300"
+
+    try {
+        $ext = [System.IO.Path]::GetExtension($fullPath).ToLower()
+        if ($ext -eq ".ps1") {
+            $cmdArgs = if ([string]::IsNullOrWhiteSpace($Arguments)) { "-Force" } else { "$Arguments -Force" }
+            Invoke-DashboardAction -ActionName ($DisplayName -replace '\s+', '_') -ScriptPath $fullPath -Arguments $cmdArgs
+        } elseif ($ext -in @(".cmd", ".bat")) {
+            $cmdArgs = if ([string]::IsNullOrWhiteSpace($Arguments)) { "/c `"$fullPath`"" } else { "/c `"$fullPath`" $Arguments" }
+            Start-Process -FilePath "cmd.exe" -ArgumentList $cmdArgs -Verb RunAs -WindowStyle Normal
+            Set-Status -Message "Launched $DisplayName in Command Prompt." -Color "#00adb5"
+        } else {
+            if ([string]::IsNullOrWhiteSpace($Arguments)) {
+                Start-Process -FilePath $fullPath -Verb RunAs
+            } else {
+                Start-Process -FilePath $fullPath -ArgumentList $Arguments -Verb RunAs
+            }
+            Set-Status -Message "Launched $DisplayName successfully." -Color "#00adb5"
+        }
+    } catch {
+        Write-DashboardLog "[ERROR] Failed to launch $($DisplayName) - $_"
+        Set-Status -Message "Failed to launch $($DisplayName): $($_.Exception.Message)" -Color "#ff5252"
+    }
+}
+
+# Hardware Diagnostics & Portable Utilities
+if ($null -ne $BtnToolCpuZ)          { $BtnToolCpuZ.Add_Click({ Launch-WinAurexTool "Tools\Apps\Hardware\CPU-Z.exe" "CPU-Z" }) }
+if ($null -ne $BtnToolGpuZ)          { $BtnToolGpuZ.Add_Click({ Launch-WinAurexTool "Tools\Apps\Hardware\GPU-Z.exe" "GPU-Z" }) }
+if ($null -ne $BtnToolHwMonitor)     { $BtnToolHwMonitor.Add_Click({ Launch-WinAurexTool "Tools\Apps\Hardware\HW-Monitor.exe" "HW-Monitor" }) }
+if ($null -ne $BtnToolProcExp)       { $BtnToolProcExp.Add_Click({ Launch-WinAurexTool "Tools\Apps\Extra\Process Explorer.exe" "Process Explorer" }) }
+if ($null -ne $BtnToolMemReduct)     { $BtnToolMemReduct.Add_Click({ Launch-WinAurexTool "Tools\Apps\Extra\memreduct-3.4-setup.exe" "MemReduct" }) }
+if ($null -ne $BtnToolEverything)    { $BtnToolEverything.Add_Click({ Launch-WinAurexTool "Tools\Apps\Extra\Everything-1.4.1.1024.x86-Setup.exe" "Everything Search" }) }
+if ($null -ne $BtnToolTcpOpt)        { $BtnToolTcpOpt.Add_Click({ Launch-WinAurexTool "Tools\Apps\Extra\TCPOptimizer.exe" "TCP Optimizer" }) }
+if ($null -ne $BtnToolMsiUtil)       { $BtnToolMsiUtil.Add_Click({ Launch-WinAurexTool "Tools\Apps\Extra\MSI Utility V3.exe" "MSI Utility v3" }) }
+if ($null -ne $BtnToolCru)           { $BtnToolCru.Add_Click({ Launch-WinAurexTool "Tools\Apps\Extra\CRU.exe" "Custom Resolution Utility (CRU)" }) }
+if ($null -ne $BtnToolRufus)         { $BtnToolRufus.Add_Click({ Launch-WinAurexTool "Tools\Apps\Extra\rufus-3.22p.exe" "Rufus" }) }
+if ($null -ne $BtnTool7Zip)          { $BtnTool7Zip.Add_Click({ Launch-WinAurexTool "Tools\Apps\Extra\7z2501-x64.exe" "7-Zip Suite" }) }
+if ($null -ne $BtnToolUnlocker)      { $BtnToolUnlocker.Add_Click({ Launch-WinAurexTool "Tools\Apps\Extra\IObit Unlocker\IObitUnlocker.exe" "IObit Unlocker" }) }
+
+# Windows Subsystem Repair Station
+if ($null -ne $BtnToolRepairAudio)   { $BtnToolRepairAudio.Add_Click({ Launch-WinAurexTool "Tools\Repair\Repair_Audio.ps1" "Repair Audio" }) }
+if ($null -ne $BtnToolRepairNetwork) { $BtnToolRepairNetwork.Add_Click({ Launch-WinAurexTool "Tools\Repair\Repair_Network.ps1" "Reset Network" }) }
+if ($null -ne $BtnToolRepairUpdate)  { $BtnToolRepairUpdate.Add_Click({ Launch-WinAurexTool "Tools\Repair\Repair_Windows_Update.ps1" "Repair Windows Update" }) }
+if ($null -ne $BtnToolRepairSfc)     { $BtnToolRepairSfc.Add_Click({ Launch-WinAurexTool "Tools\Repair\Run_SFC_And_DISM.ps1" "Run SFC / DISM" }) }
+
+# Kernel Benchmarks & Diagnostic Utilities
+if ($null -ne $BtnToolBenchmarkBoot)     { $BtnToolBenchmarkBoot.Add_Click({ Launch-WinAurexTool "Tools\Benchmark\Native\Measure_Boot_Time.ps1" "Measure Boot Time" }) }
+if ($null -ne $BtnToolBenchmarkFrames)   { $BtnToolBenchmarkFrames.Add_Click({ Launch-WinAurexTool "Tools\Benchmark\Native\Analyze_Frame_Timing.ps1" "Analyze Frame Timing" }) }
+if ($null -ne $BtnToolBenchmarkReport)   { $BtnToolBenchmarkReport.Add_Click({ Launch-WinAurexTool "Tools\Benchmark\Native\Generate_System_Performance_Report.ps1" "Generate Performance Report" }) }
+if ($null -ne $BtnToolDetectThirdParty)  { $BtnToolDetectThirdParty.Add_Click({ Launch-WinAurexTool "Tools\Testing\Test_WinAurex_Tier.ps1" "Detect Conflicting Utilities" }) }
+if ($null -ne $BtnToolCleanLogs)         { $BtnToolCleanLogs.Add_Click({ Launch-WinAurexTool "Tools\System-Info\Clean_Framework_Logs.ps1" "Clean Framework Logs" }) }
+if ($null -ne $BtnToolHypervisor)        { $BtnToolHypervisor.Add_Click({ Launch-WinAurexTool "Tools\Testing\Setup_Hypervisor.cmd" "Setup Hypervisor / VBS" }) }
 
 # --- SOFTWARE HUB TAB LOGIC ---
 if ($null -ne $BtnSoftwareSelectAll) {
@@ -1171,4 +1499,5 @@ Load-Transactions
 Update-DriveMetrics
 Update-DefenderStatusUI
 Initialize-HardwareHUD
+Initialize-TweaksCatalog
 $Window.ShowDialog() | Out-Null
