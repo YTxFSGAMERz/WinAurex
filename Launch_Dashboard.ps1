@@ -405,9 +405,10 @@ function Complete-LoadingOverlay {
         $dismissTimer = New-Object System.Windows.Threading.DispatcherTimer
         $dismissTimer.Interval = [TimeSpan]::FromMilliseconds(700)
         $dismissTimer.Add_Tick({
-            $dismissTimer.Stop()
+            param($sender, $e)
+            if ($null -ne $sender) { $sender.Stop() } elseif ($null -ne $dismissTimer) { $dismissTimer.Stop() }
             Hide-LoadingOverlay
-        })
+        }.GetNewClosure())
         $dismissTimer.Start()
     }
 }
@@ -1492,7 +1493,8 @@ if ($null -ne $BtnAiScan) {
         # Non-blocking DispatcherTimer on UI thread: pumps messages at 20Hz (every 50ms)
         $timer = New-Object System.Windows.Threading.DispatcherTimer
         $timer.Interval = [TimeSpan]::FromMilliseconds(50)
-        $timer.Add_Tick({
+        $tickHandler = {
+            param($sender, $e)
             $elapsedSec = [math]::Round($scanTimer.Elapsed.TotalSeconds, 1)
             Update-LoadingOverlay -Detail $sync.ProgressMsg -Elapsed "${elapsedSec}s"
 
@@ -1510,7 +1512,7 @@ if ($null -ne $BtnAiScan) {
 
             # Check if background scan has completed
             if (-not $sync.IsRunning) {
-                $timer.Stop()
+                if ($null -ne $sender) { $sender.Stop() } elseif ($null -ne $timer) { $timer.Stop() }
 
                 try {
                     $ps.EndInvoke($asyncHandle)
@@ -1592,7 +1594,9 @@ if ($null -ne $BtnAiScan) {
                 Write-Host "  [+] [AI SCAN] Finished! Evaluated $($script:LastAiFindings.Count) total items ($pendingCount actionable candidates)." -ForegroundColor Green
                 Write-DashboardLog "AI Scan finished successfully. Actionable candidates: $pendingCount"
             }
-        })
+        }.GetNewClosure()
+
+        $timer.Add_Tick($tickHandler)
         $timer.Start()
     })
 }
