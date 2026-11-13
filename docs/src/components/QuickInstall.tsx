@@ -12,7 +12,7 @@ const TABS: TabItem[] = [
   {
     id: 'powershell',
     label: 'PowerShell (1-Click)',
-    command: 'irm https://winaurex.tech/apply.ps1 | iex',
+    command: 'irm https://www.winaurex.tech/apply.ps1 | iex',
     description: 'Instant zero-install execution in elevated PowerShell. Prompts for profile and applies live.',
     badge: 'RECOMMENDED'
   },

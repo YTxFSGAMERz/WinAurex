@@ -358,7 +358,7 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
   };
 
   const handleCopyCmd = () => {
-    navigator.clipboard.writeText('irm https://winaurex.tech/apply.ps1 | iex');
+    navigator.clipboard.writeText('irm https://www.winaurex.tech/apply.ps1 | iex');
     setCopiedCmd(true);
     setTimeout(() => setCopiedCmd(false), 2000);
   };
@@ -603,7 +603,7 @@ ${activeTweaks.map(t => `; [${t.category.toUpperCase()}] ${t.name}\n${t.regPath 
               className="cyber-cli-cmd"
               title="Click to copy PowerShell dispatch command"
             >
-              <code>irm https://winaurex.tech/apply.ps1 | iex</code>
+              <code>irm https://www.winaurex.tech/apply.ps1 | iex</code>
               <span style={{ fontSize: '0.68rem', color: copiedCmd ? '#00ff00' : '#888' }}>
                 {copiedCmd ? '[ COPIED ]' : '[ COPY ]'}
               </span>
