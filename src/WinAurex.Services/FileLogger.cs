@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using WinAurex.Contracts;
 
 namespace WinAurex.Services
@@ -10,8 +11,15 @@ namespace WinAurex.Services
         private readonly object _lockObj = new object();
 
         public FileLogger()
+            : this(null)
         {
-            _baseLogDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "WinAurex Logs");
+        }
+
+        public FileLogger(string? baseLogDirectory)
+        {
+            _baseLogDirectory = string.IsNullOrWhiteSpace(baseLogDirectory)
+                ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "WinAurex Logs")
+                : Path.GetFullPath(baseLogDirectory);
         }
 
         private void WriteToFile(string category, string logLine)
@@ -20,7 +28,7 @@ namespace WinAurex.Services
             {
                 lock (_lockObj)
                 {
-                    string categoryDir = Path.Combine(_baseLogDirectory, category);
+                    string categoryDir = Path.Combine(_baseLogDirectory, GetSafeCategory(category));
                     if (!Directory.Exists(categoryDir))
                     {
                         Directory.CreateDirectory(categoryDir);
@@ -38,6 +46,21 @@ namespace WinAurex.Services
                 // Fallback or ignore if we absolutely cannot write to the log (e.g. permission issues)
                 System.Diagnostics.Debug.WriteLine($"FAILED TO LOG: {logLine}");
             }
+        }
+
+        private static string GetSafeCategory(string category)
+        {
+            if (string.IsNullOrWhiteSpace(category))
+            {
+                return "General";
+            }
+
+            var sanitized = new string(category
+                .Select(c => char.IsLetterOrDigit(c) || c == '-' || c == '_' || c == ' ' ? c : '_')
+                .ToArray())
+                .Trim(' ', '.', '_');
+
+            return string.IsNullOrWhiteSpace(sanitized) ? "General" : sanitized;
         }
 
         public void LogInfo(string message, string category = "General")
