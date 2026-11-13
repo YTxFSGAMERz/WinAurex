@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using WinAurex.Contracts.Execution;
 using WinAurex.Models.Execution;
@@ -49,9 +51,15 @@ namespace WinAurex.Infrastructure.Providers
                     CreateNoWindow = true
                 };
 
-                var args = string.Join(" ", operation.Target.Arguments ?? Array.Empty<string>());
-                
-                psi.Arguments = $"/c \"\"{operation.Target.FilePath}\" {args}\"";
+                var args = BuildArguments(operation.Target.Arguments ?? Array.Empty<string>());
+
+                psi.Arguments = $"/d /s /c \"\"{operation.Target.FilePath}\" {args}\"";
+
+                var scriptDirectory = Path.GetDirectoryName(Path.GetFullPath(operation.Target.FilePath));
+                if (!string.IsNullOrWhiteSpace(scriptDirectory))
+                {
+                    psi.WorkingDirectory = scriptDirectory;
+                }
 
                 using var process = new Process { StartInfo = psi };
                 var outputBuilder = new System.Text.StringBuilder();
@@ -100,6 +108,24 @@ namespace WinAurex.Infrastructure.Providers
         public Task<ProviderResult> VerifyAsync(BatchOperation operation, PlanContext context)
         {
             return Task.FromResult(ProviderResult.Success());
+        }
+
+        private static string BuildArguments(IReadOnlyList<string> arguments)
+        {
+            if (arguments.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            return string.Join(" ", arguments.Select(QuoteArgument));
+        }
+
+        private static string QuoteArgument(string? argument)
+        {
+            // cmd.exe expands metacharacters unless the value is quoted. Every argument
+            // is wrapped so spaces and characters such as &, |, < and > stay literal.
+            var value = argument ?? string.Empty;
+            return $"\"{value.Replace("\"", "\"\"")}\"";
         }
 
         public Task<ProviderResult> RevertAsync(BatchOperation operation, string undoData, PlanContext context)
