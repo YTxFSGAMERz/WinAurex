@@ -286,6 +286,180 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <!-- ComboBoxItem Dark Style -->
+        <Style TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Padding" Value="10,7"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#e6edf3"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Bd" Property="Background" Value="#21262d"/>
+                                <Setter Property="Foreground" Value="#00adb5"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Bd" Property="Background" Value="#1f2d3d"/>
+                                <Setter Property="Foreground" Value="#00adb5"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ComboBox Toggle Button Template -->
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="28" />
+                </Grid.ColumnDefinitions>
+                <Border x:Name="Border" Grid.ColumnSpan="2" CornerRadius="6" Background="#161b22" BorderBrush="#30363d" BorderThickness="1" />
+                <Path x:Name="Arrow" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z" Fill="#8b949e" />
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter TargetName="Border" Property="BorderBrush" Value="#00adb5" />
+                    <Setter TargetName="Border" Property="Background" Value="#21262d" />
+                    <Setter TargetName="Arrow" Property="Fill" Value="#00adb5" />
+                </Trigger>
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="Border" Property="BorderBrush" Value="#00adb5" />
+                    <Setter TargetName="Arrow" Property="Fill" Value="#00adb5" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <!-- ComboBox Dark Style -->
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+            <Setter Property="Foreground" Value="#ffffff" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton" Template="{StaticResource ComboBoxToggleButton}" Focusable="false" IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press" />
+                            <ContentPresenter x:Name="ContentSite" IsHitTestVisible="false" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="10,3,28,3" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="true" Focusable="false" PopupAnimation="Slide">
+                                <Grid x:Name="DropDown" SnapsToDevicePixels="true" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder" Background="#161b22" BorderBrush="#30363d" BorderThickness="1" CornerRadius="6" Padding="2" Margin="0,4,0,4">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="8" ShadowDepth="2" Direction="270" Color="#000000" Opacity="0.5"/>
+                                        </Border.Effect>
+                                        <ScrollViewer Margin="2" SnapsToDevicePixels="true">
+                                            <StackPanel IsItemsHost="true" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                        </ScrollViewer>
+                                    </Border>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Dark TextBox Style -->
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="#0d1117"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="BorderBrush" Value="#30363d"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CaretBrush" Value="#00adb5"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#484f58"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#00adb5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Dark GridView Column Header Style -->
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Background" Value="#161b22"/>
+            <Setter Property="Foreground" Value="#8b949e"/>
+            <Setter Property="BorderBrush" Value="#30363d"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#00adb5"/>
+                    <Setter Property="Background" Value="#21262d"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Dark ListViewItem Style -->
+        <Style TargetType="{x:Type ListViewItem}">
+            <Setter Property="Foreground" Value="#e6edf3"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="#21262d"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Border x:Name="ItemBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                            <GridViewRowPresenter VerticalAlignment="Center" Columns="{TemplateBinding GridView.ColumnCollection}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#1f2d3d"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#1f2d3d"/>
+                                <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#00adb5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <!-- Main Window Shell Layout -->
@@ -1720,5 +1894,50 @@
                 <TextBlock Name="TxtStatus" Grid.Column="2" Style="{StaticResource BodyText}" Text="Status: Ready" Foreground="#00adb5" FontWeight="Bold" FontSize="11" VerticalAlignment="Center"/>
             </Grid>
         </Border>
+
+        <!-- ============================================================== -->
+        <!-- PROMINENT ASYNC LOADING & PROGRESS OVERLAY (GLASSMORPHIC HUD) -->
+        <!-- ============================================================== -->
+        <Grid Name="OverlayAsyncLoading" Grid.RowSpan="3" Background="#EE0d1117" Visibility="Collapsed" Panel.ZIndex="9999">
+            <Border Width="560" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Background="#161b22" BorderBrush="#00adb5" BorderThickness="1.5" CornerRadius="12" Padding="28">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="30" ShadowDepth="0" Color="#00adb5" Opacity="0.35"/>
+                </Border.Effect>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!-- Glowing Icon / Pulse Ring -->
+                    <Border Name="BorderOverlayIconRing" Width="64" Height="64" CornerRadius="32" Background="#1f2d3d" BorderBrush="#00adb5" BorderThickness="2" Margin="0,0,0,16" HorizontalAlignment="Center">
+                        <TextBlock Name="TxtOverlayIcon" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE768;" FontSize="28" Foreground="#00adb5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <!-- Action Title -->
+                    <TextBlock Name="TxtOverlayTitle" Text="EXECUTIVE SYSTEM BOOST IN PROGRESS" FontSize="16" FontWeight="Bold" Foreground="#ffffff" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                    
+                    <!-- Subtitle / Stage -->
+                    <TextBlock Name="TxtOverlaySubtitle" Text="Optimizing background services, memory pages, and latency policies..." FontSize="12" Foreground="#8b949e" HorizontalAlignment="Center" Margin="0,0,0,18" TextWrapping="Wrap" TextAlignment="Center"/>
+
+                    <!-- Prominent Animated Progress Bar -->
+                    <ProgressBar Name="ProgressOverlay" Height="8" Width="480" Background="#21262d" Foreground="#00adb5" IsIndeterminate="True" BorderThickness="0" Margin="0,0,0,12"/>
+
+                    <!-- Live Real-Time Detail Text -->
+                    <Border Background="#0d1117" BorderBrush="#30363d" BorderThickness="1" CornerRadius="6" Padding="12,8" Width="480" Margin="0,0,0,14">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Name="TxtOverlayDetail" Grid.Column="0" Text="Initializing optimization engine..." Foreground="#00adb5" FontSize="11" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Name="TxtOverlayElapsed" Grid.Column="1" Text="0.0s" Foreground="#8b949e" FontSize="11" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Responsive State Badge -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Ellipse Width="8" Height="8" Fill="#00ff41" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="BACKGROUND WORKER ACTIVE • SYSTEM FULLY RESPONSIVE" Foreground="#8b949e" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

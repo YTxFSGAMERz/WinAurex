@@ -249,11 +249,23 @@ if (Test-Path $AiModule) {
 $script:LastAiFindings = @()
 $script:LastAnomalies = @()
 $script:GamingShieldActive = $false
+$script:AiScanInProgress = $false
+$script:RamFlushInProgress = $false
 
 # Footer UI Hooks
 $BtnOpenLogsFolder = Find-Control "BtnOpenLogsFolder"
 $ProgressGlobal    = Find-Control "ProgressGlobal"
 $TxtProgressDetail = Find-Control "TxtProgressDetail"
+
+# Prominent Loading Overlay UI Hooks
+$OverlayAsyncLoading    = Find-Control "OverlayAsyncLoading"
+$BorderOverlayIconRing  = Find-Control "BorderOverlayIconRing"
+$TxtOverlayIcon         = Find-Control "TxtOverlayIcon"
+$TxtOverlayTitle        = Find-Control "TxtOverlayTitle"
+$TxtOverlaySubtitle     = Find-Control "TxtOverlaySubtitle"
+$ProgressOverlay        = Find-Control "ProgressOverlay"
+$TxtOverlayDetail       = Find-Control "TxtOverlayDetail"
+$TxtOverlayElapsed      = Find-Control "TxtOverlayElapsed"
 
 # Central Logging Engine Setup
 $LogDir = "$env:SystemDrive\WinAurex\Logs"
@@ -263,11 +275,168 @@ if (-not (Test-Path $LogDir)) {
 }
 $DashboardSessionLog = Join-Path $LogDir "Dashboard_Session_$(Get-Date -Format 'yyyyMMdd').log"
 
+# Initialize Console Companion HUD & Disable QuickEdit Mode (Prevents accidental console freezing)
+try {
+    Add-Type -TypeDefinition @"
+    using System;
+    using System.Runtime.InteropServices;
+    public class WinAurexConsoleHelper {
+        const uint GENERIC_READ = 0x80000000;
+        const uint GENERIC_WRITE = 0x40000000;
+        const uint FILE_SHARE_READ = 1;
+        const uint FILE_SHARE_WRITE = 2;
+        const uint OPEN_EXISTING = 3;
+        const uint ENABLE_QUICK_EDIT = 0x0040;
+        const uint ENABLE_EXTENDED_FLAGS = 0x0080;
+        const int STD_INPUT_HANDLE = -10;
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern IntPtr CreateFile(
+            string lpFileName, uint dwDesiredAccess, uint dwShareMode,
+            IntPtr lpSecurityAttributes, uint dwCreationDisposition,
+            uint dwFlagsAndAttributes, IntPtr hTemplateFile);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern IntPtr GetStdHandle(int nStdHandle);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool CloseHandle(IntPtr hObject);
+
+        public static bool DisableQuickEdit() {
+            try {
+                IntPtr handle = CreateFile("CONIN$", GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, IntPtr.Zero, OPEN_EXISTING, 0, IntPtr.Zero);
+                bool needClose = true;
+                if (handle == IntPtr.Zero || handle == new IntPtr(-1)) {
+                    handle = GetStdHandle(STD_INPUT_HANDLE);
+                    needClose = false;
+                }
+                if (handle != IntPtr.Zero && handle != new IntPtr(-1)) {
+                    uint mode;
+                    if (GetConsoleMode(handle, out mode)) {
+                        uint newMode = (mode & ~ENABLE_QUICK_EDIT) | ENABLE_EXTENDED_FLAGS;
+                        SetConsoleMode(handle, newMode);
+                    }
+                    if (needClose) {
+                        CloseHandle(handle);
+                    }
+                    return true;
+                }
+            } catch {}
+            return false;
+        }
+    }
+"@ -ErrorAction SilentlyContinue
+    [WinAurexConsoleHelper]::DisableQuickEdit()
+} catch {}
+
+try {
+    $host.UI.RawUI.WindowTitle = "WinAurex Dashboard - Live Telemetry & Event HUD"
+    Clear-Host
+    Write-Host "================================================================================" -ForegroundColor Cyan
+    Write-Host "     WinAurex Optimization Workstation v5.5 EXTREME - Console HUD" -ForegroundColor Cyan
+    Write-Host "================================================================================" -ForegroundColor Cyan
+    Write-Host "  Session User  : $(([Security.Principal.WindowsIdentity]::GetCurrent()).Name) (Elevated Administrator)" -ForegroundColor Gray
+    Write-Host "  Machine / OS  : $env:COMPUTERNAME | $([System.Environment]::OSVersion.VersionString)" -ForegroundColor Gray
+    Write-Host "  Dashboard Log : $DashboardSessionLog" -ForegroundColor Gray
+    Write-Host "  Live Monitor  : ACTIVE - Streaming UI Events, Transcripts & AI Telemetry" -ForegroundColor Green
+    Write-Host "================================================================================`n" -ForegroundColor Cyan
+} catch {}
+
+function Show-LoadingOverlay {
+    param(
+        [string]$Title = "OPERATION IN PROGRESS",
+        [string]$Subtitle = "Executing system optimization task in background...",
+        [string]$Icon = [char]0xE768
+    )
+    if ($null -ne $OverlayAsyncLoading) {
+        if ($null -ne $TxtOverlayTitle) { $TxtOverlayTitle.Text = $Title }
+        if ($null -ne $TxtOverlaySubtitle) { $TxtOverlaySubtitle.Text = $Subtitle }
+        if ($null -ne $TxtOverlayIcon) { 
+            $TxtOverlayIcon.Text = $Icon 
+            $TxtOverlayIcon.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00adb5")
+        }
+        if ($null -ne $BorderOverlayIconRing) {
+            $BorderOverlayIconRing.BorderBrush = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00adb5")
+        }
+        if ($null -ne $ProgressOverlay) { $ProgressOverlay.IsIndeterminate = $true }
+        if ($null -ne $TxtOverlayDetail) { $TxtOverlayDetail.Text = "Initializing background task..." }
+        if ($null -ne $TxtOverlayElapsed) { $TxtOverlayElapsed.Text = "0.0s" }
+        $OverlayAsyncLoading.Visibility = "Visible"
+        DoEvents-WPF
+    }
+}
+
+function Update-LoadingOverlay {
+    param(
+        [string]$Detail = "",
+        [string]$Elapsed = "",
+        [string]$Subtitle = ""
+    )
+    if ($null -ne $OverlayAsyncLoading -and $OverlayAsyncLoading.Visibility -eq "Visible") {
+        if ($Detail -and $null -ne $TxtOverlayDetail) { $TxtOverlayDetail.Text = $Detail }
+        if ($Elapsed -and $null -ne $TxtOverlayElapsed) { $TxtOverlayElapsed.Text = $Elapsed }
+        if ($Subtitle -and $null -ne $TxtOverlaySubtitle) { $TxtOverlaySubtitle.Text = $Subtitle }
+    }
+}
+
+function Complete-LoadingOverlay {
+    param(
+        [string]$Message = "Task Completed Successfully!",
+        [bool]$Success = $true
+    )
+    if ($null -ne $OverlayAsyncLoading) {
+        if ($null -ne $TxtOverlayTitle) { $TxtOverlayTitle.Text = $Message }
+        if ($null -ne $ProgressOverlay) { $ProgressOverlay.IsIndeterminate = $false; $ProgressOverlay.Value = 100 }
+        if ($null -ne $TxtOverlayIcon) {
+            $TxtOverlayIcon.Text = if ($Success) { [char]0xE73E } else { [char]0xE783 }
+            $color = if ($Success) { "#00ff41" } else { "#ff5722" }
+            $TxtOverlayIcon.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString($color)
+            if ($null -ne $BorderOverlayIconRing) {
+                $BorderOverlayIconRing.BorderBrush = (New-Object System.Windows.Media.BrushConverter).ConvertFromString($color)
+            }
+        }
+        # Smoothly dismiss overlay after 700ms
+        $dismissTimer = New-Object System.Windows.Threading.DispatcherTimer
+        $dismissTimer.Interval = [TimeSpan]::FromMilliseconds(700)
+        $dismissTimer.Add_Tick({
+            $dismissTimer.Stop()
+            Hide-LoadingOverlay
+        })
+        $dismissTimer.Start()
+    }
+}
+
+function Hide-LoadingOverlay {
+    if ($null -ne $OverlayAsyncLoading) {
+        $OverlayAsyncLoading.Visibility = "Collapsed"
+        DoEvents-WPF
+    }
+}
+
 function Write-DashboardLog {
     param([string]$Message, [string]$Level = "INFO")
     $time = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
     $line = "[$time] [$Level] $Message"
     Add-Content -Path $DashboardSessionLog -Value $line -ErrorAction SilentlyContinue
+
+    try {
+        $levelColor = switch ($Level) {
+            "INFO"    { "Cyan" }
+            "WARN"    { "Yellow" }
+            "ERROR"   { "Red" }
+            "SUCCESS" { "Green" }
+            default   { "DarkCyan" }
+        }
+        Write-Host "[$time] " -NoNewline -ForegroundColor DarkGray
+        Write-Host "[$Level] " -NoNewline -ForegroundColor $levelColor
+        Write-Host $Message -ForegroundColor White
+    } catch {}
 }
 
 Write-DashboardLog "WinAurex GUI Dashboard session initialized by $([Environment]::UserName)"
@@ -388,32 +557,40 @@ if ($null -ne $BtnExecutiveBoost) {
         Write-DashboardLog "User triggered ONE-CLICK EXTREME OPTIMIZE (Executive Boost)"
         Set-Status -Message "Executing One-Click Extreme Optimization..." -Color "#00ff41"
 
+        $onStage1Complete = {
+            param($exitCode)
+            Update-LoadingOverlay -Subtitle "Stage 2/4: Flushing process working sets into free memory..."
+            # 2. Flush RAM working sets
+            if (Get-Command Invoke-WinAurexRamFlush -ErrorAction SilentlyContinue) {
+                $res = Invoke-WinAurexRamFlush
+                Write-DashboardLog "Executive Boost RAM Flush: Reclaimed $($res.ReclaimedMB) MB"
+                Update-LoadingOverlay -Detail "RAM Flushed: Reclaimed $($res.ReclaimedMB) MB"
+            }
+
+            # 3. Enable Gaming Latency Shield
+            Update-LoadingOverlay -Subtitle "Stage 3/4: Activating AI Gaming Latency Shield (Win32PrioritySeparation)..."
+            if (Get-Command Set-AiGamingShield -ErrorAction SilentlyContinue) {
+                Set-AiGamingShield -Enable | Out-Null
+                $script:GamingShieldActive = $true
+                if ($null -ne $BtnAiGamingShield) {
+                    $BtnAiGamingShield.Content = "🎮 Gaming [ON]"
+                    $BtnAiGamingShield.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+                }
+            }
+
+            # 4. Flush DNS
+            Update-LoadingOverlay -Subtitle "Stage 4/4: Clearing DNS resolver cache..."
+            try { Clear-DnsClientCache } catch {}
+
+            # Refresh UI
+            Initialize-HardwareHUD
+            Set-Status -Message "Executive Boost Complete! System tuned for maximum responsiveness." -Color "#00ff41"
+            Complete-LoadingOverlay -Message "EXECUTIVE BOOST COMPLETE!" -Success ($exitCode -eq 0)
+        }
+
         # 1. AI dynamic system optimization
         $scriptPath = Join-Path $RootPath "Tweaks\Services\AI_Dynamic_System_Optimizer.ps1"
-        Invoke-DashboardAction -ActionName "Executive_Boost" -ScriptPath $scriptPath -Arguments "-Auto -Force"
-
-        # 2. Flush RAM working sets
-        if (Get-Command Invoke-WinAurexRamFlush -ErrorAction SilentlyContinue) {
-            $res = Invoke-WinAurexRamFlush
-            Write-DashboardLog "Executive Boost RAM Flush: Reclaimed $($res.ReclaimedMB) MB"
-        }
-
-        # 3. Enable Gaming Latency Shield
-        if (Get-Command Set-AiGamingShield -ErrorAction SilentlyContinue) {
-            Set-AiGamingShield -Enable | Out-Null
-            $script:GamingShieldActive = $true
-            if ($null -ne $BtnAiGamingShield) {
-                $BtnAiGamingShield.Content = "🎮 Gaming [ON]"
-                $BtnAiGamingShield.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
-            }
-        }
-
-        # 4. Flush DNS
-        try { Clear-DnsClientCache } catch {}
-
-        # Refresh UI
-        Initialize-HardwareHUD
-        Set-Status -Message "Executive Boost Complete! System tuned for maximum responsiveness." -Color "#00ff41"
+        Invoke-DashboardAction -ActionName "Executive_Boost" -ScriptPath $scriptPath -Arguments "-Auto -Force" -OnComplete $onStage1Complete
     })
 }
 
@@ -530,16 +707,49 @@ function DoEvents-WPF {
     } catch {}
 }
 
-# --- UNIFIED DASHBOARD ACTION RUNNER & LOGGER ---
+# --- UNIFIED NON-BLOCKING DASHBOARD ACTION RUNNER & QUEUE ---
+$script:ActionQueue = [System.Collections.Generic.Queue[PSObject]]::new()
+$script:CurrentActionRunning = $false
+
 function Invoke-DashboardAction {
     param (
         [string]$ActionName,
         [string]$ScriptPath,
-        [string]$Arguments = "-Force"
+        [string]$Arguments = "-Force",
+        [scriptblock]$OnComplete = $null
     )
+    $queueItem = [PSCustomObject]@{
+        ActionName = $ActionName
+        ScriptPath = $ScriptPath
+        Arguments  = $Arguments
+        OnComplete = $OnComplete
+    }
+    $script:ActionQueue.Enqueue($queueItem)
+    if (-not $script:CurrentActionRunning) {
+        Process-NextDashboardAction
+    }
+}
+
+function Process-NextDashboardAction {
+    if ($script:ActionQueue.Count -eq 0) {
+        $script:CurrentActionRunning = $false
+        return
+    }
+    $script:CurrentActionRunning = $true
+    $item = $script:ActionQueue.Dequeue()
+    $ActionName = $item.ActionName
+    $ScriptPath = $item.ScriptPath
+    $Arguments  = $item.Arguments
+    $OnComplete = $item.OnComplete
+
+    $displayName = ($ActionName -replace '_', ' ').ToUpper()
     Write-DashboardLog "Starting Action: $ActionName (Target: $ScriptPath $Arguments)"
     Set-Status -Message "Executing $ActionName..." -Color "#ffb300"
-    
+
+    $remaining = $script:ActionQueue.Count
+    $subtitle = if ($remaining -gt 0) { "Executing stage... ($remaining additional tasks queued)" } else { "Executing system optimization task in background..." }
+    Show-LoadingOverlay -Title $displayName -Subtitle $subtitle
+
     if ($null -ne $ProgressGlobal) {
         $ProgressGlobal.Visibility = "Visible"
         $ProgressGlobal.IsIndeterminate = $true
@@ -548,20 +758,22 @@ function Invoke-DashboardAction {
         $TxtProgressDetail.Visibility = "Visible"
         $TxtProgressDetail.Text = "Running $ActionName..."
     }
-    DoEvents-WPF
 
     $ActionLog = Join-Path $LogDir "${ActionName}_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
     $cmd = "& { Start-Transcript -Path `"$ActionLog`" -Append -Force; try { & `"$ScriptPath`" $Arguments } finally { Stop-Transcript } }"
     
     $proc = Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"$cmd`"" -PassThru
-    
-    # Non-blocking Dispatcher polling loop: UI remains responsive, window stays interactive
+
+    $startTime = [System.Diagnostics.Stopwatch]::StartNew()
     $lastLogSize = 0
-    while ($proc -and -not $proc.HasExited) {
-        DoEvents-WPF
-        Start-Sleep -Milliseconds 120
-        
-        # Read latest transcript lines to show live progress detail
+
+    $timer = New-Object System.Windows.Threading.DispatcherTimer
+    $timer.Interval = [TimeSpan]::FromMilliseconds(100)
+
+    $timer.Add_Tick({
+        $elapsedSec = [math]::Round($startTime.Elapsed.TotalSeconds, 1)
+        Update-LoadingOverlay -Elapsed "${elapsedSec}s"
+
         if (Test-Path $ActionLog) {
             try {
                 $fileInfo = Get-Item $ActionLog -ErrorAction SilentlyContinue
@@ -570,30 +782,50 @@ function Invoke-DashboardAction {
                     $tail = Get-Content -Path $ActionLog -Tail 1 -ErrorAction SilentlyContinue
                     if ($tail -and -not [string]::IsNullOrWhiteSpace($tail) -and -not ($tail -match "^(Transcript|[*=]+|$)")) {
                         $cleanTail = $tail.Trim()
-                        if ($cleanTail.Length -gt 55) { $cleanTail = $cleanTail.Substring(0, 52) + "..." }
+                        if ($cleanTail.Length -gt 60) { $cleanTail = $cleanTail.Substring(0, 57) + "..." }
                         if ($null -ne $TxtProgressDetail) {
                             $TxtProgressDetail.Text = $cleanTail
                         }
+                        Update-LoadingOverlay -Detail $cleanTail
+                        try {
+                            Write-Host "  -> $cleanTail" -ForegroundColor DarkCyan
+                        } catch {}
                     }
                 }
             } catch {}
         }
-    }
 
-    $exitCode = if ($proc) { $proc.ExitCode } else { 0 }
+        if ($proc.HasExited) {
+            $timer.Stop()
+            $exitCode = if ($proc) { $proc.ExitCode } else { 0 }
+            Write-DashboardLog "Completed Action: $ActionName (ExitCode: $exitCode, Log: $ActionLog)"
+            Set-Status -Message "$ActionName complete! Log: $(Split-Path $ActionLog -Leaf)" -Color "#00adb5"
+            Update-DefenderStatusUI
 
-    if ($null -ne $ProgressGlobal) {
-        $ProgressGlobal.IsIndeterminate = $false
-        $ProgressGlobal.Visibility = "Collapsed"
-    }
-    if ($null -ne $TxtProgressDetail) {
-        $TxtProgressDetail.Visibility = "Collapsed"
-        $TxtProgressDetail.Text = ""
-    }
-    
-    Write-DashboardLog "Completed Action: $ActionName (ExitCode: $exitCode, Log: $ActionLog)"
-    Set-Status -Message "$ActionName complete! Log: $(Split-Path $ActionLog -Leaf)" -Color "#00adb5"
-    Update-DefenderStatusUI
+            if ($null -ne $ProgressGlobal) {
+                $ProgressGlobal.IsIndeterminate = $false
+                $ProgressGlobal.Visibility = "Collapsed"
+            }
+            if ($null -ne $TxtProgressDetail) {
+                $TxtProgressDetail.Visibility = "Collapsed"
+                $TxtProgressDetail.Text = ""
+            }
+
+            if ($OnComplete) {
+                try { & $OnComplete $exitCode } catch {}
+            }
+
+            if ($script:ActionQueue.Count -gt 0) {
+                Process-NextDashboardAction
+            } else {
+                $script:CurrentActionRunning = $false
+                if (-not $OnComplete) {
+                    Complete-LoadingOverlay -Message "$displayName Complete!" -Success ($exitCode -eq 0)
+                }
+            }
+        }
+    })
+    $timer.Start()
 }
 
 # PC Cleaner UI Hooks
@@ -990,8 +1222,7 @@ if ($null -ne $BtnApplySelectedTweak) {
                         }
                     }
                 } else {
-                    Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$($item.Path)`"" -Wait
-                    Set-Status -Message "Applied: $($item.Name)" -Color "#00adb5"
+                    Invoke-DashboardAction -ActionName ($item.Name -replace '\s+', '_') -ScriptPath $item.Path
                 }
             } catch {
                 Write-DashboardLog "[ERROR] Execution exception on $($item.Name): $_"
@@ -1171,12 +1402,22 @@ Write-Host "`n[SUCCESS] Batch software installation completed!" -ForegroundColor
 # --- AI OPTIMIZER TAB LOGIC ---
 if ($null -ne $BtnAiScan) {
     $BtnAiScan.Add_Click({
+        if ($script:AiScanInProgress) { return }
+        $script:AiScanInProgress = $true
+
         Write-DashboardLog "User clicked Run AI Diagnostic Scan"
+        $originalButtonContent = $BtnAiScan.Content
+        $BtnAiScan.IsEnabled = $false
+        $BtnAiScan.Content = "Scanning System..."
+
         Set-Status -Message "AI Neural Engine: Interrogating services, apps, and tasks..." -Color "#ffb300"
         if ($null -ne $TxtAiScanStatus) {
-            $TxtAiScanStatus.Text = "Status: Scanning live components through neural vectorizer..."
+            $TxtAiScanStatus.Text = "Status: Initializing neural diagnostic scanner..."
             $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#ffb300")
         }
+
+        Show-LoadingOverlay -Title "AI DIAGNOSTIC SCAN" -Subtitle "Interrogating services, apps, and telemetry tasks..."
+        $scanTimer = [System.Diagnostics.Stopwatch]::StartNew()
 
         if ($null -ne $ProgressGlobal) {
             $ProgressGlobal.Visibility = "Visible"
@@ -1188,68 +1429,160 @@ if ($null -ne $BtnAiScan) {
         }
         DoEvents-WPF
 
-        $cb = {
-            param([string]$msg, [int]$pct)
-            if ($null -ne $TxtAiScanStatus) {
-                $TxtAiScanStatus.Text = "Status: $msg"
+        # Thread-safe synchronization state
+        $sync = [hashtable]::Synchronized(@{
+            IsRunning   = $true
+            ProgressMsg = "Querying Windows Service Control Manager..."
+            Percent     = 5
+            Findings    = $null
+            HealthScore = $null
+            Anomalies   = $null
+            Error       = $null
+        })
+
+        # Create isolated background runspace to prevent UI thread starvation
+        $rs = [runspacefactory]::CreateRunspace()
+        $rs.ApartmentState = "STA"
+        $rs.ThreadOptions = "ReuseThread"
+        $rs.Open()
+        $rs.SessionStateProxy.SetVariable("sync", $sync)
+        $rs.SessionStateProxy.SetVariable("AiModulePath", (Join-Path $RootPath "Core\AI\WinAurex_AiEngine.psm1"))
+
+        $ps = [powershell]::Create()
+        $ps.Runspace = $rs
+        $ps.AddScript({
+            try {
+                if (Test-Path $AiModulePath) {
+                    Import-Module $AiModulePath -Force -DisableNameChecking
+                }
+                $cb = {
+                    param([string]$msg, [int]$pct)
+                    $sync.ProgressMsg = $msg
+                    $sync.Percent = $pct
+                }
+                $findings = Invoke-WinAurexAiScan -ProgressCallback $cb
+                $sync.Findings = $findings
+
+                $sync.ProgressMsg = "Calculating system health score..."
+                $sync.HealthScore = Get-WinAurexHealthScore
+
+                $sync.ProgressMsg = "Evaluating background process anomalies..."
+                $sync.Anomalies = Get-ProcessAnomalies
+            } catch {
+                $sync.Error = $_.Exception.Message
+            } finally {
+                $sync.IsRunning = $false
             }
-            if ($null -ne $TxtProgressDetail) {
-                $TxtProgressDetail.Text = $msg
+        }) | Out-Null
+
+        $asyncHandle = $ps.BeginInvoke()
+        $script:LastAiConsoleMsg = ""
+
+        # Non-blocking DispatcherTimer on UI thread: pumps messages at 20Hz (every 50ms)
+        $timer = New-Object System.Windows.Threading.DispatcherTimer
+        $timer.Interval = [TimeSpan]::FromMilliseconds(50)
+        $timer.Add_Tick({
+            $elapsedSec = [math]::Round($scanTimer.Elapsed.TotalSeconds, 1)
+            Update-LoadingOverlay -Detail $sync.ProgressMsg -Elapsed "${elapsedSec}s"
+
+            # Update UI elements with latest status from background thread
+            if ($null -ne $TxtAiScanStatus -and $sync.ProgressMsg) {
+                $TxtAiScanStatus.Text = "Status: $($sync.ProgressMsg)"
             }
-            DoEvents-WPF
-        }
+            if ($null -ne $TxtProgressDetail -and $sync.ProgressMsg) {
+                $TxtProgressDetail.Text = $sync.ProgressMsg
+            }
+            if ($sync.ProgressMsg -and $sync.ProgressMsg -ne $script:LastAiConsoleMsg) {
+                $script:LastAiConsoleMsg = $sync.ProgressMsg
+                try { Write-Host "  [*] [AI SCAN] $($sync.ProgressMsg)" -ForegroundColor DarkCyan } catch {}
+            }
 
-        # Run Live Heuristic Scan with real-time UI progress updates
-        $script:LastAiFindings = Invoke-WinAurexAiScan -ProgressCallback $cb
+            # Check if background scan has completed
+            if (-not $sync.IsRunning) {
+                $timer.Stop()
 
-        if ($null -ne $ProgressGlobal) {
-            $ProgressGlobal.IsIndeterminate = $false
-            $ProgressGlobal.Visibility = "Collapsed"
-        }
-        if ($null -ne $TxtProgressDetail) {
-            $TxtProgressDetail.Visibility = "Collapsed"
-            $TxtProgressDetail.Text = ""
-        }
-        
-        $svcs = $script:LastAiFindings | Where-Object { $_.TargetType -eq "Service" }
-        $apps = $script:LastAiFindings | Where-Object { $_.TargetType -eq "AppX" }
-        $tasks = $script:LastAiFindings | Where-Object { $_.TargetType -eq "ScheduledTask" }
+                try {
+                    $ps.EndInvoke($asyncHandle)
+                } catch {}
+                try {
+                    $rs.Close()
+                    $rs.Dispose()
+                    $ps.Dispose()
+                } catch {}
 
-        # Health Score Calculation
-        $health = Get-WinAurexHealthScore
-        if ($null -ne $TxtAiHealthScore) {
-            $TxtAiHealthScore.Text = "$($health.Score)/100"
-            $color = if ($health.Score -ge 90) { "#00ff41" } elseif ($health.Score -ge 75) { "#00adb5" } else { "#ffb300" }
-            $TxtAiHealthScore.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString($color)
-        }
+                $script:AiScanInProgress = $false
+                $BtnAiScan.Content = $originalButtonContent
+                $BtnAiScan.IsEnabled = $true
 
-        # Process Anomalies
-        $script:LastAnomalies = Get-ProcessAnomalies
-        if ($null -ne $TxtAiAnomaliesCount) {
-            $TxtAiAnomaliesCount.Text = "$($script:LastAnomalies.Count) Flagged"
-        }
+                if ($null -ne $ProgressGlobal) {
+                    $ProgressGlobal.IsIndeterminate = $false
+                    $ProgressGlobal.Visibility = "Collapsed"
+                }
+                if ($null -ne $TxtProgressDetail) {
+                    $TxtProgressDetail.Visibility = "Collapsed"
+                    $TxtProgressDetail.Text = ""
+                }
 
-        if ($null -ne $TxtAiServicesCount) { $TxtAiServicesCount.Text = "$($svcs.Count)" }
-        if ($null -ne $TxtAiAppsCount) { $TxtAiAppsCount.Text = "$($apps.Count)" }
-        if ($null -ne $TxtAiTasksCount) { $TxtAiTasksCount.Text = "$($tasks.Count)" }
-        if ($null -ne $TxtAiCandidateCount) { $TxtAiCandidateCount.Text = "($($script:LastAiFindings.Count) Candidates)" }
-        if ($null -ne $TxtAiProjectedImpact) { 
-            $TxtAiProjectedImpact.Text = "-$($svcs.Count) Procs | ~$([Math]::Round($apps.Count * 45))MB" 
-        }
+                if ($sync.Error) {
+                    Complete-LoadingOverlay -Message "AI SCAN FAILED" -Success $false
+                    Write-DashboardLog "AI Scan Error: $($sync.Error)"
+                    if ($null -ne $TxtAiScanStatus) {
+                        $TxtAiScanStatus.Text = "Status: Scan encountered an error: $($sync.Error)"
+                        $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#ff5722")
+                    }
+                    Set-Status -Message "AI Scan failed: $($sync.Error)" -Color "#ff5722"
+                    return
+                }
 
-        if ($null -ne $ListAiFindings) {
-            $ListAiFindings.ItemsSource = $script:LastAiFindings
-        }
+                Complete-LoadingOverlay -Message "AI DIAGNOSTIC SCAN COMPLETE!" -Success $true
 
-        if ($null -ne $BtnAiOptimize) {
-            $BtnAiOptimize.IsEnabled = ($script:LastAiFindings.Count -gt 0)
-        }
+                $script:LastAiFindings = if ($sync.Findings) { $sync.Findings } else { @() }
+                $script:LastAnomalies = if ($sync.Anomalies) { $sync.Anomalies } else { @() }
+                $health = $sync.HealthScore
 
-        if ($null -ne $TxtAiScanStatus) {
-            $TxtAiScanStatus.Text = "Status: Scan Complete! Score: $($health.Score)/100 ($($health.Grade)). Found $($script:LastAiFindings.Count) optimization candidates."
-            $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
-        }
-        Set-Status -Message "AI Scan Complete: Score $($health.Score)/100 ($($health.Grade)), $($script:LastAiFindings.Count) candidates identified." -Color "#00ff41"
+                $svcs = $script:LastAiFindings | Where-Object { $_.TargetType -eq "Service" }
+                $apps = $script:LastAiFindings | Where-Object { $_.TargetType -eq "AppX" }
+                $tasks = $script:LastAiFindings | Where-Object { $_.TargetType -eq "ScheduledTask" }
+
+                # Health Score Display
+                if ($null -ne $TxtAiHealthScore -and $health) {
+                    $TxtAiHealthScore.Text = "$($health.Score)/100"
+                    $color = if ($health.Score -ge 90) { "#00ff41" } elseif ($health.Score -ge 75) { "#00adb5" } else { "#ffb300" }
+                    $TxtAiHealthScore.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString($color)
+                }
+
+                if ($null -ne $TxtAiAnomaliesCount) {
+                    $TxtAiAnomaliesCount.Text = "$($script:LastAnomalies.Count) Flagged"
+                }
+
+                if ($null -ne $TxtAiServicesCount) { $TxtAiServicesCount.Text = "$($svcs.Count)" }
+                if ($null -ne $TxtAiAppsCount) { $TxtAiAppsCount.Text = "$($apps.Count)" }
+                if ($null -ne $TxtAiTasksCount) { $TxtAiTasksCount.Text = "$($tasks.Count)" }
+                if ($null -ne $TxtAiCandidateCount) { $TxtAiCandidateCount.Text = "($($script:LastAiFindings.Count) Candidates)" }
+                if ($null -ne $TxtAiProjectedImpact) { 
+                    $TxtAiProjectedImpact.Text = "-$($svcs.Count) Procs | ~$([Math]::Round($apps.Count * 45))MB" 
+                }
+
+                if ($null -ne $ListAiFindings) {
+                    $ListAiFindings.ItemsSource = $script:LastAiFindings
+                }
+
+                $pendingCount = ($script:LastAiFindings | Where-Object { -not $_.IsAlreadyApplied }).Count
+                if ($null -ne $BtnAiOptimize) {
+                    $BtnAiOptimize.IsEnabled = ($pendingCount -gt 0)
+                }
+
+                if ($null -ne $TxtAiScanStatus) {
+                    $scoreText = if ($health) { "Score: $($health.Score)/100 ($($health.Grade)). " } else { "" }
+                    $TxtAiScanStatus.Text = "Status: Scan Complete! ${scoreText}Found $pendingCount actionable optimization candidates."
+                    $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+                }
+                Set-Status -Message "AI Scan Complete: $($script:LastAiFindings.Count) total evaluated, $pendingCount actionable candidates." -Color "#00ff41"
+                Write-Host "  [+] [AI SCAN] Finished! Evaluated $($script:LastAiFindings.Count) total items ($pendingCount actionable candidates)." -ForegroundColor Green
+                Write-DashboardLog "AI Scan finished successfully. Actionable candidates: $pendingCount"
+            }
+        })
+        $timer.Start()
     })
 }
 
@@ -1295,16 +1628,25 @@ if ($null -ne $BtnAiFilterAnomalies) {
 
 if ($null -ne $BtnAiFlushRam) {
     $BtnAiFlushRam.Add_Click({
-        Write-DashboardLog "User clicked 1-Click Flush RAM"
-        Set-Status -Message "Flushing idle process working sets into free standby memory..." -Color "#ffb300"
-        $flush = Invoke-WinAurexRamFlush
-        Write-DashboardLog "RAM Flush Complete: Reclaimed $($flush.ReclaimedMB) MB across $($flush.ProcessesTrimmed) processes."
-        
-        if ($null -ne $TxtAiScanStatus) {
-            $TxtAiScanStatus.Text = "Status: Reclaimed $($flush.ReclaimedMB) MB active RAM! Total Free Memory: $($flush.FreeMemoryMB) MB."
-            $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+        if ($script:RamFlushInProgress) { return }
+        $script:RamFlushInProgress = $true
+        $BtnAiFlushRam.IsEnabled = $false
+        try {
+            Write-DashboardLog "User clicked 1-Click Flush RAM"
+            Set-Status -Message "Flushing idle process working sets into free standby memory..." -Color "#ffb300"
+            DoEvents-WPF
+            $flush = Invoke-WinAurexRamFlush
+            Write-DashboardLog "RAM Flush Complete: Reclaimed $($flush.ReclaimedMB) MB across $($flush.ProcessesTrimmed) processes."
+            
+            if ($null -ne $TxtAiScanStatus) {
+                $TxtAiScanStatus.Text = "Status: Reclaimed $($flush.ReclaimedMB) MB active RAM! Total Free Memory: $($flush.FreeMemoryMB) MB."
+                $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+            }
+            Set-Status -Message "RAM Flushed: Reclaimed $($flush.ReclaimedMB) MB across $($flush.ProcessesTrimmed) processes." -Color "#00ff41"
+        } finally {
+            $BtnAiFlushRam.IsEnabled = $true
+            $script:RamFlushInProgress = $false
         }
-        Set-Status -Message "RAM Flushed: Reclaimed $($flush.ReclaimedMB) MB across $($flush.ProcessesTrimmed) processes." -Color "#00ff41"
     })
 }
 
@@ -1364,8 +1706,9 @@ $BtnMeasureBootTime.Add_Click({
 $BtnGenerateReport.Add_Click({
     Set-Status -Message "Generating System Report..." -Color "#ffb300"
     $Script = Join-Path $RootPath "Tools\Benchmark\Native\Generate_System_Performance_Report.ps1"
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$Script`"" -Wait
-    Set-Status -Message "Report Generated in Tools\Benchmark\Reports" -Color "#00adb5"
+    Invoke-DashboardAction -ActionName "Generate_Performance_Report" -ScriptPath $Script -Arguments "" -OnComplete {
+        Set-Status -Message "Report Generated in Tools\Benchmark\Reports" -Color "#00adb5"
+    }
 })
 
 $BtnDetectThirdParty.Add_Click({
