@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Win32;
@@ -132,7 +133,7 @@ namespace WinAurex.Infrastructure.Providers
                     if (actualValue == null)
                         return Task.FromResult(ProviderResult.Failure("Value does not exist."));
 
-                    if (!actualValue.ToString()!.Equals(setIntent.Value.ToString()))
+                    if (!ValuesEqual(actualValue, setIntent.Value, MapKind(setIntent.ValueKind)))
                         return Task.FromResult(ProviderResult.Failure($"Verification mismatch. Expected: {setIntent.Value}, Actual: {actualValue}"));
                 }
 
@@ -158,6 +159,9 @@ namespace WinAurex.Infrastructure.Providers
                 if (state == null)
                     return Task.FromResult(ProviderResult.Failure("Invalid undo data."));
 
+                if (state.Existed && state.Value is null)
+                    return Task.FromResult(ProviderResult.Failure("Invalid undo data: the captured value is missing."));
+
                 var hive = MapHive(operation.Target.Hive);
                 using var baseKey = RegistryKey.OpenBaseKey(hive, RegistryView.Default);
 
@@ -177,12 +181,31 @@ namespace WinAurex.Infrastructure.Providers
                     object valToRestore = state.Value!;
                     if (valToRestore is JsonElement je)
                     {
-                        if (state.ValueKind == (int)RegistryValueKind.DWord)
-                            valToRestore = je.GetInt32();
-                        else if (state.ValueKind == (int)RegistryValueKind.String || state.ValueKind == (int)RegistryValueKind.ExpandString)
-                            valToRestore = je.GetString() ?? string.Empty;
-                        else if (state.ValueKind == (int)RegistryValueKind.QWord)
-                            valToRestore = je.GetInt64();
+                        var kind = (RegistryValueKind)state.ValueKind;
+                        switch (kind)
+                        {
+                            case RegistryValueKind.DWord:
+                                valToRestore = je.GetInt32();
+                                break;
+                            case RegistryValueKind.QWord:
+                                valToRestore = je.GetInt64();
+                                break;
+                            case RegistryValueKind.String:
+                            case RegistryValueKind.ExpandString:
+                                valToRestore = je.GetString() ?? string.Empty;
+                                break;
+                            case RegistryValueKind.MultiString:
+                                valToRestore = je.EnumerateArray()
+                                    .Select(element => element.GetString() ?? string.Empty)
+                                    .ToArray();
+                                break;
+                            case RegistryValueKind.Binary:
+                                valToRestore = je.GetBytesFromBase64();
+                                break;
+                            default:
+                                return Task.FromResult(ProviderResult.Failure(
+                                    $"Unsupported registry value kind in undo data: {state.ValueKind}."));
+                        }
                     }
                     
                     subKey.SetValue(operation.Target.ValueName, valToRestore, (RegistryValueKind)state.ValueKind);
@@ -193,6 +216,79 @@ namespace WinAurex.Infrastructure.Providers
             catch (Exception ex)
             {
                 return Task.FromResult(ProviderResult.Failure($"Revert failed: {ex.Message}"));
+            }
+        }
+
+        private static bool ValuesEqual(object? actual, object? expected, RegistryValueKind kind)
+        {
+            if (actual is null || expected is null)
+            {
+                return ReferenceEquals(actual, expected);
+            }
+
+            return kind switch
+            {
+                RegistryValueKind.MultiString => AsStringArray(actual)
+                    .SequenceEqual(AsStringArray(expected), StringComparer.Ordinal),
+                RegistryValueKind.Binary => AsBytes(actual).SequenceEqual(AsBytes(expected)),
+                RegistryValueKind.DWord or RegistryValueKind.QWord => NumericEquals(actual, expected),
+                _ => string.Equals(actual.ToString(), expected.ToString(), StringComparison.Ordinal)
+            };
+        }
+
+        private static string[] AsStringArray(object value)
+        {
+            if (value is string[] array)
+            {
+                return array;
+            }
+
+            if (value is JsonElement element)
+            {
+                return element.EnumerateArray().Select(item => item.GetString() ?? string.Empty).ToArray();
+            }
+
+            if (value is System.Collections.IEnumerable enumerable && value is not string)
+            {
+                return enumerable.Cast<object?>().Select(item => item?.ToString() ?? string.Empty).ToArray();
+            }
+
+            return new[] { value.ToString() ?? string.Empty };
+        }
+
+        private static byte[] AsBytes(object value)
+        {
+            if (value is byte[] bytes)
+            {
+                return bytes;
+            }
+
+            if (value is JsonElement element)
+            {
+                try
+                {
+                    return element.GetBytesFromBase64();
+                }
+                catch (FormatException)
+                {
+                }
+                catch (InvalidOperationException)
+                {
+                }
+            }
+
+            return Array.Empty<byte>();
+        }
+
+        private static bool NumericEquals(object actual, object expected)
+        {
+            try
+            {
+                return Convert.ToInt64(actual) == Convert.ToInt64(expected);
+            }
+            catch (Exception ex) when (ex is FormatException or InvalidCastException or OverflowException)
+            {
+                return false;
             }
         }
 
