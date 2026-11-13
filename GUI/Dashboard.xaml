@@ -764,22 +764,28 @@
 
                                     <!-- Center Telemetry Summary -->
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Name="TxtAiScanStatus" Text="Status: AI Engine ready for full diagnostic scan." Foreground="#ffffff" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,6"/>
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                                            <TextBlock Text="Services Flagged: " Foreground="#8b949e" FontSize="12"/>
-                                            <TextBlock Name="TxtAiServicesCount" Text="0" Foreground="#ffb300" FontWeight="Bold" FontSize="12" Margin="0,0,12,0"/>
-                                            <TextBlock Text="AppX Candidates: " Foreground="#8b949e" FontSize="12"/>
-                                            <TextBlock Name="TxtAiAppsCount" Text="0" Foreground="#00adb5" FontWeight="Bold" FontSize="12" Margin="0,0,12,0"/>
-                                            <TextBlock Text="Tasks Flagged: " Foreground="#8b949e" FontSize="12"/>
-                                            <TextBlock Name="TxtAiTasksCount" Text="0" Foreground="#ff5722" FontWeight="Bold" FontSize="12" Margin="0,0,12,0"/>
-                                            <TextBlock Text="Anomalies: " Foreground="#8b949e" FontSize="12"/>
-                                            <TextBlock Name="TxtAiAnomaliesCount" Text="0" Foreground="#ff5722" FontWeight="Bold" FontSize="12"/>
+                                        <TextBlock Name="TxtAiScanStatus" Text="Status: AI Engine ready for full diagnostic scan." Foreground="#ffffff" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                            <TextBlock Text="Host Machine: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtAiHardwareProfile" Text="Auto-Detecting Hardware..." Foreground="#00adb5" FontWeight="SemiBold" FontSize="11" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Storage / GPU: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtAiStorageProfile" Text="Evaluating..." Foreground="#00ff41" FontWeight="SemiBold" FontSize="11"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                            <TextBlock Text="Services Flagged: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtAiServicesCount" Text="0" Foreground="#ffb300" FontWeight="Bold" FontSize="11" Margin="0,0,10,0"/>
+                                            <TextBlock Text="AppX Candidates: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtAiAppsCount" Text="0" Foreground="#00adb5" FontWeight="Bold" FontSize="11" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Tasks Flagged: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtAiTasksCount" Text="0" Foreground="#ff5722" FontWeight="Bold" FontSize="11" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Anomalies: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtAiAnomaliesCount" Text="0" Foreground="#ff5722" FontWeight="Bold" FontSize="11"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Projected RAM Reclaim: " Foreground="#8b949e" FontSize="12"/>
-                                            <TextBlock Name="TxtAiProjectedImpact" Text="0 MB" Foreground="#00ff41" FontWeight="Bold" FontSize="12" Margin="0,0,12,0"/>
-                                            <TextBlock Text="Candidates: " Foreground="#8b949e" FontSize="12"/>
-                                            <TextBlock Name="TxtAiCandidateCount" Text="0" Foreground="#ffffff" FontWeight="Bold" FontSize="12"/>
+                                            <TextBlock Text="Projected RAM Reclaim: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtAiProjectedImpact" Text="0 MB" Foreground="#00ff41" FontWeight="Bold" FontSize="11" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Candidates: " Foreground="#8b949e" FontSize="11"/>
+                                            <TextBlock Name="TxtAiCandidateCount" Text="0" Foreground="#ffffff" FontWeight="Bold" FontSize="11"/>
                                         </StackPanel>
                                     </StackPanel>
 
@@ -806,6 +812,21 @@
                                             </Button>
                                         </StackPanel>
                                     </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- AI Machine Recommendations Banner -->
+                            <Border Background="#161b22" BorderBrush="#30363d" BorderThickness="1" CornerRadius="8" Padding="14,10" Margin="0,0,0,14">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,0,14,0" VerticalAlignment="Center">
+                                        <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE785;" Foreground="#00adb5" FontSize="16" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="AI Machine Recommendation:" Foreground="#ffffff" FontWeight="SemiBold" FontSize="12" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <TextBlock Name="TxtAiContextualRecommendation" Grid.Column="1" Text="Run AI Diagnostic Scan to evaluate host hardware context and active workload." Foreground="#8b949e" FontSize="12" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                                 </Grid>
                             </Border>
 

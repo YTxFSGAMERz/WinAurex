@@ -243,6 +243,9 @@ $BtnAiFilterAll         = Find-Control "BtnAiFilterAll"
 $BtnAiFilterSafe        = Find-Control "BtnAiFilterSafe"
 $BtnAiFilterAnomalies   = Find-Control "BtnAiFilterAnomalies"
 $ListAiFindings         = Find-Control "ListAiFindings"
+$TxtAiHardwareProfile           = Find-Control "TxtAiHardwareProfile"
+$TxtAiStorageProfile            = Find-Control "TxtAiStorageProfile"
+$TxtAiContextualRecommendation  = Find-Control "TxtAiContextualRecommendation"
 
 # Load AI Engine
 $AiModule = Join-Path $RootPath "Core\AI\WinAurex_AiEngine.psm1"
@@ -254,6 +257,30 @@ $script:LastAnomalies = @()
 $script:GamingShieldActive = $false
 $script:AiScanInProgress = $false
 $script:RamFlushInProgress = $false
+
+function Update-DashboardMachineProfile {
+    try {
+        if (-not (Get-Command Get-WinAurexSystemProfile -ErrorAction SilentlyContinue)) { return }
+        $prof = Get-WinAurexSystemProfile
+        if ($prof -and $prof.Hardware) {
+            if ($null -ne $TxtAiHardwareProfile) {
+                $TxtAiHardwareProfile.Text = "$($prof.Hardware.CpuName) ($($prof.Hardware.CpuCores)C/$($prof.Hardware.CpuThreads)T) | $($prof.Hardware.TotalRamGB) GB RAM"
+            }
+            if ($null -ne $TxtAiStorageProfile) {
+                $powerStr = if ($prof.Hardware.IsLaptop) { if ($prof.Hardware.OnBattery) { "(Battery)" } else { "(AC)" } } else { "(Desktop)" }
+                $TxtAiStorageProfile.Text = "$($prof.Hardware.StorageType) | $($prof.Hardware.GpuName) $powerStr"
+            }
+            if ($null -ne $TxtAiContextualRecommendation) {
+                $recs = Get-WinAurexAiRecommendations -Profile $prof -Findings $script:LastAiFindings
+                if ($recs -and $recs.Count -gt 0) {
+                    $top = $recs[0]
+                    $TxtAiContextualRecommendation.Text = "[$($top.Priority)] $($top.Title) - $($top.Description)"
+                    $TxtAiContextualRecommendation.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+                }
+            }
+        }
+    } catch {}
+}
 
 # Footer UI Hooks
 $BtnOpenLogsFolder = Find-Control "BtnOpenLogsFolder"
@@ -490,6 +517,9 @@ function Show-DashboardView([string]$ViewName) {
             }
         }
     }
+    if ($ViewName -eq "AiOptimizer") {
+        Update-DashboardMachineProfile
+    }
 }
 
 if ($null -ne $NavOverview)      { $NavOverview.Add_Checked({ Show-DashboardView "Overview" }) }
@@ -542,7 +572,7 @@ function Initialize-HardwareHUD {
             }
         } catch {}
 
-        # AI Health Score
+        # AI Health Score & Machine Profile
         if (Get-Command Get-WinAurexHealthScore -ErrorAction SilentlyContinue) {
             $health = Get-WinAurexHealthScore
             if ($null -ne $TxtHudHealthScore) { $TxtHudHealthScore.Text = "$($health.Score) / 100" }
@@ -550,6 +580,7 @@ function Initialize-HardwareHUD {
             if ($null -ne $TxtAiHealthScore)  { $TxtAiHealthScore.Text = "$($health.Score)" }
             if ($null -ne $TxtHudAiScore)     { $TxtHudAiScore.Text = "$($health.Score)/100 (Grade $($health.Grade))" }
         }
+        Update-DashboardMachineProfile
     } catch {
         Write-DashboardLog "Hardware HUD initialization warning: $_" "WARN"
     }
@@ -1483,6 +1514,10 @@ if ($null -ne $BtnAiScan) {
 
                 $sync.ProgressMsg = "Evaluating background process anomalies..."
                 $sync.Anomalies = Get-ProcessAnomalies
+
+                $sync.ProgressMsg = "Profiling host machine & workload..."
+                $sync.Profile = Get-WinAurexSystemProfile
+                $sync.Recommendations = Get-WinAurexAiRecommendations -Profile $sync.Profile -Findings $findings
             } catch {
                 $sync.Error = $_.Exception.Message
             } finally {
@@ -1566,6 +1601,22 @@ if ($null -ne $BtnAiScan) {
                 $optimizedCount = $optimizedFindings.Count
 
                 $runningSvcs = @($svcs | Where-Object { -not $_.IsAlreadyApplied -and $_.CurrentState -eq "Running" })
+
+                # Machine Profile & Intelligence HUD
+                if ($sync.Profile -and $sync.Profile.Hardware) {
+                    if ($null -ne $TxtAiHardwareProfile) {
+                        $TxtAiHardwareProfile.Text = "$($sync.Profile.Hardware.CpuName) ($($sync.Profile.Hardware.CpuCores)C/$($sync.Profile.Hardware.CpuThreads)T) | $($sync.Profile.Hardware.TotalRamGB) GB RAM"
+                    }
+                    if ($null -ne $TxtAiStorageProfile) {
+                        $powerStr = if ($sync.Profile.Hardware.IsLaptop) { if ($sync.Profile.Hardware.OnBattery) { "(Battery)" } else { "(AC)" } } else { "(Desktop)" }
+                        $TxtAiStorageProfile.Text = "$($sync.Profile.Hardware.StorageType) | $($sync.Profile.Hardware.GpuName) $powerStr"
+                    }
+                }
+                if ($sync.Recommendations -and $sync.Recommendations.Count -gt 0 -and $null -ne $TxtAiContextualRecommendation) {
+                    $top = $sync.Recommendations[0]
+                    $TxtAiContextualRecommendation.Text = "[$($top.Priority)] $($top.Title) - $($top.Description)"
+                    $TxtAiContextualRecommendation.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+                }
 
                 # Health Score Display
                 if ($null -ne $TxtAiHealthScore -and $health) {

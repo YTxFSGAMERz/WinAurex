@@ -1,0 +1,22 @@
+﻿{
+    "Passed":  31,
+    "FailedTests":  [
+
+                    ],
+    "Verdict":  "APPROVE",
+    "Timestamp":  "2026-11-13T08:20:58Z",
+    "Failed":  0,
+    "Benchmark":  {
+                      "TotalTimeMs":  926.99,
+                      "P50Ms":  0.2558,
+                      "Iterations":  1500,
+                      "P99Ms":  3.8254,
+                      "AverageLatencyMs":  0.618,
+                      "ManagedMemDeltaMB":  2.114,
+                      "ThroughputCallsSec":  1618.15,
+                      "MaxLatencyMs":  11.7336,
+                      "P90Ms":  1.8202,
+                      "WorkingSetDeltaMB":  -0.859
+                  },
+    "TotalAssertions":  31
+}

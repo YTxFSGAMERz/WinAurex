@@ -7,36 +7,202 @@
     to dynamically evaluate services, processes, AppX packages, and scheduled tasks in milliseconds.
 #>
 
-$script:ModelPath = Join-Path $PSScriptRoot "winaurex_ai_model.json"
+$script:ModelPath = Join-Path $PSScriptRoot "Data\winaurex_ai_model.json"
+if (-not (Test-Path $script:ModelPath)) {
+    $script:ModelPath = Join-Path $PSScriptRoot "winaurex_ai_model.json"
+}
+
+$script:DataDir = Join-Path $PSScriptRoot "Data"
+if (-not (Test-Path $script:DataDir)) {
+    $script:DataDir = $PSScriptRoot
+}
+
 $script:AiModel = $null
 $script:WordDicts = @{}
 $script:WhitelistSet = $null
+$script:Tier0WhitelistSet = $null
+$script:Tier0AppxPrefixes = $null
+$script:ProtectedPathPatterns = @("SystemApps", "ImmersiveControlPanel", "\\Windows\\")
+
+$script:ServiceCatalog = $null
+$script:ScheduledTasksCatalog = $null
+$script:BloatwareCatalog = $null
+$script:TweakCatalog = $null
+$script:CatalogDictionary = $null
+$script:AiModelInitialized = $false
 
 function Initialize-AiModel {
+    [CmdletBinding()]
+    param([switch]$Force)
+    if ($script:AiModelInitialized -and -not $Force) {
+        return
+    }
+
     if ($null -eq $script:AiModel -and (Test-Path $script:ModelPath)) {
         try {
             $raw = Get-Content -Path $script:ModelPath -Raw -Encoding UTF8
             $script:AiModel = $raw | ConvertFrom-Json
             
-            # Build fast O(1) hashset for Whitelist
+            # Build fast O(1) hashset for Whitelist from model
             $script:WhitelistSet = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
-            foreach ($item in $script:AiModel.whitelist) {
-                [void]$script:WhitelistSet.Add($item)
+            if ($script:AiModel.whitelist) {
+                foreach ($item in $script:AiModel.whitelist) {
+                    [void]$script:WhitelistSet.Add($item)
+                }
             }
 
             # Build fast O(1) dictionaries for log-likelihoods
             $script:WordDicts = @{}
-            foreach ($c in $script:AiModel.classes) {
-                $dict = [System.Collections.Generic.Dictionary[string, double]]::new([System.StringComparer]::OrdinalIgnoreCase)
-                foreach ($prop in $script:AiModel.log_likelihoods.$c.psobject.properties) {
-                    $dict[$prop.Name] = [double]$prop.Value
+            if ($script:AiModel.classes) {
+                foreach ($c in $script:AiModel.classes) {
+                    $dict = [System.Collections.Generic.Dictionary[string, double]]::new([System.StringComparer]::OrdinalIgnoreCase)
+                    if ($script:AiModel.log_likelihoods -and $script:AiModel.log_likelihoods.$c) {
+                        foreach ($prop in $script:AiModel.log_likelihoods.$c.psobject.properties) {
+                            $dict[$prop.Name] = [double]$prop.Value
+                        }
+                    }
+                    $script:WordDicts[$c] = $dict
                 }
-                $script:WordDicts[$c] = $dict
             }
         } catch {
             Write-Warning "Failed loading WinAurex AI model: $_"
         }
     }
+
+    # Initialize Tier 0 Whitelist HashSet
+    if ($null -eq $script:Tier0WhitelistSet) {
+        $script:Tier0WhitelistSet = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+
+        # Baseline inviolable services
+        $baselineProtected = @(
+            "mpssvc", "bfe", "mpsdrv", "fontcache", "fontcache3.0.0.0",
+            "deviceinstall", "devquerybroker", "bthserv", "bthport", "bluetoothuserservice",
+            "lanmanserver", "lanmanworkstation", "comsysapp", "msdtc", "ktmrm",
+            "appinfo", "bdesvc", "keyiso", "samss", "lsass", "lsaiso",
+            "audiosrv", "audioendpointbuilder", "nvsvc", "amdfendrs", "amd external events utility",
+            "amdppkgsvc", "amdpmfservice", "wuauserv", "trustedinstaller", "cryptsvc",
+            "bits", "msiserver", "usosvc", "installservice", "clipsvc", "appxsvc",
+            "dhcp", "dnscache", "wlansvc", "eventlog", "rpcss", "rpceptmapper",
+            "dcomlaunch", "plugplay", "schedule", "usermanager", "profsvc", "gpsvc",
+            "braveelevationservice", "googlechromeelevationservice",
+            "securityhealthservice", "brokerinfrastructure", "coremessagingregistrar",
+            "staterepository", "nsi", "nlasvc", "netprofm", "power", "themes",
+            "winmgmt", "termservice", "netlogon", "waasmedicsvc", "igfxcuiservice2.0.0.0",
+            "vmtoolsd", "vmicguestinterface", "vmicshutdown"
+        )
+        foreach ($s in $baselineProtected) {
+            [void]$script:Tier0WhitelistSet.Add($s)
+        }
+
+        if ($script:WhitelistSet) {
+            foreach ($s in $script:WhitelistSet) {
+                [void]$script:Tier0WhitelistSet.Add($s)
+            }
+        } else {
+            $script:WhitelistSet = $script:Tier0WhitelistSet
+        }
+    }
+
+    # Initialize Tier 0 AppX Prefixes
+    if ($null -eq $script:Tier0AppxPrefixes) {
+        $script:Tier0AppxPrefixes = [System.Collections.Generic.List[string]]::new()
+        $prefixes = @(
+            "microsoft.vclibs", "microsoft.ui.xaml", "microsoft.net.native",
+            "microsoft.storepurchaseapp", "microsoft.winget", "microsoft.desktopappinstaller",
+            "microsoft.windowsstore", "microsoft.windowsnotepad", "microsoft.windowscalculator",
+            "microsoft.windowsterminal", "microsoft.paint", "microsoft.screensketch",
+            "microsoft.visualstudiocode", "microsoft.powertoys", "microsoft.asynctextservice",
+            "microsoft.bioenrollment", "microsoft.ecapp", "windows.cbspreview",
+            "microsoft.windows.augloop.cbs", "microsoft.rawimageextension",
+            "microsoft.webmediaextensions", "microsoft.webpimageextension",
+            "microsoft.heifimageextension", "microsoft.hevcvideoextension",
+            "microsoft.av1videoextension", "microsoft.vp9videoextensions",
+            "microsoft.mpeg2videoextension",
+            "microsoft.microsoftedge", "microsoft.microsoftedgedevtoolsclient",
+            "microsoft.xboxgamecallableui", "microsoft.aad.brokerplugin",
+            "microsoft.accountscontrol", "microsoft.creddialoghost",
+            "microsoft.lockapp", "microsoft.win32webviewhost",
+            "microsoft.windows.contentdeliverymanager", "microsoft.windows.shellflow",
+            "microsoft.windows.shellexperiencehost", "microsoft.windows.startmenuexperiencehost",
+            "microsoft.windows.search", "microsoft.search", "microsoft.windows.explorer",
+            "microsoft.windows.peopleexperiencehost", "microsoft.windows.sechealthui"
+        )
+        foreach ($p in $prefixes) {
+            $script:Tier0AppxPrefixes.Add($p)
+        }
+    }
+
+    # Load 4 Catalogs
+    if ($null -eq $script:CatalogDictionary) {
+        $script:CatalogDictionary = [System.Collections.Generic.Dictionary[string, PSCustomObject]]::new([System.StringComparer]::OrdinalIgnoreCase)
+    }
+
+    $svcCatPath = Join-Path $script:DataDir "ServiceCatalog.json"
+    if (Test-Path $svcCatPath) {
+        try {
+            $script:ServiceCatalog = (Get-Content $svcCatPath -Raw -Encoding UTF8) | ConvertFrom-Json
+            if ($script:ServiceCatalog.services) {
+                foreach ($svc in $script:ServiceCatalog.services) {
+                    if ($svc.Category -in @("Core_OS_Required", "Core_OS_Essential") -or $svc.SafetyTier -match "Tier 0") {
+                        [void]$script:Tier0WhitelistSet.Add($svc.Name)
+                        [void]$script:WhitelistSet.Add($svc.Name)
+                    } else {
+                        $script:CatalogDictionary[$svc.Name] = $svc
+                    }
+                }
+            }
+        } catch {}
+    }
+
+    $tasksCatPath = Join-Path $script:DataDir "ScheduledTasksCatalog.json"
+    if (Test-Path $tasksCatPath) {
+        try {
+            $script:ScheduledTasksCatalog = (Get-Content $tasksCatPath -Raw -Encoding UTF8) | ConvertFrom-Json
+            if ($script:ScheduledTasksCatalog.tasks) {
+                foreach ($task in $script:ScheduledTasksCatalog.tasks) {
+                    $script:CatalogDictionary[$task.TaskName] = $task
+                    $fullTask = "$($task.TaskPath)$($task.TaskName)"
+                    $script:CatalogDictionary[$fullTask] = $task
+                }
+            }
+        } catch {}
+    }
+
+    $bloatCatPath = Join-Path $script:DataDir "BloatwareCatalog.json"
+    if (Test-Path $bloatCatPath) {
+        try {
+            $script:BloatwareCatalog = (Get-Content $bloatCatPath -Raw -Encoding UTF8) | ConvertFrom-Json
+            if ($script:BloatwareCatalog.packages) {
+                foreach ($pkg in $script:BloatwareCatalog.packages) {
+                    if ($pkg.Category -in @("Core_OS_Required", "Core_OS_Essential") -or $pkg.IsSystemApp -eq $true -or $pkg.SafetyTier -match "Tier 0") {
+                        $pkgLower = $pkg.Name.ToLowerInvariant()
+                        if (-not $script:Tier0AppxPrefixes.Contains($pkgLower)) {
+                            $script:Tier0AppxPrefixes.Add($pkgLower)
+                        }
+                    } else {
+                        $script:CatalogDictionary[$pkg.Name] = $pkg
+                    }
+                }
+            }
+        } catch {}
+    }
+
+    $tweakCatPath = Join-Path $script:DataDir "TweakCatalog.json"
+    if (Test-Path $tweakCatPath) {
+        try {
+            $script:TweakCatalog = (Get-Content $tweakCatPath -Raw -Encoding UTF8) | ConvertFrom-Json
+            if ($script:TweakCatalog.tweaks) {
+                foreach ($tweak in $script:TweakCatalog.tweaks) {
+                    $script:CatalogDictionary[$tweak.Id] = $tweak
+                    if ($tweak.ValueName) {
+                        $script:CatalogDictionary[$tweak.ValueName] = $tweak
+                    }
+                }
+            }
+        } catch {}
+    }
+
+    $script:AiModelInitialized = $true
 }
 
 function Get-Tokens {
@@ -61,87 +227,174 @@ function Get-Tokens {
 }
 
 function Invoke-AiInference {
+    [CmdletBinding()]
     param (
-        [string]$Name,
+        [Parameter(Mandatory=$true, Position=0)]
+        [AllowEmptyString()]
+        [AllowNull()]
+        [string]$Name = "",
+
+        [Parameter(Mandatory=$false, Position=1)]
+        [AllowEmptyString()]
+        [AllowNull()]
         [string]$Description = "",
-        [string]$Vendor = ""
+
+        [Parameter(Mandatory=$false, Position=2)]
+        [AllowEmptyString()]
+        [AllowNull()]
+        [string]$Vendor = "",
+
+        [Parameter(Mandatory=$false, Position=3)]
+        [ValidateSet("Service", "AppX", "ScheduledTask", "SystemTweak", "")]
+        [string]$TargetType = "Service"
     )
+
     Initialize-AiModel
-    if ($null -eq $script:AiModel) {
-        return @{
-            Category          = "Unknown"
-            SafetyTier        = "Tier 2 (Recommended)"
-            Confidence        = 0.50
-            IsSafeToDisable   = $true
-            Reason            = "Model not loaded, default fallback applied."
-        }
+
+    if ([string]::IsNullOrWhiteSpace($TargetType)) {
+        $TargetType = "Service"
     }
 
-    # 1. Hardcoded Cryptographic Whitelist & System Shield Check (TIER 0 - PROTECTED)
-    $protectedServices = @(
-        "mpssvc", "bfe", "mpsdrv", "fontcache", "fontcache3.0.0.0",
-        "deviceinstall", "devquerybroker", "bthserv", "bthport", "bluetoothuserservice",
-        "lanmanserver", "lanmanworkstation", "comsysapp", "msdtc", "ktmrm",
-        "appinfo", "bdesvc", "keyiso", "samss", "lsaiso",
-        "audiosrv", "audioendpointbuilder", "nvsvc", "amdfendrs", "amd external events utility",
-        "amdppkgsvc", "amdpmfservice", "wuauserv", "trustedinstaller", "cryptsvc",
-        "bits", "msiserver", "usosvc", "installservice", "clipsvc", "appxsvc",
-        "dhcp", "dnscache", "wlansvc", "eventlog", "rpcss", "rpceptmapper",
-        "dcomlaunch", "plugplay", "schedule", "usermanager", "profsvc", "gpsvc",
-        "braveelevationservice", "googlechromeelevationservice"
-    )
+    $rawName = if ($null -ne $Name) { $Name } else { "" }
+    $cleanName = $rawName.Trim()
+    $cleanDesc = if ($null -ne $Description) { $Description.Trim() } else { "" }
+    $cleanVendor = if ($null -ne $Vendor) { $Vendor.Trim() } else { "" }
+    $lowerName = $cleanName.ToLowerInvariant()
 
-    $protectedAppxPrefixes = @(
-        "microsoft.vclibs", "microsoft.ui.xaml", "microsoft.net.native",
-        "microsoft.storepurchaseapp", "microsoft.winget", "microsoft.desktopappinstaller",
-        "microsoft.windowsstore", "microsoft.windowsnotepad", "microsoft.windowscalculator",
-        "microsoft.windowsterminal", "microsoft.paint", "microsoft.screensketch",
-        "microsoft.visualstudiocode", "microsoft.powertoys", "microsoft.asynctextservice",
-        "microsoft.bioenrollment", "microsoft.ecapp", "windows.cbspreview",
-        "microsoft.windows.augloop.cbs", "microsoft.rawimageextension",
-        "microsoft.webmediaextensions", "microsoft.webpimageextension",
-        "microsoft.heifimageextension", "microsoft.hevcvideoextension",
-        "microsoft.av1videoextension", "microsoft.vp9videoextensions",
-        "microsoft.mpeg2videoextension",
-        "microsoft.microsoftedge", "microsoft.microsoftedgedevtoolsclient",
-        "microsoft.xboxgamecallableui", "microsoft.aad.brokerplugin",
-        "microsoft.accountscontrol", "microsoft.creddialoghost",
-        "microsoft.lockapp", "microsoft.win32webviewhost",
-        "microsoft.windows.contentdeliverymanager", "microsoft.windows.shellflow"
-    )
-
-    $lowerName = $Name.ToLower()
-
-    if (($script:WhitelistSet -and $script:WhitelistSet.Contains($Name)) -or 
-        ($protectedServices -contains $lowerName) -or 
-        ($protectedAppxPrefixes | Where-Object { $lowerName.StartsWith($_) })) {
-        return @{
+    # Empty name edge case
+    if ($cleanName.Length -eq 0) {
+        return [PSCustomObject]@{
+            Name              = ""
             Category          = "Core_OS_Essential"
             SafetyTier        = "Tier 0 (Protected)"
             Confidence        = 1.00
             IsSafeToDisable   = $false
+            EstImpact         = "None / System Instability"
+            TweakAction       = "None (Protected)"
+            CanonicalCategory = "Core_OS_Required"
+            Reason            = "Empty or null identifier supplied."
+        }
+    }
+
+    # -------------------------------------------------------------
+    # STAGE 0: Deterministic Tier 0 Hard Gate (Inviolable Shield)
+    # -------------------------------------------------------------
+    $isTier0 = $false
+
+    # Check Whitelist HashSet (O(1))
+    if (($script:Tier0WhitelistSet -and $script:Tier0WhitelistSet.Contains($cleanName)) -or 
+        ($script:Tier0WhitelistSet -and $script:Tier0WhitelistSet.Contains($lowerName)) -or
+        ($script:WhitelistSet -and $script:WhitelistSet.Contains($cleanName)) -or 
+        ($script:WhitelistSet -and $script:WhitelistSet.Contains($lowerName))) {
+        $isTier0 = $true
+    }
+
+    # Check AppX SystemApp Prefixes
+    if (-not $isTier0 -and $script:Tier0AppxPrefixes) {
+        foreach ($prefix in $script:Tier0AppxPrefixes) {
+            if ($lowerName.StartsWith($prefix)) {
+                $isTier0 = $true
+                break
+            }
+        }
+    }
+
+    # Check Display Driver Shield
+    if (-not $isTier0) {
+        if ($lowerName -match '^(nvsvc|nvlddmkm|amdfendrs|amdppkgsvc|amdpmfservice|igfx|igfxcuiservice|amdkmdag)$') {
+            $isTier0 = $true
+        }
+    }
+
+    if ($isTier0) {
+        return [PSCustomObject]@{
+            Name              = $cleanName
+            Category          = "Core_OS_Essential"
+            SafetyTier        = "Tier 0 (Protected)"
+            Confidence        = 1.00
+            IsSafeToDisable   = $false
+            EstImpact         = "None / System Instability"
+            TweakAction       = "None (Protected)"
+            CanonicalCategory = "Core_OS_Required"
             Reason            = "Cryptographically locked Core Windows component."
         }
     }
 
-    # 2. Extract feature tokens
-    $fullText = "$Name $Description $Vendor"
+    # Fallback if model not loaded
+    if ($null -eq $script:AiModel) {
+        return [PSCustomObject]@{
+            Name              = $cleanName
+            Category          = "Unknown"
+            SafetyTier        = "Tier 2 (Recommended)"
+            Confidence        = 0.50
+            IsSafeToDisable   = $true
+            EstImpact         = "Unknown"
+            TweakAction       = "Review Action"
+            CanonicalCategory = "Unknown"
+            Reason            = "Model not loaded, default fallback applied."
+        }
+    }
+
+    # -------------------------------------------------------------
+    # STAGE 1: Offline Curated Catalog Precision Match
+    # -------------------------------------------------------------
+    $catalogEntry = $null
+    if ($script:CatalogDictionary -and $script:CatalogDictionary.TryGetValue($lowerName, [ref]$catalogEntry)) {
+        $cat = $catalogEntry.Category
+        $canonical = $cat
+        if ($cat -in @("Telemetry", "Telemetry_Tracking")) {
+            $cat = "Telemetry_Tracking"
+            $canonical = "Telemetry"
+        } elseif ($cat -in @("Core_OS_Required", "Core_OS_Essential")) {
+            $cat = "Core_OS_Essential"
+            $canonical = "Core_OS_Required"
+        } elseif ($cat -eq "ThirdParty_Updater") {
+            $canonical = "Safe_Optimization"
+        }
+
+        return [PSCustomObject]@{
+            Name              = $cleanName
+            Category          = $cat
+            SafetyTier        = $catalogEntry.SafetyTier
+            Confidence        = [Math]::Round([double]$catalogEntry.Confidence, 4)
+            IsSafeToDisable   = [bool]$catalogEntry.IsSafeToDisable
+            EstImpact         = if ($catalogEntry.EstImpact) { [string]$catalogEntry.EstImpact } else { "Curated Catalog Optimization" }
+            TweakAction       = if ($catalogEntry.TweakAction) { [string]$catalogEntry.TweakAction } else { "Apply Tweak" }
+            CanonicalCategory = $canonical
+            Reason            = "Matched curated offline optimization catalog."
+        }
+    }
+
+    # -------------------------------------------------------------
+    # STAGE 2: Multi-Factor Heuristic Feature Scoring
+    # -------------------------------------------------------------
+    $classes = $script:AiModel.classes
+    if (-not $classes) {
+        $classes = @(
+            "Core_OS_Essential",
+            "Telemetry_Tracking",
+            "OEM_Bloatware",
+            "ThirdParty_Updater",
+            "Consumer_Bloatware",
+            "High_Overhead_Task"
+        )
+    }
+
+    $scores = @{}
+    $fullText = "$cleanName $cleanDesc $cleanVendor".Trim()
     $tokens = Get-Tokens -Text $fullText
 
-    # 3. Log-likelihood accumulation via O(1) Dictionary
-    $classes = $script:AiModel.classes
-    $scores = @{}
-    $vocabSize = if ($script:AiModel.metadata -and $script:AiModel.metadata.features_count) { 
-        [int]$script:AiModel.metadata.features_count 
-    } else { 
-        2100 
+    $vocabSize = if ($script:AiModel.metadata -and $script:AiModel.metadata.features_count) {
+        [int]$script:AiModel.metadata.features_count
+    } else {
+        3575
     }
 
     foreach ($c in $classes) {
-        $logPrior = [double]$script:AiModel.log_priors.$c
-        $classTotal = [double]$script:AiModel.class_totals.$c
+        $logPrior = if ($script:AiModel.log_priors -and $script:AiModel.log_priors.$c) { [double]$script:AiModel.log_priors.$c } else { -1.79 }
+        $classTotal = if ($script:AiModel.class_totals -and $script:AiModel.class_totals.$c) { [double]$script:AiModel.class_totals.$c } else { 500.0 }
         $defaultLogProb = [Math]::Log(1.0 / ($classTotal + $vocabSize))
-        
+
         $score = $logPrior
         $dict = $script:WordDicts[$c]
 
@@ -156,25 +409,48 @@ function Invoke-AiInference {
         $scores[$c] = $score
     }
 
-    # 4. Heuristic Keyword Boosters
-    $lowerText = $fullText.ToLower()
-    if ($lowerText -match "telemetry|diagnostic|ceip|spynet|appraiser|sqm") {
-        $scores["Telemetry_Tracking"] += 4.5
-    }
-    if ($lowerText -match "supportassist|touchpoint|vantage|armoury|synapse|oem|acer|dell|lenovo|asus|hp ") {
-        $scores["OEM_Bloatware"] += 4.5
-    }
-    if ($lowerText -match "adobearm|gupdate|edgeupdate|updater|autoupdate") {
-        $scores["ThirdParty_Updater"] += 4.5
-    }
-    if ($lowerText -match "retaildemo|mapsbroker|solitaire|candycrush|tiktok|bingweather|bingnews") {
-        $scores["Consumer_Bloatware"] += 4.5
-    }
-    if ($lowerText -match "winsat|defrag|autochk") {
-        $scores["High_Overhead_Task"] += 4.5
+    # --- Heuristic Feature Boosters ---
+    $lowerText = $fullText.ToLowerInvariant()
+
+    # 1. Vendor Signature Boosters
+    if ($cleanVendor -match '(?i)(Dell|Hewlett|HP|Lenovo|Acer|ASUS|ASUSTeK|Razer|Alienware|MSI)') {
+        $scores["OEM_Bloatware"] += 5.5
+        $scores["Core_OS_Essential"] -= 3.0
+    } elseif ($cleanVendor -match '(?i)(Google|Adobe|Mozilla|Brave|Dropbox|Oracle|Java)') {
+        $scores["ThirdParty_Updater"] += 5.0
+    } elseif ($cleanVendor -match '(?i)(ByteDance|King\.com|Disney|Spotify|Netflix|Facebook|Meta|TikTok|WildTangent)') {
+        $scores["Consumer_Bloatware"] += 6.0
     }
 
-    # 5. Softmax Normalization
+    # 2. Semantic Intent Regex Boosters
+    if ($lowerText -match '(?i)\b(telemetry|diagtrack|diagnostic|ceip|spynet|appraiser|sqm|dmclient|feedback|telemetrybroker|watson)\b') {
+        $scores["Telemetry_Tracking"] += 5.0
+    }
+    if ($lowerText -match '(?i)\b(supportassist|touchpoint|vantage|armoury|synapse|oem|myasus|command\s*center|hp\s*analytics)\b') {
+        $scores["OEM_Bloatware"] += 5.0
+    }
+    if ($lowerText -match '(?i)\b(adobearm|gupdate|edgeupdate|updater|autoupdate|jucheck|dropboxupdate|braveupdate)\b') {
+        $scores["ThirdParty_Updater"] += 4.5
+    }
+    if ($lowerText -match '(?i)\b(retaildemo|mapsbroker|solitaire|candycrush|tiktok|bingweather|bingnews|clipchamp)\b') {
+        $scores["Consumer_Bloatware"] += 5.0
+    }
+    if ($lowerText -match '(?i)\b(winsat|defrag|autochk|diskdiagnostic|queue\s*reporting)\b') {
+        $scores["High_Overhead_Task"] += 5.0
+    }
+
+    # 3. TargetType Prior Adjustments
+    if ($TargetType -eq "ScheduledTask") {
+        $scores["High_Overhead_Task"] += 2.0
+        $scores["Telemetry_Tracking"] += 1.5
+    } elseif ($TargetType -eq "AppX") {
+        $scores["Consumer_Bloatware"] += 2.5
+        $scores["OEM_Bloatware"] += 1.5
+    }
+
+    # -------------------------------------------------------------
+    # STAGE 3: Numerically Stable Softmax Normalization
+    # -------------------------------------------------------------
     $maxLog = ($scores.Values | Measure-Object -Maximum).Maximum
     $expScores = @{}
     $sumExp = 0.0
@@ -196,29 +472,112 @@ function Invoke-AiInference {
         }
     }
 
-    # 6. Safety Tier Mapping
+    # -------------------------------------------------------------
+    # STAGE 4: Confidence Score Calculation
+    # -------------------------------------------------------------
+    $confidence = $bestProb
+
+    # Divergence Penalties: Microsoft vendor + OEM_Bloatware -> penalize and redirect
+    if ($cleanVendor -match '(?i)Microsoft' -and $bestCat -eq "OEM_Bloatware") {
+        $confidence -= 0.30
+        $bestCat = "Core_OS_Essential"
+    }
+
+    # Low token count / unfamiliar short string penalty
+    if ($tokens.Count -lt 2) {
+        $confidence = [Math]::Min($confidence, 0.60)
+    }
+
+    $confidence = [Math]::Max(0.10, [Math]::Min(1.00, $confidence))
+
+    # -------------------------------------------------------------
+    # STAGE 5: Safety Tier & Action Assignment
+    # -------------------------------------------------------------
     $tier = "Tier 2 (Recommended)"
     $isSafe = $true
+    $estImpact = "~15-30 MB RAM, 0 CPU Drag"
+    $tweakAction = "Disable Service"
+
     if ($bestCat -eq "Core_OS_Essential") {
         $tier = "Tier 0 (Protected)"
         $isSafe = $false
+        $estImpact = "None / System Instability"
+        $tweakAction = "None (Protected)"
     } elseif ($bestCat -in @("Telemetry_Tracking", "OEM_Bloatware")) {
+        if ($confidence -ge 0.85) {
+            $tier = "Tier 1 (Safe)"
+        } else {
+            $tier = "Tier 2 (Recommended)"
+        }
+        $isSafe = $true
+        $estImpact = "Suppresses Background Telemetry & Data Harvest"
+        $tweakAction = if ($TargetType -eq "AppX") { "Uninstall Package" } elseif ($TargetType -eq "ScheduledTask") { "Disable Task" } else { "Disable Service" }
+    } elseif ($bestCat -in @("Consumer_Bloatware", "ThirdParty_Updater", "High_Overhead_Task")) {
+        if ($confidence -ge 0.85) {
+            $tier = "Tier 1 (Safe)"
+        } else {
+            $tier = "Tier 2 (Recommended)"
+        }
+        $isSafe = $true
+        $estImpact = if ($bestCat -eq "Consumer_Bloatware") { "~50 MB Disk, Suppressed Background Host" } else { "Reduces Periodic Disk & CPU Spikes" }
+        $tweakAction = if ($TargetType -eq "AppX") { "Uninstall Package" } elseif ($TargetType -eq "ScheduledTask") { "Disable Task" } else { "Disable Service" }
+    } elseif ($bestCat -in @("Gaming_Bottleneck", "Safe_Optimization")) {
         $tier = "Tier 1 (Safe)"
         $isSafe = $true
-    } elseif ($bestCat -in @("ThirdParty_Updater", "Consumer_Bloatware")) {
-        if ($bestProb -ge 0.85) { $tier = "Tier 1 (Safe)" } else { $tier = "Tier 2 (Recommended)" }
-        $isSafe = $true
+        $estImpact = "Improves Responsiveness and Frame Latency"
+        $tweakAction = "Apply System Tweak"
     } else {
-        $tier = "Tier 2 (Recommended)"
-        $isSafe = $true
+        # Unfamiliar fallback
+        $tier = "Tier 3 (Advanced)"
+        $isSafe = $false
+        $estImpact = "Unknown / Review Required"
+        $tweakAction = "Manual Review"
     }
 
-    return @{
-        Category        = $bestCat
-        SafetyTier      = $tier
-        Confidence      = [Math]::Round($bestProb, 4)
-        IsSafeToDisable = $isSafe
+    # Map canonical category
+    $canonicalCategory = switch ($bestCat) {
+        "Core_OS_Essential"   { "Core_OS_Required" }
+        "Telemetry_Tracking" { "Telemetry" }
+        "ThirdParty_Updater" { "Safe_Optimization" }
+        default              { $bestCat }
     }
+
+    return [PSCustomObject]@{
+        Name              = $cleanName
+        Category          = $bestCat
+        SafetyTier        = $tier
+        Confidence        = [Math]::Round($confidence, 4)
+        IsSafeToDisable   = $isSafe
+        EstImpact         = $estImpact
+        TweakAction       = $tweakAction
+        CanonicalCategory = $canonicalCategory
+        Reason            = "Dynamic AI multi-factor inference."
+    }
+}
+
+function Get-WinAurexServiceCatalog {
+    Initialize-AiModel
+    return $script:ServiceCatalog
+}
+
+function Get-WinAurexTaskCatalog {
+    Initialize-AiModel
+    return $script:ScheduledTasksCatalog
+}
+
+function Get-WinAurexBloatwareCatalog {
+    Initialize-AiModel
+    return $script:BloatwareCatalog
+}
+
+function Get-WinAurexTweakCatalog {
+    Initialize-AiModel
+    return $script:TweakCatalog
+}
+
+function Get-WinAurexCoreWhitelist {
+    Initialize-AiModel
+    return ,$script:Tier0WhitelistSet
 }
 
 function Invoke-WinAurexAiScan {
@@ -547,13 +906,15 @@ function Invoke-WinAurexAiRemediation {
                     continue
                 }
 
+                $isSystemAppLocked = $false
                 $hasError = $false
                 foreach ($p in $removable) {
                     try {
                         Remove-AppxPackage -Package $p.PackageFullName -AllUsers -ErrorAction Stop
                     } catch [System.Runtime.InteropServices.COMException] {
                         if ($_.Exception.HResult -eq [int]0x80070032 -or $_.Exception.HResult -eq [int]0x80073CFA -or $_.Exception.Message -match "0x80070032") {
-                            # Non-removable system app
+                            # Non-removable system app trapped
+                            $isSystemAppLocked = $true
                         } else {
                             $hasError = $true
                         }
@@ -573,7 +934,7 @@ function Invoke-WinAurexAiRemediation {
                 if (-not $hasError -and $remaining.Count -eq 0) {
                     $appliedCount++
                     Write-Host "[PURGED]" -ForegroundColor Green
-                } elseif ($remaining.Count -gt 0 -and ($remaining[0].NonRemovable -or ($remaining[0].InstallLocation -and $remaining[0].InstallLocation -match 'SystemApps'))) {
+                } elseif ($isSystemAppLocked -or ($remaining.Count -gt 0 -and ($remaining[0].NonRemovable -or ($remaining[0].InstallLocation -and $remaining[0].InstallLocation -match 'SystemApps')))) {
                     $skippedCount++
                     Write-Host "[SKIPPED - SYSTEM APP]" -ForegroundColor Yellow
                 } else {
@@ -838,4 +1199,173 @@ function Set-AiGamingShield {
     }
 }
 
-Export-ModuleMember -Function Initialize-AiModel, Invoke-AiInference, Invoke-WinAurexAiScan, Invoke-WinAurexAiRemediation, Get-WinAurexHealthScore, Invoke-WinAurexRamFlush, Get-ProcessAnomalies, Set-AiGamingShield
+function Get-WinAurexSystemProfile {
+    [CmdletBinding()]
+    param()
+
+    $cpu = Get-CimInstance -ClassName Win32_Processor -ErrorAction SilentlyContinue | Select-Object -First 1
+    $cpuName = if ($cpu -and $cpu.Name) { $cpu.Name.Trim() } else { "Intel(R) Core(TM) Processor" }
+    $cores   = if ($cpu -and $cpu.NumberOfCores) { [int]$cpu.NumberOfCores } else { [System.Environment]::ProcessorCount / 2 }
+    $threads = if ($cpu -and $cpu.NumberOfLogicalProcessors) { [int]$cpu.NumberOfLogicalProcessors } else { [System.Environment]::ProcessorCount }
+
+    $compSys = Get-CimInstance -ClassName Win32_ComputerSystem -ErrorAction SilentlyContinue | Select-Object -First 1
+    $totalRamBytes = if ($compSys -and $compSys.TotalPhysicalMemory) { [double]$compSys.TotalPhysicalMemory } else { 16GB }
+    $totalRamGB = [math]::Round($totalRamBytes / 1GB, 2)
+
+    $gpu = Get-CimInstance -ClassName Win32_VideoController -ErrorAction SilentlyContinue | Select-Object -First 1
+    $gpuName = if ($gpu -and $gpu.Name) { $gpu.Name } else { "Generic Display Adapter" }
+    $gpuVendor = if ($gpuName -match "NVIDIA") { "NVIDIA" }
+                 elseif ($gpuName -match "AMD|Radeon") { "AMD" }
+                 elseif ($gpuName -match "Intel") { "Intel" }
+                 else { "Other" }
+
+    $disk = Get-CimInstance -ClassName Win32_DiskDrive -ErrorAction SilentlyContinue | Select-Object -First 1
+    $storageType = "SATA SSD"
+    if ($disk) {
+        $pnp = "$($disk.PNPDeviceID) $($disk.Model)"
+        if ($pnp -match "NVMe|PCIe") { $storageType = "NVMe SSD" }
+        elseif ($pnp -match "HDD|HardDisk") { $storageType = "HDD" }
+    }
+
+    $battery = Get-CimInstance -ClassName Win32_Battery -ErrorAction SilentlyContinue | Select-Object -First 1
+    $isLaptop = ($null -ne $battery)
+    $onBattery = if ($battery) { ($battery.BatteryStatus -ne 2) } else { $false }
+
+    $os = Get-CimInstance -ClassName Win32_OperatingSystem -ErrorAction SilentlyContinue | Select-Object -First 1
+    $ramUsedPercent = 50.0
+    if ($os -and $os.TotalVisibleMemorySize -gt 0) {
+        $freeMem = [double]$os.FreePhysicalMemory
+        $totalMem = [double]$os.TotalVisibleMemorySize
+        $ramUsedPercent = [math]::Round((($totalMem - $freeMem) / $totalMem) * 100, 2)
+    }
+
+    $cpuLoad = if ($cpu -and $null -ne $cpu.LoadPercentage) { [double]$cpu.LoadPercentage } else { 15.0 }
+
+    $gameSigs = @("cs2", "valorant", "dota2", "leagueclient", "fortnite", "r5reload", "overwatch", "destiny2")
+    $activeGame = ""
+    $isGaming = $false
+    try {
+        $runningProcs = Get-Process -ErrorAction SilentlyContinue
+        foreach ($p in $runningProcs) {
+            if ($gameSigs -contains $p.ProcessName.ToLower()) {
+                $isGaming = $true
+                $activeGame = $p.ProcessName
+                break
+            }
+        }
+    } catch {}
+
+    return [PSCustomObject]@{
+        Hardware = [PSCustomObject]@{
+            CpuName     = $cpuName
+            CpuCores    = [int]$cores
+            CpuThreads  = [int]$threads
+            TotalRamGB  = [double]$totalRamGB
+            GpuName     = $gpuName
+            GpuVendor   = $gpuVendor
+            StorageType = $storageType
+            IsLaptop    = [bool]$isLaptop
+            OnBattery   = [bool]$onBattery
+        }
+        Workload = [PSCustomObject]@{
+            CpuLoadPercent = [double]$cpuLoad
+            RamUsedPercent = [double]$ramUsedPercent
+            IsGamingActive = [bool]$isGaming
+            ActiveGameName = $activeGame
+            TopDrainers    = @()
+        }
+        Timestamp = (Get-Date)
+    }
+}
+
+function Get-WinAurexAiRecommendations {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $false)]
+        [PSCustomObject]$Profile = $null,
+        [Parameter(Mandatory = $false)]
+        [array]$Findings = @()
+    )
+
+    if ($null -eq $Profile) {
+        $Profile = Get-WinAurexSystemProfile
+    }
+
+    $recommendations = [System.Collections.Generic.List[PSObject]]::new()
+
+    # Rule 1: Gaming Latency Boost
+    if ($Profile.Workload.IsGamingActive -or $Profile.Hardware.GpuVendor -in @("NVIDIA", "AMD")) {
+        $recommendations.Add([PSCustomObject]@{
+            Id               = "REC-GAME-01"
+            Title            = "Activate AI Low-Latency Gaming Shield"
+            Description      = "Enforces short fixed high quantum (Win32PrioritySeparation = 0x28) and disables network packet throttling."
+            Category         = "Gaming_Bottleneck"
+            Priority         = if ($Profile.Workload.IsGamingActive) { "High" } else { "Medium" }
+            SafetyTier       = "Tier 1 (Safe)"
+            EstimatedBenefit = "Reduces micro-stutter and input lag in 3D gaming runtimes"
+            TargetItems      = @("Win32PrioritySeparation", "NetworkThrottlingIndex", "GameDVR")
+        })
+    }
+
+    # Rule 2: Low-RAM or High-Pressure Adaptation
+    if ($Profile.Hardware.TotalRamGB -le 8.0 -or $Profile.Workload.RamUsedPercent -gt 75.0) {
+        $recommendations.Add([PSCustomObject]@{
+            Id               = "REC-RAM-01"
+            Title            = "Flush Idle Process Working Sets & Trim RAM"
+            Description      = "Aggressively trims memory allocations for idle background processes using native PSAPI EmptyWorkingSet."
+            Category         = "Safe_Optimization"
+            Priority         = "High"
+            SafetyTier       = "Tier 1 (Safe)"
+            EstimatedBenefit = "Reclaims 400MB - 1.2GB active physical memory immediately"
+            TargetItems      = @("PsapiMemTrim", "EmptyWorkingSet")
+        })
+    }
+
+    # Rule 3: Mobile Laptop Power-Conscious Telemetry Pruning
+    if ($Profile.Hardware.IsLaptop -and $Profile.Hardware.OnBattery) {
+        $recommendations.Add([PSCustomObject]@{
+            Id               = "REC-PWR-01"
+            Title            = "Throttle Background Telemetry on Battery"
+            Description      = "Suppresses background telemetry wakeups without aggressive clock throttling to preserve battery cycle life."
+            Category         = "Telemetry"
+            Priority         = "High"
+            SafetyTier       = "Tier 1 (Safe)"
+            EstimatedBenefit = "Extends battery life by eliminating CPU background wakeups"
+            TargetItems      = @("DiagTrack", "dmwappushservice", "Consolidator")
+        })
+    }
+
+    # Rule 4: Actionable Telemetry & Bloat Candidates from Findings
+    $actionableServices = @($Findings | Where-Object { $_.TargetType -eq "Service" -and -not $_.IsAlreadyApplied })
+    if ($actionableServices.Count -gt 0) {
+        $recommendations.Add([PSCustomObject]@{
+            Id               = "REC-BLAT-01"
+            Title            = "Disable Actionable Background Bloat Services"
+            Description      = "Disables $($actionableServices.Count) non-essential background service(s) identified by offline neural inference."
+            Category         = "Consumer_Bloatware"
+            Priority         = "High"
+            SafetyTier       = "Tier 1 (Safe)"
+            EstimatedBenefit = "Eliminates $($actionableServices.Count) background threads and persistent registry handles"
+            TargetItems      = @($actionableServices | ForEach-Object { $_.Name })
+        })
+    }
+
+    # Baseline Performance & Privacy Recommendation
+    $recommendations.Add([PSCustomObject]@{
+        Id               = "REC-BASE-01"
+        Title            = "Enforce Windows Performance & Privacy Baseline"
+        Description      = "Optimizes delivery optimization, network packet latency, and background application tracking."
+        Category         = "Safe_Optimization"
+        Priority         = "Medium"
+        SafetyTier       = "Tier 1 (Safe)"
+        EstimatedBenefit = "Reduces background network polling and idle disk/CPU drag"
+        TargetItems      = @("DeliveryOptimization", "AdvertisingInfo", "GameDVR")
+    })
+
+    return $recommendations.ToArray()
+}
+
+Export-ModuleMember -Function Initialize-AiModel, Invoke-AiInference, `
+    Get-WinAurexServiceCatalog, Get-WinAurexTaskCatalog, Get-WinAurexBloatwareCatalog, Get-WinAurexTweakCatalog, Get-WinAurexCoreWhitelist, `
+    Invoke-WinAurexAiScan, Invoke-WinAurexAiRemediation, Get-WinAurexHealthScore, Invoke-WinAurexRamFlush, Get-ProcessAnomalies, Set-AiGamingShield, `
+    Get-WinAurexSystemProfile, Get-WinAurexAiRecommendations
