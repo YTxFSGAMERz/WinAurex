@@ -103,6 +103,12 @@
                     <Setter Property="Background" Value="#00adb5"/>
                     <Setter Property="Foreground" Value="#0d1117"/>
                 </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.45"/>
+                    <Setter Property="BorderBrush" Value="#30363d"/>
+                    <Setter Property="Foreground" Value="#6e7681"/>
+                    <Setter Property="Cursor" Value="Arrow"/>
+                </Trigger>
             </Style.Triggers>
         </Style>
 
@@ -121,6 +127,12 @@
                     <Setter Property="Background" Value="#008a90"/>
                     <Setter Property="Foreground" Value="#ffffff"/>
                 </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.45"/>
+                    <Setter Property="BorderBrush" Value="#30363d"/>
+                    <Setter Property="Foreground" Value="#6e7681"/>
+                    <Setter Property="Cursor" Value="Arrow"/>
+                </Trigger>
             </Style.Triggers>
         </Style>
 
@@ -133,6 +145,12 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#ff5722"/>
                     <Setter Property="Foreground" Value="#ffffff"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.45"/>
+                    <Setter Property="BorderBrush" Value="#30363d"/>
+                    <Setter Property="Foreground" Value="#6e7681"/>
+                    <Setter Property="Cursor" Value="Arrow"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -773,10 +791,10 @@
                                                 <TextBlock Text="Run AI Diagnostic Scan" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Button>
-                                        <Button Name="BtnAiOptimize" Style="{StaticResource DangerButton}" Width="190" Height="34" Margin="0,0,0,6">
+                                        <Button Name="BtnAiOptimize" Style="{StaticResource DangerButton}" Width="190" Height="34" Margin="0,0,0,6" ToolTip="Execute AI optimization on detected candidates and enforce background policies.">
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7E8;" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                                <TextBlock Text="Execute AI Optimization" VerticalAlignment="Center"/>
+                                                <TextBlock Name="TxtAiOptimizeLabel" Text="Execute AI Optimization" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Button>
                                         <StackPanel Orientation="Horizontal">

@@ -226,6 +226,7 @@ $AppCheckboxes = @(
 # AI Optimizer UI Hooks
 $BtnAiScan              = Find-Control "BtnAiScan"
 $BtnAiOptimize          = Find-Control "BtnAiOptimize"
+$TxtAiOptimizeLabel     = Find-Control "TxtAiOptimizeLabel"
 $BtnAiFlushRam          = Find-Control "BtnAiFlushRam"
 $BtnAiGamingShield      = Find-Control "BtnAiGamingShield"
 $TxtAiScanStatus        = Find-Control "TxtAiScanStatus"
@@ -1582,7 +1583,14 @@ if ($null -ne $BtnAiScan) {
 
                 $pendingCount = ($script:LastAiFindings | Where-Object { -not $_.IsAlreadyApplied }).Count
                 if ($null -ne $BtnAiOptimize) {
-                    $BtnAiOptimize.IsEnabled = ($pendingCount -gt 0)
+                    $BtnAiOptimize.IsEnabled = $true
+                    if ($pendingCount -gt 0) {
+                        $BtnAiOptimize.ToolTip = "Remediate $pendingCount pending optimization candidates."
+                        if ($null -ne $TxtAiOptimizeLabel) { $TxtAiOptimizeLabel.Text = "Execute AI Optimization ($pendingCount)" }
+                    } else {
+                        $BtnAiOptimize.ToolTip = "All candidates already applied. Click to re-enforce policies and trim RAM."
+                        if ($null -ne $TxtAiOptimizeLabel) { $TxtAiOptimizeLabel.Text = "Re-Optimize / Enforce" }
+                    }
                 }
 
                 if ($null -ne $TxtAiScanStatus) {
@@ -1696,11 +1704,16 @@ if ($null -ne $BtnAiOptimize) {
     $BtnAiOptimize.Add_Click({
         Write-DashboardLog "User clicked Execute AI Neural Optimization"
         $scriptPath = Join-Path $RootPath "Tweaks\Services\AI_Dynamic_System_Optimizer.ps1"
-        Invoke-DashboardAction -ActionName "AI_Neural_Optimization" -ScriptPath $scriptPath -Arguments "-Auto -Force"
-        
-        if ($null -ne $TxtAiScanStatus) {
-            $TxtAiScanStatus.Text = "Status: AI Optimization executed successfully! Memory trimmed and services disabled."
-            $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+        Invoke-DashboardAction -ActionName "AI_Neural_Optimization" -ScriptPath $scriptPath -Arguments "-Auto -Force" -OnComplete {
+            param($exitCode)
+            if ($null -ne $TxtAiScanStatus) {
+                $TxtAiScanStatus.Text = "Status: AI Optimization executed successfully! Memory trimmed and policies enforced."
+                $TxtAiScanStatus.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00ff41")
+            }
+            if ($null -ne $TxtAiOptimizeLabel) {
+                $TxtAiOptimizeLabel.Text = "Re-Optimize / Enforce"
+            }
+            Initialize-HardwareHUD
         }
     })
 }
