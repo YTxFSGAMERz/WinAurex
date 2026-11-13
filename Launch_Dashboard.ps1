@@ -764,22 +764,31 @@ function Process-NextDashboardAction {
     
     $proc = Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"$cmd`"" -PassThru
 
-    $startTime = [System.Diagnostics.Stopwatch]::StartNew()
-    $lastLogSize = 0
+    $state = [PSCustomObject]@{
+        ActionName  = $ActionName
+        DisplayName = $displayName
+        ActionLog   = $ActionLog
+        Proc        = $proc
+        StartTime   = [System.Diagnostics.Stopwatch]::StartNew()
+        LastLogSize = 0
+        Timer       = $null
+        OnComplete  = $OnComplete
+    }
 
     $timer = New-Object System.Windows.Threading.DispatcherTimer
     $timer.Interval = [TimeSpan]::FromMilliseconds(100)
+    $state.Timer = $timer
 
-    $timer.Add_Tick({
-        $elapsedSec = [math]::Round($startTime.Elapsed.TotalSeconds, 1)
+    $tickHandler = {
+        $elapsedSec = [math]::Round($state.StartTime.Elapsed.TotalSeconds, 1)
         Update-LoadingOverlay -Elapsed "${elapsedSec}s"
 
-        if (Test-Path $ActionLog) {
+        if (-not [string]::IsNullOrEmpty($state.ActionLog) -and (Test-Path -LiteralPath $state.ActionLog)) {
             try {
-                $fileInfo = Get-Item $ActionLog -ErrorAction SilentlyContinue
-                if ($fileInfo -and $fileInfo.Length -gt $lastLogSize) {
-                    $lastLogSize = $fileInfo.Length
-                    $tail = Get-Content -Path $ActionLog -Tail 1 -ErrorAction SilentlyContinue
+                $fileInfo = Get-Item $state.ActionLog -ErrorAction SilentlyContinue
+                if ($fileInfo -and $fileInfo.Length -gt $state.LastLogSize) {
+                    $state.LastLogSize = $fileInfo.Length
+                    $tail = Get-Content -Path $state.ActionLog -Tail 1 -ErrorAction SilentlyContinue
                     if ($tail -and -not [string]::IsNullOrWhiteSpace($tail) -and -not ($tail -match "^(Transcript|[*=]+|$)")) {
                         $cleanTail = $tail.Trim()
                         if ($cleanTail.Length -gt 60) { $cleanTail = $cleanTail.Substring(0, 57) + "..." }
@@ -795,11 +804,11 @@ function Process-NextDashboardAction {
             } catch {}
         }
 
-        if ($proc.HasExited) {
-            $timer.Stop()
-            $exitCode = if ($proc) { $proc.ExitCode } else { 0 }
-            Write-DashboardLog "Completed Action: $ActionName (ExitCode: $exitCode, Log: $ActionLog)"
-            Set-Status -Message "$ActionName complete! Log: $(Split-Path $ActionLog -Leaf)" -Color "#00adb5"
+        if ($null -eq $state.Proc -or $state.Proc.HasExited) {
+            $state.Timer.Stop()
+            $exitCode = if ($state.Proc) { $state.Proc.ExitCode } else { 0 }
+            Write-DashboardLog "Completed Action: $($state.ActionName) (ExitCode: $exitCode, Log: $($state.ActionLog))"
+            Set-Status -Message "$($state.ActionName) complete! Log: $(Split-Path $state.ActionLog -Leaf)" -Color "#00adb5"
             Update-DefenderStatusUI
 
             if ($null -ne $ProgressGlobal) {
@@ -811,20 +820,22 @@ function Process-NextDashboardAction {
                 $TxtProgressDetail.Text = ""
             }
 
-            if ($OnComplete) {
-                try { & $OnComplete $exitCode } catch {}
+            if ($state.OnComplete) {
+                try { & $state.OnComplete $exitCode } catch {}
             }
 
             if ($script:ActionQueue.Count -gt 0) {
                 Process-NextDashboardAction
             } else {
                 $script:CurrentActionRunning = $false
-                if (-not $OnComplete) {
-                    Complete-LoadingOverlay -Message "$displayName Complete!" -Success ($exitCode -eq 0)
+                if (-not $state.OnComplete) {
+                    Complete-LoadingOverlay -Message "$($state.DisplayName) Complete!" -Success ($exitCode -eq 0)
                 }
             }
         }
-    })
+    }.GetNewClosure()
+
+    $timer.Add_Tick($tickHandler)
     $timer.Start()
 }
 
