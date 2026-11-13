@@ -66,6 +66,7 @@ public partial class App : Application
                 services.AddSingleton<ISystemStatusProvider, WinAurex.Infrastructure.SystemStatusProvider>();
                 
                 services.AddSingleton<WinAurex.Contracts.Execution.ICapabilityRegistry, WinAurex.Core.Execution.CapabilityRegistry>();
+                services.AddSingleton<WinAurex.Core.Execution.IJournalManager, WinAurex.Core.Execution.JournalManager>();
                 services.AddSingleton<WinAurex.Contracts.Execution.IExecutionEngine, WinAurex.Core.Execution.ExecutionEngine>();
                 services.AddSingleton<WinAurex.Core.Execution.IRollbackEngine, WinAurex.Core.Execution.RollbackEngine>();
                 
