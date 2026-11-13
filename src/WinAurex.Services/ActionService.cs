@@ -61,9 +61,51 @@ namespace WinAurex.Services
             return new ActionExecutionResult { ActionId = action.Id, Status = ActionStatus.Failed, Message = "Execution failed." };
         }
 
-        public Task<ActionExecutionResult> PreviewAsync(SystemAction action, CancellationToken cancellationToken = default)
+        public async Task<ActionExecutionResult> PreviewAsync(SystemAction action, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            if (action.ExecutionPlan == null)
+            {
+                return new ActionExecutionResult { ActionId = action.Id, Status = ActionStatus.Failed, Message = "No execution plan found." };
+            }
+
+            var context = new WinAurex.Contracts.Execution.PlanContext(
+                Guid.NewGuid(),
+                true, // Dry run: validate the plan without changing the system
+                cancellationToken,
+                System.Security.Principal.WindowsIdentity.GetCurrent().Name,
+                new System.Security.Principal.WindowsPrincipal(System.Security.Principal.WindowsIdentity.GetCurrent()).IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator),
+                System.Globalization.CultureInfo.CurrentCulture.Name,
+                System.IO.Directory.GetCurrentDirectory(),
+                _logger
+            );
+
+            var result = await _executionEngine.ExecutePlanAsync(action.ExecutionPlan, context);
+
+            bool isSuccess = false;
+            foreach (var evt in result.Events)
+            {
+                if (evt is WinAurex.Models.Execution.ExecutionCompletedEntry comp)
+                {
+                    isSuccess = comp.IsSuccess;
+                }
+            }
+
+            if (isSuccess)
+            {
+                return new ActionExecutionResult
+                {
+                    ActionId = action.Id,
+                    Status = ActionStatus.NotApplied,
+                    Message = "Preview completed. No changes were made."
+                };
+            }
+
+            return new ActionExecutionResult
+            {
+                ActionId = action.Id,
+                Status = ActionStatus.Failed,
+                Message = "Preview found problems in the execution plan."
+            };
         }
 
         public async Task<ActionExecutionResult> RollbackAsync(SystemAction action, CancellationToken cancellationToken = default)
