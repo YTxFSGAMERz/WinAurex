@@ -1,3 +1,4 @@
+
 ---
 name: "💡 Architecture Expansion Proposal"
 about: "Propose an optimization module or architectural expansion"
@@ -8,33 +9,70 @@ assignees: []
 
 ```ini
 ========================================================================
-                WinAurex ARCHITECTURE EXPANSION PROPOSAL
+             WinAurex ARCHITECTURE EXPANSION PROPOSAL
 ========================================================================
 [ MODULE CLASS ] : SUGGESTED EXTENSION
-[ COMPATIBILITY] : HIGHLY VERIFIABLE
+[ COMPATIBILITY ] : WINDOWS 10 / WINDOWS 11
 ========================================================================
 ```
 
 ### 🧠 1. CONCEPT SPECIFICATION
-> Clear, engineering-focused description of the proposed feature, utility, or profile addition.
+
+Introduce a Windows Performance Monitoring Module
+that allows users to monitor CPU usage, RAM consumption,
+disk usage, and system performance in real time.
+
+The module will help users identify performance issues
+and improve system resource management.
 
 ### 📊 2. EXPECTED IMPACT TELEMETRY
-> How does this proposed change improve system metrics? (Select all that apply)
-- `[ ] Latency Reduction (DPC/ISR timing)`
-- `[ ] Context Switching / Scheduler Throughput`
-- `[ ] RAM Footprint Optimization`
-- `[ ] Rollback Reliability Enhancement`
-- `[ ] GUI Dashboard Features`
-- `[ ] Cybersecurity / Telemetry Hardening`
+
+How does this proposed change improve system metrics?
+
+- [ ] Latency Reduction (DPC/ISR timing)
+- [ ] Context Switching / Scheduler Throughput
+- [x] RAM Footprint Optimization
+- [ ] Rollback Reliability Enhancement
+- [x] GUI Dashboard Features
+- [x] Cybersecurity / Telemetry Hardening
 
 ### 🔧 3. TECHNICAL SCHEMA & SCRIPTS
-> Suggest the actual registry entries, PowerShell APIs, scheduled tasks, or logic files that would be introduced.
+
+Suggested PowerShell implementation:
+
 ```powershell
-# Add prototype script/registry changes here
+# Get CPU usage
+$CPU = Get-Counter '\Processor(_Total)\% Processor Time'
+
+# Get available RAM
+$RAM = Get-CimInstance Win32_OperatingSystem
+
+$FreeRAM = [math]::Round(
+    $RAM.FreePhysicalMemory / 1MB, 2
+)
+
+# Display system information
+Write-Host "CPU Usage: $($CPU.CounterSamples.CookedValue)%"
+Write-Host "Free RAM: $FreeRAM GB"
 ```
 
 ### 🛡️ 4. ROLLBACK COMPATIBILITY
-> Detail the exact inverse operation required to fully restore Windows to its original state.
+
+This monitoring module does not modify Windows
+registry settings or system configurations.
+
+Rollback can be performed by removing the
+new monitoring script.
+
 ```powershell
-# Add rollback/restore code snippet here
+# Remove the monitoring script
+Remove-Item ".\PerformanceMonitor.ps1" -Force
 ```
+
+### ✅ 5. EXPECTED RESULT
+
+- Real-time CPU monitoring
+- RAM usage tracking
+- Better system performance visibility
+- Safe implementation without registry modifications
+- Easy removal and maintenance
