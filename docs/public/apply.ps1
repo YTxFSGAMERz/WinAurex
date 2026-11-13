@@ -3,7 +3,7 @@
     WinAurex Universal In-Place PC Conversion Bootstrapper
 .DESCRIPTION
     Converts any existing Windows 10/11 PC into WinAurex Edition in-place without reinstallation.
-    Run via: irm https://winaurex.tech/apply.ps1 | iex
+    Run via: irm https://www.winaurex.tech/apply.ps1 | iex
 #>
 [CmdletBinding()]
 param (
