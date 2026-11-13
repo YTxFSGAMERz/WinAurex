@@ -819,7 +819,9 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Style="{StaticResource Header2}" Text="AI Classification Findings &amp; Heuristic Evaluation" Margin="0" VerticalAlignment="Center"/>
                                         <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                            <Button Name="BtnAiFilterAll" Content="All Candidates" Height="28" Padding="10,0" Margin="0,0,6,0" FontSize="11"/>
+                                            <Button Name="BtnAiFilterPending" Content="Actionable (0)" Height="28" Padding="10,0" Margin="0,0,6,0" FontSize="11" Foreground="#ffb300"/>
+                                            <Button Name="BtnAiFilterOptimized" Content="Optimized (0)" Height="28" Padding="10,0" Margin="0,0,6,0" FontSize="11" Foreground="#00ff41"/>
+                                            <Button Name="BtnAiFilterAll" Content="All Evaluated" Height="28" Padding="10,0" Margin="0,0,6,0" FontSize="11"/>
                                             <Button Name="BtnAiFilterSafe" Content="Tier 1 Safe" Height="28" Padding="10,0" Margin="0,0,6,0" FontSize="11"/>
                                             <Button Name="BtnAiFilterAnomalies" Content="Process Anomalies" Height="28" Padding="10,0" FontSize="11" Foreground="#ff5722"/>
                                         </StackPanel>
@@ -828,12 +830,13 @@
                                     <ListView Name="ListAiFindings" Background="#0d1117" Foreground="#ffffff" BorderBrush="#30363d" Height="260">
                                         <ListView.View>
                                             <GridView>
-                                                <GridViewColumn Header="Type" DisplayMemberBinding="{Binding TargetType}" Width="100"/>
-                                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="180"/>
-                                                <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" Width="140"/>
-                                                <GridViewColumn Header="Confidence" DisplayMemberBinding="{Binding Confidence}" Width="90"/>
-                                                <GridViewColumn Header="Tier" DisplayMemberBinding="{Binding RiskTier}" Width="70"/>
-                                                <GridViewColumn Header="Action Recommendation" DisplayMemberBinding="{Binding Action}" Width="170"/>
+                                                <GridViewColumn Header="Status" DisplayMemberBinding="{Binding StatusDisplay}" Width="130"/>
+                                                <GridViewColumn Header="Type" DisplayMemberBinding="{Binding TargetType}" Width="80"/>
+                                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="175"/>
+                                                <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" Width="135"/>
+                                                <GridViewColumn Header="Confidence" DisplayMemberBinding="{Binding Confidence}" Width="85"/>
+                                                <GridViewColumn Header="Tier" DisplayMemberBinding="{Binding TierDisplay}" Width="85"/>
+                                                <GridViewColumn Header="Action Recommendation" DisplayMemberBinding="{Binding Action}" Width="160"/>
                                             </GridView>
                                         </ListView.View>
                                     </ListView>

@@ -279,19 +279,27 @@ function Invoke-WinAurexAiScan {
             }
 
             $isAlreadyDisabled = ($svc.StartMode -eq "Disabled" -and $svc.State -ne "Running")
+            $statusText = if ($isAlreadyDisabled) { "Optimized (Disabled)" } else { "Actionable ($($svc.State))" }
+            $actionText = if ($isAlreadyDisabled) { "Already Disabled" } else { "Disable Service" }
+            $tierText = if ($pred.SafetyTier -match "Tier 1") { "Tier 1 (Safe)" } else { "Tier 2 (Recommended)" }
+
             $results.Add([PSCustomObject]@{
                 TargetType       = "Service"
                 Name             = $name
                 DisplayName      = $svc.DisplayName
                 Category         = $pred.Category
                 SafetyTier       = $pred.SafetyTier
+                RiskTier         = $tierText
+                TierDisplay      = $tierText
                 Confidence       = "$([Math]::Round($pred.Confidence * 100, 1))%"
                 ConfidenceVal    = $pred.Confidence
                 Description      = if ($desc) { $desc } else { "Background Windows Service" }
                 CurrentState     = if ($isAlreadyDisabled) { "Already Disabled" } else { $svc.State }
+                StatusDisplay    = $statusText
+                Action           = $actionText
                 IsSelected       = ($pred.SafetyTier -eq "Tier 1 (Safe)" -and -not $isAlreadyDisabled)
                 IsAlreadyApplied = $isAlreadyDisabled
-                EstSavings       = "1 Proc, ~8 Threads, ~180 Handles"
+                EstSavings       = if ($isAlreadyDisabled) { "Already Reclaimed (0 RAM Drag)" } else { "1 Proc, ~8 Threads, ~180 Handles" }
             })
         }
     }
@@ -329,16 +337,21 @@ function Invoke-WinAurexAiScan {
             $pred = Invoke-AiInference -Name $name -Description "" -Vendor $publisher
 
             if ($pred.Category -in @("Consumer_Bloatware", "OEM_Bloatware") -and $pred.IsSafeToDisable) {
+                $tierText = if ($pred.SafetyTier -match "Tier 1") { "Tier 1 (Safe)" } else { "Tier 2 (Recommended)" }
                 $results.Add([PSCustomObject]@{
                     TargetType       = "AppX"
                     Name             = $name
                     DisplayName      = $name
                     Category         = $pred.Category
                     SafetyTier       = $pred.SafetyTier
+                    RiskTier         = $tierText
+                    TierDisplay      = $tierText
                     Confidence       = "$([Math]::Round($pred.Confidence * 100, 1))%"
                     ConfidenceVal    = $pred.Confidence
                     Description      = "Preloaded Consumer / Sponsored AppX Package"
                     CurrentState     = "Installed"
+                    StatusDisplay    = "Actionable (Installed)"
+                    Action           = "Uninstall Package"
                     IsSelected       = ($pred.SafetyTier -eq "Tier 1 (Safe)")
                     IsAlreadyApplied = $false
                     EstSavings       = "~50 MB Disk, Suppressed Background Host"
@@ -409,19 +422,25 @@ function Invoke-WinAurexAiScan {
         }
 
         if ($taskFound) {
+            $statusText = if ($isDis) { "Optimized (Disabled)" } else { "Actionable (Active)" }
+            $actionText = if ($isDis) { "Already Disabled" } else { "Disable Task" }
             $results.Add([PSCustomObject]@{
                 TargetType       = "ScheduledTask"
                 Name             = $tName
                 DisplayName      = $t
                 Category         = "High_Overhead_Task"
                 SafetyTier       = "Tier 1 (Safe)"
+                RiskTier         = "Tier 1 (Safe)"
+                TierDisplay      = "Tier 1 (Safe)"
                 Confidence       = "98.5%"
                 ConfidenceVal    = 0.985
                 Description      = "Telemetry & Diagnostic Background Task"
                 CurrentState     = if ($isDis) { "Already Disabled" } else { "Enabled" }
+                StatusDisplay    = $statusText
+                Action           = $actionText
                 IsSelected       = (-not $isDis)
                 IsAlreadyApplied = $isDis
-                EstSavings       = "Prevents Idle CPU / Disk Wakeups"
+                EstSavings       = if ($isDis) { "Already Reclaimed (0 CPU Drag)" } else { "Prevents Idle CPU / Disk Wakeups" }
             })
         }
     }
