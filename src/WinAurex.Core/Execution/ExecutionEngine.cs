@@ -72,10 +72,12 @@ namespace WinAurex.Core.Execution
 
                 if (opContext.ExecutionResult == null || !opContext.ExecutionResult.IsSuccess)
                 {
+                    // The plan failed even when the policy allows the remaining operations to run.
+                    isSuccess = false;
+
                     var policy = operation.PolicyOverride ?? plan.Policy;
                     if (!policy.ContinueOnFailure)
                     {
-                        isSuccess = false;
                         break;
                     }
                 }
