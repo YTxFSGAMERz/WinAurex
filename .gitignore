@@ -60,3 +60,6 @@ chocolatey/tools/app/
 
 # Astro / Starlight / Cache
 .cache/
+
+# Agent working directories
+.agents/

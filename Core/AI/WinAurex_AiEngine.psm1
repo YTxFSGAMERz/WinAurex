@@ -102,7 +102,12 @@ function Invoke-AiInference {
         "microsoft.webmediaextensions", "microsoft.webpimageextension",
         "microsoft.heifimageextension", "microsoft.hevcvideoextension",
         "microsoft.av1videoextension", "microsoft.vp9videoextensions",
-        "microsoft.mpeg2videoextension"
+        "microsoft.mpeg2videoextension",
+        "microsoft.microsoftedge", "microsoft.microsoftedgedevtoolsclient",
+        "microsoft.xboxgamecallableui", "microsoft.aad.brokerplugin",
+        "microsoft.accountscontrol", "microsoft.creddialoghost",
+        "microsoft.lockapp", "microsoft.win32webviewhost",
+        "microsoft.windows.contentdeliverymanager", "microsoft.windows.shellflow"
     )
 
     $lowerName = $Name.ToLower()
@@ -228,7 +233,10 @@ function Invoke-WinAurexAiScan {
     # --- 1. SCAN INSTALLED SERVICES ---
     if ($ProgressCallback) { & $ProgressCallback "Querying Windows Service Control Manager..." 5 }
     Write-Host "  [*] [1/3] Interrogating Windows Services..." -ForegroundColor Cyan
-    $allServices = Get-CimInstance Win32_Service -ErrorAction SilentlyContinue
+    $allServices = Get-CimInstance -Query "SELECT Name, DisplayName, Description, PathName, StartMode, State FROM Win32_Service" -ErrorAction SilentlyContinue
+    if (-not $allServices) {
+        $allServices = Get-CimInstance Win32_Service -ErrorAction SilentlyContinue
+    }
     $allSvcs = Get-Service -ErrorAction SilentlyContinue
     $svcMap = @{}
     foreach ($s in $allSvcs) { $svcMap[$s.Name] = $s }
@@ -243,7 +251,7 @@ function Invoke-WinAurexAiScan {
         $vendor = $svc.PathName
         
         $svcPct = [math]::Round(($svcIndex / $totalSvc) * 33)
-        if ($svcIndex % 15 -eq 0 -or $svcIndex -eq $totalSvc) {
+        if ($svcIndex % 5 -eq 0 -or $svcIndex -eq $totalSvc) {
             Write-Progress -Activity "WinAurex AI Diagnostic Scan" -Status "Evaluating Services ($svcIndex/$totalSvc): $name" -PercentComplete $svcPct
             Write-Host -NoNewline "`r  [*] [1/3] Services: $svcIndex / $totalSvc ($([math]::Round(($svcIndex/$totalSvc)*100))%) - $name                     "
             if ($ProgressCallback) { & $ProgressCallback "Scanning Services: $svcIndex/$totalSvc ($name)" $svcPct }
@@ -270,7 +278,7 @@ function Invoke-WinAurexAiScan {
                 continue
             }
 
-            $isAlreadyDisabled = ($svc.StartMode -eq "Disabled")
+            $isAlreadyDisabled = ($svc.StartMode -eq "Disabled" -and $svc.State -ne "Running")
             $results.Add([PSCustomObject]@{
                 TargetType       = "Service"
                 Name             = $name
@@ -299,6 +307,15 @@ function Invoke-WinAurexAiScan {
 
         foreach ($pkg in $appxList) {
             $appxIndex++
+
+            # Exclude non-removable Windows SystemApps, frameworks, and system packages
+            if ($pkg.NonRemovable -or 
+                ($pkg.InstallLocation -and $pkg.InstallLocation -match 'SystemApps|ImmersiveControlPanel') -or 
+                ($pkg.SignatureKind -eq "System") -or 
+                $pkg.IsFramework) {
+                continue
+            }
+
             $name = $pkg.Name
             $publisher = $pkg.Publisher
 
@@ -350,6 +367,14 @@ function Invoke-WinAurexAiScan {
     $taskIndex = 0
     $totalTasks = $TargetTasks.Count
 
+    $scheduleService = $null
+    try {
+        $scheduleService = New-Object -ComObject "Schedule.Service"
+        $scheduleService.Connect()
+    } catch {
+        $scheduleService = $null
+    }
+
     foreach ($t in $TargetTasks) {
         $taskIndex++
         $taskPct = 66 + [math]::Round(($taskIndex / $totalTasks) * 34)
@@ -357,27 +382,52 @@ function Invoke-WinAurexAiScan {
         Write-Progress -Activity "WinAurex AI Diagnostic Scan" -Status "Evaluating Task ($taskIndex/$totalTasks): $tName" -PercentComplete $taskPct
         if ($ProgressCallback) { & $ProgressCallback "Scanning Task: $tName" $taskPct }
 
-        try {
-            $path = Split-Path $t -Parent
-            $task = Get-ScheduledTask -TaskPath "$path\" -TaskName $tName -ErrorAction SilentlyContinue
-            if ($task) {
-                $isDis = ($task.State -eq "Disabled")
-                $results.Add([PSCustomObject]@{
-                    TargetType       = "ScheduledTask"
-                    Name             = $tName
-                    DisplayName      = $t
-                    Category         = "High_Overhead_Task"
-                    SafetyTier       = "Tier 1 (Safe)"
-                    Confidence       = "98.5%"
-                    ConfidenceVal    = 0.985
-                    Description      = "Telemetry & Diagnostic Background Task"
-                    CurrentState     = if ($isDis) { "Already Disabled" } else { "Enabled" }
-                    IsSelected       = (-not $isDis)
-                    IsAlreadyApplied = $isDis
-                    EstSavings       = "Prevents Idle CPU / Disk Wakeups"
-                })
-            }
-        } catch {}
+        $taskFound = $false
+        $isDis = $false
+
+        if ($scheduleService) {
+            try {
+                $path = Split-Path $t -Parent
+                $folder = $scheduleService.GetFolder($path)
+                $comTask = $folder.GetTask($tName)
+                if ($comTask) {
+                    $taskFound = $true
+                    $isDis = ($comTask.State -eq 1 -or -not $comTask.Enabled)
+                }
+            } catch {}
+        }
+
+        if (-not $taskFound) {
+            try {
+                $path = Split-Path $t -Parent
+                $task = Get-ScheduledTask -TaskPath "$path\" -TaskName $tName -ErrorAction SilentlyContinue
+                if ($task) {
+                    $taskFound = $true
+                    $isDis = ($task.State -eq "Disabled")
+                }
+            } catch {}
+        }
+
+        if ($taskFound) {
+            $results.Add([PSCustomObject]@{
+                TargetType       = "ScheduledTask"
+                Name             = $tName
+                DisplayName      = $t
+                Category         = "High_Overhead_Task"
+                SafetyTier       = "Tier 1 (Safe)"
+                Confidence       = "98.5%"
+                ConfidenceVal    = 0.985
+                Description      = "Telemetry & Diagnostic Background Task"
+                CurrentState     = if ($isDis) { "Already Disabled" } else { "Enabled" }
+                IsSelected       = (-not $isDis)
+                IsAlreadyApplied = $isDis
+                EstSavings       = "Prevents Idle CPU / Disk Wakeups"
+            })
+        }
+    }
+
+    if ($scheduleService) {
+        try { [System.Runtime.InteropServices.Marshal]::ReleaseComObject($scheduleService) | Out-Null } catch {}
     }
     Write-Progress -Activity "WinAurex AI Diagnostic Scan" -Completed
     Write-Host "  [+] [3/3] Tasks Evaluated: $totalTasks inspected." -ForegroundColor Green
@@ -389,11 +439,18 @@ function Invoke-WinAurexAiScan {
 function Invoke-WinAurexAiRemediation {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
-        [array]$SelectedItems,
+        [Parameter(Mandatory=$false)]
+        [AllowEmptyCollection()]
+        [AllowNull()]
+        [array]$SelectedItems = @(),
         [scriptblock]$ProgressCallback = $null,
         [switch]$Force
     )
+
+    if ($null -eq $SelectedItems -or $SelectedItems.Count -eq 0) {
+        Write-Host "[+] All targets are already optimized. No remediations required." -ForegroundColor Green
+        return @{ Applied = 0; Skipped = 0 }
+    }
 
     $appliedCount = 0
     $skippedCount = 0
@@ -452,10 +509,57 @@ function Invoke-WinAurexAiRemediation {
         }
         elseif ($item.TargetType -eq "AppX") {
             try {
-                Get-AppxPackage -Name $item.Name -AllUsers -ErrorAction SilentlyContinue | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue
-                Get-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -eq $item.Name } | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue | Out-Null
-                $appliedCount++
-                Write-Host "[PURGED]" -ForegroundColor Green
+                $pkgs = @(Get-AppxPackage -Name $item.Name -AllUsers -ErrorAction SilentlyContinue)
+                $prov = @(Get-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -eq $item.Name })
+
+                if ($pkgs.Count -eq 0 -and $prov.Count -eq 0) {
+                    $skippedCount++
+                    Write-Host "[ALREADY REMOVED]" -ForegroundColor DarkGray
+                    continue
+                }
+
+                $removable = @($pkgs | Where-Object {
+                    -not ($_.NonRemovable -or ($_.InstallLocation -and $_.InstallLocation -match 'SystemApps|ImmersiveControlPanel') -or ($_.SignatureKind -eq "System") -or $_.IsFramework)
+                })
+
+                if ($removable.Count -eq 0 -and $prov.Count -eq 0) {
+                    $skippedCount++
+                    Write-Host "[PROTECTED SYSTEM APP - SKIPPED]" -ForegroundColor Yellow
+                    continue
+                }
+
+                $hasError = $false
+                foreach ($p in $removable) {
+                    try {
+                        Remove-AppxPackage -Package $p.PackageFullName -AllUsers -ErrorAction Stop
+                    } catch [System.Runtime.InteropServices.COMException] {
+                        if ($_.Exception.HResult -eq [int]0x80070032 -or $_.Exception.HResult -eq [int]0x80073CFA -or $_.Exception.Message -match "0x80070032") {
+                            # Non-removable system app
+                        } else {
+                            $hasError = $true
+                        }
+                    } catch {
+                        $hasError = $true
+                    }
+                }
+
+                foreach ($pr in $prov) {
+                    try {
+                        Remove-AppxProvisionedPackage -Online -PackageName $pr.PackageName -ErrorAction Stop | Out-Null
+                    } catch {}
+                }
+
+                # Verify package is actually removed before incrementing appliedCount
+                $remaining = @(Get-AppxPackage -Name $item.Name -AllUsers -ErrorAction SilentlyContinue)
+                if (-not $hasError -and $remaining.Count -eq 0) {
+                    $appliedCount++
+                    Write-Host "[PURGED]" -ForegroundColor Green
+                } elseif ($remaining.Count -gt 0 -and ($remaining[0].NonRemovable -or ($remaining[0].InstallLocation -and $remaining[0].InstallLocation -match 'SystemApps'))) {
+                    $skippedCount++
+                    Write-Host "[SKIPPED - SYSTEM APP]" -ForegroundColor Yellow
+                } else {
+                    Write-Host "[ERROR]" -ForegroundColor Red
+                }
             } catch {
                 Write-Host "[ERROR]" -ForegroundColor Red
             }

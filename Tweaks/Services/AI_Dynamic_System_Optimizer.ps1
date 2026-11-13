@@ -53,57 +53,84 @@ Write-Host "====================================================================
 
 Write-AiLog "AI Optimizer session started (ScanOnly=$ScanOnly, Auto=$Auto, Revert=$Revert)"
 
-Write-Host "[*] Executing neural diagnostic scan across services, apps, and tasks..." -ForegroundColor Yellow
-$sw = [System.Diagnostics.Stopwatch]::StartNew()
-$findings = Invoke-WinAurexAiScan
-$sw.Stop()
+try {
+    Write-Host "[*] Executing neural diagnostic scan across services, apps, and tasks..." -ForegroundColor Yellow
+    $sw = [System.Diagnostics.Stopwatch]::StartNew()
+    $findings = Invoke-WinAurexAiScan
+    $sw.Stop()
 
-Write-Host "[+] Scan completed in $([Math]::Round($sw.Elapsed.TotalSeconds, 2))s! Found $($findings.Count) total candidates.`n" -ForegroundColor Green
-Write-AiLog "Scan completed in $($sw.Elapsed.TotalSeconds)s with $($findings.Count) candidates."
+    $pending = @($findings | Where-Object { -not $_.IsAlreadyApplied })
+    $applied = @($findings | Where-Object { $_.IsAlreadyApplied })
 
-# Group Findings
-$services = $findings | Where-Object { $_.TargetType -eq "Service" }
-$appx     = $findings | Where-Object { $_.TargetType -eq "AppX" }
-$tasks    = $findings | Where-Object { $_.TargetType -eq "ScheduledTask" }
+    Write-Host "[+] Scan completed in $([Math]::Round($sw.Elapsed.TotalSeconds, 2))s! Found $($pending.Count) pending candidates ($($applied.Count) already optimized).`n" -ForegroundColor Green
+    Write-AiLog "Scan completed in $($sw.Elapsed.TotalSeconds)s with $($pending.Count) pending candidates ($($applied.Count) already optimized)."
 
-Write-Host "======================================================================" -ForegroundColor DarkGray
-Write-Host (" {0,-15} | {1,-30} | {2,-16} | {3,-10}" -f "TYPE", "NAME", "TIER", "CONFIDENCE") -ForegroundColor Cyan
-Write-Host "----------------------------------------------------------------------" -ForegroundColor DarkGray
+    # Group Findings (Actionable pending candidates)
+    $services = @($pending | Where-Object { $_.TargetType -eq "Service" })
+    $appx     = @($pending | Where-Object { $_.TargetType -eq "AppX" })
+    $tasks    = @($pending | Where-Object { $_.TargetType -eq "ScheduledTask" })
 
-foreach ($f in $findings) {
-    $color = if ($f.SafetyTier -eq "Tier 1 (Safe)") { "Green" } else { "Yellow" }
-    Write-Host (" {0,-15} | {1,-30} | {2,-16} | {3,-10}" -f $f.TargetType, ($f.Name.Substring(0, [Math]::Min($f.Name.Length, 30))), $f.SafetyTier, $f.Confidence) -ForegroundColor $color
-}
-Write-Host "======================================================================`n" -ForegroundColor DarkGray
+    if ($pending.Count -gt 0) {
+        Write-Host "======================================================================" -ForegroundColor DarkGray
+        Write-Host (" {0,-15} | {1,-30} | {2,-16} | {3,-10}" -f "TYPE", "NAME", "TIER", "CONFIDENCE") -ForegroundColor Cyan
+        Write-Host "----------------------------------------------------------------------" -ForegroundColor DarkGray
 
-Write-Host "[SUMMARY OF AI DETECTIONS]" -ForegroundColor Cyan
-Write-Host "  Background Services : $($services.Count) detected" -ForegroundColor White
-Write-Host "  Bloatware Packages  : $($appx.Count) detected" -ForegroundColor White
-Write-Host "  High-Overhead Tasks : $($tasks.Count) detected" -ForegroundColor White
-
-if ($ScanOnly -or (-not $Auto -and -not $Force)) {
-    Write-Host "`n[INFO] Scan mode complete. Pass -Auto to execute 1-click intelligent remediation." -ForegroundColor Cyan
-    Write-AiLog "ScanOnly execution finished."
-    if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
-        Write-Host "Press Enter to exit..." -ForegroundColor DarkGray
-        $null = [System.Console]::ReadLine()
+        foreach ($f in $pending) {
+            $color = if ($f.SafetyTier -eq "Tier 1 (Safe)") { "Green" } else { "Yellow" }
+            Write-Host (" {0,-15} | {1,-30} | {2,-16} | {3,-10}" -f $f.TargetType, ($f.Name.Substring(0, [Math]::Min($f.Name.Length, 30))), $f.SafetyTier, $f.Confidence) -ForegroundColor $color
+        }
+        Write-Host "======================================================================`n" -ForegroundColor DarkGray
+    } else {
+        Write-Host "[+] All detected components are already optimized!`n" -ForegroundColor Green
     }
-    Exit 0
-}
 
-if ($Auto) {
-    Write-Host "`n[*] Applying AI Neural Remediation across all Tier 1 & Tier 2 targets..." -ForegroundColor Yellow
-    $selected = $findings | Where-Object { $_.SafetyTier -in @("Tier 1 (Safe)", "Tier 2 (Recommended)") -and -not $_.IsAlreadyApplied }
-    
-    $result = Invoke-WinAurexAiRemediation -SelectedItems $selected -Force
-    Write-Host "`n[SUCCESS] AI Optimization complete!" -ForegroundColor Green
-    Write-Host "  Applied Remediation : $($result.Applied) components" -ForegroundColor Green
-    Write-Host "  Already Optimized   : $($result.Skipped) components" -ForegroundColor DarkGray
-    Write-Host "  Working sets trimmed: psapi EmptyWorkingSet flushed" -ForegroundColor Yellow
-    Write-AiLog "Remediation finished: Applied=$($result.Applied), Skipped=$($result.Skipped)"
-}
+    Write-Host "[SUMMARY OF AI DETECTIONS]" -ForegroundColor Cyan
+    Write-Host "  Background Services : $($services.Count) detected" -ForegroundColor White
+    Write-Host "  Bloatware Packages  : $($appx.Count) detected" -ForegroundColor White
+    Write-Host "  High-Overhead Tasks : $($tasks.Count) detected" -ForegroundColor White
 
-if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
-    Write-Host "`nPress Enter to finish..." -ForegroundColor DarkGray
-    $null = [System.Console]::ReadLine()
+    if ($ScanOnly -or (-not $Auto)) {
+        Write-Host "`n[INFO] Scan mode complete. Pass -Auto to execute 1-click intelligent remediation." -ForegroundColor Cyan
+        Write-AiLog "ScanOnly execution finished."
+        if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+            Write-Host "Press Enter to exit..." -ForegroundColor DarkGray
+            $null = [System.Console]::ReadLine()
+        }
+        Exit 0
+    }
+
+    if ($Auto) {
+        $selected = @($pending | Where-Object { $_.SafetyTier -in @("Tier 1 (Safe)", "Tier 2 (Recommended)") })
+        
+        if ($selected.Count -eq 0) {
+            Write-Host "`n[SUCCESS] AI Optimization complete! All components are already optimized." -ForegroundColor Green
+            Write-Host "  Applied Remediation : 0 components" -ForegroundColor Green
+            Write-Host "  Already Optimized   : $($applied.Count) components" -ForegroundColor DarkGray
+            Write-Host "  Working sets trimmed: psapi EmptyWorkingSet flushed" -ForegroundColor Yellow
+            Write-AiLog "Remediation finished: Applied=0, Skipped=$($applied.Count)"
+            if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+                Write-Host "`nPress Enter to finish..." -ForegroundColor DarkGray
+                $null = [System.Console]::ReadLine()
+            }
+            Exit 0
+        }
+
+        Write-Host "`n[*] Applying AI Neural Remediation across all Tier 1 & Tier 2 targets..." -ForegroundColor Yellow
+        $result = Invoke-WinAurexAiRemediation -SelectedItems $selected -Force
+        $totalSkipped = $result.Skipped + $applied.Count
+        Write-Host "`n[SUCCESS] AI Optimization complete!" -ForegroundColor Green
+        Write-Host "  Applied Remediation : $($result.Applied) components" -ForegroundColor Green
+        Write-Host "  Already Optimized   : $totalSkipped components" -ForegroundColor DarkGray
+        Write-Host "  Working sets trimmed: psapi EmptyWorkingSet flushed" -ForegroundColor Yellow
+        Write-AiLog "Remediation finished: Applied=$($result.Applied), Skipped=$totalSkipped"
+        if (-not $Force -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+            Write-Host "`nPress Enter to finish..." -ForegroundColor DarkGray
+            $null = [System.Console]::ReadLine()
+        }
+        Exit 0
+    }
+} catch {
+    Write-Error "AI Dynamic System Optimizer encountered an error: $_"
+    Write-AiLog "ERROR: $_"
+    Exit 1
 }
