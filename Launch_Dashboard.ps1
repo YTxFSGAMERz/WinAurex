@@ -1254,17 +1254,21 @@ if ($null -ne $BtnApplySelectedTweak) {
             try {
                 if (Get-Command Invoke-WinAurexItem -ErrorAction SilentlyContinue) {
                     $res = Invoke-WinAurexItem -ItemPath $item.Path
-                    if ($res.Success) {
+                    $isSuccess = if ($res -is [bool]) { $res } elseif ($null -ne $res.Success) { [bool]$res.Success } else { $false }
+                    $exitCode = if ($null -ne $res.ExitCode) { $res.ExitCode } else { 0 }
+                    $errStr = if ($null -ne $res.Error) { $res.Error } else { "" }
+
+                    if ($isSuccess) {
                         Write-DashboardLog "Catalog tweak applied successfully: $($item.Name)"
                         Set-Status -Message "Applied: $($item.Name)" -Color "#00adb5"
                         if ($null -ne $TxtSelectedTweakStatus) {
-                            $TxtSelectedTweakStatus.Text = "Success: $($item.Name) applied successfully (Exit: $($res.ExitCode))"
+                            $TxtSelectedTweakStatus.Text = "Success: $($item.Name) applied successfully (Exit: $exitCode)"
                         }
                     } else {
-                        Write-DashboardLog "[WARN] Catalog tweak exited with code $($res.ExitCode): $($res.Error)"
-                        Set-Status -Message "Completed $($item.Name) with code $($res.ExitCode)" -Color "#ffb300"
+                        Write-DashboardLog "[WARN] Catalog tweak exited with code ${exitCode}: $errStr"
+                        Set-Status -Message "Completed $($item.Name) with code $exitCode" -Color "#ffb300"
                         if ($null -ne $TxtSelectedTweakStatus) {
-                            $TxtSelectedTweakStatus.Text = "Completed with warnings: $($item.Name) (Exit: $($res.ExitCode))"
+                            $TxtSelectedTweakStatus.Text = "Completed with warnings: $($item.Name) (Exit: $exitCode)"
                         }
                     }
                 } else {

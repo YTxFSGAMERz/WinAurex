@@ -98,7 +98,7 @@ function Invoke-WinAurexItem {
 
     if (-not (Test-Path $ItemPath)) {
         Write-Warning "Target file not found: $ItemPath"
-        return $false
+        return [PSCustomObject]@{ Success = $false; ExitCode = -1; Error = "Target file not found: $ItemPath" }
     }
 
     $ext = [System.IO.Path]::GetExtension($ItemPath).ToLower()
@@ -108,30 +108,34 @@ function Invoke-WinAurexItem {
                 $argList = "-NoProfile -ExecutionPolicy Bypass -File `"$ItemPath`""
                 if ($Arguments) { $argList += " $Arguments" }
                 $proc = Start-Process powershell.exe -ArgumentList $argList -PassThru -Wait
-                return ($proc.ExitCode -eq 0)
+                $exitCode = if ($null -ne $proc.ExitCode) { $proc.ExitCode } else { 0 }
+                return [PSCustomObject]@{ Success = ($exitCode -eq 0); ExitCode = $exitCode; Error = "" }
             }
             ".reg" {
                 $proc = Start-Process "reg.exe" -ArgumentList "import `"$ItemPath`"" -PassThru -Wait -WindowStyle Hidden
-                return ($proc.ExitCode -eq 0)
+                $exitCode = if ($null -ne $proc.ExitCode) { $proc.ExitCode } else { 0 }
+                return [PSCustomObject]@{ Success = ($exitCode -eq 0); ExitCode = $exitCode; Error = "" }
             }
             { $_ -in @(".cmd", ".bat") } {
                 $argList = "/c `"$ItemPath`""
                 if ($Arguments) { $argList += " $Arguments" }
                 $proc = Start-Process "cmd.exe" -ArgumentList $argList -PassThru -Wait
-                return ($proc.ExitCode -eq 0)
+                $exitCode = if ($null -ne $proc.ExitCode) { $proc.ExitCode } else { 0 }
+                return [PSCustomObject]@{ Success = ($exitCode -eq 0); ExitCode = $exitCode; Error = "" }
             }
             ".exe" {
-                Start-Process -FilePath $ItemPath -ArgumentList $Arguments
-                return $true
+                $proc = Start-Process -FilePath $ItemPath -ArgumentList $Arguments -PassThru -Wait
+                $exitCode = if ($null -ne $proc.ExitCode) { $proc.ExitCode } else { 0 }
+                return [PSCustomObject]@{ Success = ($exitCode -eq 0); ExitCode = $exitCode; Error = "" }
             }
             default {
                 Invoke-Item $ItemPath
-                return $true
+                return [PSCustomObject]@{ Success = $true; ExitCode = 0; Error = "" }
             }
         }
     } catch {
         Write-Warning "Failed executing item ($ItemPath): $_"
-        return $false
+        return [PSCustomObject]@{ Success = $false; ExitCode = -1; Error = $_.Exception.Message }
     }
 }
 
