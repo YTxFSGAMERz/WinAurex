@@ -83,7 +83,18 @@ Set-ItemProperty -Path $waasParams -Name "ServiceDllUnloadOnStop" -Value 1 -Type
 $svchostPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost"
 Set-ItemProperty -Path $svchostPath -Name "wusvcs" -Value @("WaaSMedicSvc") -Type MultiString -Force
 
-# 4. Remove Disabling Policies & WSUS Redirections
+# 4. Configure Volume Shadow Copy (VSS) for LCU Restore Points (Resolves 0x80042302 / 0x80070422)
+Write-Host "Configuring Volume Shadow Copy services for restore point staging..." -ForegroundColor Gray
+$vssPath = "HKLM:\SYSTEM\CurrentControlSet\Services\VSS"
+if (Test-Path $vssPath) {
+    Set-ItemProperty -Path $vssPath -Name "Start" -Value 3 -Type DWord -Force -ErrorAction SilentlyContinue
+}
+$swprvPath = "HKLM:\SYSTEM\CurrentControlSet\Services\swprv"
+if (Test-Path $swprvPath) {
+    Set-ItemProperty -Path $swprvPath -Name "Start" -Value 3 -Type DWord -Force -ErrorAction SilentlyContinue
+}
+
+# 5. Remove Disabling Policies & WSUS Redirections
 Write-Host "Removing blocking policies and WSUS redirects..." -ForegroundColor Gray
 $wuPolicy = "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate"
 if (Test-Path $wuPolicy) {
@@ -99,7 +110,7 @@ if (Test-Path $auPolicy) {
 }
 Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE" -Name "DisableOnline" -ErrorAction SilentlyContinue
 
-# 5. Restore Settings Page Visibility
+# 6. Restore Settings Page Visibility
 $exp = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer"
 if (Test-Path $exp) {
     $val = (Get-ItemProperty -Path $exp -Name "SettingsPageVisibility" -ErrorAction SilentlyContinue).SettingsPageVisibility
@@ -113,15 +124,17 @@ if (Test-Path $exp) {
     }
 }
 
-# 6. Disable UCPD Minifilter Driver (Resolves 0x80070005 on Edge/WebView Servicing)
-Write-Host "Disabling UCPD minifilter driver and task..." -ForegroundColor Gray
+# 7. Disable & Detach UCPD Minifilter Driver (Resolves 0x80070005 on Edge/WebView Servicing)
+Write-Host "Disabling and detaching UCPD minifilter driver..." -ForegroundColor Gray
 $ucpdPath = "HKLM:\SYSTEM\CurrentControlSet\Services\UCPD"
 if (Test-Path $ucpdPath) {
     Set-ItemProperty -Path $ucpdPath -Name "Start" -Value 4 -Type DWord -Force -ErrorAction SilentlyContinue
 }
 & schtasks.exe /change /tn "\Microsoft\Windows\AppxDeploymentClient\UCPD velocity" /disable >$null 2>&1
+& fltmc.exe detach ucpd C: >$null 2>&1
+& fltmc.exe detach ucpd D: >$null 2>&1
 
-# 7. Self-Healing Staging Permissions & Directory ACLs (Resolves 0x80070005)
+# 8. Self-Healing Staging Permissions & Directory ACLs (Resolves 0x80070005)
 Write-Host "Hardening staging directory ACLs and permissions..." -ForegroundColor Gray
 $sysTemp = "$env:SystemRoot\SystemTemp"
 if (-not (Test-Path $sysTemp)) { New-Item -ItemType Directory -Path $sysTemp -Force | Out-Null }
@@ -135,6 +148,13 @@ if (-not (Test-Path $cbsTemp)) { New-Item -ItemType Directory -Path $cbsTemp -Fo
 & icacls.exe $cbsTemp /grant "NT AUTHORITY\SYSTEM:(OI)(CI)F" /T /C /Q >$null 2>&1
 & icacls.exe $cbsTemp /grant "BUILTIN\Administrators:(OI)(CI)F" /T /C /Q >$null 2>&1
 
+# Hardening MumX directory ACLs for TrustedInstaller and SYSTEM (Resolves 0x80070005 during .mumx.esd staging)
+$mumxDir = "$env:SystemRoot\Servicing\MumX"
+if (-not (Test-Path $mumxDir)) { New-Item -ItemType Directory -Path $mumxDir -Force | Out-Null }
+& icacls.exe $mumxDir /grant "*S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464:(OI)(CI)F" /T /C /Q >$null 2>&1
+& icacls.exe $mumxDir /grant "NT AUTHORITY\SYSTEM:(OI)(CI)F" /T /C /Q >$null 2>&1
+& icacls.exe $mumxDir /grant "BUILTIN\Administrators:(OI)(CI)F" /T /C /Q >$null 2>&1
+
 # Purge locked CbsTemp._ForDelete if present
 $cbsDelete = Join-Path $sysTemp "CbsTemp._ForDelete"
 if (Test-Path $cbsDelete) {
@@ -145,66 +165,132 @@ if (Test-Path $cbsDelete) {
     }
 }
 
-# Grant Admin access on USOPrivate / USOShared to prevent 0x80070005 on store/session operations
+# Grant Admin and AppContainer access on USOPrivate / USOShared to prevent Settings UI crash ('Something went wrong')
 $usoPrivate = "$env:ProgramData\USOPrivate"
 if (Test-Path $usoPrivate) {
     takeown.exe /F $usoPrivate /A /R /D Y >$null 2>&1
-    cmd.exe /c "icacls `"$usoPrivate`" /grant administrators:(OI)(CI)F /t /c /q >nul 2>&1"
+    & cmd.exe /c "icacls `"$usoPrivate`" /grant administrators:(OI)(CI)F /grant *S-1-15-2-1:(OI)(CI)RX /grant *S-1-15-2-2:(OI)(CI)RX /t /c /q >nul 2>&1"
 }
 $usoShared = "$env:ProgramData\USOShared"
 if (Test-Path $usoShared) {
     takeown.exe /F $usoShared /A /R /D Y >$null 2>&1
-    cmd.exe /c "icacls `"$usoShared`" /grant administrators:(OI)(CI)F /t /c /q >nul 2>&1"
+    & cmd.exe /c "icacls `"$usoShared`" /grant administrators:(OI)(CI)F /grant *S-1-15-2-1:(OI)(CI)RX /grant *S-1-15-2-2:(OI)(CI)RX /t /c /q >nul 2>&1"
 }
 
-# 8. Debloat-Safe .NET WinSxS Baseline Stub Restoration (Resolves 0x80073712 without DISM/SFC)
-Write-Host "Verifying .NET delta base stubs in WinSxS..." -ForegroundColor Gray
+# 9. Self-Healing UpdateStore Reset (Resolves Settings UI 'Something went wrong. Try to reopen Settings later.')
+$usoStore = "$env:ProgramData\USOPrivate\UpdateStore"
+$storeDb = Join-Path $usoStore "store.db"
+$isCorruptSize = (Test-Path $storeDb) -and ((Get-Item $storeDb).Length -gt 1MB)
+$hasFailureState = $false
+if (Test-Path $storeDb) {
+    try {
+        $bytes = [System.IO.File]::ReadAllBytes($storeDb)
+        $text = [System.Text.Encoding]::Unicode.GetString($bytes)
+        if ($text.Contains('BlockedByFailure')) {
+            $hasFailureState = $true
+        }
+    } catch {}
+}
+$needsStoreReset = $Force -or $PurgeCache -or (-not (Test-Path $storeDb)) -or $isCorruptSize -or $hasFailureState
+if ($needsStoreReset) {
+    Write-Host "Resetting UpdateStore database to resolve Settings UI errors..." -ForegroundColor Gray
+    Stop-Service UsoSvc -Force -ErrorAction SilentlyContinue
+    Stop-Process -Name MoUsoCoreWorker, UsoClient, SystemSettings -Force -ErrorAction SilentlyContinue
+    if (Test-Path $usoStore) {
+        Get-ChildItem -Path $usoStore -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+    }
+    Start-Service UsoSvc -ErrorAction SilentlyContinue
+    Start-Process usoclient -ArgumentList 'RefreshSettings' -Wait -ErrorAction SilentlyContinue
+}
+
+# 10. Debloat-Safe WinSxS Baseline Stub Restoration (Resolves 0x80073712 without DISM/SFC)
+Write-Host "Verifying .NET and CSI delta base stubs in WinSxS..." -ForegroundColor Gray
 function Restore-WinSxSStub($targetDir, $sourceFile, $destFileName) {
-    if (-not (Test-Path $sourceFile)) { return }
+    if (-not (Test-Path -LiteralPath $sourceFile)) { return }
     $destFile = Join-Path $targetDir $destFileName
-    if (Test-Path $destFile) { return }
+    if (Test-Path -LiteralPath $destFile) { return }
     
-    if (-not (Test-Path $targetDir)) {
+    if (-not (Test-Path -LiteralPath $targetDir)) {
         New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
     }
     takeown.exe /F $targetDir >$null 2>&1
     icacls.exe $targetDir /grant "Administrators:(OI)(CI)F" >$null 2>&1
-    Copy-Item -Path $sourceFile -Destination $destFile -Force -ErrorAction SilentlyContinue
+    Copy-Item -LiteralPath $sourceFile -Destination $destFile -Force -ErrorAction SilentlyContinue
+    icacls.exe $destFile /setowner "NT SERVICE\TrustedInstaller" >$null 2>&1
     icacls.exe $targetDir /setowner "NT SERVICE\TrustedInstaller" >$null 2>&1
     icacls.exe $targetDir /reset /T /C /Q >$null 2>&1
 }
 
-$vbcSource64 = "$env:SystemRoot\Microsoft.NET\Framework64\v4.0.30319\vbc.exe"
-$vbcSource32 = "$env:SystemRoot\Microsoft.NET\Framework\v4.0.30319\vbc.exe"
+$winsxsDir = "$env:SystemRoot\WinSxS"
 
-$vbc64Dirs = Get-ChildItem "$env:SystemRoot\WinSxS" -Filter "amd64_netfx4-vbc_exe*" -Directory -ErrorAction SilentlyContinue
-foreach ($d in $vbc64Dirs) {
-    Restore-WinSxSStub -targetDir $d.FullName -sourceFile $vbcSource64 -destFileName "vbc.exe"
-}
-$vbc32Dirs = Get-ChildItem "$env:SystemRoot\WinSxS" -Filter "x86_netfx4-vbc_exe*" -Directory -ErrorAction SilentlyContinue
-foreach ($d in $vbc32Dirs) {
-    Restore-WinSxSStub -targetDir $d.FullName -sourceFile $vbcSource32 -destFileName "vbc.exe"
+# High-speed targeted stub restoration across known delta transition points
+$stubConfigs = @(
+    @{ Filter = "*netfx*aspnet_regiis*"; TargetFile = "aspnet_regiis.exe" },
+    @{ Filter = "*netfx*installsqlstate_sql_*"; TargetFile = "InstallSqlState.sql" },
+    @{ Filter = "*system.data_*"; TargetFile = "System.Data.dll" },
+    @{ Filter = "*netfx*peverify*"; TargetFile = "peverify.dll" },
+    @{ Filter = "*netfx*mscorpe*"; TargetFile = "mscorpe.dll" },
+    @{ Filter = "*netfx*mscorjit*"; TargetFile = "mscorjit.dll" },
+    @{ Filter = "*aspnet_regsql*"; TargetFile = "aspnet_regsql.exe" },
+    @{ Filter = "*netfx35linq-system.web.extensions_*"; TargetFile = "System.Web.Extensions.dll" },
+    @{ Filter = "*netfx4-vbc_exe*"; TargetFile = "vbc.exe" },
+    @{ Filter = "*aspnet_regbrowsers*"; TargetFile = "aspnet_regbrowsers.exe" }
+)
+
+foreach ($sc in $stubConfigs) {
+    $matchedDirs = Get-ChildItem -Path $winsxsDir -Filter $sc.Filter -Directory -ErrorAction SilentlyContinue
+    foreach ($dir in $matchedDirs) {
+        # Strictly restrict baseline stub restoration to baseline OS build components (10.0.26100.1 / 4.0.15912.0).
+        # Target update and delta staging directories (e.g. 10.0.27000.*, 4.0.15920.*) must NEVER have baseline
+        # uncompressed stubs injected, as this triggers STATUS_SXS_COMPONENT_STORE_CORRUPT (0x80073712) in deltastore.cpp.
+        $isBaseline = ($dir.Name -like "*10.0.26100.1_*") -or ($dir.Name -like "*4.0.15912.0_*")
+        if (-not $isBaseline) { continue }
+
+        $destFile = Join-Path $dir.FullName $sc.TargetFile
+        if (-not (Test-Path -LiteralPath $destFile)) {
+            $parts = $dir.Name -split '_'
+            if ($parts.Count -ge 5) {
+                $compPrefix = "$($parts[0])_$($parts[1])_"
+                $donor = $matchedDirs | Where-Object {
+                    $_.Name -ne $dir.Name -and $_.Name.StartsWith($compPrefix) -and (Test-Path -LiteralPath (Join-Path $_.FullName $sc.TargetFile))
+                } | Select-Object -First 1
+
+                if ($donor) {
+                    $donorFile = Join-Path $donor.FullName $sc.TargetFile
+                    Restore-WinSxSStub -targetDir $dir.FullName -sourceFile $donorFile -destFileName $sc.TargetFile
+                }
+            }
+        }
+    }
 }
 
-$regb64Source = (Get-ChildItem "$env:SystemRoot\WinSxS\amd64_aspnet_regbrowsers*" -Filter "aspnet_regbrowsers.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1).FullName
-$regb32Source = (Get-ChildItem "$env:SystemRoot\WinSxS\x86_aspnet_regbrowsers*" -Filter "aspnet_regbrowsers.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1).FullName
-
-$regbManifests64 = Get-ChildItem "$env:SystemRoot\WinSxS\Manifests" -Filter "amd64_aspnet_regbrowsers*.manifest" -ErrorAction SilentlyContinue
-foreach ($m in $regbManifests64) {
-    $folderName = [System.IO.Path]::GetFileNameWithoutExtension($m.Name)
-    $folderPath = Join-Path "$env:SystemRoot\WinSxS" $folderName
-    Restore-WinSxSStub -targetDir $folderPath -sourceFile $regb64Source -destFileName "aspnet_regbrowsers.exe"
+# Restore any missing base files for WinSxS folders containing \r\ delta differentials (Resolves 0x80073712 MissingFileSystemResource)
+$rParentDirs = Get-ChildItem -Path $winsxsDir -Directory -Filter "*10.0.26100.*" -ErrorAction SilentlyContinue | Where-Object { Test-Path (Join-Path $_.FullName "r") }
+foreach ($rp in $rParentDirs) {
+    $rFiles = Get-ChildItem -Path (Join-Path $rp.FullName "r") -File -ErrorAction SilentlyContinue
+    foreach ($rf in $rFiles) {
+        $neededFile = Join-Path $rp.FullName $rf.Name
+        if (-not (Test-Path -LiteralPath $neededFile)) {
+            $parts = $rp.Name -split '_'
+            if ($parts.Count -ge 5) {
+                $compPrefix = "$($parts[0])_$($parts[1])_"
+                $donorDirs = Get-ChildItem -Path $winsxsDir -Directory -Filter "$compPrefix*" -ErrorAction SilentlyContinue
+                foreach ($donor in $donorDirs) {
+                    $donorFile = Join-Path $donor.FullName $rf.Name
+                    if (Test-Path -LiteralPath $donorFile) {
+                        Restore-WinSxSStub -targetDir $rp.FullName -sourceFile $donorFile -destFileName $rf.Name
+                        break
+                    }
+                }
+            }
+        }
+    }
 }
-$regbManifests32 = Get-ChildItem "$env:SystemRoot\WinSxS\Manifests" -Filter "*aspnet_regbrowsers*.manifest" -ErrorAction SilentlyContinue | Where-Object { $_.Name -match '^(x86_|wow64_)' }
-foreach ($m in $regbManifests32) {
-    $folderName = [System.IO.Path]::GetFileNameWithoutExtension($m.Name)
-    $folderPath = Join-Path "$env:SystemRoot\WinSxS" $folderName
-    Restore-WinSxSStub -targetDir $folderPath -sourceFile $regb32Source -destFileName "aspnet_regbrowsers.exe"
-}
 
-# 9. Surgical CBS Staging Registry Healing (Resolves 0x80073712 & 0x80070005)
+# 11. Surgical CBS Staging Registry Healing (Resolves 0x80073712, 0x80070005 & 0x8000ffff)
 Write-Host "Verifying CBS package staging states in registry..." -ForegroundColor Gray
 $cbsPackagesKey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages"
+$servicingDir = "$env:SystemRoot\Servicing\Packages"
 if (Test-Path $cbsPackagesKey) {
     $packages = Get-ChildItem -LiteralPath $cbsPackagesKey -ErrorAction SilentlyContinue
     $repairedCount = 0
@@ -217,23 +303,58 @@ if (Test-Path $cbsPackagesKey) {
             Remove-ItemProperty -LiteralPath $pkg.PSPath -Name "LastError" -Force -ErrorAction SilentlyContinue
             $repairedCount++
         }
+
+        # Clear stale InstallGroup referencing dead sessions
+        if ($props.InstallGroup) {
+            Remove-ItemProperty -LiteralPath $pkg.PSPath -Name "InstallGroup" -Force -ErrorAction SilentlyContinue
+            $repairedCount++
+        }
         
-        # If package is stuck in Staged (32) and not committed, reset to Absent (0) so WU can re-stage cleanly
-        $isStaged = ($props.CurrentState -eq 32)
+        # If an Absent package (CurrentState 0) has no .mum file in Servicing\Packages, delete the orphaned key
+        # so TiWorker's express update watchlist resolution does not fail with 0x80070490 (ERROR_NOT_FOUND).
+        if ($props.CurrentState -eq 0) {
+            $mumFile = Join-Path $servicingDir "$($pkg.PSChildName).mum"
+            if (-not (Test-Path -LiteralPath $mumFile -ErrorAction SilentlyContinue)) {
+                Remove-Item -LiteralPath $pkg.PSPath -Recurse -Force -ErrorAction SilentlyContinue
+                $repairedCount++
+                continue
+            }
+        }
+        
+        # If package is missing its .mum file in Servicing\Packages or has no payload, clean or reset to Absent (0) so TiWorker doesn't crash with 0x8000ffff / 0x80070490
+        $isStaged = ($props.CurrentState -eq 32 -or $props.CurrentState -eq 64)
+        $hasMissingMum = ($props.InstallName -and !(Test-Path -LiteralPath (Join-Path $servicingDir $props.InstallName) -ErrorAction SilentlyContinue))
         $hasMissingLoc = ($props.InstallLocation -and !(Test-Path -LiteralPath $props.InstallLocation -ErrorAction SilentlyContinue))
         $isSDFolder = ($props.InstallLocation -match 'SoftwareDistribution\\Download')
         $noLoc = [string]::IsNullOrEmpty($props.InstallLocation)
         
-        if ($isStaged -and ($hasMissingLoc -or $isSDFolder -or $noLoc)) {
-            Set-ItemProperty -LiteralPath $pkg.PSPath -Name "CurrentState" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
-            if ($props.InstallLocation) {
-                Remove-ItemProperty -LiteralPath $pkg.PSPath -Name "InstallLocation" -Force -ErrorAction SilentlyContinue
+        if ($isStaged -and ($hasMissingMum -or $hasMissingLoc -or $isSDFolder -or $noLoc)) {
+            if ($hasMissingMum) {
+                Remove-Item -LiteralPath $pkg.PSPath -Recurse -Force -ErrorAction SilentlyContinue
+            } else {
+                Set-ItemProperty -LiteralPath $pkg.PSPath -Name "CurrentState" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
+                if ($props.InstallLocation) {
+                    Remove-ItemProperty -LiteralPath $pkg.PSPath -Name "InstallLocation" -Force -ErrorAction SilentlyContinue
+                }
             }
             $repairedCount++
         }
     }
     if ($repairedCount -gt 0) {
         Write-Host "Remediated $repairedCount CBS package registry records." -ForegroundColor Green
+    }
+}
+
+# Clean orphaned MumXContainers keys (Resolves 0x80070005 during mumx container staging)
+$mumxContainersKey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\MumXContainers"
+if (Test-Path $mumxContainersKey) {
+    $mumxDir = "$env:SystemRoot\Servicing\MumX"
+    $containers = Get-ChildItem -LiteralPath $mumxContainersKey -ErrorAction SilentlyContinue
+    foreach ($c in $containers) {
+        $containerFile = Join-Path $mumxDir "$($c.PSChildName).mumx.esd"
+        if (-not (Test-Path -LiteralPath $containerFile)) {
+            Remove-Item -LiteralPath $c.PSPath -Recurse -Force -ErrorAction SilentlyContinue
+        }
     }
 }
 
@@ -255,26 +376,23 @@ foreach ($k in $lcuErrorKeys) {
     }
 }
 
-# 10. Optional/Self-Healing Cache & Catalog Purge
+# 12. Optional/Self-Healing Cache & Catalog Purge
 if ($PurgeCache -or $Force) {
     Write-Host "Purging SoftwareDistribution download cache and resetting catroot2..." -ForegroundColor Gray
     $sdDownload = "$env:SystemRoot\SoftwareDistribution\Download"
     if (Test-Path $sdDownload) {
         Get-ChildItem -Path $sdDownload -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
     }
-    $usoStore = "$env:ProgramData\USOPrivate\UpdateStore"
-    if (Test-Path $usoStore) {
-        Get-ChildItem -Path $usoStore -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-    }
 }
 
-# 11. Re-enable Services
+# 13. Re-enable Services
 Write-Host "Configuring and starting services..." -ForegroundColor Gray
 Set-Service -Name wuauserv -StartupType Automatic -ErrorAction SilentlyContinue
 Set-Service -Name UsoSvc -StartupType Automatic -ErrorAction SilentlyContinue
 Set-Service -Name WaaSMedicSvc -StartupType Manual -ErrorAction SilentlyContinue
 Set-Service -Name BITS -StartupType Automatic -ErrorAction SilentlyContinue
 Set-Service -Name dosvc -StartupType Manual -ErrorAction SilentlyContinue
+Set-Service -Name cryptsvc -StartupType Automatic -ErrorAction SilentlyContinue
 
 Start-Service -Name cryptsvc -ErrorAction SilentlyContinue
 Start-Service -Name BITS -ErrorAction SilentlyContinue
@@ -282,7 +400,7 @@ Start-Service -Name wuauserv -ErrorAction SilentlyContinue
 Start-Service -Name UsoSvc -ErrorAction SilentlyContinue
 Start-Service -Name dosvc -ErrorAction SilentlyContinue
 
-# 12. Re-enable Scheduled Tasks
+# 14. Re-enable Scheduled Tasks
 Write-Host "Re-enabling scheduled update tasks..." -ForegroundColor Gray
 $tasks = @(
     "\Microsoft\Windows\InstallService\ScanForUpdates",

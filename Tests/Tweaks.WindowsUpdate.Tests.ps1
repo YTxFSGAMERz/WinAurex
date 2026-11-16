@@ -63,13 +63,31 @@ if (Test-Path $exp) {
 }
 Write-Host " [PASS] SettingsPageVisibility does not hide Windows Update page" -ForegroundColor Green
 
-# 7. Verify Directory ACLs (SystemTemp & CbsTemp)
+# 7. Verify Directory ACLs (SystemTemp, CbsTemp, MumX, USOPrivate)
 $sysTemp = "$env:SystemRoot\SystemTemp"
 $sysTempAcl = (Get-Acl $sysTemp).AccessToString
 if ($sysTempAcl -notmatch "TrustedInstaller" -and $sysTempAcl -notmatch "S-1-5-80-956008885") {
     throw "SystemTemp ACL missing TrustedInstaller permissions!"
 }
 Write-Host " [PASS] SystemTemp ACL contains TrustedInstaller permissions" -ForegroundColor Green
+
+$mumxDir = "$env:SystemRoot\Servicing\MumX"
+if (Test-Path $mumxDir) {
+    $mumxAcl = (Get-Acl $mumxDir).AccessToString
+    if ($mumxAcl -notmatch "TrustedInstaller" -and $mumxAcl -notmatch "S-1-5-80-956008885") {
+        throw "MumX ACL missing TrustedInstaller permissions!"
+    }
+    Write-Host " [PASS] MumX ACL contains TrustedInstaller permissions" -ForegroundColor Green
+}
+
+$usoPrivate = "$env:ProgramData\USOPrivate"
+if (Test-Path $usoPrivate) {
+    $usoAcl = (Get-Acl $usoPrivate).AccessToString
+    if ($usoAcl -notmatch "APPLICATION PACKAGE AUTHORITY" -and $usoAcl -notmatch "S-1-15-2-1") {
+        throw "USOPrivate ACL missing ALL APPLICATION PACKAGES permissions!"
+    }
+    Write-Host " [PASS] USOPrivate ACL contains AppContainer read permissions" -ForegroundColor Green
+}
 
 # 8. Verify UCPD Minifilter Driver is Disabled (Prevents 0x80070005)
 $ucpd = Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\UCPD" -ErrorAction SilentlyContinue
@@ -78,14 +96,14 @@ if ($ucpd -and $ucpd.Start -ne 4) {
 }
 Write-Host " [PASS] UCPD minifilter driver set to Disabled (Start=4)" -ForegroundColor Green
 
-# 9. Verify .NET WinSxS Stubs (Prevents 0x80073712)
+# 9. Verify .NET WinSxS Stubs & Delta Base Files (Prevents 0x80073712)
 $vbcStubs = Get-ChildItem "$env:SystemRoot\WinSxS\*netfx4-vbc_exe*" -Filter "vbc.exe" -Recurse -ErrorAction SilentlyContinue
 if ($vbcStubs.Count -eq 0) {
     throw "No vbc.exe stubs found in WinSxS netfx4-vbc_exe directories!"
 }
 Write-Host " [PASS] WinSxS vbc.exe stubs present (Found $($vbcStubs.Count))" -ForegroundColor Green
 
-# 10. Verify CBS Package Registry Health (No stuck staging states with missing payload or LastError)
+# 10. Verify CBS Package Registry Health & MumXContainers (No stuck staging states with missing payload or LastError)
 $cbsKey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages"
 $brokenStaged = 0
 $hasLastError = 0
@@ -107,5 +125,29 @@ if ($hasLastError -gt 0) {
     throw "Found $hasLastError CBS packages with non-zero LastError!"
 }
 Write-Host " [PASS] CBS Package Registry verified clean (0 stuck staging, 0 LastError)" -ForegroundColor Green
+
+# 11. Verify MumXContainers registry has no orphan keys
+$mumxContainersKey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\MumXContainers"
+if (Test-Path $mumxContainersKey) {
+    $containers = Get-ChildItem -LiteralPath $mumxContainersKey -ErrorAction SilentlyContinue
+    foreach ($c in $containers) {
+        $containerFile = Join-Path $mumxDir "$($c.PSChildName).mumx.esd"
+        if (-not (Test-Path -LiteralPath $containerFile)) {
+            throw "Found orphan MumXContainers registry key without file: $($c.PSChildName)"
+        }
+    }
+}
+Write-Host " [PASS] MumXContainers registry clean (0 orphan container keys)" -ForegroundColor Green
+
+# 12. Verify UpdateStore Database Health (Resolves Settings UI crash)
+$storeDb = "$env:ProgramData\USOPrivate\UpdateStore\store.db"
+if (Test-Path $storeDb) {
+    $bytes = [System.IO.File]::ReadAllBytes($storeDb)
+    $text = [System.Text.Encoding]::Unicode.GetString($bytes)
+    if ($text.Contains('BlockedByFailure')) {
+        throw "UpdateStore store.db contains BlockedByFailure attention lock!"
+    }
+    Write-Host " [PASS] UpdateStore store.db verified healthy (0 failure attention lock)" -ForegroundColor Green
+}
 
 Write-Host "`n[ALL TESTS PASSED] Windows Update Restoration & Hardening Verified." -ForegroundColor Green
