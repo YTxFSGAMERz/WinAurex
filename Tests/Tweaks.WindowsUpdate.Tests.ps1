@@ -71,20 +71,41 @@ if ($sysTempAcl -notmatch "TrustedInstaller" -and $sysTempAcl -notmatch "S-1-5-8
 }
 Write-Host " [PASS] SystemTemp ACL contains TrustedInstaller permissions" -ForegroundColor Green
 
-# 8. Verify CBS Package Registry Health (No stuck staging states with missing payload)
+# 8. Verify UCPD Minifilter Driver is Disabled (Prevents 0x80070005)
+$ucpd = Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\UCPD" -ErrorAction SilentlyContinue
+if ($ucpd -and $ucpd.Start -ne 4) {
+    throw "UCPD service is not disabled! Current Start: $($ucpd.Start)"
+}
+Write-Host " [PASS] UCPD minifilter driver set to Disabled (Start=4)" -ForegroundColor Green
+
+# 9. Verify .NET WinSxS Stubs (Prevents 0x80073712)
+$vbcStubs = Get-ChildItem "$env:SystemRoot\WinSxS\*netfx4-vbc_exe*" -Filter "vbc.exe" -Recurse -ErrorAction SilentlyContinue
+if ($vbcStubs.Count -eq 0) {
+    throw "No vbc.exe stubs found in WinSxS netfx4-vbc_exe directories!"
+}
+Write-Host " [PASS] WinSxS vbc.exe stubs present (Found $($vbcStubs.Count))" -ForegroundColor Green
+
+# 10. Verify CBS Package Registry Health (No stuck staging states with missing payload or LastError)
 $cbsKey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages"
 $brokenStaged = 0
+$hasLastError = 0
 if (Test-Path $cbsKey) {
     Get-ChildItem -LiteralPath $cbsKey -ErrorAction SilentlyContinue | ForEach-Object {
         $p = Get-ItemProperty -LiteralPath $_.PSPath -ErrorAction SilentlyContinue
-        if ($p.CurrentState -eq 32 -and ($p.InstallLocation -match 'SoftwareDistribution' -or -not (Test-Path -LiteralPath $p.InstallLocation -ErrorAction SilentlyContinue))) {
+        if ($p.CurrentState -eq 32 -and ($p.InstallLocation -match 'SoftwareDistribution' -or [string]::IsNullOrEmpty($p.InstallLocation) -or -not (Test-Path -LiteralPath $p.InstallLocation -ErrorAction SilentlyContinue))) {
             $brokenStaged++
+        }
+        if ($p.LastError -and $p.LastError -ne 0) {
+            $hasLastError++
         }
     }
 }
 if ($brokenStaged -gt 0) {
     throw "Found $brokenStaged CBS packages stuck in CurrentState=32 with missing payload!"
 }
-Write-Host " [PASS] CBS Package Registry verified clean (0 stuck staging packages)" -ForegroundColor Green
+if ($hasLastError -gt 0) {
+    throw "Found $hasLastError CBS packages with non-zero LastError!"
+}
+Write-Host " [PASS] CBS Package Registry verified clean (0 stuck staging, 0 LastError)" -ForegroundColor Green
 
 Write-Host "`n[ALL TESTS PASSED] Windows Update Restoration & Hardening Verified." -ForegroundColor Green
