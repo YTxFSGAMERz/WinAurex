@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using WinAurex.Contracts.Execution;
 using WinAurex.Models.Execution;
@@ -22,9 +23,22 @@ namespace WinAurex.Core.Execution.Middleware
                 context.Journal.Events.Add(new OperationProgressEntry
                 {
                     OperationId = operation.Id,
-                    Message = $"Dry run: {operation.Description}"
+                    Message = $"Dry run: validating {operation.Description}"
                 });
-                context.ExecutionResult = ProviderResult.Success();
+
+                try
+                {
+                    dynamic dynamicProvider = context.Provider;
+                    ProviderResult analysis = await dynamicProvider.AnalyzeAsync((dynamic)operation, context);
+                    context.ExecutionResult = analysis.IsSuccess
+                        ? ProviderResult.Success()
+                        : ProviderResult.Failure($"Dry run validation failed: {analysis.ErrorMessage}");
+                }
+                catch (Exception ex)
+                {
+                    context.ExecutionResult = ProviderResult.Failure($"Dry run validation failed: {ex.Message}");
+                }
+
                 return; // Stop pipeline if dry run
             }
 
