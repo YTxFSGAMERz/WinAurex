@@ -12,8 +12,8 @@ namespace WinAurex.Core.Execution.Middleware
         public async Task InvokeAsync(ExecutionOperation operation, OperationContext context, OperationDelegate next)
         {
             var policy = operation.PolicyOverride ?? new ExecutionPolicy(); // In reality, fetch from engine plan context if needed
-            
-            int maxAttempts = policy.MaxRetries + 1;
+
+            int maxAttempts = GetMaxAttempts(policy);
             Exception? lastException = null;
 
             for (int attempt = 1; attempt <= maxAttempts; attempt++)
@@ -62,14 +62,58 @@ namespace WinAurex.Core.Execution.Middleware
                         Message = $"Attempt {attempt} failed. Retrying..."
                     });
 
-                    if (policy.RetryDelay.HasValue)
+                    var delay = ComputeRetryDelay(policy, attempt);
+                    if (delay > TimeSpan.Zero)
                     {
-                        await Task.Delay(policy.RetryDelay.Value, context.CancellationToken);
+                        await Task.Delay(delay, context.CancellationToken);
                     }
                 }
             }
 
             context.ExecutionResult = ProviderResult.Failure(lastException?.Message ?? "Failed after retries");
+        }
+
+        /// <summary>
+        /// Returns how many times the operation may run for the given policy.
+        /// <see cref="RetryPolicy.None"/> runs once regardless of <see cref="ExecutionPolicy.MaxRetries"/>;
+        /// a negative retry count is treated as zero retries.
+        /// </summary>
+        internal static int GetMaxAttempts(ExecutionPolicy policy)
+        {
+            if (policy.RetryPolicy == RetryPolicy.None)
+            {
+                return 1;
+            }
+
+            return Math.Max(1, policy.MaxRetries + 1);
+        }
+
+        /// <summary>
+        /// Returns the delay to wait after <paramref name="failedAttempt"/> (1-based) has failed.
+        /// <see cref="RetryPolicy.Fixed"/> uses a constant delay; <see cref="RetryPolicy.ExponentialBackoff"/>
+        /// doubles the delay after every failed attempt, capped at <see cref="TimeSpan.MaxValue"/>.
+        /// </summary>
+        internal static TimeSpan ComputeRetryDelay(ExecutionPolicy policy, int failedAttempt)
+        {
+            if (policy.RetryPolicy == RetryPolicy.None || !policy.RetryDelay.HasValue || failedAttempt < 1)
+            {
+                return TimeSpan.Zero;
+            }
+
+            var baseDelay = policy.RetryDelay.Value;
+            if (policy.RetryPolicy == RetryPolicy.Fixed)
+            {
+                return baseDelay;
+            }
+
+            // ExponentialBackoff: base * 2^(failedAttempt - 1)
+            var ticks = (double)baseDelay.Ticks * Math.Pow(2, failedAttempt - 1);
+            if (ticks >= TimeSpan.MaxValue.Ticks)
+            {
+                return TimeSpan.MaxValue;
+            }
+
+            return TimeSpan.FromTicks((long)ticks);
         }
     }
 }
