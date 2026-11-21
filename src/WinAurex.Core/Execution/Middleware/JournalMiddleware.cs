@@ -18,6 +18,12 @@ namespace WinAurex.Core.Execution.Middleware
 
                 if (context.ExecutionResult != null && context.ExecutionResult.IsSuccess)
                 {
+                    if (context.IsDryRun)
+                    {
+                        EmitProgress(context, operation.Id, $"Dry run validated: {operation.Description}");
+                        return;
+                    }
+
                     context.Journal.Events.Add(new OperationCompletedEntry 
                     { 
                         OperationId = operation.Id, 
