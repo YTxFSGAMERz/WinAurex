@@ -644,14 +644,6 @@ foreach ($drive in $drives) {
         $oemPath = &quot;$($drive.DriveLetter):\OEM Info&quot;
         if (Test-Path $oemPath) {
             Write-Host &quot;Found OEM Info at $oemPath. Copying files...&quot;
-            if (Test-Path &quot;$oemPath\img0.jpg&quot;) {
-                Copy-Item -Path &quot;$oemPath\img0.jpg&quot; -Destination &quot;C:\Windows\Web\Wallpaper\Windows\img0.jpg&quot; -Force
-                Copy-Item -Path &quot;$oemPath\img0.jpg&quot; -Destination &quot;C:\Windows\Web\Wallpaper\Windows\img0_3840x2160.jpg&quot; -Force
-            }
-            if (Test-Path &quot;$oemPath\img19.jpg&quot;) {
-                Copy-Item -Path &quot;$oemPath\img19.jpg&quot; -Destination &quot;C:\Windows\Web\Wallpaper\Windows\img19.jpg&quot; -Force
-                Copy-Item -Path &quot;$oemPath\img19.jpg&quot; -Destination &quot;C:\Windows\Web\Wallpaper\Windows\img19_3840x2160.jpg&quot; -Force
-            }
             if (Test-Path &quot;$oemPath\oemlogo.bmp&quot;) {
                 Copy-Item -Path &quot;$oemPath\oemlogo.bmp&quot; -Destination &quot;C:\Windows\System32\oemlogo.bmp&quot; -Force
             }
