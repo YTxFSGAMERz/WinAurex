@@ -65,6 +65,29 @@
 <!-- ═══ ANIMATED DIVIDER ═══ -->
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
+<h2 align="center">📀 OFFICIAL PRE-BUILT WINAUREX OS ISOS</h2>
+
+<div align="center">
+
+> Pre-compiled, debloated, and verified Windows 11 installation media powered by our **Archinstall-inspired Direct-Deploy Engine**.
+
+<br>
+
+<a href="https://drive.google.com/drive/folders/1ANWy6cB-PhQ5UTHWbES3MYS3NRSG5UV5"><img src="https://img.shields.io/badge/📁_BROWSE_ALL_ISOS-GOOGLE_DRIVE_FOLDER-00bcd4?style=for-the-badge&logo=googledrive&logoColor=00bcd4&labelColor=0D1117"></a>
+
+<br><br>
+
+| Edition | File Size (Drive / Disk) | Description | Download Link |
+| :--- | :--- | :--- | :--- |
+| **🟣 WinAurex Extreme (Core Ultra-Lite)** | `4.90 GiB` / `5.26 GB` | Pure TUI installer, extreme slop & Defender purge, minimal footprint for low-spec VMs & gaming rigs. | [📥 Download Extreme ISO](https://drive.google.com/file/d/1FQAMw9JdAHsuhpLlnFvSXBhfZ2Uh8cZP/view?usp=drivesdk) |
+| **🟡 WinAurex Moderate (Performance & Gaming)** | `7.68 GiB` / `8.25 GB` | Debloated, telemetry stripped, Windows Update disabled, WinGet & hardware drivers 100% intact. | [📥 Download Moderate ISO](https://drive.google.com/file/d/1hl8GMYO5othK2nO_wOQEoFl4PCkCWSOs/view?usp=drivesdk) |
+| **🟢 WinAurex Stable (Workstation Edition)** | `7.74 GiB` / `8.32 GB` | Enterprise stability, 100% working Windows Update, WinGet, Microsoft Store, and pristine driver stack. | [📥 Download Stable ISO](https://drive.google.com/file/d/1vtWpSpqIiThtuZ1V7Q64NwRApABFEPqe/view?usp=drivesdk) |
+
+</div>
+
+<!-- ═══ ANIMATED DIVIDER ═══ -->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+
 <h2 align="center">⚡ QUICK START</h2>
 
 <div align="center">
