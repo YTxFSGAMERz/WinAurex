@@ -28,6 +28,9 @@ namespace WinAurex.Infrastructure.Providers
             if (!File.Exists(operation.Target.FilePath))
                 return Task.FromResult(ProviderResult.Failure($"Reg file not found: {operation.Target.FilePath}"));
 
+            if (!HasRegExtension(operation.Target.FilePath))
+                return Task.FromResult(ProviderResult.Failure($"Reg file target must have a .reg extension: {operation.Target.FilePath}"));
+
             return Task.FromResult(ProviderResult.Success());
         }
 
@@ -36,7 +39,18 @@ namespace WinAurex.Infrastructure.Providers
             return Task.FromResult(ProviderResult.Success());
         }
 
-        public async Task<ProviderResult> ExecuteAsync(RegFileOperation operation, PlanContext context)
+        public Task<ProviderResult> ExecuteAsync(RegFileOperation operation, PlanContext context)
+        {
+            if (operation.Target == null || string.IsNullOrWhiteSpace(operation.Target.FilePath))
+                return Task.FromResult(ProviderResult.Failure("FilePath is required."));
+
+            if (!HasRegExtension(operation.Target.FilePath))
+                return Task.FromResult(ProviderResult.Failure($"Reg file target must have a .reg extension: {operation.Target.FilePath}"));
+
+            return ExecuteRegImportAsync(operation, context);
+        }
+
+        private async Task<ProviderResult> ExecuteRegImportAsync(RegFileOperation operation, PlanContext context)
         {
             try
             {
@@ -97,6 +111,11 @@ namespace WinAurex.Infrastructure.Providers
         public Task<ProviderResult> VerifyAsync(RegFileOperation operation, PlanContext context)
         {
             return Task.FromResult(ProviderResult.Success());
+        }
+
+        private static bool HasRegExtension(string path)
+        {
+            return string.Equals(Path.GetExtension(path), ".reg", StringComparison.OrdinalIgnoreCase);
         }
 
         public Task<ProviderResult> RevertAsync(RegFileOperation operation, string undoData, PlanContext context)
